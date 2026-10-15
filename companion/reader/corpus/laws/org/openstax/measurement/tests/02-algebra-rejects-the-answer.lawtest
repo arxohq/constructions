@@ -1,0 +1,103 @@
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+// ВТОРАЯ ГРОМКОСТЬ РАЗМЕРНОСТИ: проверка ЗНАЧЕНИЯ, а не формы. Дело
+// предъявляет два множителя и заявленный ответ; алгебра §49.1 считает
+// произведение и сверяет. Три сцены — верный ответ, ответ чужой размерности
+// и ответ верной размерности в чужом масштабе.
+
+// 2 м/с на 3 с даёт 6 м. Мультимножитель произведения — {m:1}: секунда
+// сокращается САМОЙ ОПЕРАЦИЕЙ, а не автором формулы.
+test "urn:query:meas-t02a-product-matches" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t02a": claimed_product(entity_ref("urn:case:meas:eq:p1"), 2 m_per_s, 3 s, 6 m) { origin case_input; }
+    }
+
+    evaluate truth(claimed_product_holds(entity_ref("urn:case:meas:eq:p1")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ClaimedProductMatches);
+}
+
+// ТА ЖЕ ЗАДАЧА, ОТВЕТ В СЕКУНДАХ. Произведение имеет мультимножитель {m:1},
+// заявленный ответ — {s:1}; сравнение величин РАЗНОЙ размерности отвергается
+// алгеброй, и ответ не выводится. Это и есть «ответ отвергнут алгеброй
+// размерностей»: причину называет отказ операции, а не молчание правила.
+test "urn:query:meas-t02b-answer-of-wrong-dimension" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t02b": claimed_product(entity_ref("urn:case:meas:eq:p2"), 2 m_per_s, 3 s, 6 s) { origin case_input; }
+    }
+
+    evaluate truth(claimed_product_holds(entity_ref("urn:case:meas:eq:p2")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+}
+
+// ТА ЖЕ ЗАДАЧА, ОТВЕТ В КИЛОМЕТРАХ И ЧИСЛЕННО ВЕРНЫЙ (0,006 км = 6 м).
+// Размерность совпала, МАСШТАБ — нет, и §49.1 требует различать эти два
+// отказа именем. Сцена сторожит именно этот случай: символьная проверка
+// §1.4 его не видит вовсе (у км и м одна размерность L), и без второй
+// громкости он прошёл бы молча.
+test "urn:query:meas-t02c-answer-of-wrong-scale" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t02c": claimed_product(entity_ref("urn:case:meas:eq:p3"), 2 m_per_s, 3 s, 0.006 km) { origin case_input; }
+    }
+
+    evaluate truth(claimed_product_holds(entity_ref("urn:case:meas:eq:p3")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+}
+
+// ОТКАЗ АЛГЕБРЫ ЕСТЬ ОТКАЗ ДОКУМЕНТА, А НЕ ОДНОГО ПРАВИЛА. Замер 06.09.2026:
+// на чужой единице документ получает `evaluation_status = RUNTIME_ERROR` и
+// issue
+//
+//   UNIT_MISMATCH: eq: Magnitude[m] и Magnitude[s] — операция требует
+//   тождественной единицы; приведение масштабов делает unit_convert
+//   (§58.1, errata E-0135)
+//
+// Причина НАЗВАНА — это и есть требуемое «отвергнут алгеброй с причиной», —
+// но названа она документу целиком: `truth_status` остаётся NEITHER, а
+// `evaluation_status` перестаёт быть COMPUTED. Практическое следствие для
+// автора сцен: вопрос с заведомо чужой единицей нельзя задавать в одном
+// документе с вопросами, ответ на которые нужен вычисленным. Сцены 02b и 02c
+// поэтому и стоят порознь.
+test "urn:query:meas-t02d-why-not-the-claimed-answer" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t02d": claimed_product(entity_ref("urn:case:meas:eq:p2"), 2 m_per_s, 3 s, 6 s) { origin case_input; }
+    }
+
+    evaluate why_not(claimed_product_holds(entity_ref("urn:case:meas:eq:p2")));
+
+    expect truth_status == NEITHER;
+    expect evaluation_status == RUNTIME_ERROR;
+}

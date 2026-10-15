@@ -1,0 +1,55 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-CANCELLATIONDECLAREDBYPRODUCTOWNER" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": product_owner_of(entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v0"), entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v2")) { origin case_input; }
+        assert "cat-1": sprint_of_team(entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v1"), entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v2")) { origin case_input; }
+        assert "cat-2": cancels_sprint(entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v0"), entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v1")) { origin case_input; }
+    }
+    evaluate truth(cancellation_declared_by_product_owner(entity_ref("urn:law:catalog:cancellationdeclaredbyproductowner:v1")));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-NEXTSPRINTSTARTSIMMEDIATELY" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": sprint_ends(entity_ref("urn:law:catalog:nextsprintstartsimmediately:v1"), @2026-01-15) { origin case_input; }
+        assert "cat-1": follows_sprint(entity_ref("urn:law:catalog:nextsprintstartsimmediately:v0"), entity_ref("urn:law:catalog:nextsprintstartsimmediately:v1")) { origin case_input; }
+    }
+    evaluate truth(next_sprint_start_due(entity_ref("urn:law:catalog:nextsprintstartsimmediately:v0"), @2026-01-15));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-ONLYPRODUCTOWNERCANCELSSPRINT" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": sprint_of_team(entity_ref("urn:law:catalog:onlyproductownercancelssprint:v1"), entity_ref("urn:law:catalog:onlyproductownercancelssprint:v2")) { origin case_input; }
+        assert "cat-1": cancels_sprint(entity_ref("urn:law:catalog:onlyproductownercancelssprint:v0"), entity_ref("urn:law:catalog:onlyproductownercancelssprint:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(ProductOwnerCancelsSprint, ACTIVE);
+}
+
+// 
+test "CATALOG-SCOPEMAYBERENEGOTIATED" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": sprint_of_team(entity_ref("urn:law:catalog:scopemayberenegotiated:v1"), entity_ref("urn:law:catalog:scopemayberenegotiated:v2")) { origin case_input; }
+        assert "cat-1": renegotiates_scope(entity_ref("urn:law:catalog:scopemayberenegotiated:v0"), entity_ref("urn:law:catalog:scopemayberenegotiated:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(RenegotiateScope, ACTIVE);
+}

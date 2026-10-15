@@ -1,0 +1,203 @@
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+// §1.4, пример «Checking Equations for Dimensional Consistency» (a):
+// s = vt + ½at² при [s] = L, [v] = LT⁻¹, [a] = LT⁻². Учебник считает три
+// терма и получает L у каждого; здесь то же считает движок.
+//
+// ЭТО ПОЛОЖИТЕЛЬНАЯ СТОРОНА ГРАНИЦЫ. Отрицательная — сцена 02 на том же
+// наборе величин: пара по обе стороны одной границы.
+test "urn:query:meas-t01a-consistent-equation" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01a-eq": equation_presented(entity_ref("urn:case:meas:eq:a")) { origin case_input; }
+        assert "t01a-ref": reference_term(entity_ref("urn:case:meas:eq:a"), entity_ref("urn:case:meas:term:s")) { origin case_input; }
+        assert "t01a-t1": term_of(entity_ref("urn:case:meas:eq:a"), entity_ref("urn:case:meas:term:s")) { origin case_input; }
+        assert "t01a-t2": term_of(entity_ref("urn:case:meas:eq:a"), entity_ref("urn:case:meas:term:vt")) { origin case_input; }
+        assert "t01a-t3": term_of(entity_ref("urn:case:meas:eq:a"), entity_ref("urn:case:meas:term:at2")) { origin case_input; }
+
+        // [s] = L
+        assert "t01a-s-l": dimension_exponent(entity_ref("urn:case:meas:term:s"), Length, 1) { origin case_input; }
+        assert "t01a-s-t": dimension_exponent(entity_ref("urn:case:meas:term:s"), Time, 0) { origin case_input; }
+        // [vt] = LT⁻¹ · T = L
+        assert "t01a-vt-l": dimension_exponent(entity_ref("urn:case:meas:term:vt"), Length, 1) { origin case_input; }
+        assert "t01a-vt-t": dimension_exponent(entity_ref("urn:case:meas:term:vt"), Time, 0) { origin case_input; }
+        // [½at²] = LT⁻² · T² = L
+        assert "t01a-at2-l": dimension_exponent(entity_ref("urn:case:meas:term:at2"), Length, 1) { origin case_input; }
+        assert "t01a-at2-t": dimension_exponent(entity_ref("urn:case:meas:term:at2"), Time, 0) { origin case_input; }
+    }
+
+    evaluate truth(dimensionally_consistent(entity_ref("urn:case:meas:eq:a")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(EquationConsistentWhenNoTermDiffers);
+}
+
+// §1.4, тот же пример (b): s = vt² + ½at. У vt² размерность LT, у ½at —
+// LT⁻¹, у s — L; «None of the three terms has the same dimension as any
+// other». Согласованность ОПРОВЕРГНУТА, а не «не выведена»: ответ FALSE_ONLY.
+test "urn:query:meas-t01b-inconsistent-equation" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01b-eq": equation_presented(entity_ref("urn:case:meas:eq:b")) { origin case_input; }
+        assert "t01b-ref": reference_term(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:sb")) { origin case_input; }
+        assert "t01b-t1": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:sb")) { origin case_input; }
+        assert "t01b-t2": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:vt2")) { origin case_input; }
+        assert "t01b-t3": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:at")) { origin case_input; }
+
+        // [s] = L
+        assert "t01b-s-l": dimension_exponent(entity_ref("urn:case:meas:term:sb"), Length, 1) { origin case_input; }
+        assert "t01b-s-t": dimension_exponent(entity_ref("urn:case:meas:term:sb"), Time, 0) { origin case_input; }
+        // [vt²] = LT⁻¹ · T² = LT
+        assert "t01b-vt2-l": dimension_exponent(entity_ref("urn:case:meas:term:vt2"), Length, 1) { origin case_input; }
+        assert "t01b-vt2-t": dimension_exponent(entity_ref("urn:case:meas:term:vt2"), Time, 1) { origin case_input; }
+        // [at] = LT⁻² · T = LT⁻¹
+        assert "t01b-at-l": dimension_exponent(entity_ref("urn:case:meas:term:at"), Length, 1) { origin case_input; }
+        assert "t01b-at-t": dimension_exponent(entity_ref("urn:case:meas:term:at"), Time, -1) { origin case_input; }
+    }
+
+    evaluate truth(dimensionally_consistent(entity_ref("urn:case:meas:eq:b")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(EquationInconsistentWhenTermDiffers);
+}
+
+// Расхождение НАЗВАНО поимённо: система отвечает не «не согласовано», а
+// «терм vt² расходится с опорным по Time». Это и есть «почему величина
+// такова» на самом мелком масштабе.
+test "urn:query:meas-t01c-which-base-quantity-differs" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01c-eq": equation_presented(entity_ref("urn:case:meas:eq:b")) { origin case_input; }
+        assert "t01c-ref": reference_term(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:sb")) { origin case_input; }
+        assert "t01c-t2": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:vt2")) { origin case_input; }
+        assert "t01c-s-t": dimension_exponent(entity_ref("urn:case:meas:term:sb"), Time, 0) { origin case_input; }
+        assert "t01c-vt2-t": dimension_exponent(entity_ref("urn:case:meas:term:vt2"), Time, 1) { origin case_input; }
+    }
+
+    evaluate truth(terms_differ_in(entity_ref("urn:case:meas:eq:b"),
+                                   entity_ref("urn:case:meas:term:vt2"),
+                                   Time));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TermDiffersFromReference);
+}
+
+// §1.4 дословно: «an equation is not dimensionally consistent and cannot
+// possibly be a correct statement of physical law». `refuted` читает
+// ОПРОВЕРГНУТУЮ согласованность, и вывод тоже отрицательный — FALSE_ONLY.
+test "urn:query:meas-t01d-cannot-be-physical-law" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01d-eq": equation_presented(entity_ref("urn:case:meas:eq:b")) { origin case_input; }
+        assert "t01d-ref": reference_term(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:sb")) { origin case_input; }
+        assert "t01d-t1": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:sb")) { origin case_input; }
+        assert "t01d-t2": term_of(entity_ref("urn:case:meas:eq:b"), entity_ref("urn:case:meas:term:vt2")) { origin case_input; }
+        assert "t01d-s-t": dimension_exponent(entity_ref("urn:case:meas:term:sb"), Time, 0) { origin case_input; }
+        assert "t01d-vt2-t": dimension_exponent(entity_ref("urn:case:meas:term:vt2"), Time, 1) { origin case_input; }
+    }
+
+    evaluate truth(possibly_a_statement_of_physical_law(entity_ref("urn:case:meas:eq:b")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(InconsistentCannotBeLaw);
+}
+
+// §1.4, пример «Which one is the volume»: 4πr³/3 против 4πr². Объём есть L³,
+// площадь — L²; предъявленная формула объёма с размерностью L² опровергается.
+test "urn:query:meas-t01e-area-is-not-a-volume" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01e-eq": equation_presented(entity_ref("urn:case:meas:eq:vol")) { origin case_input; }
+        assert "t01e-ref": reference_term(entity_ref("urn:case:meas:eq:vol"), entity_ref("urn:case:meas:term:v")) { origin case_input; }
+        assert "t01e-t1": term_of(entity_ref("urn:case:meas:eq:vol"), entity_ref("urn:case:meas:term:v")) { origin case_input; }
+        assert "t01e-t2": term_of(entity_ref("urn:case:meas:eq:vol"), entity_ref("urn:case:meas:term:4pir2")) { origin case_input; }
+        assert "t01e-v-l": dimension_exponent(entity_ref("urn:case:meas:term:v"), Length, 3) { origin case_input; }
+        assert "t01e-a-l": dimension_exponent(entity_ref("urn:case:meas:term:4pir2"), Length, 2) { origin case_input; }
+    }
+
+    evaluate truth(dimensionally_consistent(entity_ref("urn:case:meas:eq:vol")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// Второе правило §1.4: «The arguments of any of the standard mathematical
+// functions… must be dimensionless». Пример (c) v = sin(at²/s): сам аргумент
+// at²/s безразмерен, и это ВЫВОДИТСЯ.
+test "urn:query:meas-t01f-transcendental-argument-dimensionless" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01f-eq": equation_presented(entity_ref("urn:case:meas:eq:sin")) { origin case_input; }
+        assert "t01f-t": term_of(entity_ref("urn:case:meas:eq:sin"), entity_ref("urn:case:meas:term:arg")) { origin case_input; }
+        assert "t01f-arg": argument_of_transcendental(entity_ref("urn:case:meas:eq:sin"), entity_ref("urn:case:meas:term:arg")) { origin case_input; }
+        assert "t01f-arg-l": dimension_exponent(entity_ref("urn:case:meas:term:arg"), Length, 0) { origin case_input; }
+        assert "t01f-arg-t": dimension_exponent(entity_ref("urn:case:meas:term:arg"), Time, 0) { origin case_input; }
+    }
+
+    evaluate truth(dimensionless(entity_ref("urn:case:meas:term:arg")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TermWithoutNonzeroExponentIsDimensionless);
+}
+
+// Обратная сторона той же границы: размерный аргумент трансцендентной
+// функции опровергает согласованность всего уравнения.
+test "urn:query:meas-t01g-transcendental-argument-carries-dimension" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t01g-eq": equation_presented(entity_ref("urn:case:meas:eq:logbad")) { origin case_input; }
+        assert "t01g-t": term_of(entity_ref("urn:case:meas:eq:logbad"), entity_ref("urn:case:meas:term:badarg")) { origin case_input; }
+        assert "t01g-arg": argument_of_transcendental(entity_ref("urn:case:meas:eq:logbad"), entity_ref("urn:case:meas:term:badarg")) { origin case_input; }
+        assert "t01g-arg-l": dimension_exponent(entity_ref("urn:case:meas:term:badarg"), Length, 1) { origin case_input; }
+    }
+
+    evaluate truth(dimensionally_consistent(entity_ref("urn:case:meas:eq:logbad")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TranscendentalArgumentMustBeDimensionless);
+}

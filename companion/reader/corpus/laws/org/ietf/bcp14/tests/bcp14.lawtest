@@ -1,0 +1,768 @@
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// Сценарии перенесены из прежнего Python-раннера семейства `bcp14`.
+// Заголовки — прежние ID сценариев (scenario-manifest); ожидания
+// выведены из ПРЕЖНИХ проверок, а не из ответов движка.
+
+test "BCP14-01-MUST-SATISFIED-IS-ACTIVE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_conforms(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(SatisfyAbsoluteRequirement, ACTIVE);
+}
+
+test "BCP14-02-MUST-BREACHED-IS-VIOLATED" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(SatisfyAbsoluteRequirement, VIOLATED);
+
+    evaluate truth(requirement_satisfied(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+}
+
+test "BCP14-03-MUST-NOT-OBSERVED-IS-ACTIVE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), MustNot, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_conforms(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(AbstainFromProhibitedBehaviour, ACTIVE);
+}
+
+test "BCP14-04-MUST-NOT-BREACHED-IS-VIOLATED" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), MustNot, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(AbstainFromProhibitedBehaviour, VIOLATED);
+
+    evaluate truth(abstains_from(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+}
+
+test "BCP14-05-LOWERCASE-KEYWORD-CARRIES-NO-FORCE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, Lowercase) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(keyword_used(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+
+    evaluate positions();
+    expect issues_within(info);
+}
+
+test "BCP14-06-PRE-8174-READING-REVIVES-LOWERCASE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+            interpretation PreRfc8174Practice;
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, Lowercase) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(keyword_used(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect interpretations(PreRfc8174Practice);
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(SatisfyAbsoluteRequirement, ACTIVE);
+}
+
+test "BCP14-07-SHOULD-DEVIATION-REQUIRES-JUDGMENT" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Should, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f5": implications_understood_and_weighed(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(deviation_from_recommendation_justified(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")));
+    expect evaluation_status == REQUIRES_JUDGMENT;
+    expect issues_within(info);
+    expect judgment_requests(1);
+    expect judgment_request(valid_reason_to_ignore);
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(FollowRecommendation, VIOLATED);
+}
+
+test "BCP14-08-JUSTIFIED-DEVIATION-RELEASES-FROM-SHOULD" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Should, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f5": valid_reason_to_ignore(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f6": implications_understood_and_weighed(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(recommendation_binding(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+
+    evaluate positions();
+    expect issues_within(info);
+}
+
+test "BCP14-09-VALID-REASON-WITHOUT-WEIGHING-DOES-NOT-RELEASE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Should, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f5": valid_reason_to_ignore(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(FollowRecommendation, VIOLATED);
+}
+
+test "BCP14-10-SHOULD-NOT-BREACHED-IS-VIOLATED" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), ShouldNot, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(AvoidDiscouragedBehaviour, VIOLATED);
+}
+
+test "BCP14-11-ACCEPTABLE-BEHAVIOUR-RELEASES-FROM-SHOULD-NOT" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), ShouldNot, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+
+        assert "assert-f5": implications_understood_and_weighed(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+
+        assert "assert-f6": valid_reason_for_discouraged_behaviour(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+}
+
+test "BCP14-12-OMITTING-IMPLEMENTATION-MUST-INTEROPERATE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), May, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": omits_option(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(IncludeOrOmitTheOption, ACTIVE);
+    expect position(InteroperateWithIncludingImplementation, ACTIVE);
+}
+
+test "BCP14-13-INCLUDING-IMPLEMENTATION-MUST-INTEROPERATE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), May, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": includes_option(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(IncludeOrOmitTheOption, ACTIVE);
+    expect position(InteroperateWithOmittingImplementation, ACTIVE);
+}
+
+test "BCP14-14-IMPERATIVE-ADMISSIBILITY-GOES-TO-THE-WORKING-GROUP" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": uses_imperative(entity_ref("urn:case:author:draft-editor"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(imperative_use_admissible(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")));
+    expect evaluation_status == REQUIRES_JUDGMENT;
+    expect issues_within(info);
+    expect judgment_requests(2);
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(UseImperativesOnlyWhereAllowed, ACTIVE);
+}
+
+test "BCP14-15-IMPERATIVE-USED-WHERE-NOT-ALLOWED-IS-VIOLATED" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": uses_imperative(entity_ref("urn:case:author:draft-editor"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": not actually_required_for_interoperation(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": not limits_potentially_harmful_behavior(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(imperative_use_admissible(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(UseImperativesOnlyWhereAllowed, VIOLATED);
+}
+
+test "BCP14-16-IMPERATIVE-REQUIRED-FOR-INTEROPERATION-IS-ACTIVE" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": uses_imperative(entity_ref("urn:case:author:draft-editor"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": actually_required_for_interoperation(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(UseImperativesOnlyWhereAllowed, ACTIVE);
+}
+
+test "BCP14-17-SECTION-SEVEN-IS-SILENT-IN-THE-BASE-THEORY" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": authored_by(entity_ref("urn:ietf:rfc:9110"), entity_ref("urn:case:author:draft-editor")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+}
+
+test "BCP14-18-PRE-8174-READING-REVIVES-SECTION-SEVEN" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+            interpretation PreRfc8174SecurityDuty;
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": authored_by(entity_ref("urn:ietf:rfc:9110"), entity_ref("urn:case:author:draft-editor")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position("PreRfc8174SecurityDuty/ElaborateSecurityImplications", ACTIVE);
+    expect interpretations(PreRfc8174SecurityDuty);
+}
+
+test "BCP14-19-NO-CONFORMANCE-CLAIM-NO-POSITION" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f3": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+}
+
+test "BCP14-20-BEFORE-COMMENCEMENT-THE-REFERENCE-REFUSES-BY-NAME" {
+    given {
+        context {
+            decision_time @1997-02-28T12:00:00Z;
+            knowledge_time @1997-02-28T12:00:00Z;
+            legal_time @1997-02-28;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_conforms(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info, SOURCE_RESOLUTION_FAILED);
+    expect issue(SOURCE_RESOLUTION_FAILED);
+}
+
+test "BCP14-21-FIRST-DAY-OF-THE-NAMED-MONTH-IS-ACTIVE" {
+    given {
+        context {
+            decision_time @1997-03-01T12:00:00Z;
+            knowledge_time @1997-03-01T12:00:00Z;
+            legal_time @1997-03-01;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Must, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_conforms(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+    expect position(SatisfyAbsoluteRequirement, ACTIVE);
+}
+
+test "BCP14-22-JUDGMENT-CHANNEL-INVISIBLE-THROUGH-NORM-HEADS" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f1": stated_in(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f2": claims_conformance(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110")) {
+            origin case_input;
+        }
+
+        assert "assert-f3": keyword_written(entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow"), Should, AllCapitals) {
+            origin case_input;
+        }
+
+        assert "assert-f4": behaviour_deviates(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+
+        assert "assert-f5": implications_understood_and_weighed(entity_ref("urn:case:impl:origin-server"), entity_ref("urn:ietf:rfc:9110#section-15.5.6-allow")) {
+            origin case_input;
+        }
+    }
+
+    evaluate positions();
+    expect issues_within(info);
+}

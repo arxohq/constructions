@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:c29bf9d0ca4c482638fe273246961645716ecd5b9f39e0a8cf5acfe0d37b0d2f",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:8647a6c2e4fe894b8a59673ba07676196a0ad029798da3b8f5c125ab9d59c1cc",
+    "name": "kz.grammar.yqsham_tulgalar",
+    "namespace": "urn:kz:grammar:clir:yqsham-tulgalar",
+    "sourceHash": "sha256:cc44d32f42e2e507e765aa3b830a40477b63c129cce892eec780fde8225380d4",
+    "version": "0.1.0"
+  }
+}

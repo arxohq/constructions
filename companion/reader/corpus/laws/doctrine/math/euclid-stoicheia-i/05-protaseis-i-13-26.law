@@ -1,0 +1,270 @@
+// Προτάσεις ιγ΄—κϛ΄ (I.13—I.26)
+//
+// Углы — равенством ἴσος и отношением «равны двум прямым», без градусов.
+// I.16, I.18, I.19, I.21, I.24, I.25 — сравнение μείζων / ἐλάσσων.
+
+use self::{
+    Eutheia,
+    Gonion,
+    STO_PROP13,
+    STO_PROP14,
+    STO_PROP15,
+    STO_PROP16,
+    STO_PROP17,
+    STO_PROP18,
+    STO_PROP19,
+    STO_PROP20,
+    STO_PROP21,
+    STO_PROP22,
+    STO_PROP23,
+    STO_PROP24,
+    STO_PROP25,
+    STO_PROP26,
+    Semeion,
+    Trigonon,
+    elassous_dyo_orthon,
+    isos_dyo_orthais,
+    isos_gonia,
+    isos_mikos,
+    meizon_gonia,
+    meizon_mikos,
+    orthos,
+    smezhnye_gonia,
+    trigonon_gonia,
+};
+
+pub relation kata_koryphen(g: Gonion, h: Gonion) kind empirical {
+    label grc official "αἱ κατὰ κορυφὴν γωνίαι";
+    label ru unofficial "вертикальные углы";
+}
+
+pub relation pleurai_trigonou(t: Trigonon, a: Integer, b: Integer, c: Integer) kind empirical {
+    label ru unofficial "длины трёх сторон треугольника";
+    key(t);
+}
+
+pub relation trigonon_synistatai(t: Trigonon) kind institutional {
+    label ru unofficial "тройка составляет треугольник (I.20)";
+}
+
+pub relation oude_trigonon(t: Trigonon) kind institutional {
+    label ru unofficial "тройка не составляет треугольника";
+}
+
+relation isos_gonia_prostheisa(g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "к прямой приложен угол, равный данному";
+}
+
+relation aas_kataskeue(
+    t: Trigonon, u: Trigonon, g: Gonion, h: Gonion,
+    p: Semeion, q: Semeion, r: Semeion, s: Semeion,
+) kind empirical {
+    label ru unofficial "AAS: два угла и сторона; p-q и r-s — остальные стороны";
+}
+
+relation synistatai_ek_trion(a: Integer, b: Integer, c: Integer, t: Trigonon) kind empirical {
+    label ru unofficial "построение треугольника из трёх длин";
+}
+
+relation ektos_entos_apodedeigmenon(t: Trigonon, ext: Gonion, entos: Gonion) kind empirical {
+    label ru unofficial "внешний угол и внутренний противолежащий";
+}
+
+relation meizon_pleura_apodedeigmenon(
+    t: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion, g: Gonion, h: Gonion,
+) kind empirical {
+    label ru unofficial "большая сторона ab против угла g, меньшая cd против h";
+}
+
+relation entos_dyo_eutheion(t: Trigonon, p: Semeion, q: Semeion) kind empirical {
+    label ru unofficial "две внутренние прямые от концов стороны";
+}
+
+relation entos_elasson_pleuron(t: Trigonon) kind institutional {
+    label ru unofficial "внутренние прямые короче двух сторон";
+}
+
+relation meizona_gonia_dyo_trigonon(t: Trigonon, u: Trigonon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "в паре треугольников угол g больше угла h";
+}
+
+relation meizona_basis_dyo_trigonon(
+    t: Trigonon, u: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) kind empirical {
+    label ru unofficial "в паре треугольников основание ab больше cd";
+}
+
+relation dyo_eutheiai_pros_semeion(l: Eutheia, m: Eutheia, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "две прямые по разные стороны точки, смежные углы g и h";
+}
+
+relation ep_eutheias_allelais(l: Eutheia, m: Eutheia) kind institutional {
+    label grc official "ἐπ' εὐθείας ἀλλήλαις";
+    label ru unofficial "две прямые лежат на одной прямой";
+}
+
+@source(STO_PROP13)
+pub rule SmezhnyeIsosDyoOrthais(g: Gonion, h: Gonion) strict {
+    label grc official "ἤτοι δύο ὀρθὰς ἢ δυσὶν ὀρθαῖς ἴσας ποιήσει";
+    label ru unofficial "I.13: смежные углы вместе равны двум прямым";
+    when smezhnye_gonia(g, h);
+    then isos_dyo_orthais(g, h);
+}
+
+@source(STO_PROP13)
+pub rule SmezhnyeOrthai(g: Gonion, h: Gonion) strict {
+    label ru unofficial "I.13: если один из смежных прямой — второй тоже прямой";
+    when smezhnye_gonia(g, h) and supported(orthos(g));
+    then orthos(h);
+}
+
+@source(STO_PROP13)
+rule SmezhnyeIsosDiaOrthou(g: Gonion, h: Gonion, k: Gonion) strict {
+    label ru unofficial "I.13: смежный равному прямому сам равен этому прямому";
+    when smezhnye_gonia(g, h) and supported(isos_gonia(g, k)) and supported(orthos(k));
+    then isos_gonia(h, k);
+}
+
+@source(STO_PROP14)
+rule EpEutheias(l: Eutheia, m: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "ἐπ' εὐθείας ἔσονται ἀλλήλαις αἱ εὐθεῖαι";
+    label ru unofficial "I.14: смежные, равные двум прямым — прямые на одной линии";
+    when dyo_eutheiai_pros_semeion(l, m, g, h) and supported(isos_dyo_orthais(g, h));
+    then ep_eutheias_allelais(l, m);
+}
+
+@source(STO_PROP15)
+pub rule KataKoryphen(g: Gonion, h: Gonion) strict {
+    label grc official "τὰς κατὰ κορυφὴν γωνίας ἴσας ἀλλήλαις ποιοῦσιν";
+    label ru unofficial "I.15: вертикальные углы равны";
+    when kata_koryphen(g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP16)
+rule EktosMeizon(t: Trigonon, ext: Gonion, entos: Gonion) strict {
+    label grc official "ἡ ἐκτὸς γωνία ἑκατέρας τῶν ἐντὸς καὶ ἀπεναντίον μείζων ἐστίν";
+    label ru unofficial "I.16: внешний угол больше внутреннего противолежащего";
+    when ektos_entos_apodedeigmenon(t, ext, entos);
+    then meizon_gonia(ext, entos);
+}
+
+@source(STO_PROP17)
+rule DyoOrthonElassous(t: Trigonon, g: Gonion, h: Gonion) strict {
+    label grc official "αἱ δύο γωνίαι δύο ὀρθῶν ἐλάσσονές εἰσι";
+    label ru unofficial "I.17: любые два угла треугольника меньше двух прямых";
+    when trigonon_gonia(t, g) and trigonon_gonia(t, h);
+    then elassous_dyo_orthon(g);
+}
+
+@source(STO_PROP18)
+rule MeizonPleura(
+    t: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion, g: Gonion, h: Gonion,
+) strict {
+    label grc official "ἡ μείζων πλευρὰ τὴν μείζονα γωνίαν ὑποτείνει";
+    label ru unofficial "I.18: большая сторона стягивает больший угол";
+    when meizon_pleura_apodedeigmenon(t, a, b, c, d, g, h)
+        and supported(meizon_mikos(a, b, c, d));
+    then meizon_gonia(g, h);
+}
+
+@source(STO_PROP19)
+rule MeizonaGonia(
+    t: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion, g: Gonion, h: Gonion,
+) strict {
+    label grc official "ὑπὸ τὴν μείζονα γωνίαν ἡ μείζων πλευρὰ ὑποτείνει";
+    label ru unofficial "I.19: больший угол стягивается большей стороной";
+    when meizon_pleura_apodedeigmenon(t, a, b, c, d, g, h)
+        and supported(meizon_gonia(g, h));
+    then meizon_mikos(a, b, c, d);
+}
+
+@source(STO_PROP20)
+pub rule TrigononEstin(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label grc official "αἱ δύο πλευραὶ τῆς λοιπῆς μείζονές εἰσι πάντῃ μεταλαμβανόμεναι";
+    label ru unofficial "I.20: неравенство треугольника";
+    when pleurai_trigonou(t, a, b, c) and (a + b > c) and (b + c > a) and (a + c > b);
+    then trigonon_synistatai(t);
+}
+
+@source(STO_PROP20)
+rule OudeTrigononPleuraiAB(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.20 нарушено: первая и вторая не больше третьей";
+    when pleurai_trigonou(t, a, b, c) and (a + b <= c);
+    then oude_trigonon(t);
+}
+
+@source(STO_PROP20)
+rule OudeTrigononPleuraiBC(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.20 нарушено: вторая и третья не больше первой";
+    when pleurai_trigonou(t, a, b, c) and (b + c <= a);
+    then oude_trigonon(t);
+}
+
+@source(STO_PROP20)
+rule OudeTrigononPleuraiAC(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.20 нарушено: первая и третья не больше второй";
+    when pleurai_trigonou(t, a, b, c) and (a + c <= b);
+    then oude_trigonon(t);
+}
+
+@source(STO_PROP21)
+rule EntosElasson(t: Trigonon, p: Semeion, q: Semeion) strict {
+    label grc official "αἱ συσταθεῖσαι τῶν λοιπῶν … ἐλάττονες";
+    label ru unofficial "I.21: внутренние прямые короче двух сторон";
+    when entos_dyo_eutheion(t, p, q) and supported(trigonon_synistatai(t));
+    then entos_elasson_pleuron(t);
+}
+
+@source(STO_PROP22)
+rule SynistataiEkTion(a: Integer, b: Integer, c: Integer, t: Trigonon) strict {
+    label grc official "ἐκ τριῶν εὐθειῶν … τρίγωνον συστήσασθαι";
+    label ru unofficial "I.22: треугольник из трёх отрезков, удовлетворяющих I.20";
+    when synistatai_ek_trion(a, b, c, t) and (a + b > c) and (b + c > a) and (a + c > b);
+    then trigonon_synistatai(t);
+}
+
+@source(STO_PROP23)
+rule IsosGoniaProstheisa(g: Gonion, h: Gonion) strict {
+    label grc official "τῇ δοθείσῃ γωνίᾳ … ἴσην γωνίαν … συστήσασθαι";
+    label ru unofficial "I.23: предъявленный равный угол";
+    when isos_gonia_prostheisa(g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP24)
+rule MeizonaGonianMeizonaBasis(
+    t: Trigonon, u: Trigonon, g: Gonion, h: Gonion,
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "τὴν βάσιν τῆς βάσεως μείζονα ἕξει";
+    label ru unofficial "I.24: больший заключённый угол — большее основание";
+    when meizona_gonia_dyo_trigonon(t, u, g, h)
+        and meizona_basis_dyo_trigonon(t, u, a, b, c, d)
+        and supported(meizon_gonia(g, h));
+    then meizon_mikos(a, b, c, d);
+}
+
+@source(STO_PROP25)
+rule MeizonaBasisMeizonaGonian(
+    t: Trigonon, u: Trigonon, g: Gonion, h: Gonion,
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "τὴν γωνίαν τῆς γωνίας μείζονα ἕξει";
+    label ru unofficial "I.25: большее основание — больший заключённый угол";
+    when meizona_gonia_dyo_trigonon(t, u, g, h)
+        and meizona_basis_dyo_trigonon(t, u, a, b, c, d)
+        and supported(meizon_mikos(a, b, c, d));
+    then meizon_gonia(g, h);
+}
+
+@source(STO_PROP26)
+rule AASCongruence(
+    t: Trigonon, u: Trigonon, g: Gonion, h: Gonion,
+    p: Semeion, q: Semeion, r: Semeion, s: Semeion,
+) strict {
+    label grc official "τὰς λοιπὰς πλευρὰς ταῖς λοιπαῖς πλευραῖς ἴσας ἕξει";
+    label ru unofficial "I.26 AAS: остальные стороны равны";
+    when aas_kataskeue(t, u, g, h, p, q, r, s) and supported(isos_gonia(g, h));
+    then isos_mikos(p, q, r, s);
+}

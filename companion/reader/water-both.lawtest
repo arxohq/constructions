@@ -1,0 +1,19 @@
+language "law.core" version "0.2";
+package openstax.chemistry_acids version "0.1.0";
+namespace "urn:openstax:clir:chemistry-acids";
+
+test "urn:query:openstax-chem-acids-17-book-water-donation-both" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k17-yes": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k17-no": not donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == BOTH;
+    expect evaluation_status == COMPUTED;
+}

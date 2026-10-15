@@ -1,0 +1,24 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// I.48 — признак прямоугольности на египетском треугольнике 3-4-5:
+// 9 + 16 == 25, квадрат третьей стороны равен сумме квадратов первых двух.
+// legal_time @0001-01-01 — даты у сочинения нет (нижняя граница §19).
+test "urn:query:eucl-345" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "eucl-t01-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 5) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

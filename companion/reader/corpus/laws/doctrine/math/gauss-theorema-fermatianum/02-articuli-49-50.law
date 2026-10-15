@@ -1,0 +1,278 @@
+// Артикулы 49—50: теорема о порядке, теорема Ферма — и ДОКТРИНАЛЬНЫЙ ШАГ,
+// которым тест Ферма становится презумпцией простоты.
+//
+// ЧТО ДОКАЗЫВАЕТ ГАУСС И ЧЕГО ОН НЕ ДОКАЗЫВАЕТ. Артикул 50 доказывает ОДНУ
+// импликацию: «$a^{p-1}-1$ semper per $p$ divisibilis est, quando $p$ est
+// primus ipsum $a$ non metiens». Обратной у него нет и быть не может — она
+// ЛОЖНА: 341 = 11·31 не простое, а тест по основанию 2 проходит (первое
+// псевдопростое по этому основанию). Тем не менее тест Ферма применяется
+// именно как признак простоты, и пакет этот шаг делает — но делает его
+// ПОРАЖАЕМЫМ СЛОЕМ, а не строгим правилом. Строгое правило «тест пройден ⟹
+// простое» было бы враньём о числе 341 при зелёных check, lower и
+// differential; презумпция с дефитером говорит правду: «презюмируется, пока
+// не предъявлена составность».
+//
+// ДВА ДЕФИТЕРА, И ОНИ РАЗНОЙ ПРИРОДЫ. Первый — ПРЕДЪЯВЛЕННЫЙ ДЕЛИТЕЛЬ: дело
+// приносит число, правило проверяет, что оно больше единицы, меньше модуля
+// и делит модуль без остатка. Простоту НЕ выводят перебором делителей
+// сознательно: домен делителей неограничен, и правило «делителей не
+// нашлось» было бы утверждением о полноте поиска, которой у движка нет.
+// Второй — ОБРАЩЕНИЕ АРТИКУЛА 49: если проверенный следом наименьший
+// показатель не делит модуль без единицы, модуль составной. Это уже
+// СТРОГИЙ вывод из самого Гаусса (при простом p показатель обязан быть
+// долей p−1), и он даёт составность без всякого делителя.
+//
+// ПОЧЕМУ БАРЬЕР ОДНОМЕСТНЫЙ. Оба основания сводятся в один строгий предикат
+// `compositus(modulus)`, и презумпция поражается ИМ, а не каждым основанием
+// по отдельности: у барьера с поражаемым производителем клауза `unless`
+// уезжает рангом выше презумпции (§116 — ребро приоритета между разными
+// рангами не применяется никогда и молчит), и ответ становится BOTH вместо
+// FALSE_ONLY. Производители барьера здесь — только строгие правила.
+//
+// ЧЕТЫРЕ ЖЕМЧУЖИНЫ ЭТОГО СЛОЯ ПРОВЕРЯЮТСЯ ДЕЛАМИ, А НЕ СЛОВАМИ (сценарии
+// FLT-*): p=7 по основанию 2 — тест пройден, делителя нет; n=341 — тест по
+// основанию 2 пройден, по основанию 3 ПРОВАЛЕН, презумпция побеждена
+// делителем 11; n=561 (число Кармайкла 3·11·17) — тест пройден по трём
+// основаниям сразу, и НИКАКОЕ основание его не ловит: презумпция снимается
+// ТОЛЬКО делителем. Пара 341/561 и есть смысл чисел Кармайкла, показанный
+// делами.
+
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+use self::{
+    DA_ART49,
+    DA_ART50,
+    Probatio,
+    casus_propositus,
+    catena,
+    compositus,
+    divisor_allatus,
+    divisor_probatus,
+    ordo,
+    ordo_probatus,
+    primus,
+    probatio_fermatiana_transacta,
+    propositum,
+    residuum,
+    violatio_fermatiana,
+};
+
+// --- Артикул 49: порядок и его обращение -----------------------------------
+
+// Объявленный делом порядок ПРОВЕРЕН САМИМ СЛЕДОМ: цепь до него дошла (все
+// звенья сошлись по артикулу 46), и остаток там единица. Наименьшим он при
+// этом НЕ объявляется проверенным — леастность стерегут сторожа артикулов
+// 45 и 48 громко, а рассуждению артикула 49 её и не нужно.
+@source(DA_ART49)
+rule OrdoProbatus(pr: Probatio, ordinis: Integer) strict {
+    label la official "atque \\(a^t\\) infima ipsius \\(a\\) potestas secundum modulum p unitati congrua";
+    label ru unofficial "объявленный порядок проверен следом: цепь до него дошла и остаток там единица; наименьшим он этим правилом не объявляется";
+    when ordo(pr, ordinis) and catena(pr, ordinis)
+        and residuum(pr, ordinis, 1);
+    then ordo_probatus(pr, ordinis);
+}
+
+// ВКЛАД АРТИКУЛА 49 В ИСПОЛНЕНИЕ: тест Ферма проходится БЕЗ следа до p−1.
+// Гаусс возводит обе части сравнения $a^{t} \equiv 1$ в степень $\tfrac{p-1}{t}$
+// — то есть при показателе, делящем p−1, единица получается сразу. Второй
+// продюсер того же вывода по §206: одно основание — одно правило.
+@source(DA_ART49)
+rule ProbatioFermatianaPerOrdinem(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    ordinis: Integer,
+) strict {
+    label la official "Quum igitur \\((p-1)/t\\) sit integer, sequitur evehendo utramque partem congruentiae a^t unitati congruae ad potestatem exponentis (p-1)/t";
+    label ru unofficial "артикул 49 в исполнении: проверенный показатель делит модуль без единицы — тест Ферма пройден, и следа до p−1 для этого не нужно";
+    when propositum(pr, modulus, basis) and ordo_probatus(pr, ordinis)
+        and (basis mod modulus != 0)
+        and ((modulus - 1) mod ordinis == 0);
+    then probatio_fermatiana_transacta(pr);
+}
+
+// --- Артикул 50: теорема Ферма ---------------------------------------------
+
+// Тест Ферма пройден: проверенная цепь дошла до показателя на единицу меньше
+// модуля, и остаток там единица; модуль основания не делит («quando p est
+// primus ipsum a non metiens» — условие взято из самой формулировки).
+//
+// ЭТО ПРАВИЛО ОСТАЛОСЬ НА ЦЕПИ ПОСЛЕ ERRATA E-0075, И ЭТО ЗАМЕР, А НЕ
+// ЗАБЫТЫЙ ДОЛГ. Черновик errata обещал свести его к одному гарду
+// `pow(basis, modulus - 1) mod modulus == 1` и снять нужду в `catena` и
+// `residuum` как входе. Обещание не исполнимо ровно из-за того пункта,
+// которым проведение отклонилось от черновика: предел `pow` встал на
+// 64-битном ДИАПАЗОНЕ ЗНАЧЕНИЯ, а не на промежуточной разрядности. Замер
+// (audit §4.1): гард даёт TRUE_ONLY при модулях 7 и 13 и RESOURCE_LIMIT при
+// 341 (`2^340` — 341 бит) и 561 (`2^560` — 561 бит), то есть ровно на
+// псевдопростом и числе Кармайкла — на двух числах, ради которых пакет и
+// заведён. Отсечь их гардом нельзя: порядок конъюнктов тела — sha256
+// канонических байтов (§207.1/E-0002), степень считается раньше любой
+// проверки малости, и ошибка терма гасит ПРАВИЛО ЦЕЛИКОМ, а не подстановку.
+//
+// Поэтому цепь здесь — не иллюстрация и не памятник, а ЕДИНСТВЕННАЯ
+// выразимая форма теста за пределами 64 бит. Степень вошла в пакет там, где
+// она тотальна на объявленном домене: в три экземпляра инварианта (модуль
+// фиксирован литералом, показатель — литерал) и в свидетель
+// эквивалентности `PotestasVestigioDiscordat`.
+@source(DA_ART50)
+rule ProbatioFermatianaTransacta(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    exponens: Integer,
+) strict {
+    label la official "sive \\(a^{(p-1)}-1\\) semper per \\(p\\) divisibilis est, quando p est primus ipsum a non metiens";
+    label ru unofficial "теорема Ферма как тест: проверенная цепь дошла до показателя на единицу меньше модуля, остаток там единица, и модуль основания не делит";
+    when propositum(pr, modulus, basis)
+        and catena(pr, exponens)
+        and residuum(pr, exponens, 1)
+        and (exponens == modulus - 1)
+        and (basis mod modulus != 0);
+    then probatio_fermatiana_transacta(pr);
+}
+
+// --- Дефитер: предъявленный и проверенный делитель -------------------------
+
+// Делитель принимается не на веру: он обязан быть больше единицы, меньше
+// модуля и делить модуль без остатка. «Metiri» Гаусса — ровно это.
+@source(DA_ART50)
+rule DivisorProbatus(pr: Probatio, modulus: Integer, basis: Integer, divisor: Integer) strict {
+    label la official "quando p est primus ipsum a non metiens";
+    label ru unofficial "предъявленный делитель проверяется правилом: больше единицы, меньше модуля, модуль на него делится без остатка";
+    when propositum(pr, modulus, basis) and divisor_allatus(pr, divisor)
+        and (divisor > 1) and (divisor < modulus)
+        and (modulus mod divisor == 0);
+    then divisor_probatus(pr, divisor);
+}
+
+// Барьер составности по проверенному делителю.
+@source(DA_ART50)
+rule CompositusExDivisore(pr: Probatio, modulus: Integer, basis: Integer, divisor: Integer) strict {
+    label la official "numerus primus ipsum a non metiens";
+    label ru unofficial "барьер составности: у модуля предъявлен и проверен собственный делитель";
+    when propositum(pr, modulus, basis) and divisor_probatus(pr, divisor);
+    then compositus(modulus);
+}
+
+// --- Доктринальный шаг: тест Ферма как презумпция простоты ------------------
+
+// ЭТОГО ПРАВИЛА У ГАУССА НЕТ. Оно есть способ, каким тест Ферма применяется:
+// пройден — презюмируем простоту, пока не предъявлена составность. Форма
+// поражаемая ровно потому, что обратная теорема ложна (341, 561).
+@source(DA_ART50)
+presumption PrimusPraesumptus(pr: Probatio, modulus: Integer, basis: Integer) {
+    label la unofficial "numerus, cuius probatio Fermatiana transacta est, primus praesumitur donec compositus probetur";
+    label ru unofficial "доктринальный шаг: модуль, прошедший тест Ферма, презюмируется простым, пока составность не установлена; у Гаусса обратной теоремы нет, и строгим этот вывод был бы враньём о числе 341";
+    when probatio_fermatiana_transacta(pr) and propositum(pr, modulus, basis);
+    presume primus(modulus);
+    unless compositus(modulus)
+    then not primus(modulus);
+}
+
+// --- Инварианты §93.1: экземпляры теоремы Ферма для атаки решателем --------
+//
+// ЭТИ ЗАПИСИ — ОБЪЯВЛЕНИЯ ДЛЯ АТАКИ, А НЕ ИСПОЛНЯЕМЫЕ НОРМЫ. Утверждение
+// каждого: при данном простом модуле не бывает основания, которое модуль не
+// делит и у которого нужная степень НЕ даёт единицы.
+//
+// СТЕПЕНЬ ЗАПИСАНА ТЕРМОМ `pow` (errata E-0075, 31.08.2026) — до неё здесь
+// стояла развёртка произведениями (`(basis*basis)*(basis*basis)*…`), нужная
+// ровно потому, что показатель не выражался. Развёртка снята; смысл тот же,
+// и differential обязан это подтвердить байтами.
+//
+// ПОКАЗАТЕЛЬ — ЛИТЕРАЛ (2, 4, 6), А НЕ `modulus - 1`, И ЭТО НЕ СТИЛЬ.
+// Запись `pow(basis, modulus - 1)` читается лучше, но она НЕИСПОЛНИМА рядом
+// с делами этого же пакета: у `pow` после E-0075 предел — 64-битный
+// ДИАПАЗОН ЗНАЧЕНИЯ, а гард `modulus == 3` НЕ ЗАЩИЩАЕТ соседний гард со
+// степенью. Порядок конъюнктов в теле — не авторский: §207.1/E-0002
+// сортирует их по sha256 канонических байтов, и `solve` берёт первый
+// полностью связанный. На деле с модулем 341 степень `2^340` посчиталась бы
+// РАНЬШЕ проверки `modulus == 3` и дала бы RESOURCE_LIMIT — ошибку уровня
+// документа во всех сценах 341 и 561. Замер и доказательство того, что
+// решает именно порядок-хэш (та же норма с капом `<= 11` чиста, с `<= 12`
+// падает), — audit §4.1. С литеральным показателем максимум по всем сценам
+// пакета есть `7^6 = 117 649`, и предела не касается ни одна подстановка.
+//
+// Почему требование НЕГАТИВНО. Срез режима `--invariant` требует ровно
+// одного негативного литерала: нарушение позитивного требования есть
+// ОТСУТСТВИЕ вывода, а не гард, и вопрос о нём адресован движку, а не
+// решателю. Поэтому носителем нарушения заведён предикат «степень НЕ даёт
+// единицы», и инвариант требует его отсутствия.
+//
+// ПОЧЕМУ ОСНОВАНИЕ ОГРАНИЧЕНО НАИМЕНЬШИМ ПОЛОЖИТЕЛЬНЫМ ВЫЧЕТОМ — ЭТО НЕ
+// УДОБСТВО РЕШАТЕЛЯ, А ГРАНИЦА, ИЗМЕРЕННАЯ ПРОБОЙ. Без гардов `0 <= basis`
+// и `basis < modulus` z3 на этих скриптах НЕ СХОДИТСЯ вовсе: замер
+// 31.08.2026 — экземпляр p=3 (`(mod a 3) != 0` и `(mod (* a a) 3) != 1`
+// при неограниченном целом `a`) не решён за 60 с, и то же при грубой рамке
+// [−1000, 1000]; с рамкой `0 <= a < 3` ответ UNSAT приходит мгновенно, у
+// p=7 с шестью сомножителями — тоже. Нелинейная целочисленная арифметика с
+// остатком неразрешима, и решатель это честно показывает.
+//
+// Сведе́ние произвольного основания к наименьшему вычету — НЕ работа
+// решателя, а работа права: это артикул 46 («residua prodeunt iterum»),
+// выраженный цепью выше. И это же — язык самого Гаусса: артикул 49
+// рассуждает о «residua minima positiva», а не о произвольных целых.
+// Поэтому инвариант утверждает ровно то, что доказано, — экземпляр теоремы
+// НА ВЫЧЕТАХ, — а не больше.
+
+// Экземпляр p=3: основание, не делящееся на 3, у которого квадрат не даёт
+// единицы по модулю 3.
+@source(DA_ART50)
+rule QuadratumNonUnitatiCongruumModulo3(pr: Probatio, modulus: Integer, basis: Integer) strict {
+    label la unofficial "basis modulo 3 non divisibilis cuius quadratum unitati non congruum";
+    label ru unofficial "носитель нарушения экземпляра p=3: основание, не делящееся на 3, чей квадрат не сравним с единицей по модулю 3";
+    when propositum(pr, modulus, basis)
+        and (modulus == 3)
+        and (basis >= 0) and (basis < modulus)
+        and (basis mod modulus != 0)
+        and (pow(basis, 2) mod modulus != 1);
+    then violatio_fermatiana(pr);
+}
+
+// Экземпляр p=5: та же форма, четвёртая степень произведением квадратов.
+@source(DA_ART50)
+rule QuartaNonUnitatiCongruaModulo5(pr: Probatio, modulus: Integer, basis: Integer) strict {
+    label la unofficial "basis modulo 5 non divisibilis cuius potestas quarta unitati non congrua";
+    label ru unofficial "носитель нарушения экземпляра p=5: основание, не делящееся на 5, у которого четвёртая степень не сравнима с единицей по модулю 5";
+    when propositum(pr, modulus, basis)
+        and (modulus == 5)
+        and (basis >= 0) and (basis < modulus)
+        and (basis mod modulus != 0)
+        and (pow(basis, 4) mod modulus != 1);
+    then violatio_fermatiana(pr);
+}
+
+// Экземпляр p=7: шестая степень шестью сомножителями.
+@source(DA_ART50)
+rule SextaNonUnitatiCongruaModulo7(pr: Probatio, modulus: Integer, basis: Integer) strict {
+    label la unofficial "basis modulo 7 non divisibilis cuius potestas sexta unitati non congrua";
+    label ru unofficial "носитель нарушения экземпляра p=7: основание, не делящееся на 7, у которого шестая степень не сравнима с единицей по модулю 7";
+    when propositum(pr, modulus, basis)
+        and (modulus == 7)
+        and (basis >= 0) and (basis < modulus)
+        and (basis mod modulus != 0)
+        and (pow(basis, 6) mod modulus != 1);
+    then violatio_fermatiana(pr);
+}
+
+// Антецедент атаки: испытание с предъявленными модулем и основанием.
+@source(DA_ART50)
+rule CasusPropositus(pr: Probatio, modulus: Integer, basis: Integer) strict {
+    label la unofficial "casus propositus: modulus et basis dati";
+    label ru unofficial "антецедент инварианта: испытанию предъявлены модуль и основание";
+    when propositum(pr, modulus, basis);
+    then casus_propositus(pr);
+}
+
+@source(DA_ART50)
+constraint TheoremaFermatianumSemperTenet(pr: Probatio) {
+    label la unofficial "theorema Fermatianum nullo casu violatur";
+    label ru unofficial "инвариант §93.1: экземпляр теоремы Ферма не нарушается ни одним основанием — при модуле 3, 5 либо 7 основание, модулем не делящееся, обязано давать единицу в степени на единицу меньше модуля";
+    when casus_propositus(pr);
+    require not violatio_fermatiana(pr);
+    severity error;
+    message "предъявлено основание, нарушающее теорему Ферма при простом модуле: степень на единицу меньше модуля не дала единицы, хотя модуль основания не делит";
+}

@@ -1,0 +1,405 @@
+// § 2. Группа аксиом I: аксиомы соединения (Axiome der Verknüpfung), I 1—7.
+//
+// «Die Axiome dieser Gruppe stellen zwischen den oben erklärten Begriffen
+// Punkte, Geraden und Ebenen eine Verknüpfung her» — семь аксиом, из которых
+// I 1—2 плоские (только точки и прямые), I 3—7 пространственные.
+//
+// ЧТО ЗДЕСЬ ИНВАРИАНТ, А ЧТО ПРАВИЛО. Пять аксиом (I 1, I 3, I 5, I 6, I 7)
+// записаны только инвариантами §93.1: они ничего не выводят, они отсекают.
+// Две (I 2 и I 4) записаны И правилом: их содержание есть ЕДИНСТВЕННОСТЬ, а
+// единственность в предъявленной конфигурации выражается равенством в голове
+// («эти две прямые суть одна и та же»), и именно её спрашивает третий вопрос
+// пакета. Инвариант при них остаётся и говорит обратное: раз совпали —
+// различными их объявлять нельзя.
+//
+// I 7 РАСЩЕПЛЕНА §206 НА ТРИ. Текст аксиомы несёт три независимых требования
+// («auf jeder Geraden … in jeder Ebene … im Raum»), и слить их в одно
+// значило бы потерять, КАКОЕ из трёх нарушено: у инварианта с тремя
+// требованиями один исход на три причины.
+
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+use self::{
+    Ebene,
+    GDG_I_1,
+    GDG_I_2,
+    GDG_I_3,
+    GDG_I_4,
+    GDG_I_5,
+    GDG_I_6,
+    GDG_I_7,
+    Gerade,
+    Punkt,
+    dreieck,
+    ebene_der_figur,
+    ebenenpaar,
+    gehoert_zur_ebene,
+    gerade_der_figur,
+    liegt_auf,
+    liegt_in,
+    punktpaar,
+    punktquadrupel,
+    punkttripel,
+    raeumliche_figur,
+    verschiedene_ebenen,
+    verschiedene_geraden,
+    verschiedene_punkte,
+};
+
+// ---------------------------------------------------------------------------
+// I 1. Две различные точки всегда определяют прямую.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_1)
+pub relation verbindende_gerade(a: Punkt, b: Punkt) kind institutional {
+    label en official "a straight line determined by two distinct points";
+    label ru unofficial "через обе точки проходит одна и та же прямая конфигурации";
+}
+
+@source(GDG_I_1)
+rule VerbindendeGerade(a: Punkt, b: Punkt, l: Gerade) strict {
+    label ru unofficial "прямая соединяет две точки, когда обе на ней лежат";
+    when liegt_auf(a, l) and liegt_auf(b, l);
+    then verbindende_gerade(a, b);
+}
+
+closure VerbindungsAbschluss {
+    label ru unofficial "замыкание §70: пара точек без общей прямой соединяющей прямой не имеет";
+    predicate verbindende_gerade;
+    domain punktpaar;
+    snapshot "urn:de:hilbert:snapshot:verbindung:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_I_1)
+constraint AxiomI1(a: Punkt, b: Punkt) {
+    label en official "I, 1. Two distinct points A and B always completely determine a straight line a";
+    label ru unofficial "инвариант §93.1, аксиома I 1: две различные точки конфигурации всегда лежат на общей прямой";
+    when verschiedene_punkte(a, b);
+    require verbindende_gerade(a, b);
+    severity error;
+    message "аксиома I 1 нарушена: две различные точки конфигурации не лежат ни на одной общей прямой — соединяющей прямой в предъявленном чертеже нет";
+}
+
+// ---------------------------------------------------------------------------
+// I 2. Любые две различные точки прямой определяют эту прямую.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_2)
+relation geraden_fallen_zusammen(l: Gerade, m: Gerade) kind institutional {
+    label en official "then is also BC = a";
+    label ru unofficial "из фактов дела следует, что две прямые суть одна и та же";
+}
+
+@source(GDG_I_2)
+rule AxiomI2(b: Punkt, c: Punkt, l: Gerade, m: Gerade) strict {
+    label en official "I, 2. Any two distinct points of a straight line completely determine that line";
+    label ru unofficial "аксиома I 2: две различные точки, лежащие на обеих прямых, делают эти прямые одной";
+    when verschiedene_punkte(b, c)
+        and liegt_auf(b, l) and liegt_auf(c, l)
+        and liegt_auf(b, m) and liegt_auf(c, m);
+    then geraden_fallen_zusammen(l, m);
+}
+
+@source(GDG_I_2)
+constraint AxiomI2Eindeutig(l: Gerade, m: Gerade) {
+    label ru unofficial "инвариант §93.1, аксиома I 2: прямые, совпавшие по двум различным точкам, не могут быть объявлены различными";
+    when geraden_fallen_zusammen(l, m);
+    require not verschiedene_geraden(l, m);
+    severity error;
+    message "аксиома I 2 нарушена: две прямые, объявленные в чертеже различными, несут одну и ту же пару различных точек — через две точки проходит более одной прямой";
+}
+
+// ---------------------------------------------------------------------------
+// I 3. Три точки, не лежащие на одной прямой, всегда определяют плоскость.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_3)
+relation traegerebene(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "a plane determined by three points not situated in the same straight line";
+    label ru unofficial "все три точки принадлежат одной плоскости конфигурации";
+}
+
+@source(GDG_I_3)
+rule Traegerebene(a: Punkt, b: Punkt, c: Punkt, e: Ebene) strict {
+    label ru unofficial "плоскость несёт три точки, когда все три ей принадлежат";
+    when gehoert_zur_ebene(a, e) and gehoert_zur_ebene(b, e) and gehoert_zur_ebene(c, e);
+    then traegerebene(a, b, c);
+}
+
+closure TraegerebeneAbschluss {
+    label ru unofficial "замыкание §70: тройка без общей плоскости несущей плоскости не имеет";
+    predicate traegerebene;
+    domain punkttripel;
+    snapshot "urn:de:hilbert:snapshot:traegerebene:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_I_3)
+constraint AxiomI3(a: Punkt, b: Punkt, c: Punkt) {
+    label en official "I, 3. Three points A, B, C not situated in the same straight line always completely determine a plane α";
+    label ru unofficial "инвариант §93.1, аксиома I 3: три точки, не лежащие на одной прямой, всегда лежат в общей плоскости";
+    when dreieck(a, b, c);
+    require traegerebene(a, b, c);
+    severity error;
+    message "аксиома I 3 нарушена: три точки конфигурации не лежат на одной прямой и при этом не принадлежат ни одной общей плоскости";
+}
+
+// ---------------------------------------------------------------------------
+// I 4. Любые три точки плоскости, не лежащие на одной прямой, определяют эту
+// плоскость.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_4)
+relation ebenen_fallen_zusammen(e: Ebene, f: Ebene) kind institutional {
+    label ru unofficial "из фактов дела следует, что две плоскости суть одна и та же";
+}
+
+@source(GDG_I_4)
+rule AxiomI4(a: Punkt, b: Punkt, c: Punkt, e: Ebene, f: Ebene) strict {
+    label en official "I, 4. Any three points A, B, C of a plane α, which do not lie in the same straight line, completely determine that plane";
+    label ru unofficial "аксиома I 4: три неколлинеарные точки, принадлежащие обеим плоскостям, делают эти плоскости одной";
+    when dreieck(a, b, c)
+        and gehoert_zur_ebene(a, e) and gehoert_zur_ebene(b, e) and gehoert_zur_ebene(c, e)
+        and gehoert_zur_ebene(a, f) and gehoert_zur_ebene(b, f) and gehoert_zur_ebene(c, f);
+    then ebenen_fallen_zusammen(e, f);
+}
+
+@source(GDG_I_4)
+constraint AxiomI4Eindeutig(e: Ebene, f: Ebene) {
+    label ru unofficial "инвариант §93.1, аксиома I 4: плоскости, совпавшие по трём неколлинеарным точкам, не могут быть объявлены различными";
+    when ebenen_fallen_zusammen(e, f);
+    require not verschiedene_ebenen(e, f);
+    severity error;
+    message "аксиома I 4 нарушена: две плоскости, объявленные в чертеже различными, несут одну и ту же тройку точек, не лежащих на одной прямой";
+}
+
+// ---------------------------------------------------------------------------
+// I 5. Если две точки прямой лежат в плоскости, то в этой плоскости лежит
+// каждая точка прямой.
+//
+// РЕКУРСИЯ ЧЕРЕЗ `monotone` §65, И ЭТО НЕ УКРАШЕНИЕ. Аксиома I 5 добавляет
+// точки к `gehoert_zur_ebene`, а «прямая лежит в плоскости» читается из
+// `gehoert_zur_ebene` же: две точки прямой, попавшие в плоскость ПО ЭТОЙ ЖЕ
+// аксиоме через другую прямую, обязаны втянуть в неё и свою прямую. Голый
+// атом в таком цикле даёт LDC-E4102 «программа не стратифицируема»
+// (§110/§191); циклам разрешено только монотонное ребро.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_5)
+relation liegt_in_ebene(l: Gerade, e: Ebene) kind institutional {
+    label en official "the straight line a lies in the plane α";
+    label ru unofficial "прямая лежит в плоскости";
+}
+
+@source(GDG_I_5)
+rule LiegtInEbene(a: Punkt, b: Punkt, l: Gerade, e: Ebene) strict {
+    label ru unofficial "прямая лежит в плоскости, когда в ней лежат две её различные точки";
+    when verschiedene_punkte(a, b)
+        and liegt_auf(a, l) and liegt_auf(b, l)
+        and monotone(gehoert_zur_ebene(a, e)) and monotone(gehoert_zur_ebene(b, e));
+    then liegt_in_ebene(l, e);
+}
+
+@source(GDG_I_5)
+rule AxiomI5(p: Punkt, l: Gerade, e: Ebene) strict {
+    label en official "I, 5. If two points A, B of a straight line a lie in a plane α, then every point of a lies in α";
+    label ru unofficial "аксиома I 5: каждая точка прямой, лежащей в плоскости, принадлежит этой плоскости";
+    when monotone(liegt_in_ebene(l, e)) and liegt_auf(p, l);
+    then gehoert_zur_ebene(p, e);
+}
+
+@source(GDG_I_5)
+constraint AxiomI5Ebenenzugehoerigkeit(p: Punkt, e: Ebene) {
+    label ru unofficial "инвариант §93.1, аксиома I 5: принадлежность плоскости, выведенная по аксиоме, обязана стоять и в самом чертеже";
+    when gehoert_zur_ebene(p, e);
+    require liegt_in(p, e);
+    severity error;
+    message "аксиома I 5 нарушена: точка лежит на прямой, две различные точки которой лежат в плоскости, но самой этой точки в плоскости чертёж не содержит";
+}
+
+// ---------------------------------------------------------------------------
+// I 6. Две плоскости, имеющие общую точку, имеют по меньшей мере ещё одну
+// общую точку.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_6)
+relation gemeinsamer_punkt(e: Ebene, f: Ebene) kind institutional {
+    label en official "two planes have a point A in common";
+    label ru unofficial "у двух плоскостей есть общая точка";
+}
+
+@source(GDG_I_6)
+rule GemeinsamerPunkt(p: Punkt, e: Ebene, f: Ebene) strict {
+    label ru unofficial "точка, принадлежащая обеим плоскостям, есть их общая точка";
+    when gehoert_zur_ebene(p, e) and gehoert_zur_ebene(p, f);
+    then gemeinsamer_punkt(e, f);
+}
+
+@source(GDG_I_6)
+relation zwei_gemeinsame_punkte(e: Ebene, f: Ebene) kind institutional {
+    label en official "they have at least a second point B in common";
+    label ru unofficial "у двух плоскостей есть две различные общие точки";
+}
+
+@source(GDG_I_6)
+rule ZweiGemeinsamePunkte(p: Punkt, q: Punkt, e: Ebene, f: Ebene) strict {
+    label ru unofficial "две различные точки, принадлежащие обеим плоскостям";
+    when verschiedene_punkte(p, q)
+        and gehoert_zur_ebene(p, e) and gehoert_zur_ebene(p, f)
+        and gehoert_zur_ebene(q, e) and gehoert_zur_ebene(q, f);
+    then zwei_gemeinsame_punkte(e, f);
+}
+
+closure ZweitpunktAbschluss {
+    label ru unofficial "замыкание §70: пара плоскостей без двух общих точек второй общей точки не имеет";
+    predicate zwei_gemeinsame_punkte;
+    domain ebenenpaar;
+    snapshot "urn:de:hilbert:snapshot:zweitpunkt:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_I_6)
+constraint AxiomI6(e: Ebene, f: Ebene) {
+    label en official "I, 6. If two planes α, β have a point A in common, then they have at least a second point B in common";
+    label ru unofficial "инвариант §93.1, аксиома I 6: у двух различных плоскостей с общей точкой есть и вторая общая точка";
+    when verschiedene_ebenen(e, f) and gemeinsamer_punkt(e, f);
+    require zwei_gemeinsame_punkte(e, f);
+    severity error;
+    message "аксиома I 6 нарушена: две различные плоскости конфигурации имеют ровно одну общую точку";
+}
+
+// ---------------------------------------------------------------------------
+// I 7. На каждой прямой есть по меньшей мере две точки, в каждой плоскости —
+// по меньшей мере три точки, не лежащие на одной прямой, и в пространстве —
+// по меньшей мере четыре точки, не лежащие в одной плоскости.
+// Расщепление §206: три независимых требования — три инварианта.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_7)
+relation zwei_punkte_auf(l: Gerade) kind institutional {
+    label en official "upon every straight line there exist at least two points";
+    label ru unofficial "на прямой лежат по меньшей мере две различные точки";
+}
+
+@source(GDG_I_7)
+rule ZweiPunkteAuf(p: Punkt, q: Punkt, l: Gerade) strict {
+    label ru unofficial "две различные точки, лежащие на одной прямой";
+    when verschiedene_punkte(p, q) and liegt_auf(p, l) and liegt_auf(q, l);
+    then zwei_punkte_auf(l);
+}
+
+closure ZweiPunkteAbschluss {
+    label ru unofficial "замыкание §70: прямая без двух различных точек их не несёт";
+    predicate zwei_punkte_auf;
+    domain gerade_der_figur;
+    snapshot "urn:de:hilbert:snapshot:zweipunkte:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_I_7)
+constraint AxiomI7Gerade(l: Gerade) {
+    label ru unofficial "инвариант §93.1, аксиома I 7, первое требование: на каждой прямой лежат по меньшей мере две точки";
+    when gerade_der_figur(l);
+    require zwei_punkte_auf(l);
+    severity error;
+    message "аксиома I 7 нарушена в первом требовании: на прямой конфигурации нет двух различных точек";
+}
+
+@source(GDG_I_7)
+relation drei_punkte_in_ebene(e: Ebene) kind institutional {
+    label en official "in every plane at least three points not lying in the same straight line";
+    label ru unofficial "в плоскости лежат три точки, не лежащие на одной прямой";
+}
+
+@source(GDG_I_7)
+rule DreiPunkteInEbene(a: Punkt, b: Punkt, c: Punkt, e: Ebene) strict {
+    label ru unofficial "три неколлинеарные точки, принадлежащие одной плоскости";
+    when dreieck(a, b, c)
+        and gehoert_zur_ebene(a, e) and gehoert_zur_ebene(b, e) and gehoert_zur_ebene(c, e);
+    then drei_punkte_in_ebene(e);
+}
+
+// ГРАНИЦА v1, ИЗМЕРЕННАЯ, А НЕ ПРЕДПОЛОЖЕННАЯ: ВТОРОЕ И ТРЕТЬЕ ТРЕБОВАНИЯ
+// I 7 НЕ ЗАМЫКАЮТСЯ. Оценщик применяет замыкания §70 РОВНО ОДИН РАЗ, между
+// двумя фикспойнтами строгих правил (`engines/lawref/lawref/evaluator/engine.py`,
+// комментарий «v1-стратификация closure §70/§231.1»). Отсюда правило,
+// действующее для всех замыканий разом: ЗАКРЫВАТЬ МОЖНО ТОЛЬКО ПРЕДИКАТ,
+// ВЫВОДИМЫЙ ЧИСТО ПОЗИТИВНО. В первом фикспойнте негативов нет ни одного,
+// поэтому опора предиката, читающего чужой негатив, появляется лишь во
+// втором — после того, как его собственное замыкание уже материализовало
+// негатив. Замер 03.09.2026 на треугольнике ABC в плоскости α:
+// `drei_punkte_in_ebene(α)` вышел `BOTH`, а инвариант — `CONFLICTED` при
+// заведомо выполненной аксиоме. Оба требования опираются на «не лежат на
+// одной прямой» и «не лежат в одной плоскости», то есть на негатив
+// замыканий `KollinearAbschluss` и `KomplanaritaetAbschluss`, и потому
+// собственных замыканий не имеют. Плата названа: нарушение второго и
+// третьего требований I 7 даёт `UNDETERMINED`, а не `VIOLATED`;
+// удовлетворение даёт `SATISFIED`, как у прочих. Сценарии стерегут эту
+// границу ПАДАЮЩИМ ожиданием — полная стратификация §191 (WP-11/WP-16)
+// сделает исход `VIOLATED`, и сценарий обязан упасть, а не промолчать.
+// У третьего требования есть и вторая, независимая причина: закрытый
+// предикат обязан быть местным, а «в пространстве есть четыре точки» —
+// утверждение безместное (`NON_EXECUTABLE_CLOSURE`, E-0087).
+@source(GDG_I_7)
+constraint AxiomI7Ebene(e: Ebene) {
+    label ru unofficial "инвариант §93.1, аксиома I 7, второе требование: в каждой плоскости лежат три точки, не лежащие на одной прямой";
+    when ebene_der_figur(e);
+    require drei_punkte_in_ebene(e);
+    severity error;
+    message "аксиома I 7 не подтверждена во втором требовании: в плоскости конфигурации не найдено трёх точек, не лежащих на одной прямой (исход UNDETERMINED — граница v1, разбор выше по файлу)";
+}
+
+@source(GDG_I_7)
+relation komplanar(a: Punkt, b: Punkt, c: Punkt, d: Punkt) kind institutional {
+    label ru unofficial "четыре точки лежат в одной плоскости";
+}
+
+@source(GDG_I_7)
+rule Komplanar(a: Punkt, b: Punkt, c: Punkt, d: Punkt, e: Ebene) strict {
+    label ru unofficial "четыре точки компланарны, когда есть плоскость, несущая все четыре";
+    when gehoert_zur_ebene(a, e) and gehoert_zur_ebene(b, e)
+        and gehoert_zur_ebene(c, e) and gehoert_zur_ebene(d, e);
+    then komplanar(a, b, c, d);
+}
+
+closure KomplanaritaetAbschluss {
+    label ru unofficial "замыкание §70: четвёрка без общей плоскости компланарной не является";
+    predicate komplanar;
+    domain punktquadrupel;
+    snapshot "urn:de:hilbert:snapshot:komplanar:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_I_7)
+relation vier_punkte_ausserhalb_einer_ebene() kind institutional {
+    label en official "in space there exist at least four points not lying in a plane";
+    label ru unofficial "в конфигурации есть четыре точки, не лежащие в одной плоскости";
+}
+
+@source(GDG_I_7)
+rule VierPunkteAusserhalbEinerEbene(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "четыре попарно различные точки, не лежащие в одной плоскости";
+    when punktquadrupel(a, b, c, d)
+        and verschiedene_punkte(a, b) and verschiedene_punkte(a, c)
+        and verschiedene_punkte(a, d) and verschiedene_punkte(b, c)
+        and verschiedene_punkte(b, d) and verschiedene_punkte(c, d)
+        and not komplanar(a, b, c, d);
+    then vier_punkte_ausserhalb_einer_ebene();
+}
+
+@source(GDG_I_7)
+constraint AxiomI7Raum {
+    label ru unofficial "инвариант §93.1, аксиома I 7, третье требование: в пространстве есть четыре точки, не лежащие в одной плоскости";
+    when raeumliche_figur();
+    require vier_punkte_ausserhalb_einer_ebene();
+    severity error;
+    message "аксиома I 7 не подтверждена в третьем требовании: конфигурация объявлена пространственной, но четырёх точек, не лежащих в одной плоскости, в ней не найдено (исход UNDETERMINED — граница v1, разбор выше по файлу)";
+}

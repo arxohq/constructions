@@ -1,0 +1,399 @@
+// Сверка таблиц 4, 7 и 8 с реестром единиц `units.si` алгеброй величин §49.1
+// (DECISION-0154).
+//
+// ДВА ИСТОЧНИКА ОБ ОДНОМ. Брошюра — норма: «N = kg m s⁻²», «1 km = 10³ m»,
+// «1 t = 10³ kg». Реестр `units.si` — машина: масштабы и мультимножители,
+// по которым исполняются формулы физики. Каждое правило ниже берёт строку
+// таблицы и требует, чтобы реестр её ПОДТВЕРДИЛ: `magnitude(1 N) ==
+// magnitude(1 kg) * magnitude(1 m) / (magnitude(1 s) * magnitude(1 s))` истинно
+// только при тождестве мультимножителей (§58.1), `unit_convert(magnitude(1
+// km), "m") == magnitude(1000 m)` — только при масштабе 1000/1 в реестре.
+// Расхождение отвечало бы не ложью, а отказом UNIT_MISMATCH всему документу
+// — поэтому сцены со сверками держатся отдельно от сцен с вопросами.
+//
+// ЧТО СВЕРЕНО. Столбец «через базовые единицы» таблицы 4 — ОДНИМ правилом
+// над полными векторами показателей (errata E-0139): 19 строк, у которых
+// есть имя в реестре; радиан и стерадиан — размерность один, простой единицы
+// нулевой размерности в реестре нет; градус Цельсия сверен как ИНТЕРВАЛ
+// (алиас `degC_interval = K`, сноска f), абсолютная шкала — функция модуля
+// 07. Столбец «через другие единицы SI» — 13 равенств, по одному на строку,
+// где таблица его даёт. Таблица 7 — шесть множителей; таблица 8 — семь значений (минута,
+// час, сутки, гектар, литр, тонна, астрономическая единица). Единицы
+// констант таблицы 1 — четыре тождества из текстов определений §2.3.1.
+// Единицы Pa, Hz, Wb, T, H, F, S, Gy, Sv, kat, lm, lx, ha, au, day, J_s,
+// J_per_K, per_mol, lm_per_W добавлены в `packs/units/si/units.json`
+// 06.09.2026 из этого пакета.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    DefiningConstant,
+    NonSiUnit,
+    Prefix,
+    SI9_DEF_AMPERE,
+    SI9_DEF_CANDELA,
+    SI9_DEF_KELVIN,
+    SI9_DEF_KILOGRAM,
+    SI9_S2_2_DEFINITION_OF_SI,
+    SI9_S2_3_1_CELSIUS,
+    SI9_S3_KILOGRAM,
+    SI9_TABLE_1,
+    SI9_TABLE_2,
+    SI9_TABLE_4,
+    SI9_TABLE_7,
+    SI9_TABLE_8,
+    SiUnit,
+    base_exponent,
+    non_si_unit,
+    prefix_factor,
+    registry_name,
+    special_unit,
+};
+
+// --- Таблица 4: выражение через базовые единицы --------------------------------------
+
+relation base_expression_verified(u: SiUnit) kind institutional {
+    label en official "the expression of the unit in terms of base units (Table 4) is confirmed by the unit registry: the multisets of base units coincide";
+    label ru unofficial "выражение единицы через базовые (таблица 4) подтверждено реестром единиц: мультимножители базовых единиц совпадают";
+}
+
+
+// ОДНО ПРАВИЛО НА ВСЮ ТАБЛИЦУ (errata E-0139). Величина единицы берётся по
+// имени из реестра — `magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), name))`, — а показатель каждой
+// из семи базовых читается термом `unit_exponent` и сравнивается с полным
+// вектором фактов таблицы. Совпасть обязаны все семь, включая нули: лишний
+// множитель реестра или недостающий в таблице срывает сверку.
+@source(SI9_TABLE_4, SI9_TABLE_2)
+rule TableRowVerifiedByRegistry(
+    u: SiUnit,
+    n: Text,
+    e_s: Integer,
+    e_m: Integer,
+    e_kg: Integer,
+    e_a: Integer,
+    e_k: Integer,
+    e_mol: Integer,
+    e_cd: Integer,
+) strict {
+    label en official "Table 4: the exponents of all seven base units in the unit, as tabulated, coincide with the multiset of the registry unit of the same name";
+    label ru unofficial "Таблица 4: показатели всех семи базовых единиц в единице, как они стоят в таблице, совпадают с мультимножителем одноимённой единицы реестра";
+    when registry_name(u, n)
+         and base_exponent(u, Second, e_s) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "s") == e_s
+         and base_exponent(u, Metre, e_m) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "m") == e_m
+         and base_exponent(u, Kilogram, e_kg) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "kg") == e_kg
+         and base_exponent(u, Ampere, e_a) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "A") == e_a
+         and base_exponent(u, Kelvin, e_k) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "K") == e_k
+         and base_exponent(u, Mole, e_mol) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "mol") == e_mol
+         and base_exponent(u, Candela, e_cd) and unit_exponent(magnitude(with_unit(scalar_of(magnitude(1 m) / magnitude(1 m)), n)), "cd") == e_cd;
+    then base_expression_verified(u);
+}
+
+// --- Таблица 4, столбец «через другие единицы SI» --------------------------------------
+
+relation other_units_expression_verified(u: SiUnit) kind institutional {
+    label en official "the expression of the unit in terms of other SI units (Table 4, last column) is confirmed by the unit registry";
+    label ru unofficial "выражение единицы через другие единицы SI (таблица 4, последний столбец) подтверждено реестром единиц";
+}
+
+
+@source(SI9_TABLE_4)
+rule PascalViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: Pa = N/m² holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: Pa = N/m² выполняется в реестре единиц";
+    when special_unit(Pascal, qn, s) and magnitude(1 Pa) == magnitude(1 N) / (magnitude(1 m) * magnitude(1 m));
+    then other_units_expression_verified(Pascal);
+}
+
+@source(SI9_TABLE_4)
+rule JouleViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: J = N m holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: J = N m выполняется в реестре единиц";
+    when special_unit(Joule, qn, s) and magnitude(1 J) == magnitude(1 N) * magnitude(1 m);
+    then other_units_expression_verified(Joule);
+}
+
+@source(SI9_TABLE_4)
+rule WattViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: W = J/s holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: W = J/s выполняется в реестре единиц";
+    when special_unit(Watt, qn, s) and magnitude(1 W) == magnitude(1 J) / magnitude(1 s);
+    then other_units_expression_verified(Watt);
+}
+
+@source(SI9_TABLE_4)
+rule VoltViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: V = W/A holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: V = W/A выполняется в реестре единиц";
+    when special_unit(Volt, qn, s) and magnitude(1 V) == magnitude(1 W) / magnitude(1 A);
+    then other_units_expression_verified(Volt);
+}
+
+@source(SI9_TABLE_4)
+rule FaradViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: F = C/V holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: F = C/V выполняется в реестре единиц";
+    when special_unit(Farad, qn, s) and magnitude(1 F) == magnitude(1 C_coulomb) / magnitude(1 V);
+    then other_units_expression_verified(Farad);
+}
+
+@source(SI9_TABLE_4)
+rule OhmViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: Ω = V/A holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: Ω = V/A выполняется в реестре единиц";
+    when special_unit(Ohm, qn, s) and magnitude(1 Ohm) == magnitude(1 V) / magnitude(1 A);
+    then other_units_expression_verified(Ohm);
+}
+
+@source(SI9_TABLE_4)
+rule SiemensViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: S = A/V holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: S = A/V выполняется в реестре единиц";
+    when special_unit(Siemens, qn, s) and magnitude(1 S) == magnitude(1 A) / magnitude(1 V);
+    then other_units_expression_verified(Siemens);
+}
+
+@source(SI9_TABLE_4)
+rule WeberViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: Wb = V s holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: Wb = V s выполняется в реестре единиц";
+    when special_unit(Weber, qn, s) and magnitude(1 Wb) == magnitude(1 V) * magnitude(1 s);
+    then other_units_expression_verified(Weber);
+}
+
+@source(SI9_TABLE_4)
+rule TeslaViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: T = Wb/m² holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: T = Wb/m² выполняется в реестре единиц";
+    when special_unit(Tesla, qn, s) and magnitude(1 T) == magnitude(1 Wb) / (magnitude(1 m) * magnitude(1 m));
+    then other_units_expression_verified(Tesla);
+}
+
+@source(SI9_TABLE_4)
+rule HenryViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: H = Wb/A holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: H = Wb/A выполняется в реестре единиц";
+    when special_unit(Henry, qn, s) and magnitude(1 H) == magnitude(1 Wb) / magnitude(1 A);
+    then other_units_expression_verified(Henry);
+}
+
+@source(SI9_TABLE_4)
+rule LuxViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: lx = lm/m² holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: lx = lm/m² выполняется в реестре единиц";
+    when special_unit(Lux, qn, s) and magnitude(1 lx) == magnitude(1 lm) / (magnitude(1 m) * magnitude(1 m));
+    then other_units_expression_verified(Lux);
+}
+
+@source(SI9_TABLE_4)
+rule GrayViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: Gy = J/kg holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: Gy = J/kg выполняется в реестре единиц";
+    when special_unit(Gray, qn, s) and magnitude(1 Gy) == magnitude(1 J) / magnitude(1 kg);
+    then other_units_expression_verified(Gray);
+}
+
+@source(SI9_TABLE_4)
+rule SievertViaOtherUnitsVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, last column: Sv = J/kg holds in the unit registry";
+    label ru unofficial "Таблица 4, последний столбец: Sv = J/kg выполняется в реестре единиц";
+    when special_unit(Sievert, qn, s) and magnitude(1 Sv) == magnitude(1 J) / magnitude(1 kg);
+    then other_units_expression_verified(Sievert);
+}
+
+// --- Таблица 7: множитель префикса против масштаба реестра ---------------------------
+
+relation prefix_scale_verified(p: Prefix, u: SiUnit) kind institutional {
+    label en official "the prefixed unit's scale in the registry equals ten to the power of Table 7 for the prefix";
+    label ru unofficial "масштаб единицы с префиксом в реестре равен степени десяти из таблицы 7 для этого префикса";
+}
+
+@source(SI9_TABLE_7)
+rule KilometreScaleVerified(sym: Text) strict {
+    label en official "Table 7: kilo = 10³ — 1 km converts to 1000 m in the registry";
+    label ru unofficial "Таблица 7: кило = 10³ — 1 km переводится в 1000 m по реестру";
+    when prefix_factor(Kilo, sym, 3) and unit_convert(magnitude(1 km), "m") == magnitude(1000 m);
+    then prefix_scale_verified(Kilo, Metre);
+}
+
+@source(SI9_TABLE_7)
+rule DecimetreScaleVerified(sym: Text) strict {
+    label en official "Table 7: deci = 10⁻¹ — 1 dm converts to 0.1 m";
+    label ru unofficial "Таблица 7: деци = 10⁻¹ — 1 dm переводится в 0,1 m";
+    when prefix_factor(Deci, sym, -1) and unit_convert(magnitude(1 dm), "m") == magnitude(0.1 m);
+    then prefix_scale_verified(Deci, Metre);
+}
+
+@source(SI9_TABLE_7)
+rule CentimetreScaleVerified(sym: Text) strict {
+    label en official "Table 7: centi = 10⁻² — 1 cm converts to 0.01 m";
+    label ru unofficial "Таблица 7: санти = 10⁻² — 1 cm переводится в 0,01 m";
+    when prefix_factor(Centi, sym, -2) and unit_convert(magnitude(1 cm), "m") == magnitude(0.01 m);
+    then prefix_scale_verified(Centi, Metre);
+}
+
+@source(SI9_TABLE_7)
+rule MillimetreScaleVerified(sym: Text) strict {
+    label en official "Table 7: milli = 10⁻³ — 1 mm converts to 0.001 m";
+    label ru unofficial "Таблица 7: милли = 10⁻³ — 1 mm переводится в 0,001 m";
+    when prefix_factor(Milli, sym, -3) and unit_convert(magnitude(1 mm), "m") == magnitude(0.001 m);
+    then prefix_scale_verified(Milli, Metre);
+}
+
+@source(SI9_TABLE_7, SI9_S3_KILOGRAM)
+rule MilligramScaleVerified(sym: Text) strict {
+    label en official "Table 7 and §3: milli = 10⁻³ applied to the gram — 1 mg converts to 0.001 g";
+    label ru unofficial "Таблица 7 и §3: милли = 10⁻³ к грамму — 1 mg переводится в 0,001 g";
+    when prefix_factor(Milli, sym, -3) and unit_convert(magnitude(1 mg), "g") == magnitude(0.001 g);
+    then prefix_scale_verified(Milli, Gram);
+}
+
+@source(SI9_TABLE_7)
+rule MillimoleScaleVerified(sym: Text) strict {
+    label en official "Table 7: milli = 10⁻³ — 1 mmol converts to 0.001 mol";
+    label ru unofficial "Таблица 7: милли = 10⁻³ — 1 mmol переводится в 0,001 mol";
+    when prefix_factor(Milli, sym, -3) and unit_convert(magnitude(1 mmol), "mol") == magnitude(0.001 mol);
+    then prefix_scale_verified(Milli, Mole);
+}
+
+// --- Таблица 8: значение внесистемной единицы против реестра ------------------------------
+
+relation non_si_value_verified(u: NonSiUnit) kind institutional {
+    label en official "the value of the non-SI unit in SI units (Table 8) is confirmed by the unit registry";
+    label ru unofficial "значение внесистемной единицы в единицах SI (таблица 8) подтверждено реестром единиц";
+}
+
+@source(SI9_TABLE_8)
+rule MinuteValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 min = 60 s in the registry";
+    label ru unofficial "Таблица 8: 1 min = 60 s по реестру";
+    when non_si_unit(Minute, sym, v) and unit_convert(magnitude(1 min), "s") == magnitude(60 s);
+    then non_si_value_verified(Minute);
+}
+
+@source(SI9_TABLE_8)
+rule HourValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 h = 3600 s in the registry";
+    label ru unofficial "Таблица 8: 1 h = 3600 s по реестру";
+    when non_si_unit(Hour, sym, v) and unit_convert(magnitude(1 h), "s") == magnitude(3600 s);
+    then non_si_value_verified(Hour);
+}
+
+@source(SI9_TABLE_8)
+rule TonneValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 t = 10³ kg in the registry";
+    label ru unofficial "Таблица 8: 1 t = 10³ kg по реестру";
+    when non_si_unit(Tonne, sym, v) and unit_convert(magnitude(1 t), "kg") == magnitude(1000 kg);
+    then non_si_value_verified(Tonne);
+}
+
+@source(SI9_TABLE_8)
+rule LitreValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 l = 10⁻³ m³ in the registry";
+    label ru unofficial "Таблица 8: 1 l = 10⁻³ m³ по реестру";
+    when non_si_unit(Litre, sym, v) and unit_convert(magnitude(1 l), "m3") == magnitude(0.001 m3);
+    then non_si_value_verified(Litre);
+}
+
+// --- Таблица 4, остальные строки (после расширения реестра 06.09.2026) ------------------
+
+// --- Таблица 8, остальные значения -------------------------------------------------------------
+
+@source(SI9_TABLE_8)
+rule DayValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 d = 86 400 s in the registry";
+    label ru unofficial "Таблица 8: 1 d = 86 400 s по реестру";
+    when non_si_unit(Day, sym, v) and unit_convert(magnitude(1 day), "s") == magnitude(86400 s);
+    then non_si_value_verified(Day);
+}
+
+@source(SI9_TABLE_8)
+rule HectareValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 ha = 10⁴ m² in the registry";
+    label ru unofficial "Таблица 8: 1 ha = 10⁴ m² по реестру";
+    when non_si_unit(Hectare, sym, v) and unit_convert(magnitude(1 ha), "m2") == magnitude(10000 m2);
+    then non_si_value_verified(Hectare);
+}
+
+@source(SI9_TABLE_8)
+rule AstronomicalUnitValueVerified(sym: Text, v: Text) strict {
+    label en official "Table 8: 1 au = 149 597 870 700 m in the registry";
+    label ru unofficial "Таблица 8: 1 au = 149 597 870 700 m по реестру";
+    when non_si_unit(AstronomicalUnit, sym, v) and unit_convert(magnitude(1 au), "m") == magnitude(149597870700 m);
+    then non_si_value_verified(AstronomicalUnit);
+}
+
+// --- Таблица 1: единицы констант против текстов определений §2.3.1 -----------------------------
+
+@source(SI9_TABLE_1, SI9_S2_2_DEFINITION_OF_SI)
+relation defining_constant_quantity(c: DefiningConstant, value: Quantity) kind empirical {
+    label en official "the defining constant as a quantity: exact numerical value with its SI unit (Table 1)";
+    label ru unofficial "определяющая константа как величина: точное численное значение с её единицей SI (таблица 1)";
+}
+
+@source(SI9_TABLE_1)
+facts Table1Quantities {
+    label en official "Table 1 as quantities of the unit registry";
+    label ru unofficial "Таблица 1 как величины реестра единиц";
+    assert "t1q-dnu-cs": defining_constant_quantity(CaesiumFrequency, 9192631770 Hz) { }
+    assert "t1q-c": defining_constant_quantity(SpeedOfLight, 299792458 m_per_s) { }
+    assert "t1q-h": defining_constant_quantity(PlanckConstant, 6.62607015e-34 J_s) { }
+    assert "t1q-e": defining_constant_quantity(ElementaryCharge, 1.602176634e-19 C_coulomb) { }
+    assert "t1q-k": defining_constant_quantity(BoltzmannConstant, 1.380649e-23 J_per_K) { }
+    assert "t1q-na": defining_constant_quantity(AvogadroConstant, 6.02214076e23 per_mol) { }
+    assert "t1q-kcd": defining_constant_quantity(LuminousEfficacy, 683 lm_per_W) { }
+}
+
+relation constant_unit_verified(c: DefiningConstant) kind institutional {
+    label en official "the unit of the defining constant expands into base units exactly as the definition text of §2.3.1 states";
+    label ru unofficial "единица определяющей константы раскрывается в базовые ровно так, как говорит текст определения §2.3.1";
+}
+
+@source(SI9_DEF_KILOGRAM)
+rule PlanckUnitVerified(v: Quantity) strict {
+    label en official "§2.3.1 kilogram: J s is equal to kg m² s⁻¹ — confirmed by the registry";
+    label ru unofficial "§2.3.1, килограмм: J s равно kg m² s⁻¹ — подтверждено реестром";
+    when defining_constant_quantity(PlanckConstant, v)
+         and magnitude(1 J_s) == magnitude(1 kg) * magnitude(1 m) * magnitude(1 m) / magnitude(1 s);
+    then constant_unit_verified(PlanckConstant);
+}
+
+@source(SI9_DEF_AMPERE)
+rule ElementaryChargeUnitVerified(v: Quantity) strict {
+    label en official "§2.3.1 ampere: C is equal to A s — confirmed by the registry";
+    label ru unofficial "§2.3.1, ампер: C равно A s — подтверждено реестром";
+    when defining_constant_quantity(ElementaryCharge, v)
+         and magnitude(1 C_coulomb) == magnitude(1 A) * magnitude(1 s);
+    then constant_unit_verified(ElementaryCharge);
+}
+
+@source(SI9_DEF_KELVIN)
+rule BoltzmannUnitVerified(v: Quantity) strict {
+    label en official "§2.3.1 kelvin: J K⁻¹ is equal to kg m² s⁻² K⁻¹ — confirmed by the registry";
+    label ru unofficial "§2.3.1, кельвин: J K⁻¹ равно kg m² s⁻² K⁻¹ — подтверждено реестром";
+    when defining_constant_quantity(BoltzmannConstant, v)
+         and magnitude(1 J_per_K) == magnitude(1 J) / magnitude(1 K);
+    then constant_unit_verified(BoltzmannConstant);
+}
+
+@source(SI9_DEF_CANDELA)
+rule LuminousEfficacyUnitVerified(v: Quantity) strict {
+    label en official "§2.3.1 candela: lm W⁻¹ is equal to cd sr kg⁻¹ m⁻² s³ — confirmed by the registry";
+    label ru unofficial "§2.3.1, кандела: lm W⁻¹ равно cd sr kg⁻¹ m⁻² s³ — подтверждено реестром";
+    when defining_constant_quantity(LuminousEfficacy, v)
+         and magnitude(1 lm_per_W) == magnitude(1 lm) / magnitude(1 W);
+    then constant_unit_verified(LuminousEfficacy);
+}
+
+@source(SI9_TABLE_4, SI9_S2_3_1_CELSIUS)
+rule DegreeCelsiusIntervalVerified(qn: Text, s: Text) strict {
+    label en official "Table 4, footnote (f): the degree Celsius is by definition equal in magnitude to the kelvin — a temperature interval in °C is the same number in K; the registry declares the interval unit as an alias of K";
+    label ru unofficial "Таблица 4, сноска (f): градус Цельсия по определению равен кельвину по величине — интервал температур в °C есть то же число в K; реестр объявляет единицу интервала алиасом K";
+    when special_unit(DegreeCelsius, qn, s)
+         and magnitude(1 degC_interval) == magnitude(1 K);
+    then base_expression_verified(DegreeCelsius);
+}
+
+// Constructions CLI 0.2.4 adaptation: exact Rational unity;
+// rule comparisons, source claims and expectations are unchanged.

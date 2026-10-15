@@ -1,0 +1,24 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// §4, таблица 8: литр допускается к применению с SI.
+test "urn:query:si-t09a-litre-accepted" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(accepted_for_use_with_si(Litre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NonSiUnitAccepted);
+}
+
+// Таблица 8: 1 h = 60 min = 3600 s.
+test "urn:query:si-t09b-hour-value" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_unit(Hour, "h", "1 h = 60 min = 3600 s"));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,45 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-DEVELOPERSREQUIREDTOCONFORM" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": developer_of(entity_ref("urn:law:catalog:developersrequiredtoconform:v0"), entity_ref("urn:law:catalog:developersrequiredtoconform:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(ConformToDefinitionOfDone, ACTIVE);
+}
+
+// 
+test "CATALOG-FOLLOWORGANIZATIONALDEFINITIONOFDONE" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_team(entity_ref("urn:law:catalog:followorganizationaldefinitionofdone:v0")) { origin case_input; }
+        assert "cat-1": organizational_dod_exists(entity_ref("urn:law:catalog:followorganizationaldefinitionofdone:v1")) { origin case_input; }
+        assert "cat-2": organization_of(entity_ref("urn:law:catalog:followorganizationaldefinitionofdone:v0"), entity_ref("urn:law:catalog:followorganizationaldefinitionofdone:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(FollowOrganizationalStandard, ACTIVE);
+}
+
+// 
+test "CATALOG-PART-CREATEDEFINITIONOFDONE" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_team(entity_ref("urn:law:catalog:createdefinitionofdone:v0")) { origin case_input; }
+        assert "cat-1": checked_organization(entity_ref("urn:law:catalog:createdefinitionofdone:v1")) { origin case_input; }
+        assert "cat-2": organization_of(entity_ref("urn:law:catalog:createdefinitionofdone:v0"), entity_ref("urn:law:catalog:createdefinitionofdone:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(CreateOwnDefinitionOfDone, ACTIVE);
+}

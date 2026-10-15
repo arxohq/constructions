@@ -1,0 +1,309 @@
+// Артикулы 45—48: машинерия следа. Здесь живёт весь идиом «доказательство
+// приезжает делом, право его проверяет», и здесь же платится его цена.
+//
+// АРТИКУЛ 46 И ЕСТЬ ПРАВИЛО ШАГА, А НЕ ЕГО ОБРАЗЕЦ. «Scilicet si $a^{t}
+// \equiv 1$, erit $a^{t+1} \equiv a$, $a^{t+2} \equiv aa$ etc.» — Гаусс
+// объясняет периодичность ровно тем умножением на основание, которым звено
+// следа получается из предыдущего. Правило CatenaGradus переписывает эту
+// фразу без потерь: остаток следующего показателя есть остаток предыдущего,
+// умноженный на основание, по модулю. Пакет не «моделирует возведение в
+// степень за неимением pow» — он исполняет артикул 46.
+//
+// ПОЧЕМУ ЦЕПЬ, А НЕ ПРОВЕРКА ОТДЕЛЬНЫХ ЗВЕНЬЕВ. Проверка каждого звена по
+// отдельности молчала бы о ДЫРЕ: след 1, 2, 3, 7, 8 с пропущенными
+// показателями 4—6 сошёлся бы на каждом соседстве, которое в нём есть, и
+// утверждал бы про показатель 8 ровно ничего. Рекурсивная цепь `catena`
+// закрывает это по построению: она растёт ТОЛЬКО на единицу и только от
+// проверенного предшественника, поэтому «цепь дошла до e» значит «все
+// показатели от 1 до e предъявлены и все звенья сошлись».
+//
+// СВЯЗЫВАНИЕ ПОКАЗАТЕЛЯ СЛЕДУЮЩЕГО ЗВЕНА — ФАКТОМ, А НЕ АРИФМЕТИКОЙ В
+// ГОЛОВЕ. `catena(pr, e + 1)` записать нельзя: вычисляемый аргумент головы
+// остаётся несвязанным (§190). Поэтому следующий показатель приходит из
+// САМОГО СЛЕДА — `residuum(pr, sequens, r2)` связывает его позитивным
+// литералом, — а равенство `sequens == exponens + 1` стои́т гардом. Побочный
+// и полезный эффект: цепь физически не может перешагнуть отсутствующее
+// звено, потому что связывать было бы не от чего.
+//
+// ЦЕНА ИДИОМА, НАЗВАННАЯ ПРЯМО. След обязан быть полным, и дыра в нём сама
+// по себе МОЛЧИТ: цепь просто не доходит, а «не дошла» неотличимо от «след
+// короче». Громкими это делают два сторожа. `vestigium_falsum` называет
+// БИТОЕ ЗВЕНО (нашлась пара соседних показателей, не сходящаяся по артикулу
+// 46, либо первое звено не равно остатку самого основания).
+// `vestigium_ruptum` называет НЕДОВЕРИЕ К СЛЕДУ ЦЕЛИКОМ: дело объявило длину
+// следа, а цепь до неё не дошла. Второй сторож — единственное место пакета,
+// где читается `not_known`: вопрос «дошла ли цепь» есть вопрос об отсутствии
+// вывода, и позитивного носителя у него нет.
+
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+use self::{
+    DA_ART45,
+    DA_ART46,
+    DA_ART47,
+    DA_ART48,
+    Probatio,
+    catena,
+    ordo,
+    ordo_absurdus,
+    propositum,
+    quaesitum,
+    residuum,
+    residuum_quaesiti,
+    vestigium,
+    vestigium_falsum,
+    vestigium_ruptum,
+};
+
+// --- Артикул 46: начало цепи и правило шага --------------------------------
+
+// Первое звено: остаток первой степени есть остаток самого основания.
+// «progressio geometrica 1, a, aa, a³ etc. praeter primum 1» (артикул 45) —
+// счёт показателей начинается с единицы, нулевой член прогрессии есть сама
+// единица и в след не входит.
+@source(DA_ART46)
+rule CatenaInitium(pr: Probatio, modulus: Integer, basis: Integer, primum: Integer) strict {
+    label la official "In omni progressione geometrica \\(1, a, aa, a^3\\) etc. praeter primum 1";
+    label ru unofficial "начало цепи: первое звено следа обязано быть остатком самого основания по модулю испытания";
+    when propositum(pr, modulus, basis) and residuum(pr, 1, primum)
+        and (primum == basis mod modulus);
+    then catena(pr, 1);
+}
+
+// Шаг цепи — дословный артикул 46: следующий член получается умножением на
+// основание, остаток берётся по модулю. Показатель следующего звена связан
+// самим следом, равенство с предыдущим плюс единица стои́т гардом.
+@source(DA_ART46)
+rule CatenaGradus(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    exponens: Integer,
+    sequens: Integer,
+    prior: Integer,
+    posterior: Integer,
+) strict {
+    label la official "Scilicet si \\(a^t\\) est unitati congruum, erit \\(a^{(t+1)}\\) congruum ipsi \\(a\\)";
+    label ru unofficial "шаг цепи (артикул 46): остаток следующего показателя есть остаток предыдущего, умноженный на основание, по модулю испытания";
+    when propositum(pr, modulus, basis)
+        and supported(catena(pr, exponens))
+        and residuum(pr, exponens, prior)
+        and residuum(pr, sequens, posterior)
+        and (sequens == exponens + 1)
+        and (posterior == (prior * basis) mod modulus);
+    then catena(pr, sequens);
+}
+
+// Удвоение — ВТОРОЙ вид звена, названный тем же артикулом 46: «donec ad
+// terminum $a^{2t}\!$ perveniatur». Остаток удвоенного показателя есть
+// квадрат остатка по модулю. Показатель связан самим следом, равенство
+// «вдвое больше» стои́т гардом.
+@source(DA_ART46)
+rule CatenaDuplicata(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    exponens: Integer,
+    duplum: Integer,
+    prior: Integer,
+    posterior: Integer,
+) strict {
+    label la official "donec ad terminum \\(a^{(2t)}\\) perveniatur";
+    label ru unofficial "удвоение цепи (артикул 46): остаток удвоенного показателя есть квадрат остатка предыдущего по модулю испытания";
+    when propositum(pr, modulus, basis)
+        and supported(catena(pr, exponens))
+        and residuum(pr, exponens, prior)
+        and residuum(pr, duplum, posterior)
+        and (duplum == exponens + exponens)
+        and (posterior == (prior * prior) mod modulus);
+    then catena(pr, duplum);
+}
+
+// --- Сторожа следа ---------------------------------------------------------
+
+// Первое звено не равно остатку основания — след подделан в самом начале.
+@source(DA_ART46)
+rule VestigiumFalsumInInitio(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    primum: Integer,
+) strict {
+    label la official "praeter primum 1";
+    label ru unofficial "сторож начала: дело заявило первым звеном не остаток основания — след противоречит артикулу 45 уже на первом показателе";
+    when propositum(pr, modulus, basis) and residuum(pr, 1, primum)
+        and (primum != basis mod modulus);
+    then vestigium_falsum(pr);
+}
+
+// Соседние звенья не сходятся по правилу шага — след подделан в середине.
+// Контрапозиция артикула 46, и позитивный предикат сознательно: негативная
+// голова строгого правила есть мёртвая норма.
+@source(DA_ART46)
+rule VestigiumFalsumInGradu(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    exponens: Integer,
+    sequens: Integer,
+    prior: Integer,
+    posterior: Integer,
+) strict {
+    label la official "erit \\(a^{(t+1)}\\) congruum ipsi \\(a\\), \\(a^{(t+2)}\\) congruum ipsi \\(aa\\)";
+    label ru unofficial "сторож шага: нашлись соседние показатели, у которых остаток следующего не есть остаток предыдущего, умноженный на основание (нарушен артикул 46)";
+    when propositum(pr, modulus, basis)
+        and residuum(pr, exponens, prior)
+        and residuum(pr, sequens, posterior)
+        and (sequens == exponens + 1)
+        and (posterior != (prior * basis) mod modulus);
+    then vestigium_falsum(pr);
+}
+
+// Удвоенное звено не есть квадрат предыдущего — след подделан на удвоении.
+@source(DA_ART46)
+rule VestigiumFalsumInDuplicatione(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    exponens: Integer,
+    duplum: Integer,
+    prior: Integer,
+    posterior: Integer,
+) strict {
+    label la official "donec ad terminum \\(a^{(2t)}\\) perveniatur, cuius residuum minimum iterum erit unitati congruum";
+    label ru unofficial "сторож удвоения: нашлась пара показателей, один вдвое больше другого, у которых остаток большего не есть квадрат остатка меньшего (нарушен артикул 46)";
+    when propositum(pr, modulus, basis)
+        and residuum(pr, exponens, prior)
+        and residuum(pr, duplum, posterior)
+        and (duplum == exponens + exponens)
+        and (posterior != (prior * prior) mod modulus);
+    then vestigium_falsum(pr);
+}
+
+// СВИДЕТЕЛЬ ЭКВИВАЛЕНТНОСТИ ДВУХ ЗАПИСЕЙ (errata E-0075, приём E-0068
+// `kz.paracetamol`): второе звено следа обязано совпасть с ПРЯМОЙ степенью,
+// посчитанной термом `pow`. Правило избыточно ПО ЗАМЫСЛУ — на полном следе
+// звено 2 уже прижато цепью (`CatenaInitium` пиннит первое звено остатком
+// основания, `CatenaGradus` — каждое следующее), — и в этом вся его роль:
+// оно есть ВТОРОЙ, независимый путь к тому же числу. Сработать оно может
+// только если разойдутся сами записи, то есть если дефектен новый терм
+// `pow`, — и тогда старая запись назовёт это вслух, вместо того чтобы
+// молча согласиться.
+//
+// ПОЧЕМУ ПОКАЗАТЕЛЬ 2, А НЕ ОБЪЯВЛЕННАЯ ДЛИНА СЛЕДА. Форма
+// `pow(basis, exponens)` по ВСЕМУ следу была первым выбором и не годится:
+// показатели следа доходят до 340 и 560, а предел `pow` после E-0075 — это
+// 64-битный диапазон ЗНАЧЕНИЯ, и гардом его не обойти (порядок конъюнктов —
+// sha256 §207.1, а не авторский; замер — audit §4.1). Показатель 2
+// присутствует в аддитивной цепи ВСЕГДА (она начинается 1, 2, …), поэтому
+// свидетель применим к каждой сцене пакета, а `basis` во всех делах мал:
+// максимум подстановки — `7^2 = 49`.
+@source(DA_ART46)
+rule PotestasVestigioDiscordat(
+    pr: Probatio,
+    modulus: Integer,
+    basis: Integer,
+    quadratum: Integer,
+) strict {
+    label la unofficial "potestas secunda per terminum pow computata a vestigio allato discrepat";
+    label ru unofficial "свидетель эквивалентности: второе звено предъявленного следа не совпало с квадратом основания, посчитанным термом pow, — две записи одной степени разошлись";
+    when propositum(pr, modulus, basis)
+        and residuum(pr, 2, quadratum)
+        and (pow(basis, 2) mod modulus != quadratum);
+    then vestigium_falsum(pr);
+}
+
+// Цепь не дошла до объявленной длины следа. Единственное место пакета с
+// `not_known`: вопрос об ОТСУТСТВИИ вывода позитивного носителя не имеет.
+// Правило ПОРАЖАЕМОЕ не по смыслу, а по §113: `not_known` в строгом теле —
+// `NON_EXECUTABLE_RULE`, то есть правило молча выпадает из исполнения
+// (измерено 31.08.2026: две таких нормы дали два предупреждения и ноль
+// выводов при зелёных check и lower).
+@source(DA_ART46)
+rule VestigiumRuptum(pr: Probatio, longitudo: Integer) defeasible {
+    label la official "neque alia residua quam quae in hac periodo continentur, in tota progressione occurrere possunt";
+    label ru unofficial "сторож целости: дело объявило длину следа, а проверенная цепь до неё не дошла — дыра в показателях либо оборванное звено";
+    when vestigium(pr, longitudo) and not_known(catena(pr, longitudo));
+    then vestigium_ruptum(pr);
+}
+
+// --- Артикул 47: компендий -------------------------------------------------
+
+// Остаток запрошенной степени берётся через остаток показателя по порядку:
+// «quare quum sit 1000 congruum 1 (mod 3), erit 3^1000 congruum 3 (mod 13)».
+// Случай ненулевого остатка показателя: звено уже стои́т в проверенном следе.
+@source(DA_ART47)
+rule ResiduumQuaesitiPerCompendium(
+    pr: Probatio,
+    quaesitus: Integer,
+    ordinis: Integer,
+    reductus: Integer,
+    valor: Integer,
+) strict {
+    label la official "Petitur ex hoc theoremate compendium potestatum quantumvis magno exponente affectarum residua expedite inveniendi";
+    label ru unofficial "компендий (артикул 47): показатель берётся по модулю порядка, и остаток запрошенной степени читается из уже проверенного следа";
+    when quaesitum(pr, quaesitus) and ordo(pr, ordinis)
+        and catena(pr, ordinis)
+        and residuum(pr, reductus, valor)
+        and (reductus == quaesitus mod ordinis);
+    then residuum_quaesiti(pr, quaesitus, valor);
+}
+
+// Случай нулевого остатка показателя: «Generaliter erit a^(mt) congruum 1»
+// (артикул 46). Нулевого звена в следе нет — счёт показателей начинается с
+// единицы, — поэтому второе правило по §206, а не ветвление внутри первого.
+@source(DA_ART47)
+rule ResiduumQuaesitiInPeriodo(pr: Probatio, quaesitus: Integer, ordinis: Integer) strict {
+    label la official "Generaliter erit \\(a^{(mt)}\\) unitati congruum";
+    label ru unofficial "компендий при показателе, кратном порядку: остаток есть единица (артикул 46, «Generaliter erit a^(mt) congruum 1»)";
+    when quaesitum(pr, quaesitus) and ordo(pr, ordinis)
+        and catena(pr, ordinis)
+        and (quaesitus mod ordinis == 0);
+    then residuum_quaesiti(pr, quaesitus, 1);
+}
+
+// --- Артикулы 45 и 48: сторожа объявленного порядка ------------------------
+
+// Артикул 45 требует показателя СТРОГО меньше модуля («cuius exponens t<p»).
+@source(DA_ART45)
+rule OrdoNonMinorModulo(pr: Probatio, modulus: Integer, basis: Integer, ordinis: Integer) strict {
+    label la official "alius adhuc datur terminus \\(a^t\\), secundum modulum p ad a primum unitati congruus, cuius exponens t<p";
+    label ru unofficial "сторож артикула 45: объявленный порядок не меньше модуля, а артикул требует строго меньшего";
+    when propositum(pr, modulus, basis) and ordo(pr, ordinis)
+        and (ordinis >= modulus);
+    then ordo_absurdus(pr);
+}
+
+// Объявленный порядок обязан САМ давать единицу — «infima potestas unitati
+// congrua» (артикул 48).
+@source(DA_ART48)
+rule OrdoSineUnitate(pr: Probatio, ordinis: Integer, valor: Integer) strict {
+    label la official "Quando \\(a^t\\) est infima potestas unitati congrua";
+    label ru unofficial "сторож артикула 48: объявленный порядок не даёт единицы в самом следе — он не есть infima potestas unitati congrua";
+    when ordo(pr, ordinis) and residuum(pr, ordinis, valor) and (valor != 1);
+    then ordo_absurdus(pr);
+}
+
+// Порядок обязан быть НАИМЕНЬШИМ: единица раньше него — противоречие следу.
+@source(DA_ART48)
+rule OrdoAnticipatus(pr: Probatio, ordinis: Integer, exponens: Integer) strict {
+    label la official "illi t termini, residuorum periodum constituentes omnes erunt diversi";
+    label ru unofficial "сторож артикула 48: в следе есть более ранний показатель с единицей — объявленный порядок не наименьший";
+    when ordo(pr, ordinis) and residuum(pr, exponens, 1)
+        and (exponens < ordinis);
+    then ordo_absurdus(pr);
+}
+
+// Обращение артикула 46 при наименьшем показателе: всякий показатель с
+// единицей делится на порядок («Si itaque a^k congruum 1, erit k congruum 0
+// (mod t) i. e. k per t divisibilis»).
+@source(DA_ART48)
+rule OrdoNonDividens(pr: Probatio, ordinis: Integer, exponens: Integer) strict {
+    label la official "Si itaque \\(a^k\\) unitati congruum, erit \\(k\\) per \\(t\\) divisibilis";
+    label ru unofficial "сторож артикула 48: в следе есть показатель с единицей, не делящийся на объявленный порядок, — обращение артикула 46 нарушено";
+    when ordo(pr, ordinis) and residuum(pr, exponens, 1)
+        and (exponens mod ordinis != 0);
+    then ordo_absurdus(pr);
+}

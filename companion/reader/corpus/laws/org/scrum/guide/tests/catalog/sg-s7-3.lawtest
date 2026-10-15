@@ -1,0 +1,29 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-INCREMENTMAYBEDELIVEREDEARLY" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": part_of_increment(entity_ref("urn:law:catalog:incrementmaybedeliveredearly:v0")) { origin case_input; }
+    }
+    evaluate truth(may_be_delivered_before_sprint_end(entity_ref("urn:law:catalog:incrementmaybedeliveredearly:v0")));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-USABLEINCREMENTCREATED" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": selected_for_sprint(entity_ref("urn:law:catalog:usableincrementcreated:v1"), entity_ref("urn:law:catalog:usableincrementcreated:v0")) { origin case_input; }
+        assert "cat-1": part_of_increment(entity_ref("urn:law:catalog:usableincrementcreated:v1")) { origin case_input; }
+    }
+    evaluate truth(usable_increment_created(entity_ref("urn:law:catalog:usableincrementcreated:v0")));
+    expect truth_status == TRUE_ONLY;
+}

@@ -1,0 +1,59 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-SCRUMMASTERACCOUNTABLEFOREFFECTIVENESS" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_master_of(entity_ref("urn:law:catalog:scrummasteraccountableforeffectiveness:v0"), entity_ref("urn:law:catalog:scrummasteraccountableforeffectiveness:v1")) { origin case_input; }
+    }
+    evaluate truth(scrum_master_accountable_for(entity_ref("urn:law:catalog:scrummasteraccountableforeffectiveness:v0"), entity_ref("urn:law:catalog:scrummasteraccountableforeffectiveness:v1"), TeamEffectiveness));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-SCRUMMASTERENSURESTIMEBOXES" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_master_of(entity_ref("urn:law:catalog:scrummasterensurestimeboxes:v0"), entity_ref("urn:law:catalog:scrummasterensurestimeboxes:v1")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(EnsureEventsWithinTimebox, ACTIVE);
+}
+
+// 
+test "CATALOG-SERVESORGANIZATIONBYEMPIRICALAPPROACH" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_master_of(entity_ref("urn:law:catalog:servesorganizationbyempiricalapproach:v0"), entity_ref("urn:law:catalog:servesorganizationbyempiricalapproach:v1")) { origin case_input; }
+    }
+    evaluate truth(scrum_master_serves_organization_by(entity_ref("urn:law:catalog:servesorganizationbyempiricalapproach:v0"), entity_ref("urn:law:catalog:servesorganizationbyempiricalapproach:v1"), EmpiricalApproachForEmployees));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-SERVESPRODUCTOWNERBYCLEARITEMS" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_master_of(entity_ref("urn:law:catalog:servesproductownerbyclearitems:v0"), entity_ref("urn:law:catalog:servesproductownerbyclearitems:v1")) { origin case_input; }
+    }
+    evaluate truth(scrum_master_serves_product_owner_by(entity_ref("urn:law:catalog:servesproductownerbyclearitems:v0"), entity_ref("urn:law:catalog:servesproductownerbyclearitems:v1"), ClearAndConciseBacklogItems));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-SERVESTEAMBYCOACHING" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_master_of(entity_ref("urn:law:catalog:servesteambycoaching:v0"), entity_ref("urn:law:catalog:servesteambycoaching:v1")) { origin case_input; }
+    }
+    evaluate truth(scrum_master_serves_team_by(entity_ref("urn:law:catalog:servesteambycoaching:v0"), entity_ref("urn:law:catalog:servesteambycoaching:v1"), CoachingSelfManagement));
+    expect truth_status == TRUE_ONLY;
+}

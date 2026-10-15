@@ -1,0 +1,25 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// II.13 при ВСЕХ трёх позициях: 16 + 25 > 36, 25 + 36 > 16, 16 + 36 > 25.
+// Одно правило с тремя гардами, а не три правила по позиции, — буква
+// определения I.21: остроугольный тот, у кого ВСЕ ТРИ угла острые. Дело
+// 4-5-6 уже стоит в тесте 03 (не прямоугольный); здесь спрашивается род.
+test "urn:query:eucl-acute-456" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "eucl-t13-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 4, 5, 6) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

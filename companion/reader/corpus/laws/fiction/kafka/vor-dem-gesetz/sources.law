@@ -1,0 +1,664 @@
+// Модель источников пакета «Vor dem Gesetz»: один свидетель в одной
+// редакции и один акт, засвидетельствованный им.
+//
+// ПОРОЖДЁННЫЙ ФАЙЛ. Правится
+// `corpus/tools/sources/sync/sync_vor_dem_gesetz_fragments.py`, не
+// руками; сверка — тот же скрипт с `--check` (шаг в `verify/ci/run_all.sh`).
+//
+// ДВА УРОВНЯ, И РАЗЛИЧИЕ МЕЖДУ НИМИ НЕСУЩЕЕ. Притча актом никакого
+// правопорядка не является — у неё `jurisdiction "none"` (приём
+// «Антигоны», «Кощея» и KHM 5). Акт ЕСТЬ, но он внутри вымысла: порядок,
+// объявленный привратником у врат, — «meines Verbotes», «Es ist möglich,
+// jetzt aber nicht», «Ich nehme es nur an…».
+//
+// ПОЧЕМУ ПРАВОПОРЯДОК ЗОВЁТСЯ ПОРЯДКОМ ПРИВРАТНИКА. Запрет привратник
+// называет СВОИМ, и притча нигде не говорит, что он объявляет его от
+// имени Закона. Имя `DasGesetz` решило бы главный спорный вопрос
+// экзегезы молча, одним словом; `Tuerhueterordnung` не решает ничего.
+//
+// РЕДАКЦИЯ ОДНА. Притча печаталась при жизни Кафки трижды (Selbstwehr
+// 1915, альманах «Vom jüngsten Tag» 1916, сборник «Ein Landarzt» 1919),
+// но расхождения печатаний правовыми не являются, а вычитанный по
+// сканам носитель есть только у первого. Ось редакций здесь не работает
+// — в отличие от KHM 5, где два издания расходятся о САМОМ
+// СУЩЕСТВОВАНИИ нормы.
+//
+// ДАТ У ПРИТЧИ НЕТ, И ШКАЛА АКТА УСЛОВНА. Действие датировать нечем;
+// порядок у врат датирован условным @1000-01-01 — тем же заведомо не
+// спутываемым годом, что указ Креонта, оферта рыбки и наставление козы.
+// Дата САМОЙ ПУБЛИКАЦИИ (7 сентября 1915) — свойство свидетеля, а не
+// права, и в редакцию акта не вписана.
+//
+// ПРАВА. Франц Кафка ум. 3 июня 1924 — текст в общественном достоянии.
+// Русские переводы (Райт-Ковалёва ум. 1988) под охраной и НЕ
+// закрепляются: пакет ведётся на языке подлинника (приём horde/yarliks).
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// --- Свидетель: притча в первопечатании -------------------------------------
+
+source VOR_DEM_GESETZ {
+    kind parabel;
+    jurisdiction "none";
+    number "Franz Kafka, Vor dem Gesetz (Türhüterlegende)";
+    label de official "Vor dem Gesetz";
+    label ru official "«Перед законом», притча о привратнике";
+}
+
+edition VDG_SELBSTWEHR_1915 of VOR_DEM_GESETZ {
+    label ru official "Первопечатание: Selbstwehr. Unabhängige jüdische Wochenschrift, Jg. 9, Nr. 34 (Neujahrs-Festnummer), Прага, 7 сентября 1915, с. 2—3";
+    language de;
+    officiality unofficial;
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+// Закреплены ТРИ страничные ревизии Викитеки, сшитые в один файл:
+//   3249904  Seite:De Kafka Vor dem Gesetz 2a.jpg
+//   3249905  Seite:De Kafka Vor dem Gesetz 2b.jpg
+//   3249906  Seite:De Kafka Vor dem Gesetz 3.jpg
+// В `uri` стоит первая из них; состав держит контракт среза в
+// `corpus/tools/sources/fetch/fetch_vor_dem_gesetz_text.py`.
+publication VDG_1915_TEXT of VDG_SELBSTWEHR_1915 {
+    media_type "text/plain; charset=utf-8";
+    uri "https://de.wikisource.org/w/index.php?oldid=3249904&action=raw";
+    retrieved_at @2026-08-30T12:00:00Z;
+    content_hash "sha256:bfca5c5f92ef6346b48014b6b617ebb5eb8bc9cdc308fc8d7d49069bc3cd1bcd";
+    local_path "sources/vor-dem-gesetz/de.txt";
+}
+
+// --- Повествование ----------------------------------------------------------
+//
+// Локаторы `erzaehlung/N` — адреса СОБСТВЕННОЙ нарезки, а не деление
+// текста: притча набрана одним абзацем и себя не нумерует вовсе.
+
+// Исходное положение: привратник стоит ПЕРЕД Законом, проситель приходит и
+// просит о входе. Всё дело пакета вырастает отсюда
+fragment VDG_ANKUNFT in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/1";
+    text de unofficial """Vor dem Gesetz steht ein Türhüter. Zu diesem Türhüter kommt ein Mann vom Lande und bittet um Eintritt in das Gesetz.""";
+    content_hash "sha256:1b1a47c5839713e0d5f0c467ba1292fae949e3d2825487e8a7cc523e7e6b9f42";
+}
+
+// Отказ, и он ВРЕМЕННОЙ: «jetzt» — сейчас. Не «нельзя», а «не сейчас»;
+// различие несёт всю притчу
+fragment VDG_JETZT_NICHT in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/2";
+    text de unofficial """Aber der Türhüter sagt, daß er ihm jetzt den Eintritt nicht gewähren könne.""";
+    content_hash "sha256:5f2db0fd84a72b165beee2892abd2118c60af30babc97ede1869ae88f02ef99c";
+}
+
+// Возможность входа ПОДТВЕРЖДЕНА самим привратником: «Es ist möglich».
+// Аксиома «вход невозможен» противоречила бы источнику дословно
+fragment VDG_SPAETER_MOEGLICH in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/3";
+    text de unofficial """Der Mann überlegt und fragt dann, ob er also später werde eintreten dürfen. „Es ist möglich,“ sagt der Türhüter, „jetzt aber nicht.“""";
+    content_hash "sha256:6e13765c3519167a8f0a65d0baca567d827300648fde0b01a1bda3579d3febfd";
+}
+
+// Врата ФИЗИЧЕСКИ открыты — «wie immer», всегда, — и привратник отступает в
+// сторону. Препятствие не физическое
+fragment VDG_TOR_OFFEN in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/4";
+    text de unofficial """Da das Tor zum Gesetz offen steht wie immer und der Türhüter beiseite tritt, bückt sich der Mann, um durch das Tor in das Innere zu sehen.""";
+    content_hash "sha256:0c9df30cacf32d017059bf5d2db45a7b1b14d1ac0fb5e2e40f691fdcb0416903";
+}
+
+// Привратник САМ предлагает попробовать войти вопреки запрету. Отсюда
+// переход автомата, которого проситель не совершил ни разу
+fragment VDG_EINLADUNG in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/5";
+    text de unofficial """Als der Türhüter das merkt, lacht er und sagt: „Wenn es dich so lockt, versuche es doch trotz meines Verbotes hineinzugehen.""";
+    content_hash "sha256:bb3a987d10954a78fa12a26cf12073e0237653d78baaa95fdc4c704265b13a41";
+}
+
+// Единственное, что названо на случай входа вопреки запрету: следующие
+// привратники, один сильнее другого. Не санкция, а сообщение о власти
+fragment VDG_MAECHTIGERE in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/6";
+    text de unofficial """Merke aber: Ich bin mächtig. Und ich bin nur der unterste Türhüter. Von Saal zu Saal stehen aber Türhüter, einer mächtiger als der andere. Schon den Anblick des Dritten kann nicht einmal ich mehr ertragen.“""";
+    content_hash "sha256:7f26f123d83b290955c04c853d4cd15980da84229c8d6264557cdf014328e0d1";
+}
+
+// ОЖИДАНИЕ ПРОСИТЕЛЯ, а не норма: «Закон должен быть доступен каждому и
+// всегда» — это то, что он ДУМАЕТ. Текст этого не устанавливает
+fragment VDG_ERWARTUNG in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/7";
+    text de unofficial """Solche Schwierigkeiten hat der Mann vom Lande nicht erwartet; das Gesetz soll doch jedem und immer zugänglich sein, denkt er,""";
+    content_hash "sha256:0778ef8f0b62d5aacf130e40031eabb6e44e911424c5fc646a6ff211c2769bfe";
+}
+
+// Решение ждать РАЗРЕШЕНИЯ. Тем самым проситель выбирает путь, ведущий через
+// суждение привратника, и отказывается от второго
+fragment VDG_ENTSCHLUSS in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/8";
+    text de unofficial """entschließt er sich doch lieber zu warten, bis er die Erlaubnis zum Eintritt bekommt.""";
+    content_hash "sha256:0d7c76be12f41bc5951207d58c4b5690c7b6893bbf994766d4f71d11b69773b4";
+}
+
+// Стадия ожидания заведена самим привратником: скамеечка сбоку от двери
+fragment VDG_SCHEMEL in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/9";
+    text de unofficial """Der Türhüter gibt ihm einen Schemel und läßt ihn seitwärts von der Tür sich niedersetzen. Dort sitzt er Tage und Jahre.""";
+    content_hash "sha256:b46508796365f53de3e4936b5ba99afc1b50b13f077d0373eb3c81c507f689d8";
+}
+
+// Попытки быть впущенным — многократные и безрезультатные
+fragment VDG_BITTEN in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/10";
+    text de unofficial """Er macht viele Versuche eingelassen zu werden und ermüdet den Türhüter durch seine Bitten.""";
+    content_hash "sha256:2ddc9e70a321895fa2af990e34786efcb38f211aceb02cf869faf43daa92e932";
+}
+
+// Итог допросов всегда один: «noch nicht». Отказ не меняется от числа
+// попыток — и это утверждение притчи, а не наша аксиома
+fragment VDG_NOCH_NICHT in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/11";
+    text de unofficial """Der Türhüter stellt öfters kleine Verhöre mit ihm an, fragt ihn über seine Heimat aus und nach vielem andern, es sind aber teilnahmslose Fragen, wie sie große Herren stellen, und zum Schlusse sagt er ihm immer wieder, daß er ihn noch nicht einlassen könne.""";
+    content_hash "sha256:bfb445175ea2f9490523dfc4d2eeeb402c82624f3065160f348649a5119023ff";
+}
+
+// Подкуп: истрачено всё, и сколь угодно ценное
+fragment VDG_BESTECHUNG in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/12";
+    text de unofficial """Der Mann, der sich für seine Reise mit vielem ausgerüstet hat, verwendet alles, und sei es noch so wertvoll, um den Türhüter zu bestechen.""";
+    content_hash "sha256:f5aaae21423ed1daf52bc018eefdd3214be4074ed3727330e3d90df2dda23a73";
+}
+
+// ПОПЫТКА БЕЗ ПРАВОВОГО ЭФФЕКТА §164, названная самим привратником: «беру
+// только затем, чтобы ты не думал, будто что-то упустил»
+fragment VDG_ANNAHME in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/13";
+    text de unofficial """Dieser nimmt zwar alles an, aber sagt dabei: „Ich nehme es nur an, damit du nicht glaubst, etwas versäumt zu haben.“""";
+    content_hash "sha256:4e87f3031005b3e9af40033f317b7687c67b34c8284ecfc03c43eec9bffed0cb";
+}
+
+// ВТОРАЯ ОШИБКА ПРОСИТЕЛЯ, парная к первой: он забывает остальных
+// привратников и принимает этого за единственное препятствие. Ни один вывод
+// пакета на ней не стоит — как и на ожидании доступности
+fragment VDG_VERGISST in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/14";
+    text de unofficial """Während der vielen Jahre beobachtet der Mann den Türhüter fast ununterbrochen. Er vergißt die andern Türhüter und dieser erste scheint ihm das einzige Hindernis für den Eintritt in das Gesetz.""";
+    content_hash "sha256:e9d2c2a2e09dcf4cd78744e0ed60217d980316e9d2d95a23d59ebce5cad4af7c";
+}
+
+// Последняя попытка воздействия: просьба к блохам в воротнике
+fragment VDG_FLOEHE in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/15";
+    text de unofficial """Er wird kindisch und da er in dem jahrelangen Studium des Türhüters auch die Flöhe in seinem Pelzkragen erkannt hat, bittet er auch die Flöhe ihm zu helfen und den Türhüter umzustimmen.""";
+    content_hash "sha256:3204f6cafa0f1a2030715060dd44105f8dfafdd99bed5f5feca7944760be11b8";
+}
+
+// Сияние из врат Закона. Правового содержания у него нет, и пакет его нормой
+// не делает — фрагмент стоит ради полноты закрепления
+fragment VDG_GLANZ in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/16";
+    text de unofficial """Wohl aber erkennt er jetzt im Dunkel einen Glanz, der unverlöschlich aus der Türe des Gesetzes bricht.""";
+    content_hash "sha256:727e2436a7e0d234d42e1b877ca5c51b5c54a22e2ca26ece4f2a82964b2a42c4";
+}
+
+// «Перед смертью» — текст смерти НЕ ПОВЕСТВУЕТ, он её предполагает. Отсюда
+// стадия автомата зовётся «при конце», а не «умер»
+fragment VDG_VOR_DEM_TODE in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/17";
+    text de unofficial """Nun lebt er nicht mehr lange. Vor seinem Tode sammeln sich in seinem Kopfe alle Erfahrungen der ganzen Zeit zu einer Frage, die er bisher an den Türhüter noch nicht gestellt hat.""";
+    content_hash "sha256:efc7984b8c38e82bea1179387c278e4fdb5d29d22e542f6caea3b394e8ff32b1";
+}
+
+// Последний вопрос: почему за все годы никто, кроме него, не просил о входе
+fragment VDG_LETZTE_FRAGE in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/18";
+    text de unofficial """„Alle streben doch nach dem Gesetz,“ sagt der Mann, „wieso kommt es, daß in den vielen Jahren niemand außer mir Einlaß verlangt hat?“""";
+    content_hash "sha256:c026fa802fb74029ba265f4dfac83098d0fa13751fa25ea1cf7acfc702f3700e";
+}
+
+// Привратник узнаёт, что проситель при конце, — и только тогда отвечает
+fragment VDG_AM_ENDE in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/19";
+    text de unofficial """Der Türhüter erkennt, daß der Mann schon an seinem Ende ist und, um sein vergehendes Gehör noch zu erreichen, brüllt er ihn an:""";
+    content_hash "sha256:486380482cb29abfb5dc4fbb9e9fa316eaf1e3cc92e157ac1b28592cca50a863";
+}
+
+// РАЗВЯЗКА: вход был предназначен только ему, и он закрывается. Оба факта
+// открываются лишь этой репликой — до неё они невыводимы
+fragment VDG_BESTIMMUNG_UND_SCHLUSS in VDG_SELBSTWEHR_1915 {
+    kind clause;
+    locator "erzaehlung/20";
+    text de unofficial """„Hier konnte niemand sonst Einlaß erhalten, denn dieser Eingang war nur für dich bestimmt. Ich gehe jetzt und schließe ihn.“""";
+    content_hash "sha256:94c1aa0eb0dab5ea2fb0f00ccd172aacc4940cb4a079d896d243a798b8920770";
+}
+
+// --- Порядок у врат ---------------------------------------------------------
+//
+// ABSTRACT_ONLY: объявлен вслух и записан никогда не был. Фрагменты
+// вырезаны из тех же байтов, но локаторы у них свои — вопрос «что
+// предписывала норма» адресуется норме, а не странице журнала.
+
+source ORDNUNG_AM_TOR {
+    kind custom_law;
+    jurisdiction Tuerhueterordnung;
+    number "Ordnung des Türhüters am Eingang zum Gesetz";
+    label ru official "Порядок, объявленный привратником у входа в Закон";
+    label de official "Ordnung des Türhüters am Eingang zum Gesetz";
+}
+
+edition ORDNUNG_WIE_BEZEUGT of ORDNUNG_AM_TOR {
+    label ru official "Порядок у врат в передаче притчи: отказ «сейчас нет», возможность впредь, собственный запрет привратника, иерархия привратников, приём даров без притязания, предназначенность входа и его закрытие";
+    language de;
+    officiality unofficial;
+    in_force @1000-01-01;
+    materialization_status ABSTRACT_ONLY;
+}
+
+// УЧРЕДИТЕЛЬНОЕ ПОЛОЖЕНИЕ ПОРЯДКА, и оно первое слово притчи. Настоящее
+// время и отсутствие всякого события: не «пришёл» и не «был поставлен», а
+// СТОИТ — свойство врат, а не случай из жизни просителя
+fragment TO_TUERHUETER_STEHT in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/1";
+    text de unofficial """Vor dem Gesetz steht ein Türhüter.""";
+    content_hash "sha256:1cc3f5cc8bb86020fde887044ec8d45158010cd89a731d7f6f402351d678d168";
+}
+
+// Отказ во входе НА ТЕПЕРЬ. Норма временная по своему содержанию
+fragment TO_JETZT_NICHT in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/2";
+    text de unofficial """daß er ihm jetzt den Eintritt nicht gewähren könne""";
+    content_hash "sha256:3efe910b7afe1e054b51b7485e7ac624d4167d9b2aaa66b7e54bf18c1f80441f";
+}
+
+// Вход впредь ВОЗМОЖЕН — сказано органом, который его и решает. Ни один
+// вывод пакета не вправе этому противоречить
+fragment TO_SPAETER_MOEGLICH in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/3";
+    text de unofficial """„Es ist möglich,“ sagt der Türhüter, „jetzt aber nicht.“""";
+    content_hash "sha256:c46c06e7be2464cc48b4d49a235c795aff7eacd5cde36b01ae9f84d9999fae6a";
+}
+
+// ВРАТА ОТКРЫТЫ, И ОТКРЫТЫ ВСЕГДА — «wie immer». Тоже свойство порядка, а не
+// событие: препятствие у этих врат нормативное, и притча говорит об этом
+// прямо, а не оставляет догадываться
+fragment TO_TOR_OFFEN in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/4";
+    text de unofficial """Da das Tor zum Gesetz offen steht wie immer und der Türhüter beiseite tritt""";
+    content_hash "sha256:0a1610e68071b47d8f9bc50ff32a716b350593438f460327a5f36178b741c964";
+}
+
+// ЗАПРЕТ, названный своим («meines Verbotes») в той же фразе, которой
+// привратник предлагает его нарушить. Запрет есть; препятствия нет
+fragment TO_VERBOT in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/5";
+    text de unofficial """versuche es doch trotz meines Verbotes hineinzugehen""";
+    content_hash "sha256:793b482d892467ed9cee9fd153d08282e29d887e51ff5d1db5e84ed988b153c8";
+}
+
+// Иерархия привратников — всё, что названо на случай нарушения. Санкции
+// здесь нет: сказано о власти, а не о последствии
+fragment TO_MACHT in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/6";
+    text de unofficial """Ich bin mächtig. Und ich bin nur der unterste Türhüter. Von Saal zu Saal stehen aber Türhüter, einer mächtiger als der andere.""";
+    content_hash "sha256:72e677cf31f88f1fcb6222c14d7b998c5e0ed43a9a370bf64934bc5c3b7afba4";
+}
+
+// МЕСТО ОЖИДАНИЯ УЧРЕЖДЕНО САМИМ ПРИВРАТНИКОМ: скамеечка и дозволение сесть
+// сбоку от двери. Это распоряжение, а не описание: стадия ожидания у врат
+// существует потому, что он её отвёл
+fragment TO_WARTEPLATZ in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/7";
+    text de unofficial """Der Türhüter gibt ihm einen Schemel und läßt ihn seitwärts von der Tür sich niedersetzen.""";
+    content_hash "sha256:5ea328b5328ac223ba6b5ee3d3ceccfbfcad5182628b2152bdec226a649e6811";
+}
+
+// Повторяемый отказ: «ещё не». Тот же временной характер, что и у первого, —
+// и та же неопределённость срока
+fragment TO_NOCH_NICHT in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/8";
+    text de unofficial """daß er ihn noch nicht einlassen könne""";
+    content_hash "sha256:8e18e4b60f6ac36186f0f7ef6da95e162e561b76c748ae8ebce15da529b1ddcc";
+}
+
+// Принятие даров НЕ ПОРОЖДАЕТ ПРИТЯЗАНИЯ, и сказано это самим привратником.
+// §164 в чистом виде: действие совершено, эффекта нет
+fragment TO_ANNAHME_OHNE_WIRKUNG in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/9";
+    text de unofficial """„Ich nehme es nur an, damit du nicht glaubst, etwas versäumt zu haben.“""";
+    content_hash "sha256:c1b630eb88cfd6a8c04aa1caf097f84b1b5a394b53b5f7c2f4aa618ab8c3f593";
+}
+
+// Предназначенность врат одному лицу — сообщена в последней реплике и нигде
+// раньше
+fragment TO_BESTIMMUNG in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/10";
+    text de unofficial """Hier konnte niemand sonst Einlaß erhalten, denn dieser Eingang war nur für dich bestimmt.""";
+    content_hash "sha256:c76f9d9552c85926b6ab8ef147a6dc9adec10094976ba265babd92e643a6e7d9";
+}
+
+// Закрытие врат: объявлено, но не описано. Пакет держит именно ОБЪЯВЛЕНИЕ —
+// большего текст не даёт
+fragment TO_SCHLIESSUNG in ORDNUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "ordnung/11";
+    text de unofficial """Ich gehe jetzt und schließe ihn.""";
+    content_hash "sha256:9e01b8a2427a59fbdf38031b5bfdb252bf41ff90696415d7ef5a308794acba2d";
+}
+
+// --- Второй свидетель: экзегеза из главы «Im Dom» ---------------------------
+//
+// ЗАЧЕМ ВТОРОЙ СВИДЕТЕЛЬ. Притча вошла в девятую главу романа, и там
+// священник приводит СОПЕРНИЧАЮЩИЕ ПРОЧТЕНИЯ: привратник обманул /
+// исполнил долг / сам обманут / судить его не вправе никто. Доводы, их
+// посылки и их взаимные атаки названы прямой речью — материал профиля
+// §274, который не пришлось реконструировать.
+//
+// СРЕЗ — ТОЛЬКО СПОР, без пересказа самой притчи (с. 375—378): у притчи
+// в пакете свой закреплённый текст, первопечатный, и вторая её копия
+// рядом была бы приглашением незаметно смешать два текста. Разночтения
+// между романом и «Selbstwehr» правовых последствий не несут и потому
+// второй редакцией притчи не заведены; перечислены в шапке
+// `corpus/tools/sources/fetch/fetch_prozess_im_dom_text.py`.
+
+source DER_PROZESS_IM_DOM {
+    kind roman;
+    jurisdiction "none";
+    number "Franz Kafka, Der Prozeß, Kapitel «Im Dom»";
+    label de official "Der Prozeß, Im Dom";
+    label ru official "«Процесс», глава «В соборе»";
+}
+
+edition PROZESS_1925 of DER_PROZESS_IM_DOM {
+    label ru official "Первое издание: Берлин, Die Schmiede, 1925, с. 378—388 (посмертное издание, подготовленное Максом Бродом)";
+    language de;
+    officiality unofficial;
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+// Закреплены ОДИННАДЦАТЬ страничных ревизий, сшитых в один файл; в `uri`
+// стоит первая. Состав держит контракт среза, проверяющий все четыре
+// прочтения поимённо: пропади одно при переразметке страницы, пакет
+// остался бы зелёным с тремя доводами вместо четырёх.
+publication PROZESS_1925_TEXT of PROZESS_1925 {
+    media_type "text/plain; charset=utf-8";
+    uri "https://de.wikisource.org/w/index.php?oldid=3133676&action=raw";
+    retrieved_at @2026-08-30T12:00:00Z;
+    content_hash "sha256:d3e280fb6145fe346c445bae9ddb503c7400d96894ea390d13f13a32bfb6d825";
+    local_path "sources/vor-dem-gesetz/de-prozess-im-dom.txt";
+}
+
+// ПЕРВОЕ ПРОЧТЕНИЕ и первый же ответ на него: К. заключает об обмане,
+// священник отвечает, что в самой Писании об обмане не сказано ничего
+fragment EX_ERSTE_DEUTUNG in PROZESS_1925 {
+    kind clause;
+    locator "streit/1";
+    text de unofficial """„Der Türhüter hat also den Mann getäuscht,“ sagte K. sofort, von der Geschichte sehr stark angezogen. „Sei nicht übereilt,“ sagte der Geistliche, „übernimm nicht die fremde Meinung ungeprüft. Ich habe dir die Geschichte im Wortlaut der Schrift erzählt. Von Täuschung steht darin nichts.“""";
+    content_hash "sha256:d2b475b9d81b38e314e7e8ab1a0fa28fe194a3536ea7cdbe26d39bd198a9870b";
+}
+
+// ПОСЫЛКА первого прочтения: спасительное сообщение сделано лишь тогда,
+// когда помочь просителю уже не могло
+fragment EX_ZU_SPAET in PROZESS_1925 {
+    kind clause;
+    locator "streit/2";
+    text de unofficial """„Es ist aber klar,“ sagte K., „und deine erste Deutung war ganz richtig. Der Türhüter hat die erlösende Mitteilung erst dann gemacht, als sie dem Manne nicht mehr helfen konnte.“""";
+    content_hash "sha256:ec92520c0516b740c8a9c3fbe8f9ffb421eb220de1f9064e6c1bb245d9449ff7";
+}
+
+// ВТОРОЕ ПРОЧТЕНИЕ: его не спрашивали раньше, и он был только привратником —
+// а как привратник исполнил свой долг
+fragment EX_PFLICHT_ERFUELLT in PROZESS_1925 {
+    kind clause;
+    locator "streit/3";
+    text de unofficial """„Er wurde nicht früher gefragt,“ sagte der Geistliche, „bedenke auch, daß er nur Türhüter war und als solcher hat er seine Pflicht erfüllt.“""";
+    content_hash "sha256:db946c7b3514157e977df5f614983f80ad59f5da5a6243b3c9bbb158ff306a2a";
+}
+
+// ВОЗРАЖЕНИЕ К. второму прочтению: долгом было, быть может, отвергать чужих
+// — но этого, кому вход предназначен, он был обязан впустить
+fragment EX_PFLICHT_WAR_EINLASSEN in PROZESS_1925 {
+    kind clause;
+    locator "streit/4";
+    text de unofficial """„Warum glaubst du, daß er seine Pflicht erfüllt hat?“ fragte K., „Er hat sie nicht erfüllt. Seine Pflicht war es vielleicht, alle Fremden abzuwehren, diesen Mann aber, für den der Eingang bestimmt war, hätte er einlassen müssen.“""";
+    content_hash "sha256:60c587ad854475aec4313aa7ae5bead86a75e871a6f2729789828f3c307ef70b";
+}
+
+// ОСНОВАНИЕ второго прочтения: два объявления привратника — «сейчас не могу»
+// и «вход был предназначен тебе» — не противоречат друг другу; будь
+// противоречие, обман был бы доказан, и священник говорит это прямо
+fragment EX_KEIN_WIDERSPRUCH in PROZESS_1925 {
+    kind clause;
+    locator "streit/5";
+    text de unofficial """Die Geschichte enthält über den Einlaß ins Gesetz zwei wichtige Erklärungen des Türhüters, eine am Anfang, eine am Ende. Die eine Stelle lautet: daß er ihm jetzt den Eintritt nicht gewähren könne und die andere: dieser Eingang war nur für dich bestimmt. Bestände zwischen diesen beiden Erklärungen ein Widerspruch, dann hättest du recht und der Türhüter hätte den Mann getäuscht. Nun besteht aber kein Widerspruch. Im Gegenteil, die erste Erklärung deutet sogar auf die zweite hin.""";
+    content_hash "sha256:62dba5d69fc2c9fde4ce5418b79fba8eadc628e9ae2e7dceb557f7893029c886";
+}
+
+// РАЗВЁРНУТОЕ основание второго прочтения: пост не покидает, врата закрывает
+// лишь в самом конце, не болтлив, неподкупен, к мольбам и озлоблению равно
+// нечувствителен
+fragment EX_PFLICHTTREU in PROZESS_1925 {
+    kind clause;
+    locator "streit/6";
+    text de unofficial """Durch viele Jahre verläßt er seinen Posten nicht und schließt das Tor erst ganz zuletzt, er ist sich der Wichtigkeit seines Dienstes sehr bewußt, denn er sagt: „Ich bin mächtig,“ er hat Ehrfurcht vor den Vorgesetzten, denn er sagt: „Ich bin nur der unterste Türhüter,“ er ist nicht geschwätzig, denn während der vielen Jahre stellt er nur wie es heißt, „teilnahmslose Fragen“, er ist nicht bestechlich, denn er sagt über ein Geschenk: „Ich nehme es nur an, damit du nicht glaubst, etwas versäumt zu haben,“ er ist, wo es um Pflichterfüllung geht, weder zu rühren noch zu erbittern, denn es heißt von dem Mann, „er ermüdet den Türhüter durch sein Bitten,“ schließlich deutet auch sein Äußeres auf einen pedantischen Charakter hin, die große Spitznase und der lange, dünne, schwarze, tartarische Bart. Kann es einen pflichttreueren Türhüter geben?""";
+    content_hash "sha256:aa44ee17c6c959072b46cd1441939b10b5c3870f4b2852b4572775efa5aec28f";
+}
+
+// ТРЕЩИНА, признанная самим священником: привратник простоват и самонадеян,
+// и оттого его понимание замутнено — «Lücken im Charakter»
+fragment EX_EINFALT in PROZESS_1925 {
+    kind clause;
+    locator "streit/7";
+    text de unofficial """Es ist nämlich nicht zu leugnen, daß er ein wenig einfältig und im Zusammenhang damit ein wenig eingebildet ist. Wenn auch seine Äußerungen über seine Macht und über die Macht der andern Türhüter und über deren sogar für ihn unerträglichen Anblick – ich sage, wenn auch alle diese Äußerungen an sich richtig sein mögen, so zeigt doch die Art, wie er diese Äußerungen vorbringt, daß seine Auffassung durch Einfalt und Überhebung getrübt ist. Die Erklärer sagen hierzu: „Richtiges Auffassen einer Sache und Mißverstehn der gleichen Sache schließen einander nicht vollständig aus.“ Jedenfalls aber muß man annehmen, daß jene Einfalt und Überhebung, so geringfügig sie sich vielleicht auch äußern, doch die Bewachung des Eingangs schwächen, es sind Lücken im Charakter des Türhüters.""";
+    content_hash "sha256:8fd8f898e7c173afbef4fae1ef0ada3e427ff5650fc9f1c61d10419db93693b2";
+}
+
+// ТРЕТЬЕ ПРОЧТЕНИЕ, названное священником отдельным мнением: обманут как раз
+// привратник
+fragment EX_DER_GETAEUSCHTE in PROZESS_1925 {
+    kind clause;
+    locator "streit/8";
+    text de unofficial """In diesem Falle gibt es sogar eine Meinung, nach welcher gerade der Türhüter der Getäuschte ist.""";
+    content_hash "sha256:23445a75f61ac773187c247e298b99c0623570d20642b3ba1f23503f452660ab";
+}
+
+// ОСНОВАНИЕ третьего прочтения: внутренности Закона он не знает, а того, чем
+// пугает просителя, боится сам
+fragment EX_KENNT_DAS_INNERE_NICHT in PROZESS_1925 {
+    kind clause;
+    locator "streit/9";
+    text de unofficial """Man sagt, daß er das Innere des Gesetzes nicht kennt, sondern nur den Weg, den er vor dem Eingang immer wieder abgehn muß. Die Vorstellungen, die er von dem Innern hat, werden für kindlich gehalten und man nimmt an, daß er das, wovor er dem Manne Furcht machen will, selbst fürchtet.""";
+    content_hash "sha256:aff1afa98b510ffad95772eb263ab165347ca5f9168abeea651fa5782c27a941";
+}
+
+// ВТОРОЕ основание третьего прочтения: свободный выше связанного, а
+// проситель свободен — сидит у врат добровольно, о принуждении притча не
+// говорит
+fragment EX_UNTERGEORDNET in PROZESS_1925 {
+    kind clause;
+    locator "streit/10";
+    text de unofficial """Vor allem ist der Freie dem Gebundenen übergeordnet. Nun ist der Mann tatsächlich frei, er kann hingehn, wohin er will, nur der Eingang in das Gesetz ist ihm verboten und überdies nur von einem Einzelnen, vom Türhüter. Wenn er sich auf den Schemel seitwärts vom Tor niedersetzt und dort sein Leben lang bleibt, so geschieht dies freiwillig, die Geschichte erzählt von keinem Zwang.""";
+    content_hash "sha256:1adf03ea2a7e38852615ef6258185fd8f07735c9698c6f036fe62a772d4d5232";
+}
+
+// ТРЕТЬЕ основание, и самое сильное: врата стоят открытыми ВСЕГДА, то есть
+// независимо от жизни просителя, — значит и закрыть их привратник не сможет
+fragment EX_KANN_NICHT_SCHLIESSEN in PROZESS_1925 {
+    kind clause;
+    locator "streit/11";
+    text de unofficial """Zuletzt spricht er nämlich vom Eingang und sagt: „Ich gehe jetzt und schließe ihn,“ aber am Anfang heißt es, daß das Tor zum Gesetz offensteht wie immer, steht es aber immer offen, immer, d. h. unabhängig von der Lebensdauer des Mannes, für den es bestimmt ist, dann wird es auch der Türhüter nicht schließen können.""";
+    content_hash "sha256:e7a26f53a75ec29a170aef07d98666569f9c82786ace00b6c52a21280a6ee509";
+}
+
+// ЧЕТВЁРТОЕ ПРОЧТЕНИЕ, и оно иного рода: судить привратника не вправе никто.
+// Он служитель Закона, стало быть принадлежит Закону, стало быть изъят из
+// человеческого суда — сомневаться в его достоинстве значит сомневаться в
+// Законе
+fragment EX_NIEMAND_DARF_URTEILEN in PROZESS_1925 {
+    kind clause;
+    locator "streit/12";
+    text de unofficial """Manche sagen nämlich, daß die Geschichte niemandem ein Recht gibt, über den Türhüter zu urteilen. Wie er uns auch erscheinen mag, so ist er doch ein Diener des Gesetzes, also zum Gesetz gehörig, also dem menschlichen Urteil entrückt. Man darf dann auch nicht glauben, daß der Türhüter dem Manne untergeordnet ist. Durch seinen Dienst auch nur an den Eingang des Gesetzes gebunden zu sein, ist unvergleichlich mehr als frei in der Welt zu leben. Der Mann kommt erst zum Gesetz, der Türhüter ist schon dort. Er ist vom Gesetz zum Dienst bestellt, an seiner Würdigkeit zu zweifeln, hieße am Gesetze zweifeln.“""";
+    content_hash "sha256:dc0934aca27642e9a963b92b60c15b458cc6efa512472aba6b4d7f32f502ac25";
+}
+
+// ВОЗРАЖЕНИЕ К. четвёртому прочтению: принять его значит держать за истину
+// всё, что говорит привратник, — а невозможность этого священник обосновал
+// сам
+fragment EX_ALLES_FUER_WAHR in PROZESS_1925 {
+    kind clause;
+    locator "streit/13";
+    text de unofficial """„Mit dieser Meinung stimme ich nicht überein,“ sagte K. kopfschüttelnd, „denn wenn man sich ihr anschließt, muß man alles, was der Türhüter sagt, für wahr halten. Daß das aber nicht möglich ist, hast du ja selbst ausführlich begründet.“""";
+    content_hash "sha256:2c6f1752bb9740afb3ea8d66d67a0737cbd419dae3721bf21bf8f6c1375ea62d";
+}
+
+// ОТВЕТ священника, которым спор кончается: держать за истину не нужно —
+// нужно держать за необходимое
+fragment EX_NOTWENDIG in PROZESS_1925 {
+    kind clause;
+    locator "streit/14";
+    text de unofficial """„Nein,“ sagte der Geistliche, „man muß nicht alles für wahr halten, man muß es nur für notwendig halten.“""";
+    content_hash "sha256:7f46a05d686cee64931d8019fdffe0cdb374baad99f01a6e1faaf1da5219d987";
+}
+
+// --- Толкование Писания: доктринальный слой --------------------------------
+//
+// ЧЕТВЁРТЫЙ УРОВЕНЬ, И ОН ЗАКОНЕН ПО ТЕКСТУ. Священник говорит, что
+// притча стои́т «in den einleitenden Schriften zum Gesetz», а прочтения
+// приписывает «Erklärer der Schrift» — толкователям Писания. Значит
+// внутри вымысла есть не только порядок у врат, но и доктрина о нём, и
+// правопорядок у неё тот же: Tuerhueterordnung. Роман — свидетель об
+// этой доктрине, как «Selbstwehr» — свидетель о порядке.
+//
+// ПОЧЕМУ ЭТО НЕ УКРАШЕНИЕ. Правила профиля §274 обязаны стоять на
+// редакции С lifecycle: `process-run` проецирует всегда, и правило,
+// повешенное на редакцию свидетеля, снимается проекцией на любой дате
+// (та же причина, по которой на порядок у врат заякорены нормы).
+
+source AUSLEGUNG_DER_SCHRIFT {
+    kind doctrine;
+    jurisdiction Tuerhueterordnung;
+    number "Meinungen der Erklärer der Schrift über den Türhüter";
+    label ru official "Мнения толкователей Писания о привратнике";
+    label de official "Meinungen der Erklärer der Schrift";
+}
+
+edition AUSLEGUNG_WIE_BEZEUGT of AUSLEGUNG_DER_SCHRIFT {
+    label ru official "Толкование в передаче главы «В соборе»: четыре соперничающих прочтения, ни одно из которых текст не уполномочивает выбрать";
+    language de;
+    officiality unofficial;
+    in_force @1000-01-01;
+    materialization_status ABSTRACT_ONLY;
+}
+
+// Прочтение первое, довод целиком: спасительное сообщение сделано, когда оно
+// уже не могло помочь
+fragment AU_TAEUSCHUNG_DES_MANNES in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/1";
+    text de unofficial """Der Türhüter hat die erlösende Mitteilung erst dann gemacht, als sie dem Manne nicht mehr helfen konnte.""";
+    content_hash "sha256:2841ffab563bfa7e35f763e35c5d450037988936c7d21ed8aba11f35fc712d88";
+}
+
+// Прочтение второе, довод целиком: он был только привратником и как
+// привратник исполнил долг
+fragment AU_PFLICHT_ERFUELLT in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/2";
+    text de unofficial """bedenke auch, daß er nur Türhüter war und als solcher hat er seine Pflicht erfüllt.""";
+    content_hash "sha256:5d79b0ef51607e0f476d3d006a5f84b7d799d7a14f51afa0db768fdb29480858";
+}
+
+// Основание второго прочтения, названное условно и потому проверяемое: будь
+// между двумя объявлениями противоречие, обман был бы доказан
+fragment AU_KEIN_WIDERSPRUCH in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/3";
+    text de unofficial """Bestände zwischen diesen beiden Erklärungen ein Widerspruch, dann hättest du recht und der Türhüter hätte den Mann getäuscht. Nun besteht aber kein Widerspruch.""";
+    content_hash "sha256:a79b22f012251f3e2025064cfbfe1162b4841c0fdd4150e2a118cee715ee7bfd";
+}
+
+// Возражение второму прочтению: этого, кому вход предназначен, он был обязан
+// впустить
+fragment AU_PFLICHT_WAR_EINLASSEN in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/4";
+    text de unofficial """Seine Pflicht war es vielleicht, alle Fremden abzuwehren, diesen Mann aber, für den der Eingang bestimmt war, hätte er einlassen müssen.""";
+    content_hash "sha256:d2d929c9612af6c5bd923f6f3183327c89d28b90d19dc597af84e2748adaad54";
+}
+
+// Прочтение третье в одной строке: обманут как раз привратник
+fragment AU_DER_GETAEUSCHTE in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/5";
+    text de unofficial """gerade der Türhüter der Getäuschte ist""";
+    content_hash "sha256:f0a56ab4f5a14646f207b6b4b8312605fb8751ada7738543e9caa226a77b83f7";
+}
+
+// Основание третьего прочтения: внутренности Закона он не знает — знает лишь
+// путь, который обходит перед входом
+fragment AU_KENNT_DAS_INNERE_NICHT in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/6";
+    text de unofficial """Man sagt, daß er das Innere des Gesetzes nicht kennt, sondern nur den Weg, den er vor dem Eingang immer wieder abgehn muß.""";
+    content_hash "sha256:bcd6c3ef1755915697714ea51fa3114db11d6cf332f74557fdd0dca78ddcf047";
+}
+
+// Признание священника, ставшее посылкой возражения: понимание привратника
+// замутнено простотой и самомнением
+fragment AU_EINFALT_TRUEBT in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/7";
+    text de unofficial """so zeigt doch die Art, wie er diese Äußerungen vorbringt, daß seine Auffassung durch Einfalt und Überhebung getrübt ist.""";
+    content_hash "sha256:261f8f46451ddb72e8d9a276c99e9f25846638ce23bc6eea23a1c3954ed72dae";
+}
+
+// Прочтение четвёртое: служитель Закона изъят из человеческого суда
+fragment AU_DIENER_DES_GESETZES in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/8";
+    text de unofficial """so ist er doch ein Diener des Gesetzes, also zum Gesetz gehörig, also dem menschlichen Urteil entrückt.""";
+    content_hash "sha256:b364a0408a6375f29b52a8b942b102f779e1f0b3899816b0bd9c6bba6d2f6943";
+}
+
+// Ход Йозефа К., которым третье прочтение возвращается к первому: обман
+// привратника неизбежно переносится на просителя
+fragment AU_TAEUSCHUNG_UEBERTRAEGT_SICH in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/9";
+    text de unofficial """wenn der Türhüter aber getäuscht ist, dann muß sich seine Täuschung notwendig auf den Mann übertragen.""";
+    content_hash "sha256:b598fa737637a9308d7810de49c4f27480e8618f004a46ca3b35f3972c401b47";
+}
+
+// Возражение четвёртому прочтению: принять его значит держать за истину всё,
+// что говорит привратник
+fragment AU_ALLES_FUER_WAHR in AUSLEGUNG_WIE_BEZEUGT {
+    kind clause;
+    locator "auslegung/10";
+    text de unofficial """muß man alles, was der Türhüter sagt, für wahr halten.""";
+    content_hash "sha256:3dc238d8d436b949fc8cc4da87e0098f154e1459667cc2b559ada4fe4e277208";
+}

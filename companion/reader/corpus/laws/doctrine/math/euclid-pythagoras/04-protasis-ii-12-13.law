@@ -1,0 +1,115 @@
+// II.12 и II.13 — тупоугольный и остроугольный случаи, замыкающие
+// ТРИХОТОМИЮ над импортированным треугольником книги I.
+//
+// Головы — `grc.euclid.stoicheia_i::amblygonion` / `oxygonion`.
+// Существование треугольника — `trigonon_synistatai` (I.20 книги I).
+// Прямоугольность — `orthogonion` (I.48 книги I), не дублируется здесь.
+// Определение I.21 читается целочисленным прочтением (INTEGER_READING):
+// байты ὅρος принадлежат stoicheia_i.
+
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+use self::{
+    INTEGER_READING,
+    STO_II12,
+    STO_II13,
+};
+
+@source(STO_II12, INTEGER_READING)
+rule AmblygonionProsTritei(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label grc official "Ἐν τοῖς ἀμβλυγωνίοις τριγώνοις τὸ ἀπὸ τῆς τὴν ἀμβλεῖαν γωνίαν ὑποτεινούσης πλευρᾶς τετράγωνον μεῖζόν ἐστι τῶν ἀπὸ τῶν τὴν ἀμβλεῖαν γωνίαν περιεχουσῶν πλευρῶν τετραγώνων";
+    label ru unofficial "II.12, угол против третьей стороны: квадрат третьей БОЛЬШЕ суммы квадратов первых двух — треугольник тупоугольный";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b < c * c);
+    then grc.euclid.stoicheia_i::amblygonion(t);
+}
+
+@source(STO_II12, INTEGER_READING)
+rule AmblygonionProsProtei(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "II.12, угол против первой стороны: квадрат первой БОЛЬШЕ суммы квадратов второй и третьей — треугольник тупоугольный";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (b * b + c * c < a * a);
+    then grc.euclid.stoicheia_i::amblygonion(t);
+}
+
+@source(STO_II12, INTEGER_READING)
+rule AmblygonionProsDeuterai(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "II.12, угол против второй стороны: квадрат второй БОЛЬШЕ суммы квадратов первой и третьей — треугольник тупоугольный";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + c * c < b * b);
+    then grc.euclid.stoicheia_i::amblygonion(t);
+}
+
+@source(STO_II13, INTEGER_READING)
+rule OxygonionKataPasasTasGonias(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "II.13 при всех трёх позициях: квадрат на стороне против угла МЕНЬШЕ суммы квадратов двух других при КАЖДОЙ позиции — треугольник остроугольный";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b > c * c)
+        and (b * b + c * c > a * a)
+        and (a * a + c * c > b * b);
+    then grc.euclid.stoicheia_i::oxygonion(t);
+}
+
+@source(INTEGER_READING)
+constraint OxygonionKaiOrthogonionAsymbata(t: grc.euclid.stoicheia_i::Trigonon) {
+    label ru unofficial "инвариант §93.1: остроугольный и прямоугольный — разные роды";
+    when grc.euclid.stoicheia_i::oxygonion(t);
+    require not grc.euclid.stoicheia_i::orthogonion(t);
+    severity error;
+    message "треугольник признан и остроугольным (II.13), и прямоугольным (I.48)";
+}
+
+@source(INTEGER_READING)
+constraint OxygonionKaiAmblygonionAsymbata(t: grc.euclid.stoicheia_i::Trigonon) {
+    label ru unofficial "инвариант §93.1: остроугольный и тупоугольный — разные роды";
+    when grc.euclid.stoicheia_i::oxygonion(t);
+    require not grc.euclid.stoicheia_i::amblygonion(t);
+    severity error;
+    message "треугольник признан и остроугольным (II.13), и тупоугольным (II.12)";
+}
+
+@source(INTEGER_READING)
+constraint OrthogonionKaiAmblygonionAsymbata(t: grc.euclid.stoicheia_i::Trigonon) {
+    label ru unofficial "инвариант §93.1: прямоугольный и тупоугольный — разные роды";
+    when grc.euclid.stoicheia_i::orthogonion(t);
+    require not grc.euclid.stoicheia_i::amblygonion(t);
+    severity error;
+    message "треугольник признан и прямоугольным (I.48), и тупоугольным (II.12)";
+}
+
+@source(INTEGER_READING)
+constraint TrichotomiaPliris(t: grc.euclid.stoicheia_i::Trigonon) {
+    label ru unofficial "инвариант §93.1, ПОЛНОТА: всякий треугольник принадлежит одному из трёх родов";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t);
+    require grc.euclid.stoicheia_i::orthogonion(t)
+        or grc.euclid.stoicheia_i::amblygonion(t)
+        or grc.euclid.stoicheia_i::oxygonion(t);
+    severity error;
+    message "тройка составляет треугольник, но не отнесена ни к одному из трёх родов";
+}

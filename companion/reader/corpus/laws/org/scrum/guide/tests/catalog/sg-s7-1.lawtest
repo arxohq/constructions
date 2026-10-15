@@ -1,0 +1,29 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-DEVELOPERSRESPONSIBLEFORSIZING" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": developer_of(entity_ref("urn:law:catalog:developersresponsibleforsizing:v0"), entity_ref("urn:law:catalog:developersresponsibleforsizing:v1")) { origin case_input; }
+        assert "cat-1": product_backlog_item_of(entity_ref("urn:law:catalog:developersresponsibleforsizing:v2"), entity_ref("urn:law:catalog:developersresponsibleforsizing:v1")) { origin case_input; }
+    }
+    evaluate truth(responsible_for_sizing(entity_ref("urn:law:catalog:developersresponsibleforsizing:v0"), entity_ref("urn:law:catalog:developersresponsibleforsizing:v2")));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-DOABLEITEMSAREREADY" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": doable_within_one_sprint(entity_ref("urn:law:catalog:doableitemsareready:v0")) { origin case_input; }
+    }
+    evaluate truth(ready_for_selection(entity_ref("urn:law:catalog:doableitemsareready:v0")));
+    expect truth_status == TRUE_ONLY;
+}

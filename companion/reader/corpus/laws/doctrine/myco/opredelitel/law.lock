@@ -1,0 +1,37 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:d21e1f197cdf8983afec3b7eabf70e238fb9e6183e5c21d1c9fef84dc2c68552",
+  "resources": [
+    {
+      "capability": "compile_time",
+      "contentHash": "sha256:650f372717a4fb1c31e32bacb9a7be6d5d2b04940daaaab205215db18480a890",
+      "id": "urn:myco:clir:opredelitel:param:gyromitra-boil-count",
+      "kind": "parameter-dataset",
+      "path": "gyromitra-boil-count.lawparam.json"
+    },
+    {
+      "capability": "compile_time",
+      "contentHash": "sha256:9130b794821e90930ec67faf797d59345754542c8ca4970508447f1a08a9db70",
+      "id": "urn:myco:clir:opredelitel:param:gyromitra-boil-minutes",
+      "kind": "parameter-dataset",
+      "path": "gyromitra-boil-minutes.lawparam.json"
+    },
+    {
+      "capability": "compile_time",
+      "contentHash": "sha256:8024b35d4a45f286c980ed077679b79a037cd4aa15b170edb0ec552d70f710e4",
+      "id": "urn:myco:clir:opredelitel:table:latency-syndrome",
+      "kind": "decision-table",
+      "path": "latency-syndrome.lawtable.json"
+    }
+  ],
+  "root": {
+    "artifactHash": "sha256:b9ff78fbb2af846de4d414cd7b72fb0d6cacc8d6db6a7cb0364871947765b6c0",
+    "name": "myco.opredelitel",
+    "namespace": "urn:myco:clir:opredelitel",
+    "sourceHash": "sha256:d425f911279e8bb7fcc2abefb212509a5eab00892d3ce3f2dda121caf0145cdd",
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,19 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// §164 в чистом виде, и назван самим источником: «Ich nehme es nur an, damit
+// du nicht glaubst, etwas versäumt zu haben» — приём состоялся, притязания
+// не возникло, и сказало это то самое лицо, чьё принятие могло бы его
+// породить.
+test "urn:query:vor-dem-gesetz-gifts-create-no-claim" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg09-1": gabe_angeboten(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg09-2": gabe_angenommen(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#DerTuerhueter"), entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+    }
+    evaluate truth(kein_anspruch_aus_annahme(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

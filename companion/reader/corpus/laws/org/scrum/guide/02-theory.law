@@ -1,0 +1,146 @@
+// Разделы 2 и 3-1…3-3: определение Scrum и три столпа эмпиризма.
+//
+// Раздел 2 говорит «Scrum requires a Scrum Master to foster an environment
+// where…» — единственная норма определения: ответственность Scrum Master-а
+// за среду. Три бутлета («PO orders the work…», «the Scrum Team turns…»,
+// «inspect and adjust») здесь описательны и предписаны ниже своими
+// разделами (5-2, 7-3, 6-4).
+//
+// Столпы записаны ОБЯЗАННОСТЯМИ ПОДДЕРЖАНИЯ с презумпцией (00-package.law,
+// решение 4): «must be visible», «must be inspected» — условия, которые
+// команда обязана держать, и нарушение обязано давать VIOLATED. Условие
+// презюмируется у всякой Scrum-команды; опровергает его эмпирический факт
+// противоположного; приоритет §116 отдаёт факту. Тело поражающего повторяет
+// конъюнкт презумпции (`scrum_team(t)`), иначе страты §111 разойдутся.
+//
+// Адаптация (3-3) — обязанность ДОСТИЖЕНИЯ: «the process … or the materials
+// … must be adjusted» наступает при отклонении, а «as soon as possible» срока
+// не даёт — окно открыто.
+
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+use self::{
+    Aspect,
+    Person,
+    SG_S2,
+    SG_S3_1,
+    SG_S3_2,
+    SG_S3_3,
+    Team,
+    scrum_master_of,
+    scrum_team,
+};
+
+// ═══ Раздел 2. Scrum Definition ══════════════════════════════════════════
+
+relation accountable_for_fostering_environment(p: Person, t: Team) kind institutional {
+    label en official "the Scrum Master is accountable for fostering the environment in which Scrum happens";
+}
+
+@source(SG_S2)
+rule ScrumRequiresScrumMasterToFosterEnvironment(p: Person, t: Team) strict {
+    label en official "In a nutshell, Scrum requires a Scrum Master to foster an environment where a Product Owner orders the work, the Scrum Team turns a selection of it into an Increment, and the Scrum Team and its stakeholders inspect and adjust";
+    when scrum_master_of(p, t);
+    then accountable_for_fostering_environment(p, t);
+}
+
+// ═══ Раздел 3-1. Transparency ════════════════════════════════════════════
+
+relation work_visible(t: Team) kind institutional {
+    label en official "the emergent process and work are visible to those performing the work as well as those receiving the work";
+}
+relation work_hidden(t: Team) kind empirical {
+    label en official "the emergent process or work is hidden from those performing or receiving it";
+}
+
+@source(SG_S3_1)
+rule WorkPresumedVisible(t: Team) defeasible {
+    label en official "Transparency: the work of a Scrum Team is presumed visible until the contrary is established";
+    when scrum_team(t);
+    then work_visible(t);
+}
+
+@source(SG_S3_1)
+rule HiddenWorkBreaksTransparency(t: Team) defeasible {
+    label en official "Transparency: work hidden from those performing or receiving it is not visible";
+    when scrum_team(t) and work_hidden(t);
+    then not work_visible(t);
+}
+
+@source(SG_S3_1)
+priority HiddenWorkBeatsPresumptionOfVisibility {
+    label en official "an established concealment prevails over the presumption of visibility";
+    prefer HiddenWorkBreaksTransparency over WorkPresumedVisible;
+    reason explicit_exception;
+}
+
+@source(SG_S3_1)
+rule TransparencyRequired(t: Team) strict {
+    label en official "The emergent process and work must be visible to those performing the work as well as those receiving the work";
+    when scrum_team(t);
+    then duty KeepWorkVisible {
+        bearer t;
+        maintain work_visible(t) during [@2020-11-18, infinity);
+    };
+}
+
+// ═══ Раздел 3-2. Inspection ══════════════════════════════════════════════
+
+relation artifacts_inspected(t: Team) kind institutional {
+    label en official "the Scrum artifacts and the progress toward agreed goals are inspected frequently and diligently";
+}
+relation inspection_lapsed(t: Team) kind empirical {
+    label en official "the Scrum artifacts or the progress toward agreed goals are not being inspected frequently and diligently";
+}
+
+@source(SG_S3_2)
+rule InspectionPresumed(t: Team) defeasible {
+    label en official "Inspection: the artifacts of a Scrum Team are presumed inspected until the contrary is established";
+    when scrum_team(t);
+    then artifacts_inspected(t);
+}
+
+@source(SG_S3_2)
+rule LapseBreaksInspection(t: Team) defeasible {
+    label en official "Inspection: a lapse in frequent and diligent inspection means the artifacts are not inspected";
+    when scrum_team(t) and inspection_lapsed(t);
+    then not artifacts_inspected(t);
+}
+
+@source(SG_S3_2)
+priority LapseBeatsPresumptionOfInspection {
+    label en official "an established lapse prevails over the presumption of inspection";
+    prefer LapseBreaksInspection over InspectionPresumed;
+    reason explicit_exception;
+}
+
+@source(SG_S3_2)
+rule InspectionRequired(t: Team) strict {
+    label en official "The Scrum artifacts and the progress toward agreed goals must be inspected frequently and diligently to detect potentially undesirable variances or problems";
+    when scrum_team(t);
+    then duty InspectArtifactsAndProgress {
+        bearer t;
+        maintain artifacts_inspected(t) during [@2020-11-18, infinity);
+    };
+}
+
+// ═══ Раздел 3-3. Adaptation ══════════════════════════════════════════════
+
+relation deviation_outside_acceptable_limits(t: Team, a: Aspect) kind empirical {
+    label en official "an aspect of the process deviates outside acceptable limits, or the resulting product is unacceptable";
+}
+relation adjusted(t: Team, a: Aspect) kind empirical {
+    label en official "the process being applied or the materials being produced have been adjusted in that aspect";
+}
+
+@source(SG_S3_3)
+rule DeviationRequiresAdjustment(t: Team, a: Aspect) strict {
+    label en official "If any aspects of a process deviate outside acceptable limits or if the resulting product is unacceptable, the process being applied or the materials being produced must be adjusted";
+    when scrum_team(t) and deviation_outside_acceptable_limits(t, a);
+    then duty AdjustProcessOrMaterials {
+        bearer t;
+        achieve adjusted(t, a) during [@2020-11-18, infinity);
+    };
+}

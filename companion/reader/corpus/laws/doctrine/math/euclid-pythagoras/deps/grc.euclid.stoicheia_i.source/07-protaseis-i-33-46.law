@@ -1,0 +1,240 @@
+// Προτάσεις λγ΄—μϛ΄ (I.33—I.46)
+//
+// I.33—34, 39—40, 42, 44, 46 — равенство сторон, углов и параллельность.
+// I.35—38, 41, 43, 45 — равенство площадей: минимальная проверка предъявленного
+// равенства фигур (полного слоя площади нет).
+
+use self::{
+    Eutheia,
+    Gonion,
+    Parallelogrammon,
+    STO_PROP33,
+    STO_PROP34,
+    STO_PROP35,
+    STO_PROP36,
+    STO_PROP37,
+    STO_PROP38,
+    STO_PROP39,
+    STO_PROP40,
+    STO_PROP41,
+    STO_PROP42,
+    STO_PROP43,
+    STO_PROP44,
+    STO_PROP45,
+    STO_PROP46,
+    Semeion,
+    Trigonon,
+    isos_gonia,
+    isos_mikos,
+    parallelogrammon,
+    parallelogrammon_tes_figuras,
+    paralleloi,
+    tetragonon,
+};
+
+relation epizzeugnyousai(l: Eutheia, m: Eutheia, n: Eutheia, p: Eutheia) kind empirical {
+    label ru unofficial "соединяющие равные параллельные отрезки";
+}
+
+relation antipodoi_pleurai(p: Parallelogrammon, a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind empirical {
+    label ru unofficial "противолежащие стороны ab и cd параллелограмма";
+}
+
+relation antipodoi_gonia(p: Parallelogrammon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "противолежащие углы параллелограмма";
+}
+
+relation diametros_parallelogrammou(p: Parallelogrammon, a: Semeion, b: Semeion) kind empirical {
+    label ru unofficial "диагональ параллелограмма";
+}
+
+relation dicha_temnei_parallelogrammon(p: Parallelogrammon) kind institutional {
+    label ru unofficial "диагональ делит параллелограмм пополам";
+}
+
+relation isa_schema(p: Parallelogrammon, q: Parallelogrammon) kind institutional {
+    label grc official "ἴσα παραλληλόγραμμα";
+    label ru unofficial "параллелограммы равны как фигуры";
+}
+
+relation isa_trigona(t: Trigonon, u: Trigonon) kind institutional {
+    label ru unofficial "треугольники равны как фигуры";
+}
+
+relation diplasion(p: Parallelogrammon, t: Trigonon) kind institutional {
+    label grc official "διπλάσιόν ἐστι";
+    label ru unofficial "параллелограмм вдвое больше треугольника";
+}
+
+relation parallelogrammon_synestatai(p: Parallelogrammon, t: Trigonon, g: Gonion) kind empirical {
+    label ru unofficial "построен параллелограмм, равный треугольнику, в данном угле";
+}
+
+relation paraballein_ison(p: Parallelogrammon, t: Trigonon, g: Gonion) kind empirical {
+    label ru unofficial "к данной прямой приложен параллелограмм, равный треугольнику";
+}
+
+relation tetragonon_anagraphe(p: Parallelogrammon, a: Semeion, b: Semeion) kind empirical {
+    label ru unofficial "квадрат, описанный на отрезке ab";
+}
+
+relation isa_parallelogramma_baseos(p: Parallelogrammon, q: Parallelogrammon, l: Eutheia, m: Eutheia) kind empirical {
+    label ru unofficial "два параллелограмма на одном основании между теми же параллелями";
+}
+
+relation isa_trigona_baseos(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) kind empirical {
+    label ru unofficial "два треугольника на одном основании между теми же параллелями";
+}
+
+relation isa_trigona_isais_baseos(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) kind empirical {
+    label ru unofficial "два треугольника на равных основаниях между теми же параллелями";
+}
+
+relation parallelogrammon_kai_trigonon_baseos(p: Parallelogrammon, t: Trigonon) kind empirical {
+    label ru unofficial "параллелограмм и треугольник на одном основании между теми же параллелями";
+}
+
+relation parapleromata(p: Parallelogrammon, q: Parallelogrammon) kind empirical {
+    label ru unofficial "дополнения параллелограмма около диаметра";
+}
+
+relation polypleuron_ison(p: Parallelogrammon) kind empirical {
+    label ru unofficial "построен параллелограмм, равный данному многоугольнику";
+}
+
+@source(STO_PROP33)
+rule EpizzeugnyousaiIsos(
+    l: Eutheia, m: Eutheia, n: Eutheia, p: Eutheia,
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "αἱ ἐπιζευγνύουσαι τὰς ἴσας καὶ παραλλήλους ἴσαι τε καὶ παράλληλοί εἰσιν";
+    label ru unofficial "I.33: соединяющие равные параллельные сами равны и параллельны";
+    when epizzeugnyousai(l, m, n, p)
+        and supported(isos_mikos(a, b, c, d))
+        and supported(paralleloi(l, m));
+    then paralleloi(n, p);
+}
+
+@source(STO_PROP34)
+rule ParallelogrammonAntipodoiPleurai(
+    p: Parallelogrammon, a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "αἱ ἀπεναντίον πλευραί … ἴσαι ἀλλήλαις εἰσίν";
+    label ru unofficial "I.34: противолежащие стороны параллелограмма равны";
+    when supported(parallelogrammon(p)) and antipodoi_pleurai(p, a, b, c, d);
+    then isos_mikos(a, b, c, d);
+}
+
+@source(STO_PROP34)
+rule ParallelogrammonAntipodoiGoniai(p: Parallelogrammon, g: Gonion, h: Gonion) strict {
+    label grc official "αἱ ἀπεναντίον … γωνίαι ἴσαι ἀλλήλαις εἰσίν";
+    label ru unofficial "I.34: противолежащие углы параллелограмма равны";
+    when supported(parallelogrammon(p)) and antipodoi_gonia(p, g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP34)
+rule ParallelogrammonDiametrosDicha(
+    p: Parallelogrammon, a: Semeion, b: Semeion,
+) strict {
+    label grc official "ἡ διάμετρος αὐτὰ δίχα τέμνει";
+    label ru unofficial "I.34: диаметр делит параллелограмм пополам";
+    when supported(parallelogrammon(p)) and diametros_parallelogrammou(p, a, b);
+    then dicha_temnei_parallelogrammon(p);
+}
+
+@source(STO_PROP35)
+rule ProtasisI35Isa(
+    p: Parallelogrammon, q: Parallelogrammon, l: Eutheia, m: Eutheia,
+) strict {
+    label ru unofficial "I.35: параллелограммы на одном основании между теми же параллелями равны";
+    when isa_parallelogramma_baseos(p, q, l, m) and supported(paralleloi(l, m));
+    then isa_schema(p, q);
+}
+
+@source(STO_PROP36)
+rule ProtasisI36Isa(
+    p: Parallelogrammon, q: Parallelogrammon, l: Eutheia, m: Eutheia,
+) strict {
+    label ru unofficial "I.36: параллелограммы на равных основаниях между теми же параллелями равны";
+    when isa_parallelogramma_baseos(p, q, l, m) and supported(paralleloi(l, m));
+    then isa_schema(p, q);
+}
+
+@source(STO_PROP37)
+rule ProtasisI37Isa(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "I.37: треугольники на одном основании между теми же параллелями равны";
+    when isa_trigona_baseos(t, u, l, m) and supported(paralleloi(l, m));
+    then isa_trigona(t, u);
+}
+
+@source(STO_PROP38)
+rule ProtasisI38Isa(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "I.38: треугольники на равных основаниях между теми же параллелями равны";
+    when isa_trigona_isais_baseos(t, u, l, m) and supported(paralleloi(l, m));
+    then isa_trigona(t, u);
+}
+
+@source(STO_PROP39)
+rule ProtasisI39Paralleloi(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "I.39: равные треугольники на одном основании — в тех же параллелях";
+    when isa_trigona_baseos(t, u, l, m) and supported(isa_trigona(t, u));
+    then paralleloi(l, m);
+}
+
+@source(STO_PROP40)
+rule ProtasisI40Paralleloi(t: Trigonon, u: Trigonon, l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "I.40: равные треугольники на равных основаниях — в тех же параллелях";
+    when isa_trigona_isais_baseos(t, u, l, m) and supported(isa_trigona(t, u));
+    then paralleloi(l, m);
+}
+
+@source(STO_PROP41)
+rule ProtasisI41Diplasion(p: Parallelogrammon, t: Trigonon) strict {
+    label grc official "διπλάσιόν ἐστι τὸ παραλληλόγραμμον τοῦ τριγώνου";
+    label ru unofficial "I.41: параллелограмм вдвое больше треугольника на том же основании";
+    when parallelogrammon_kai_trigonon_baseos(p, t) and supported(parallelogrammon(p));
+    then diplasion(p, t);
+}
+
+@source(STO_PROP42)
+rule ParallelogrammonSynestatai(p: Parallelogrammon, t: Trigonon, g: Gonion) strict {
+    label grc official "τῷ δοθέντι τριγώνῳ ἴσον παραλληλόγραμμον συστήσασθαι";
+    label ru unofficial "I.42: построен параллелограмм, равный треугольнику";
+    when parallelogrammon_synestatai(p, t, g) and parallelogrammon_tes_figuras(p);
+    then parallelogrammon(p);
+}
+
+@source(STO_PROP43)
+rule ProtasisI43Parapleromata(p: Parallelogrammon, q: Parallelogrammon) strict {
+    label ru unofficial "I.43: дополнения параллелограмма около диаметра равны";
+    when parapleromata(p, q);
+    then isa_schema(p, q);
+}
+
+@source(STO_PROP44)
+rule ParaballeinIson(p: Parallelogrammon, t: Trigonon, g: Gonion) strict {
+    label grc official "παρὰ τὴν δοθεῖσαν εὐθεῖαν … ἴσον παραλληλόγραμμον παραβαλεῖν";
+    label ru unofficial "I.44: к прямой приложен параллелограмм, равный треугольнику";
+    when paraballein_ison(p, t, g) and parallelogrammon_tes_figuras(p);
+    then parallelogrammon(p);
+}
+
+@source(STO_PROP45)
+rule ProtasisI45Polypleuron(p: Parallelogrammon) strict {
+    label ru unofficial "I.45: построен параллелограмм, равный многоугольнику";
+    when polypleuron_ison(p) and parallelogrammon_tes_figuras(p);
+    then parallelogrammon(p);
+}
+
+@source(STO_PROP46)
+rule TetragononAnagraphe(
+    p: Parallelogrammon, a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "ἀπὸ τῆς δοθείσης εὐθείας τετράγωνον ἀναγράψαι";
+    label ru unofficial "I.46: квадрат на данной прямой";
+    when tetragonon_anagraphe(p, a, b)
+        and antipodoi_pleurai(p, a, b, c, d)
+        and supported(isos_mikos(a, b, c, d));
+    then tetragonon(p);
+}

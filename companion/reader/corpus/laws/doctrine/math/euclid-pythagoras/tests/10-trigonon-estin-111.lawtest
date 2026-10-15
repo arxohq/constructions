@@ -1,0 +1,25 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// Наименьший равносторонний в целых: z3 подобрал 1-1-1 под конъюнкцию
+// трёх строгих неравенств I.20 (1+1 > 1 трижды). Свидетель существования
+// с другого края, чем рукописный 2-3-4: там разносторонний, здесь
+// минимальный равносторонний, и оба обязаны быть треугольниками.
+test "urn:query:eucl-smt-111" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "eucl-t10-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 1, 1) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::trigonon_synistatai(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

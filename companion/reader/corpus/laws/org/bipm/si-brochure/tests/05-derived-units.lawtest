@@ -1,0 +1,56 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// Таблица 4, §2.3.4: ньютон — когерентная единица SI.
+test "urn:query:si-t05a-newton-coherent" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(coherent_si_unit(Newton));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SpecialNamedUnitIsCoherent);
+}
+
+// Таблица 4: N = kg m s^−2 — показатель секунды −2.
+test "urn:query:si-t05b-newton-second-exponent" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_exponent(Newton, Second, -2));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// Таблица 4: J = kg m^2 s^−2 — показатель метра 2.
+test "urn:query:si-t05c-joule-metre-exponent" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_exponent(Joule, Metre, 2));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// §2.3.4: базовая единица входит в когерентный набор и в полный набор единиц SI.
+test "urn:query:si-t05d-kilogram-si-unit" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_unit(Kilogram));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BaseUnitIsCoherent);
+    expect applied(CoherentUnitIsSiUnit);
+}
+
+// Таблица 4: F = kg^−1 m^−2 s^4 A^2 — показатель ампера 2.
+test "urn:query:si-t05e-farad-ampere-exponent" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_exponent(Farad, Ampere, 2));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

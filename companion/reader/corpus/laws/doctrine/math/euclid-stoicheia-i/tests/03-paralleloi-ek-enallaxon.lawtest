@@ -1,0 +1,38 @@
+language "law.core" version "0.2";
+package grc.euclid.stoicheia_i version "0.1.0";
+namespace "urn:grc:euclid:clir:stoicheia-i";
+
+// I.27: секущая EF, накрест лежащие равны — AB ∥ CD.
+test "urn:query:sto-i-27-parallel" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "sto-27-1": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB")) { origin case_input; }
+        assert "sto-27-2": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:CD")) { origin case_input; }
+        assert "sto-27-3": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:EF")) { origin case_input; }
+        assert "sto-27-4": gonion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:AEZ")) { origin case_input; }
+        assert "sto-27-5": gonion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:EZD")) { origin case_input; }
+        assert "sto-27-6": enallax_gonia(
+            entity_ref("urn:grc:euclid:stoicheia-i:case:line:EF"),
+            entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB"),
+            entity_ref("urn:grc:euclid:stoicheia-i:case:line:CD"),
+            entity_ref("urn:grc:euclid:stoicheia-i:case:angle:AEZ"),
+            entity_ref("urn:grc:euclid:stoicheia-i:case:angle:EZD"),
+        ) { origin case_input; }
+        assert "sto-27-7": isos_gonia(
+            entity_ref("urn:grc:euclid:stoicheia-i:case:angle:AEZ"),
+            entity_ref("urn:grc:euclid:stoicheia-i:case:angle:EZD"),
+        ) { origin case_input; }
+    }
+    evaluate truth(paralleloi(
+        entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB"),
+        entity_ref("urn:grc:euclid:stoicheia-i:case:line:CD"),
+    ));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

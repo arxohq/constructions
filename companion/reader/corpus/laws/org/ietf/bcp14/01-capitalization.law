@@ -1,0 +1,149 @@
+// RFC 8174: специальное значение несут ТОЛЬКО заглавные формы.
+//
+// ЭТО ВТОРОЙ ДОКУМЕНТ СВОДА, И ОН МЕНЯЕТ ПРОЧТЕНИЕ ПЕРВОГО. RFC 2119 сказал о
+// ключевых словах лишь «These words are often capitalized» — наблюдение о
+// практике, а не условие применения. Двадцать лет из этого выводили что
+// угодно: спор «нормативен ли строчный must в старом RFC» шёл в рабочих
+// группах и в трекерах реализаций. RFC 8174 (май 2017) закрыл его дословной
+// заменой абзаца: «The words have the meanings specified herein only when they
+// are in all capitals».
+//
+// ПОЧЕМУ УЗКОЕ ПРОЧТЕНИЕ — БАЗА, А ШИРОКОЕ — НАДСТРОЙКА. Толкование §152
+// только ДОБАВЛЯЕТ: правило под `include` выводится из базовой теории и без
+// выбранного прочтения не действует ни на одном деле. Значит базой обязано
+// стать то прочтение, которое действует само, — действующее право свода,
+// то есть узкое. Широкое (до-8174-е) прочтение живёт `interpretation`-ом:
+// дело, разбирающее спор о документе 2005 года, выбирает его явно, и тогда
+// строчный `must` снова связывает. Обратный порядок означал бы, что пакет
+// по умолчанию отвечает по отменённой практике.
+//
+// ОБА БАЗОВЫХ ПРАВИЛА `defeasible`, И ЭТО НЕ ВКУС. Надстройка обязана
+// ПОБЕЖДАТЬ отрицательное базовое правило, а приоритет §116 применяется
+// только внутри одной страты §110/§111: правило и поражающее его правило,
+// оказавшись в разных стратах, в одну конфликтную группу не попадают, и
+// приоритет молчит при полностью зелёном `lawc check`. Здесь все три правила
+// читают в теле ОДИН И ТОТ ЖЕ эмпирический предикат `keyword_written` и
+// потому лежат в одной страте по построению.
+
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+use self::{
+    AllCapitals,
+    Casing,
+    Keyword,
+    Lowercase,
+    RFC2119_ABSTRACT,
+    RFC2119_S1,
+    RFC8174_S1,
+    RFC8174_S2,
+    Requirement,
+    keyword_used,
+    keyword_written,
+};
+
+// ДВА ЯКОРЯ, И ОБА НЕСУЩИЕ. RFC 2119 §1 определяет слова сам («MUST … mean
+// that the definition is an absolute requirement»), RFC 8174 §2 сужает силу
+// до написания в верхнем регистре. С E-0095 `evaluate` проецирует
+// применимость редакции §92.3: с одним якорем на RFC 8174 правило молчало
+// бы все двадцать лет между 1997 и 2017 годами, и `MUST` первого дня свода
+// (BCP14-21) не давал бы обязанности вовсе.
+@source(RFC2119_S1, RFC8174_S2)
+rule CapitalisedKeywordCarriesTheDefinedMeaning(r: Requirement, k: Keyword) defeasible {
+    label en official "the words have the meanings specified herein only when they are in all capitals";
+    when keyword_written(r, k, AllCapitals);
+    then keyword_used(r, k);
+}
+
+// ОТРИЦАНИЕ ЗДЕСЬ НЕСУЩЕЕ, а не следствие открытого мира. RFC 8174 §2 не
+// умалчивает о строчных формах — он прямо говорит: «When these words are not
+// capitalized, they have their normal English meanings and are not affected by
+// this document». Молчание (`NEITHER`) было бы неотличимо от недоделки;
+// явный `FALSE` отличим и проверяется делом (сценарий BCP14-04).
+@source(RFC8174_S2)
+rule LowercaseKeywordCarriesNoDefinedMeaning(r: Requirement, k: Keyword) defeasible {
+    label en official "when these words are not capitalized, they have their normal English meanings and are not affected by this document";
+    when keyword_written(r, k, Lowercase);
+    then not keyword_used(r, k);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОЧТЕНИЕ ДО RFC 8174
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// КРИТЕРИЙ УМЕСТНОСТИ `include` СОБЛЮДЁН, и это стоит сказать прямо, потому
+// что чаще он нарушается. `include` уместен, когда толкование ВЫБИРАЕТ МЕЖДУ
+// ПРОЧТЕНИЯМИ, дающими РАЗНЫЕ нормы, и неуместен, когда стандарт качествует
+// содержание обязанности, а не её существование. Здесь именно первое: до мая
+// 2017 года из одного и того же документа выводились разные обязанности в
+// зависимости от того, считать ли строчный `must` ключевым словом, — и
+// «правильного» ответа текст RFC 2119 не давал. Дело обязано выбрать.
+//
+// ═══ ПОЧЕМУ ПРОЧТЕНИЕ ПОСТАВЛЯЕТ ПОСЫЛКУ, А НЕ ПОБЕЖДАЮЩЕЕ ПРАВИЛО ═════════
+//
+// Естественная запись — положительное правило ВНУТРИ толкования плюс
+// `priority`, побеждающий отрицательное правило базовой теории, — НЕ
+// КОМПИЛИРУЕТСЯ, и отказ громкий: `LDC-E1318` на `lawc lower` при полностью
+// зелёном `lawc check` (замерено 30.08.2026). Правила внутри толкования
+// получают SCOPED StableId (§152), поэтому объявленный там `priority` видит
+// только своих; сторона, названная именем правила базовой теории, «не
+// называет ни одного правила пакета».
+//
+// Поэтому обе стороны конфликта живут В БАЗЕ, а толкование поставляет им
+// ПОСЫЛКУ — предикат `lowercase_carries_force_by_earlier_practice`. Без
+// выбранного прочтения он не выводится ничем, положительное правило не
+// срабатывает, и база отвечает по узкому прочтению: строчное слово силы не
+// несёт. С выбранным — посылка появляется, правило срабатывает, приоритет
+// разрешает конфликт в пользу до-8174-й практики.
+//
+// ═══ ПОЧЕМУ ПРАВИЛО ТОЛКОВАНИЯ `strict` ═══════════════════════════════════
+//
+// Ранг правила §110 растёт от чтения ПОРАЖАЕМОГО предиката в теле, а
+// приоритет §116 применяется только внутри одной страты §111. Объяви правило
+// толкования `defeasible` — и его вывод стал бы поражаемым, положительное
+// базовое правило уехало бы стратой выше отрицательного, конфликтная группа
+// не собралась бы, и приоритет не применился бы ВООБЩЕ: `BOTH` вместо `TRUE`
+// при зелёных `check`, `lower` и пустых issues. `strict` держит посылку в
+// нулевой страте, и оба соперника остаются в одной. Сторож — BCP14-05:
+// сценарий требует `TRUE_ONLY`, а не «хотя бы не FALSE».
+
+relation lowercase_carries_force_by_earlier_practice(r: Requirement, k: Keyword)
+        kind institutional {
+    label en unofficial "under the practice preceding RFC 8174 this lowercase occurrence was read as a key word";
+}
+
+@source(RFC8174_S1)
+rule LowercaseKeywordUnderEarlierPracticeCarriesTheDefinedMeaning(
+    r: Requirement,
+    k: Keyword,
+) defeasible {
+    label en unofficial "under the earlier practice a lowercase occurrence of a key word carried its defined meaning";
+    when keyword_written(r, k, Lowercase)
+        and lowercase_carries_force_by_earlier_practice(r, k);
+    then keyword_used(r, k);
+}
+
+@source(RFC8174_S1)
+priority EarlierPracticeBeatsTheCapitalisationRule {
+    label en unofficial "where the earlier practice is chosen, the lowercase occurrence binds notwithstanding the later clarification";
+    prefer LowercaseKeywordUnderEarlierPracticeCarriesTheDefinedMeaning over LowercaseKeywordCarriesNoDefinedMeaning;
+    // `explicit_exception`, а НЕ `lex_posterior`: конфликт разрешается в
+    // пользу БОЛЕЕ РАННЕГО прочтения — прочтение потому и называется
+    // до-8174-м. Записать `lex_posterior` значило бы утверждать обратное.
+    reason explicit_exception;
+}
+
+// ТОЛКОВАНИЕ ОТНЕСЕНО К ABSTRACT RFC 2119, а не к разделу: спорна была именно
+// фраза «These words are often capitalized», и заменил её RFC 8174 §2 тоже
+// целиком. Фрагмент `RFC2119_ABSTRACT` заведён ради этой ссылки.
+interpretation PreRfc8174Practice of RFC2119_ABSTRACT {
+    status disputed;
+    label en unofficial "pre-2017 reading: RFC 2119 said only that the key words 'are often capitalized', so lowercase occurrences were argued to carry the same force";
+
+    rule EarlierPracticeAppliesToEveryLowercaseKeyword(r: Requirement, k: Keyword) strict {
+        label en unofficial "before RFC 8174 every lowercase occurrence of a key word was argued to carry its defined meaning";
+        when keyword_written(r, k, Lowercase);
+        then lowercase_carries_force_by_earlier_practice(r, k);
+    }
+}

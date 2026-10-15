@@ -1,0 +1,381 @@
+// Source-модель BCP 14: закреплённые байты обоих RFC свода и фрагменты
+// всех их разделов.
+//
+// ФАЙЛ ПОРОЖДАЕТСЯ. Правится только генератором —
+// `corpus/tools/sources/sync/sync_bcp14_fragments.py`; сверка без записи — его
+// же ключом `--check`. Тексты вырезаются из `sources/rfc2119/en.txt` и
+// `sources/rfc8174/en.txt`, поэтому разойтись с публикацией они не могут.
+//
+// ПРОВЕНАНС ЗДЕСЬ ЛУЧШЕ, ЧЕМ У ЛЮБОГО ДРУГОГО ПАКЕТА КОРПУСА, и это следствие
+// устройства серии, а не нашего усердия. Канонический формат RFC — плоский
+// US-ASCII текст, и `https://www.rfc-editor.org/rfc/rfc2119.txt` отдаёт САМУ
+// публикацию, а не её отрисовку: закрепляются байты издателя без единого
+// преобразования. Поэтому здесь стоит `PINNED_OFFICIAL_BYTES`, а не
+// `PINNED_UNOFFICIAL_COPY`, каким закреплены Конвенция о геноциде, ДНЯО и
+// Римский статут, — и это утверждение проверяемо: sha256 обоих документов
+// закреплён в `corpus/tools/sources/fetch/fetch_bcp14_texts.py`, и `--check`
+// отказывает громко, если издатель однажды отдаст другой файл под тем же URL.
+//
+// ОПУБЛИКОВАННЫЙ RFC НЕ РЕДАКТИРУЕТСЯ НИКОГДА. Ошибки ведутся отдельным
+// журналом errata; исправленный текст выходит НОВЫМ номером с заголовком
+// `Obsoletes:`. Это ровно инвариант 1 настоящего репозитория (`release/` не
+// правится, расхождение со `spec/` и есть накопленный журнал errata) — только
+// у IETF он старше на тридцать лет. Следствие для закрепления: ревизия
+// документа не нужна вовсе, достаточно номера.
+//
+// ПОЧЕМУ У ПАКЕТА ДВА `source`, А НЕ ДВЕ РЕДАКЦИИ ОДНОГО. RFC 8174 несёт
+// заголовок `Updates: 2119`, а не `Obsoletes: 2119`: он ИЗМЕНЯЕТ прочтение
+// RFC 2119, но не заменяет его, и оба документа входят в свод одновременно.
+// Это два самостоятельных акта со своей нумерацией разделов, своим автором и
+// своей датой, а не два состояния одного текста.
+//
+// ПОЧЕМУ ЗДЕСЬ НЕТ `revision`. Соблазн записать `revision { previous
+// RFC2119_EN; next …; relation amends; }` велик: RFC 8174 §2 даёт дословную
+// замену («=== OLD === … === NEW ===»), то есть является амендментом в самом
+// строгом смысле. Но `revision` §31 связывает две РЕДАКЦИИ одного документа, а
+// сводной редакции RFC 2119 с учтённой правкой НЕ СУЩЕСТВУЕТ и существовать не
+// может: опубликованный RFC не переиздаётся. Объявить `next` было бы
+// объявлением документа, которого нет. Связь выражена тем, что издатель для
+// неё и завёл, — ссылкой §28 (`RFC8174_UPDATES_RFC2119`), отвечающей заголовку
+// `Updates:`. Это и есть тот случай, когда «неизменяемость текста» перестаёт
+// быть красивыми словами и становится ограничением модели.
+//
+// `retrieved_at` — константа, а не момент сборки (DECISION-0005 п. 6).
+//
+// ДАТА ПРИНЯТИЯ — ПЕРВОЕ ЧИСЛО НАЗВАННОГО МЕСЯЦА, И ЭТО ОБЪЯВЛЕННОЕ
+// СОГЛАШЕНИЕ, А НЕ НАЙДЕННЫЙ ФАКТ. RFC датируется с точностью до месяца:
+// шапка RFC 2119 несёт «March 1997», шапка RFC 8174 — «May 2017», дня в
+// публикации нет вовсе. Машине редакций §31/D1 и окнам норм §140 нужна дата,
+// и взята самая ранняя, совместимая с источником, — первое число месяца.
+// Ни один сценарий пакета на выборе дня внутри месяца не держится: ближайшая
+// проверка границы — пара BCP14-20/21 на СУТКАХ по обе стороны первого
+// числа марта 1997 года.
+
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// ═══ RFC 2119 ═════════════════════════════════════════════════════════
+
+source RFC2119 {
+    kind best_current_practice;
+    jurisdiction IETF;
+    authority IETF;
+    number "RFC 2119, BCP 14";
+    label en official "Key words for use in RFCs to Indicate Requirement Levels";
+}
+
+edition RFC2119_EN of RFC2119 {
+    label en official "RFC 2119 (S. Bradner)";
+    language en;
+    officiality official;
+    adopted @1997-03-01;
+    in_force [@1997-03-01, infinity);
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication RFC2119_EN_TEXT of RFC2119_EN {
+    media_type "text/plain; charset=us-ascii";
+    uri "https://www.rfc-editor.org/rfc/rfc2119.txt";
+    retrieved_at @2026-08-30T09:00:00Z;
+    content_hash "sha256:3c2ceb7bfc84cd34720f4a5271338ab9d8280d34bdd1eb250c64306202f2ed8b";
+    local_path "sources/rfc2119/en.txt";
+}
+
+// Abstract — НЕ раздел (в знаменатель учёта не входит); закреплён потому, что RFC 8174 §2 заменяет именно его текст
+fragment RFC2119_ABSTRACT in RFC2119_EN {
+    kind section;
+    locator "abstract";
+    text en official """Abstract
+
+   In many standards track documents several words are used to signify
+   the requirements in the specification.  These words are often
+   capitalized.  This document defines these words as they should be
+   interpreted in IETF documents.  Authors who follow these guidelines
+   should incorporate this phrase near the beginning of their document:
+
+      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in
+      RFC 2119.
+
+   Note that the force of these words is modified by the requirement
+   level of the document in which they are used.""";
+    content_hash "sha256:bb5ab2fc6f2a847cd257301a355d2ad89fb38d1db6ad191fffdb9910d0e36c84";
+}
+
+// Раздел 1. MUST / REQUIRED / SHALL — абсолютное требование спецификации
+fragment RFC2119_S1 in RFC2119_EN {
+    kind section;
+    locator "section/1";
+    text en official """1. MUST   This word, or the terms "REQUIRED" or "SHALL", mean that the
+   definition is an absolute requirement of the specification.""";
+    content_hash "sha256:5cab6a6cdaacb5846bf7f4fe518a564097de37d01907ec17a13aa9b1b34e2dee";
+}
+
+// Раздел 2. MUST NOT / SHALL NOT — абсолютный запрет спецификации
+fragment RFC2119_S2 in RFC2119_EN {
+    kind section;
+    locator "section/2";
+    text en official """2. MUST NOT   This phrase, or the phrase "SHALL NOT", mean that the
+   definition is an absolute prohibition of the specification.""";
+    content_hash "sha256:884711508117e29299cce379f7bb7982fad767b1c687368f763e7dc411c66392";
+}
+
+// Раздел 3. SHOULD / RECOMMENDED — отступление при веской причине и взвешенных последствиях
+fragment RFC2119_S3 in RFC2119_EN {
+    kind section;
+    locator "section/3";
+    text en official """3. SHOULD   This word, or the adjective "RECOMMENDED", mean that there
+   may exist valid reasons in particular circumstances to ignore a
+   particular item, but the full implications must be understood and
+   carefully weighed before choosing a different course.""";
+    content_hash "sha256:8c9c3078a377a323a624f0d338fcd33dd477d1cd1d0589e6c70c309a6abb39bb";
+}
+
+// Раздел 4. SHOULD NOT / NOT RECOMMENDED — зеркало раздела 3 для воздержания
+fragment RFC2119_S4 in RFC2119_EN {
+    kind section;
+    locator "section/4";
+    text en official """4. SHOULD NOT   This phrase, or the phrase "NOT RECOMMENDED" mean that
+   there may exist valid reasons in particular circumstances when the
+   particular behavior is acceptable or even useful, but the full
+   implications should be understood and the case carefully weighed
+   before implementing any behavior described with this label.""";
+    content_hash "sha256:d11bb22b8c2bac792bb06e030cd309855859488969ba22c069a70f90fb6b4897";
+}
+
+// Раздел 5. MAY / OPTIONAL — подлинно факультативно; и ДВА собственных MUST об интероперабельности
+fragment RFC2119_S5 in RFC2119_EN {
+    kind section;
+    locator "section/5";
+    text en official """5. MAY   This word, or the adjective "OPTIONAL", mean that an item is
+   truly optional.  One vendor may choose to include the item because a
+   particular marketplace requires it or because the vendor feels that
+   it enhances the product while another vendor may omit the same item.
+   An implementation which does not include a particular option MUST be
+   prepared to interoperate with another implementation which does
+   include the option, though perhaps with reduced functionality. In the
+   same vein an implementation which does include a particular option
+   MUST be prepared to interoperate with another implementation which
+   does not include the option (except, of course, for the feature the
+   option provides.)""";
+    content_hash "sha256:db65f499a701322e8256aa974259df0dd8373526445d422e59a6327934bd50ef";
+}
+
+// Раздел 6. Норма о нормотворчестве: императивы MUST применять только там, где это нужно для интероперации или ограничения вредоносного поведения
+fragment RFC2119_S6 in RFC2119_EN {
+    kind section;
+    locator "section/6";
+    text en official """6. Guidance in the use of these Imperatives
+
+   Imperatives of the type defined in this memo must be used with care
+   and sparingly.  In particular, they MUST only be used where it is
+   actually required for interoperation or to limit behavior which has
+   potential for causing harm (e.g., limiting retransmisssions)  For
+   example, they must not be used to try to impose a particular method
+   on implementors where the method is not required for
+   interoperability.""";
+    content_hash "sha256:c8aaceacfe0e5d2c85b12f611d76b4366b5e2c2916bc07049a49d2cc3ce448f5";
+}
+
+// Раздел 7. Security Considerations: последствия неисполнения бывают неочевидны, авторам следует их раскрывать
+fragment RFC2119_S7 in RFC2119_EN {
+    kind section;
+    locator "section/7";
+    text en official """7. Security Considerations
+
+   These terms are frequently used to specify behavior with security
+   implications.  The effects on security of not implementing a MUST or
+   SHOULD, or doing something the specification says MUST NOT or SHOULD
+   NOT be done may be very subtle. Document authors should take the time
+   to elaborate the security implications of not following
+   recommendations or requirements as most implementors will not have
+   had the benefit of the experience and discussion that produced the
+   specification.""";
+    content_hash "sha256:d36d14df22423878900f31ccfe6151e1ba278cc2c20a2a7ff68ec5ab6dcb836a";
+}
+
+// Раздел 8. Acknowledgments — граница, объявлена в articles.json
+fragment RFC2119_S8 in RFC2119_EN {
+    kind section;
+    locator "section/8";
+    text en official """8. Acknowledgments
+
+   The definitions of these terms are an amalgam of definitions taken
+   from a number of RFCs.  In addition, suggestions have been
+   incorporated from a number of people including Robert Ullmann, Thomas
+   Narten, Neal McBurnett, and Robert Elz.""";
+    content_hash "sha256:a06c5df62ba350052deb8b511dfacda0f6d306cf04649d65a9932f2520587927";
+}
+
+// Раздел 9. Author's Address — граница, объявлена в articles.json
+fragment RFC2119_S9 in RFC2119_EN {
+    kind section;
+    locator "section/9";
+    text en official """9. Author's Address
+
+      Scott Bradner
+      Harvard University
+      1350 Mass. Ave.
+      Cambridge, MA 02138
+
+      phone - +1 617 495 3864
+
+      email - sob@harvard.edu""";
+    content_hash "sha256:1375c67b62902990daec4c8bfeb8c54538cffb1f48e2c7cf06625c56159080d3";
+}
+
+// ═══ RFC 8174 ═════════════════════════════════════════════════════════
+
+source RFC8174 {
+    kind best_current_practice;
+    jurisdiction IETF;
+    authority IETF;
+    number "RFC 8174, BCP 14";
+    label en official "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words";
+}
+
+edition RFC8174_EN of RFC8174 {
+    label en official "RFC 8174 (B. Leiba)";
+    language en;
+    officiality official;
+    adopted @2017-05-01;
+    in_force [@2017-05-01, infinity);
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication RFC8174_EN_TEXT of RFC8174_EN {
+    media_type "text/plain; charset=us-ascii";
+    uri "https://www.rfc-editor.org/rfc/rfc8174.txt";
+    retrieved_at @2026-08-30T09:00:00Z;
+    content_hash "sha256:5ca0e2f90be0bc5928ee465f76518fee316dfa775aed885658a29a419cc293b7";
+    local_path "sources/rfc8174/en.txt";
+}
+
+// Раздел 1. Introduction: RFC 2119 сказал «are often capitalized», и это породило неясность
+fragment RFC8174_S1 in RFC8174_EN {
+    kind section;
+    locator "section/1";
+    text en official """1.  Introduction
+
+   RFC 2119 specifies common key words, such as "MUST", "SHOULD", and
+   "MAY", that may be used in protocol specifications.  It says that the
+   key words "are often capitalized," which has caused confusion about
+   how to interpret non-capitalized words such as "must" and "should".
+
+   This document updates RFC 2119 by clarifying that only UPPERCASE
+   usage of the key words have the defined special meanings.  This
+   document is part of BCP 14.""";
+    content_hash "sha256:7c292e03a608e54d036a33c6b23c620a740d00c120374ca621891aef5f8c0df6";
+}
+
+// Раздел 2. Замена текста RFC 2119: специальное значение — только у ЗАГЛАВНЫХ форм
+fragment RFC8174_S2 in RFC8174_EN {
+    kind section;
+    locator "section/2";
+    text en official """2.  Clarifying Capitalization of Key Words
+
+   The following change is made to [RFC2119]:
+
+   === OLD ===
+   In many standards track documents several words are used to signify
+   the requirements in the specification.  These words are often
+   capitalized.  This document defines these words as they should be
+   interpreted in IETF documents.  Authors who follow these guidelines
+   should incorporate this phrase near the beginning of their document:
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119.
+
+
+   === NEW ===
+   In many IETF documents, several words, when they are in all capitals
+   as shown below, are used to signify the requirements in the
+   specification.  These capitalized words can bring significant clarity
+   and consistency to documents because their meanings are well defined.
+   This document defines how those words are interpreted in IETF
+   documents when the words are in all capitals.
+
+   o  These words can be used as defined here, but using them is not
+      required.  Specifically, normative text does not require the use
+      of these key words.  They are used for clarity and consistency
+      when that is what's wanted, but a lot of normative text does not
+      use them and is still normative.
+
+   o  The words have the meanings specified herein only when they are in
+      all capitals.
+
+   o  When these words are not capitalized, they have their normal
+      English meanings and are not affected by this document.
+
+   Authors who follow these guidelines should incorporate this phrase
+   near the beginning of their document:
+
+      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+      "MAY", and "OPTIONAL" in this document are to be interpreted as
+      described in BCP 14 [RFC2119] [RFC8174] when, and only when, they
+      appear in all capitals, as shown here.
+
+   === END ===""";
+    content_hash "sha256:877b9617d0e5bb1bd21fcca1b07224dae94b167b41e335e550bdb8bb348adfce";
+}
+
+// Раздел 3. IANA Considerations — граница, объявлена в articles.json
+fragment RFC8174_S3 in RFC8174_EN {
+    kind section;
+    locator "section/3";
+    text en official """3.  IANA Considerations
+
+   This document does not require any IANA actions.""";
+    content_hash "sha256:ccd753b753d8360ec6d752df52dadc544fbbfc3851e0804a0bfdbf1b3ea88b3b";
+}
+
+// Раздел 4. Security Considerations — граница, объявлена в articles.json
+fragment RFC8174_S4 in RFC8174_EN {
+    kind section;
+    locator "section/4";
+    text en official """4.  Security Considerations
+
+   This document is purely procedural; there are no related security
+   considerations.""";
+    content_hash "sha256:c9e392b79bfef29b14693186262b4a8e2e4d63e9af014299a94a25a05a4f4672";
+}
+
+// Раздел 5. Normative References — граница, объявлена в articles.json
+fragment RFC8174_S5 in RFC8174_EN {
+    kind section;
+    locator "section/5";
+    text en official """5.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
+Author's Address
+
+   Barry Leiba
+   Huawei Technologies
+
+   Phone: +1 646 827 0648
+   Email: barryleiba@computer.org
+   URI:   http://internetmessagingtechnology.org/""";
+    content_hash "sha256:42c10cfb58c475392d56db1656e1dddc73832e1382d860aa3f927f343a8e5a18";
+}
+
+// Заголовок `Updates: 2119` в шапке RFC 8174 — машиночитаемое
+// объявление самого издателя о том, что этот документ меняет
+// прочтение того. Локатор указывает на Abstract: именно его
+// текст заменён разделом 2 RFC 8174. См. шапку файла о том,
+// почему связь записана ссылкой §28, а не `revision` §31.
+reference RFC8174_UPDATES_RFC2119 {
+    source RFC2119;
+    locator "abstract";
+    // §30.2 требует момент разрешения ссылки; в срезе 0.1
+    // допустимо единственное значение — `legal_time`.
+    resolve_at legal_time;
+    label en official "Updates: 2119 (RFC 8174, May 2017)";
+}

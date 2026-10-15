@@ -1,0 +1,81 @@
+// Ықшам тұлғалар (§§33—34 раздела «Сөз сазы») — реестровый №53.
+//
+// ЧТО ЗДЕСЬ ЗА ПРАВО. §33 — полная и сокращённая формы глагола сосуществуют
+// (келіп қалды и кеп қалды, барамын и барам, барғаннан соң, барған соң и
+// барғасын), и произносить надо РОВНО ТУ, что дана. §34 — в стихе окончание
+// -ды, -ді ради размера и рифмы сокращается до -д и звучит даже с т
+// (тілдесет, есет вместо тілдеседі, еседі).
+//
+// ЗАПРЕТ ЗДЕСЬ ДВУСТОРОННИЙ, И ЭТО РЕДКОСТЬ. «Кеп, барам, барғасын, барғамын
+// деп жазылғанды келіп, барамын, барғаннан соң, барғанмын деп айтуға (оқуға)
+// БОЛМАЙДЫ немесе КЕРІСІНШЕ: толық түрінде беріліп тұрса, оны қысқартып
+// айтуға болмайды». Обе половины выражены раздельно: нельзя разворачивать
+// сокращённое и нельзя сокращать полное. Слить их значило бы потерять
+// симметрию, ради которой источник и написал «керісінше».
+//
+// §34 ДАЁТ РАЗРЕШЕНИЕ, А НЕ ОБЯЗАННОСТЬ. «Ықшамдалып, жалаң -д түрінде
+// қолданылуы МҮМКІН», «тіпті т дыбысымен де айтылады» — оба сказаны как
+// возможность, и вторая норма поражаема: источник не утверждает, что т звучит
+// всегда.
+//
+// ЗАПИСАННЫЕ ГРАНИЦЫ.
+//   - какая форма дана в тексте — факт дела: движок не разбирает строку;
+//   - вариантность звучания вообще — срез №52 (§§30—32), и «звучит как дано»
+//     там уже есть для СЛОВА; здесь та же формула сказана о ФОРМЕ ГЛАГОЛА, и
+//     это отдельная клетка другого параграфа, а не повтор;
+//   - опускание узких ы, і в стихе — §14 в срезе №50; здесь стих меняет
+//     ОКОНЧАНИЕ, а не выпадение звука в середине слова.
+
+language "law.core" version "0.2";
+package kz.grammar.yqsham_tulgalar version "0.1.0";
+namespace "urn:kz:grammar:clir:yqsham-tulgalar";
+
+pub entity EtistikTulgasy {
+    label kk-KZ official "мәтінде берілген нақты етістік тұлғасы";
+    label ru-KZ translation "конкретная форма глагола, данная в тексте";
+}
+
+pub relation yqsham_turinde_berilgen(w: EtistikTulgasy) kind empirical {
+    label kk-KZ official "тұлға ықшам түрінде берілген (кеп, барам, барғасын)";
+    label ru-KZ translation "форма дана в сокращённом виде";
+}
+
+pub relation tolyq_turinde_berilgen(w: EtistikTulgasy) kind empirical {
+    label kk-KZ official "тұлға толық түрінде берілген (келіп, барамын, барғаннан соң)";
+    label ru-KZ translation "форма дана в полном виде";
+}
+
+pub relation olengde_olshem_uiqas_talap_etedi(w: EtistikTulgasy) kind empirical {
+    label kk-KZ official "өлең өлшемі не ұйқасы ықшамдалуды талап етіп тұр";
+    label ru-KZ translation "размер либо рифма стиха требуют сокращения";
+}
+
+pub relation auyspaly_shaq_ushinshi_zhaq_zhalgauy(w: EtistikTulgasy) kind empirical {
+    label kk-KZ official "тұлғада ауыспалы шақтың ІІІ жақтағы ды, ді жалғауы келеді";
+    label ru-KZ translation "в форме стоит окончание III лица переходного времени -ды, -ді";
+}
+
+pub relation berilgen_turinde_aitylady(w: EtistikTulgasy) kind institutional {
+    label kk-KZ official "тұлға қалай берілсе, солай айтылады";
+    label ru-KZ translation "форма произносится ровно так, как дана";
+}
+
+pub relation yqshamdy_tolyq_etip_aituga_bolmaidy(w: EtistikTulgasy) kind institutional {
+    label kk-KZ official "ықшам жазылғанды толық етіп айтуға (оқуға) болмайды";
+    label ru-KZ translation "написанное сокращённо нельзя произносить полным";
+}
+
+pub relation tolyqty_qysqartyp_aituga_bolmaidy(w: EtistikTulgasy) kind institutional {
+    label kk-KZ official "толық түрінде берілгенді қысқартып айтуға болмайды";
+    label ru-KZ translation "данное полностью нельзя произносить сокращённо";
+}
+
+pub relation zhalang_d_turinde_qoldanyluy_mumkin(w: EtistikTulgasy) kind institutional {
+    label kk-KZ official "жалғау ықшамдалып, жалаң -д түрінде қолданылуы мүмкін";
+    label ru-KZ translation "окончание может сокращаться до одного -д";
+}
+
+pub relation t_dybysymen_de_aitylady(w: EtistikTulgasy) kind institutional {
+    label kk-KZ official "мұндай тұлғалар тіпті т дыбысымен де айтылады";
+    label ru-KZ translation "такие формы произносятся даже со звуком т";
+}

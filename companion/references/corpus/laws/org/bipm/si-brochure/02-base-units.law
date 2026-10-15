@@ -1,0 +1,155 @@
+// Таблица 2 и §2.3.1 (9-е издание) против §2.1.1 (8-е издание): семь базовых
+// единиц и то, чем каждая определена, с окнами вокруг 20 мая 2019.
+//
+// ДВЕ ДАТИРОВКИ, КАК У `us/liver-status`: `effective` на правиле читает
+// исполнитель, `in_force` редакций в sources.law читает проекция
+// `impact-editions`; правила 8-го издания якорятся только в его фрагменты,
+// правила 9-го — в свои и в указатель приложения 1 с датой вступления в
+// силу. Секунда, метр и кандела в обеих редакциях определены через те же
+// константы: их правила якорятся в ОБА фрагмента и не датированы.
+//
+// ТАБЛИЦЫ ЯКОРЯТСЯ В ОБЕ РЕДАКЦИИ. Узел с якорем только в одну редакцию
+// применим лишь пока та редакция в силе (машина применимости D1,
+// `edition_state`): таблица базовых единиц с одним якорем 9-го издания
+// молча пустела до 20.05.2019, и правила 8-го издания не находили посылок.
+// Измерено на этом пакете 06.09.2026: четыре сцены «до переопределения»
+// отвечали NEITHER при верных правилах.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+@source(SI9_TABLE_2, SI8_TABLE_1)
+pub relation base_unit(u: SiUnit, q: BaseQuantity, symbol: Text) kind empirical {
+    label en official "the unit is the SI base unit of the given base quantity, with the given symbol (Table 2)";
+    label ru unofficial "единица — базовая единица SI данной базовой величины с данным символом (таблица 2)";
+}
+
+@source(SI9_TABLE_2, SI8_TABLE_1)
+facts Table2 {
+    label en official "Table 2: SI base units";
+    label ru unofficial "Таблица 2: базовые единицы SI";
+    assert "t2-s": base_unit(Second, Time, "s") { }
+    assert "t2-m": base_unit(Metre, Length, "m") { }
+    assert "t2-kg": base_unit(Kilogram, Mass, "kg") { }
+    assert "t2-a": base_unit(Ampere, ElectricCurrent, "A") { }
+    assert "t2-k": base_unit(Kelvin, ThermodynamicTemperature, "K") { }
+    assert "t2-mol": base_unit(Mole, AmountOfSubstance, "mol") { }
+    assert "t2-cd": base_unit(Candela, LuminousIntensity, "cd") { }
+}
+
+pub relation defined_by_constant(u: SiUnit, c: DefiningConstant) kind institutional {
+    label en official "the unit is defined by fixing the numerical value of the defining constant";
+    label ru unofficial "единица определена фиксацией численного значения определяющей константы";
+}
+
+pub relation defined_by_reference(u: SiUnit, r: Reference) kind institutional {
+    label en official "the unit is defined by reference to a physical artefact, experiment or substance (8th edition)";
+    label ru unofficial "единица определена через физический артефакт, опыт или вещество (8-е издание)";
+}
+
+// --- Неизменные основания: секунда, метр, кандела --------------------------------
+
+@source(SI9_DEF_SECOND, SI8_DEF_SECOND)
+rule SecondByCaesiumFrequency(q: BaseQuantity, s: Text) strict {
+    label en official "the second is defined by the caesium 133 hyperfine transition frequency ∆νCs = 9 192 631 770 Hz (both editions)";
+    label ru unofficial "секунда определена частотой сверхтонкого перехода цезия-133 ∆νCs = 9 192 631 770 Гц (обе редакции)";
+    when base_unit(Second, q, s);
+    then defined_by_constant(Second, CaesiumFrequency);
+}
+
+@source(SI9_DEF_METRE, SI8_DEF_METRE)
+rule MetreBySpeedOfLight(q: BaseQuantity, s: Text) strict {
+    label en official "the metre is defined by the speed of light in vacuum c = 299 792 458 m/s (both editions)";
+    label ru unofficial "метр определён скоростью света в вакууме c = 299 792 458 м/с (обе редакции)";
+    when base_unit(Metre, q, s);
+    then defined_by_constant(Metre, SpeedOfLight);
+}
+
+@source(SI9_DEF_CANDELA, SI8_DEF_CANDELA)
+rule CandelaByLuminousEfficacy(q: BaseQuantity, s: Text) strict {
+    label en official "the candela is defined by the luminous efficacy Kcd = 683 lm/W of radiation of frequency 540 × 10^12 Hz (both editions)";
+    label ru unofficial "кандела определена световой эффективностью Kcd = 683 лм/Вт излучения частоты 540 × 10^12 Гц (обе редакции)";
+    when base_unit(Candela, q, s);
+    then defined_by_constant(Candela, LuminousEfficacy);
+}
+
+// --- Килограмм ----------------------------------------------------------------------
+
+@source(SI9_DEF_KILOGRAM, SI9_APP1_2018_INDEX)
+rule KilogramByPlanckConstant(q: BaseQuantity, s: Text) strict {
+    label en official "§2.3.1: the kilogram is defined by taking the Planck constant h to be 6.626 070 15 × 10^−34 J s (from 20 May 2019)";
+    label ru unofficial "§2.3.1: килограмм определён фиксацией постоянной Планка h = 6,626 070 15 × 10^−34 Дж·с (с 20 мая 2019)";
+    when base_unit(Kilogram, q, s);
+    then defined_by_constant(Kilogram, PlanckConstant);
+    effective [@2019-05-20, infinity);
+}
+
+@source(SI8_DEF_KILOGRAM)
+rule KilogramByInternationalPrototype(q: BaseQuantity, s: Text) strict {
+    label en official "8th ed., §2.1.1.2: the kilogram is equal to the mass of the international prototype of the kilogram (until 20 May 2019)";
+    label ru unofficial "8-е изд., §2.1.1.2: килограмм равен массе международного прототипа килограмма (до 20 мая 2019)";
+    when base_unit(Kilogram, q, s);
+    then defined_by_reference(Kilogram, InternationalPrototypeKilogram);
+    effective [-infinity, @2019-05-20);
+}
+
+// --- Ампер --------------------------------------------------------------------------
+
+@source(SI9_DEF_AMPERE, SI9_APP1_2018_INDEX)
+rule AmpereByElementaryCharge(q: BaseQuantity, s: Text) strict {
+    label en official "§2.3.1: the ampere is defined by taking the elementary charge e to be 1.602 176 634 × 10^−19 C (from 20 May 2019)";
+    label ru unofficial "§2.3.1: ампер определён фиксацией элементарного заряда e = 1,602 176 634 × 10^−19 Кл (с 20 мая 2019)";
+    when base_unit(Ampere, q, s);
+    then defined_by_constant(Ampere, ElementaryCharge);
+    effective [@2019-05-20, infinity);
+}
+
+@source(SI8_DEF_AMPERE)
+rule AmpereByForceBetweenConductors(q: BaseQuantity, s: Text) strict {
+    label en official "8th ed., §2.1.1.4: the ampere is the constant current producing a force of 2 × 10^−7 newton per metre between two parallel conductors 1 metre apart (until 20 May 2019)";
+    label ru unofficial "8-е изд., §2.1.1.4: ампер — постоянный ток, создающий силу 2 × 10^−7 ньютона на метр между двумя параллельными проводниками на расстоянии 1 м (до 20 мая 2019)";
+    when base_unit(Ampere, q, s);
+    then defined_by_reference(Ampere, ForceBetweenParallelConductors);
+    effective [-infinity, @2019-05-20);
+}
+
+// --- Кельвин -------------------------------------------------------------------------
+
+@source(SI9_DEF_KELVIN, SI9_APP1_2018_INDEX)
+rule KelvinByBoltzmannConstant(q: BaseQuantity, s: Text) strict {
+    label en official "§2.3.1: the kelvin is defined by taking the Boltzmann constant k to be 1.380 649 × 10^−23 J/K (from 20 May 2019)";
+    label ru unofficial "§2.3.1: кельвин определён фиксацией постоянной Больцмана k = 1,380 649 × 10^−23 Дж/К (с 20 мая 2019)";
+    when base_unit(Kelvin, q, s);
+    then defined_by_constant(Kelvin, BoltzmannConstant);
+    effective [@2019-05-20, infinity);
+}
+
+@source(SI8_DEF_KELVIN)
+rule KelvinByTriplePointOfWater(q: BaseQuantity, s: Text) strict {
+    label en official "8th ed., §2.1.1.5: the kelvin is the fraction 1/273.16 of the thermodynamic temperature of the triple point of water (until 20 May 2019)";
+    label ru unofficial "8-е изд., §2.1.1.5: кельвин — 1/273,16 термодинамической температуры тройной точки воды (до 20 мая 2019)";
+    when base_unit(Kelvin, q, s);
+    then defined_by_reference(Kelvin, TriplePointOfWater);
+    effective [-infinity, @2019-05-20);
+}
+
+// --- Моль -------------------------------------------------------------------------------
+
+@source(SI9_DEF_MOLE, SI9_APP1_2018_INDEX)
+rule MoleByAvogadroConstant(q: BaseQuantity, s: Text) strict {
+    label en official "§2.3.1: one mole contains exactly 6.022 140 76 × 10^23 elementary entities, the fixed numerical value of the Avogadro constant (from 20 May 2019)";
+    label ru unofficial "§2.3.1: один моль содержит ровно 6,022 140 76 × 10^23 элементарных сущностей — фиксированное значение постоянной Авогадро (с 20 мая 2019)";
+    when base_unit(Mole, q, s);
+    then defined_by_constant(Mole, AvogadroConstant);
+    effective [@2019-05-20, infinity);
+}
+
+@source(SI8_DEF_MOLE)
+rule MoleByCarbonTwelve(q: BaseQuantity, s: Text) strict {
+    label en official "8th ed., §2.1.1.6: the mole is the amount of substance containing as many elementary entities as there are atoms in 0.012 kilogram of carbon 12 (until 20 May 2019)";
+    label ru unofficial "8-е изд., §2.1.1.6: моль — количество вещества, содержащее столько элементарных сущностей, сколько атомов в 0,012 кг углерода-12 (до 20 мая 2019)";
+    when base_unit(Mole, q, s);
+    then defined_by_reference(Mole, CarbonTwelve);
+    effective [-infinity, @2019-05-20);
+}

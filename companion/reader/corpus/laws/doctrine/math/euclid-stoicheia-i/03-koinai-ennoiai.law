@@ -1,0 +1,156 @@
+// Κοιναὶ ἔννοιαι — шесть общих понятий (δ΄—ϛ΄ в источнике пропущены).
+
+use self::{
+    Eutheia,
+    Gonion,
+    STO_CN1,
+    STO_CN2,
+    STO_CN3,
+    STO_CN7,
+    STO_CN8,
+    STO_CN9,
+    Semeion,
+    diaphora_eutheion,
+    isos_gonia,
+    isos_mikos,
+    meizon_mikos,
+    mikos,
+};
+
+@source(STO_CN1)
+rule IsosMikosEkIsouMekous(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion, v: Integer,
+) strict {
+    label ru unofficial "CN1 на длинах: отрезки одной и той же длины равны";
+    when mikos(a, b, v) and mikos(c, d, v);
+    then isos_mikos(a, b, c, d);
+}
+
+@source(STO_CN1)
+rule IsosMikosEkTransitivity(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+    e: Semeion, f: Semeion,
+) strict {
+    label grc official "Τὰ τῷ αὐτῷ ἴσα καὶ ἀλλήλοις ἐστὶν ἴσα";
+    label ru unofficial "CN1: отрезки, равные одному и тому же, равны между собой";
+    when supported(isos_mikos(a, b, e, f)) and supported(isos_mikos(c, d, e, f));
+    then isos_mikos(a, b, c, d);
+}
+
+@source(STO_CN1)
+rule IsosGoniaEkTransitivity(a: Gonion, b: Gonion, c: Gonion) strict {
+    label grc official "Τὰ τῷ αὐτῷ ἴσα καὶ ἀλλήλοις ἐστὶν ἴσα";
+    label ru unofficial "CN1: углы, равные одному и тому же, равны между собой";
+    when supported(isos_gonia(a, b)) and supported(isos_gonia(c, b));
+    then isos_gonia(a, c);
+}
+
+@source(STO_CN1)
+rule IsosGoniaAntistrophe(a: Gonion, b: Gonion) strict {
+    label ru unofficial "CN1: равенство углов симметрично";
+    when supported(isos_gonia(a, b));
+    then isos_gonia(b, a);
+}
+
+@source(STO_CN1)
+rule IsosMikosAntistrophe(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label ru unofficial "CN1: равенство отрезков симметрично";
+    when supported(isos_mikos(a, b, c, d));
+    then isos_mikos(c, d, a, b);
+}
+
+@source(STO_CN2)
+relation prosthesis_eutheias(a: Semeion, b: Semeion, c: Semeion) kind empirical {
+    label grc official "προστεθῇ";
+    label ru unofficial "точка b между a и c — сложение отрезков на прямой";
+}
+
+@source(STO_CN2)
+rule IsaProstethenta(
+    a: Semeion, b: Semeion, c: Semeion,
+    d: Semeion, e: Semeion, f: Semeion,
+    x: Integer, y: Integer,
+) strict {
+    label grc official "ἐὰν ἴσοις ἴσα προστεθῇ, τὰ ὅλα ἐστὶν ἴσα";
+    label ru unofficial "CN2: к равным прибавлены равные — целые равны";
+    when prosthesis_eutheias(a, b, c) and prosthesis_eutheias(d, e, f)
+        and mikos(a, b, x) and mikos(d, e, x)
+        and mikos(b, c, y) and mikos(e, f, y)
+        and mikos(a, c, x + y) and mikos(d, f, x + y);
+    then isos_mikos(a, c, d, f);
+}
+
+@source(STO_CN3)
+rule IsaAphairethenta(
+    a: Semeion, b: Semeion, c: Semeion,
+    d: Semeion, e: Semeion, f: Semeion,
+    x: Integer, y: Integer,
+) strict {
+    label grc official "ἐὰν ἀπὸ ἴσων ἴσα ἀφαιρεθῇ, τὰ καταλειπόμενά ἐστιν ἴσα";
+    label ru unofficial "CN3: от равных отняты равные — остатки равны";
+    when prosthesis_eutheias(a, b, c) and prosthesis_eutheias(d, e, f)
+        and mikos(a, c, x) and mikos(d, f, x)
+        and mikos(a, b, y) and mikos(d, e, y)
+        and (x > y)
+        and mikos(b, c, x - y) and mikos(e, f, x - y);
+    then isos_mikos(b, c, e, f);
+}
+
+@source(STO_CN7)
+relation epharmoge_gonion(a: Gonion, b: Gonion) kind empirical {
+    label grc official "τὰ ἐφαρμόζοντα ἐπ' ἄλληλα";
+    label ru unofficial "углы совпадают при наложении";
+}
+
+@source(STO_CN7)
+rule IsosEkEpharmoge(a: Gonion, b: Gonion) strict {
+    label grc official "Καὶ τὰ ἐφαρμόζοντα ἐπ' ἄλληλα ἴσα ἀλλήλοις ἐστίν";
+    label ru unofficial "CN7: совпадающие при наложении углы равны";
+    when epharmoge_gonion(a, b);
+    then isos_gonia(a, b);
+}
+
+@source(STO_CN7)
+relation epharmoge_eutheias(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind empirical {
+    label ru unofficial "отрезки совпадают при наложении";
+}
+
+@source(STO_CN7)
+rule IsosMikosEkEpharmoge(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label ru unofficial "CN7: совпадающие при наложении отрезки равны";
+    when epharmoge_eutheias(a, b, c, d);
+    then isos_mikos(a, b, c, d);
+}
+
+@source(STO_CN8)
+relation meros_eutheias(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind empirical {
+    label grc official "μέρος";
+    label ru unofficial "первый отрезок — часть второго";
+}
+
+@source(STO_CN8)
+rule HolonTouMerousMeizon(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion, p: Integer, w: Integer,
+) strict {
+    label grc official "τὸ ὅλον τοῦ μέρους μεῖζον";
+    label ru unofficial "CN8: целое больше части — на длинах отрезков";
+    when meros_eutheias(a, b, c, d) and mikos(a, b, p) and mikos(c, d, w) and (w > p);
+    then meizon_mikos(c, d, a, b);
+}
+
+@source(STO_CN9)
+relation dyo_eutheiai_chorion_ou_periechousin(l: Eutheia, m: Eutheia) kind institutional {
+    label grc official "Καὶ δύο εὐθεῖαι χωρίον οὐ περιέχουσιν";
+    label ru unofficial "две прямые сами по себе не замыкают область";
+}
+
+@source(STO_CN9)
+rule DyoEutheiaiChorionOuPeriechousin(l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "CN9: две различные прямые не замыкают область";
+    when diaphora_eutheion(l, m);
+    then dyo_eutheiai_chorion_ou_periechousin(l, m);
+}

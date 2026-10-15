@@ -1,0 +1,121 @@
+language "law.core" version "0.2";
+package calc.mechanics version "0.1.0";
+namespace "urn:law:calc:mechanics";
+
+// v = v₀ + at: 0 + 20·20 = 400 м/с.
+test "urn:query:calc-mech-t01-final-velocity" {
+    given {
+        assert "c1a": given_initial_velocity(entity_ref("urn:case:calc:m1"), 0 m_per_s) { origin case_input; }
+        assert "c1b": given_acceleration(entity_ref("urn:case:calc:m1"), 20 m_per_s2) { origin case_input; }
+        assert "c1c": given_elapsed_time(entity_ref("urn:case:calc:m1"), 20 s) { origin case_input; }
+    }
+    evaluate truth(final_velocity(entity_ref("urn:case:calc:m1"), 400 m_per_s));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(FinalVelocity);
+}
+
+// ВХОД В ЧУЖИХ ЕДИНИЦАХ: 36 км/ч и 1 ч приводятся явно, ответ в м/с.
+test "urn:query:calc-mech-t02-units-converted" {
+    given {
+        assert "c2a": given_initial_velocity(entity_ref("urn:case:calc:m2"), 36 km_per_h) { origin case_input; }
+        assert "c2b": given_acceleration(entity_ref("urn:case:calc:m2"), 0 m_per_s2) { origin case_input; }
+        assert "c2c": given_elapsed_time(entity_ref("urn:case:calc:m2"), 1 h) { origin case_input; }
+    }
+    evaluate truth(final_velocity(entity_ref("urn:case:calc:m2"), 10 m_per_s));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// x = v₀t + ½at²: 30·5 + ½·30·25 = 525 м.
+test "urn:query:calc-mech-t03-displacement" {
+    given {
+        assert "c3a": given_initial_velocity(entity_ref("urn:case:calc:m3"), 30 m_per_s) { origin case_input; }
+        assert "c3b": given_acceleration(entity_ref("urn:case:calc:m3"), 30 m_per_s2) { origin case_input; }
+        assert "c3c": given_elapsed_time(entity_ref("urn:case:calc:m3"), 5 s) { origin case_input; }
+    }
+    evaluate truth(displacement(entity_ref("urn:case:calc:m3"), 525 m));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(Displacement);
+}
+
+// W = Fd: 6 Н на 50 м даёт 300 Дж.
+test "urn:query:calc-mech-t04-work" {
+    given {
+        assert "c4a": given_force_and_distance(entity_ref("urn:case:calc:m4"), 6 N, 50 m) { origin case_input; }
+    }
+    evaluate truth(work(entity_ref("urn:case:calc:m4"), 300 J));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(WorkOfConstantForce);
+}
+
+// K = ½mv²: 4 кг при 10 м/с — 200 Дж; p = mv — 40 кг·м/с. Один факт дела,
+// два разных ответа, обе единицы выведены алгеброй.
+test "urn:query:calc-mech-t05-kinetic-energy" {
+    given {
+        assert "c5a": given_mass_and_speed(entity_ref("urn:case:calc:m5"), 4 kg, 10 m_per_s) { origin case_input; }
+    }
+    evaluate truth(kinetic_energy(entity_ref("urn:case:calc:m5"), 200 J));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KineticEnergy);
+}
+
+test "urn:query:calc-mech-t06-momentum" {
+    given {
+        assert "c6a": given_mass_and_speed(entity_ref("urn:case:calc:m5"), 4 kg, 10 m_per_s) { origin case_input; }
+    }
+    evaluate truth(momentum(entity_ref("urn:case:calc:m5"), 40 kg_m_per_s));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(Momentum);
+}
+
+// КПД = 200/500 = 2/5, безразмерно.
+test "urn:query:calc-mech-t07-efficiency" {
+    given {
+        assert "c7a": given_work_and_heat(entity_ref("urn:case:calc:m7"), 200 J, 500 J) { origin case_input; }
+    }
+    evaluate truth(efficiency(entity_ref("urn:case:calc:m7"), 2/5));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(Efficiency);
+}
+
+// Предел Карно между 300 К и 600 К — 1/2.
+test "urn:query:calc-mech-t08-carnot-limit" {
+    given {
+        assert "c8a": given_reservoir_temperatures(entity_ref("urn:case:calc:m7"), 300 K, 600 K) { origin case_input; }
+    }
+    evaluate truth(carnot_limit(entity_ref("urn:case:calc:m7"), 1/2));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(CarnotLimit);
+}
+
+// НИЖЕ ПРЕДЕЛА: 2/5 против 1/2 — превышения нет (FALSE_ONLY у превышения).
+test "urn:query:calc-mech-t09-within-limit" {
+    given {
+        assert "c9a": given_work_and_heat(entity_ref("urn:case:calc:m7"), 200 J, 500 J) { origin case_input; }
+        assert "c9b": given_reservoir_temperatures(entity_ref("urn:case:calc:m7"), 300 K, 600 K) { origin case_input; }
+    }
+    evaluate truth(efficiency_exceeds_carnot_limit(entity_ref("urn:case:calc:m7")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(EfficiencyWithinLimit);
+}
+
+// ВЫШЕ ПРЕДЕЛА: 3/5 против 1/2 — превышение выведено. Пара со сценой 09.
+test "urn:query:calc-mech-t10-above-limit" {
+    given {
+        assert "c10a": given_work_and_heat(entity_ref("urn:case:calc:m10"), 300 J, 500 J) { origin case_input; }
+        assert "c10b": given_reservoir_temperatures(entity_ref("urn:case:calc:m10"), 300 K, 600 K) { origin case_input; }
+    }
+    evaluate truth(efficiency_exceeds_carnot_limit(entity_ref("urn:case:calc:m10")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(EfficiencyAboveLimit);
+}

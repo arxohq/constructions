@@ -1,0 +1,1 @@
+{"query":{"queryId":"urn:query:myco-loophole-edible","kind":"truth","literal":{"kind":"literal","polarity":"positive","predicate":"urn:myco:clir:opredelitel#edible_verdict","args":[{"kind":"entity_ref","id":"urn:case:myco:loophole"}]}},"expect":{"truthStatus":"TRUE_ONLY"}}

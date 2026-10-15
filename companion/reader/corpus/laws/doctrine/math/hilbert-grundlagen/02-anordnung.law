@@ -1,0 +1,568 @@
+// § 3. Группа аксиом II: аксиомы порядка (Axiome der Anordnung), II 1—5.
+//
+// «Die Axiome dieser Gruppe definiren den Begriff „zwischen"» — четыре
+// линейные аксиомы (II 1—4), говорящие только о точках одной прямой, и
+// плоская аксиома II 5, которая и есть аксиома Паша: сноска самого Гильберта
+// называет её источник — «Insbesondere rührt das Axiom II 5 von M. Pasch her».
+//
+// ЧТО ЭТА ГРУППА ПОКАЗЫВАЕТ НА КОНЕЧНОЙ КОНФИГУРАЦИИ — И ЭТО НЕ ДЕФЕКТ
+// ПАКЕТА, А ЕГО ОТВЕТ. Аксиома II 2 требует, чтобы между любыми двумя
+// точками прямой лежала третья и чтобы за каждой точкой нашлась ещё одна.
+// В КОНЕЧНОЙ конфигурации это невыполнимо ни при каком чертеже: крайние
+// точки любой прямой продолжать некуда, а между соседними ничего не лежит.
+// Инвариант II 2 поэтому даёт `VIOLATED` на каждой конечной модели, и
+// названная им пара точек и есть свидетель. Это ровно то, ради чего аксиома
+// записана инвариантом, а не правилом: она отсекает, и она отсекает всё
+// конечное. Аксиомы II 1, II 3, II 4, II 5 и вся группа I конечной моделью
+// удовлетворимы, и пакет это показывает исполнением.
+//
+// II 3 РАСЩЕПЛЕНА §206 НА СУЩЕСТВОВАНИЕ И ЕДИНСТВЕННОСТЬ («einen und nur
+// einen»): у слитого инварианта был бы один исход на две разные причины —
+// «серединой не оказалась ни одна» и «серединами оказались две».
+//
+// II 4 ЗАПИСАНА ДВАДЦАТЬЮ ЧЕТЫРЬМЯ ПРАВИЛАМИ ОДНОЙ ГОЛОВЫ, И ЭТО НЕ
+// ИЗБЫТОК. Текст говорит «können stets so angeordnet werden» — четыре точки
+// МОЖНО расположить так-то, то есть утверждает существование ПОДХОДЯЩЕЙ
+// расстановки, а не свойство данной. Дизъюнкция в теле правила запрещена
+// (расщепление §206), равенства сущностей у языка нет (см. шапку
+// `00-package.law`), и потому «существует перестановка» выражается
+// единственным доступным способом: по правилу на перестановку, все с одной
+// головой. Двадцать четыре правила суть двадцать четыре случая одного
+// основания, а не двадцать четыре нормы.
+
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+use self::{
+    Ebene,
+    GDG_II_1,
+    GDG_II_2,
+    GDG_II_3,
+    GDG_II_4,
+    GDG_II_5,
+    Gerade,
+    Punkt,
+    dreieck,
+    gehoert_zur_ebene,
+    gerade_der_figur,
+    kollinear,
+    liegt_auf,
+    liegt_in_ebene,
+    punkt_der_figur,
+    punkt_gerade_paar,
+    punktpaar,
+    punkttripel,
+    verbindende_gerade,
+    verschiedene_punkte,
+    zwischen,
+};
+
+// ---------------------------------------------------------------------------
+// II 1. Если B лежит между A и C, то B лежит и между C и A.
+// ---------------------------------------------------------------------------
+
+@source(GDG_II_1)
+relation umgekehrte_lage(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "then B lies also between C and A";
+    label ru unofficial "обратный порядок, следующий из записанного по аксиоме II 1";
+}
+
+@source(GDG_II_1)
+rule AxiomII1(a: Punkt, b: Punkt, c: Punkt) strict {
+    label en official "II, 1. If A, B, C are points of a straight line and B lies between A and C, then B lies also between C and A";
+    label ru unofficial "аксиома II 1: «между» не различает концов";
+    when zwischen(a, b, c);
+    then umgekehrte_lage(c, b, a);
+}
+
+@source(GDG_II_1)
+constraint AxiomII1Symmetrie(a: Punkt, b: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 1: обратный порядок, следующий из аксиомы, обязан стоять и в самом чертеже";
+    when umgekehrte_lage(a, b, c);
+    require zwischen(a, b, c);
+    severity error;
+    message "аксиома II 1 нарушена: точка объявлена лежащей между двумя другими, но не объявлена лежащей между ними же в обратном порядке";
+}
+
+// ---------------------------------------------------------------------------
+// II 2. Между двумя точками прямой всегда лежит точка, и за второй из них
+// всегда есть точка, для которой вторая оказывается посередине.
+// Расщепление §206: два независимых требования — два инварианта.
+// ---------------------------------------------------------------------------
+
+@source(GDG_II_2)
+relation innerer_punkt(a: Punkt, c: Punkt) kind institutional {
+    label en official "there exists at least one point B lying between A and C";
+    label ru unofficial "между двумя точками лежит третья точка конфигурации";
+}
+
+@source(GDG_II_2)
+rule InnererPunkt(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "точка, лежащая между двумя данными";
+    when zwischen(a, b, c);
+    then innerer_punkt(a, c);
+}
+
+closure InnererPunktAbschluss {
+    label ru unofficial "замыкание §70: пара точек без промежуточной точки её не имеет";
+    predicate innerer_punkt;
+    domain punktpaar;
+    snapshot "urn:de:hilbert:snapshot:innerer-punkt:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_II_2)
+constraint AxiomII2Innen(a: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 2, первое требование: между двумя точками одной прямой лежит третья";
+    when verschiedene_punkte(a, c) and verbindende_gerade(a, c);
+    require innerer_punkt(a, c);
+    severity error;
+    message "аксиома II 2 нарушена в первом требовании: между двумя различными точками одной прямой не лежит ни одна точка конфигурации — конечный чертёж этого требования не выполняет";
+}
+
+@source(GDG_II_2)
+relation fortsetzungspunkt(a: Punkt, c: Punkt) kind institutional {
+    label en official "at least one point D so situated that C lies between A and D";
+    label ru unofficial "за второй точкой есть точка, для которой вторая оказывается посередине";
+}
+
+@source(GDG_II_2)
+rule Fortsetzungspunkt(a: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "точка, за которую продолжен отрезок";
+    when zwischen(a, c, d);
+    then fortsetzungspunkt(a, c);
+}
+
+closure FortsetzungsAbschluss {
+    label ru unofficial "замыкание §70: пара точек без продолжения его не имеет";
+    predicate fortsetzungspunkt;
+    domain punktpaar;
+    snapshot "urn:de:hilbert:snapshot:fortsetzung:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_II_2)
+constraint AxiomII2Fortsetzung(a: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 2, второе требование: отрезок продолжается за свой конец";
+    when verschiedene_punkte(a, c) and verbindende_gerade(a, c);
+    require fortsetzungspunkt(a, c);
+    severity error;
+    message "аксиома II 2 нарушена во втором требовании: за второй точкой пары нет точки, для которой вторая лежала бы между первой и ею — конечный чертёж этого требования не выполняет";
+}
+
+// ---------------------------------------------------------------------------
+// II 3. Из любых трёх точек прямой одна и только одна лежит между двумя
+// другими.
+// ---------------------------------------------------------------------------
+
+relation drei_punkte_einer_gerade(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label ru unofficial "три попарно различные точки, лежащие на одной прямой";
+}
+
+rule DreiPunkteEinerGerade(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "три попарно различные коллинеарные точки";
+    when verschiedene_punkte(a, b) and verschiedene_punkte(b, c)
+        and verschiedene_punkte(a, c) and kollinear(a, b, c);
+    then drei_punkte_einer_gerade(a, b, c);
+}
+
+@source(GDG_II_3)
+relation lage_bestimmt(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "there is always one which lies between the other two";
+    label ru unofficial "у тройки точек есть середина";
+}
+
+@source(GDG_II_3)
+rule LageBestimmtErste(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "серединой тройки оказалась первая точка";
+    when zwischen(b, a, c);
+    then lage_bestimmt(a, b, c);
+}
+
+@source(GDG_II_3)
+rule LageBestimmtZweite(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "серединой тройки оказалась вторая точка";
+    when zwischen(a, b, c);
+    then lage_bestimmt(a, b, c);
+}
+
+@source(GDG_II_3)
+rule LageBestimmtDritte(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "серединой тройки оказалась третья точка";
+    when zwischen(a, c, b);
+    then lage_bestimmt(a, b, c);
+}
+
+closure LageAbschluss {
+    label ru unofficial "замыкание §70: тройка без середины её не имеет";
+    predicate lage_bestimmt;
+    domain punkttripel;
+    snapshot "urn:de:hilbert:snapshot:lage:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_II_3)
+constraint AxiomII3Existenz(a: Punkt, b: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 3, существование: из трёх точек прямой одна лежит между двумя другими";
+    when drei_punkte_einer_gerade(a, b, c);
+    require lage_bestimmt(a, b, c);
+    severity error;
+    message "аксиома II 3 нарушена в существовании: три различные точки одной прямой, и ни одна из них не лежит между двумя другими";
+}
+
+// Единственность держат ДВА инварианта, а не три: инвариант квантифицирован
+// по всем подстановкам тройки, и пара «первая и третья суть середины»
+// покрывается вторым из них при подстановке a↦b, b↦a. Третий инвариант был
+// бы не строже, а копией — и разошёлся бы при первой правке.
+@source(GDG_II_3)
+constraint AxiomII3EindeutigZweiteErste(a: Punkt, b: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 3, единственность: серединой не могут быть и вторая, и первая точки";
+    when zwischen(a, b, c);
+    require not zwischen(b, a, c);
+    severity error;
+    message "аксиома II 3 нарушена в единственности: у одной и той же тройки точек серединой объявлены две разные точки";
+}
+
+@source(GDG_II_3)
+constraint AxiomII3EindeutigZweiteDritte(a: Punkt, b: Punkt, c: Punkt) {
+    label ru unofficial "инвариант §93.1, аксиома II 3, единственность: серединой не могут быть и вторая, и третья точки";
+    when zwischen(a, b, c);
+    require not zwischen(a, c, b);
+    severity error;
+    message "аксиома II 3 нарушена в единственности: у одной и той же тройки точек серединой объявлены вторая и третья точки одновременно";
+}
+
+// ---------------------------------------------------------------------------
+// II 4. Любые четыре точки прямой можно расположить так, что B лежит между A
+// и C и между A и D, а C — между A и D и между B и D.
+// ---------------------------------------------------------------------------
+
+relation vier_punkte_einer_gerade(a: Punkt, b: Punkt, c: Punkt, d: Punkt) kind institutional {
+    label ru unofficial "четыре попарно различные точки, лежащие на одной прямой";
+}
+
+rule VierPunkteEinerGerade(a: Punkt, b: Punkt, c: Punkt, d: Punkt, l: Gerade) strict {
+    label ru unofficial "четыре попарно различные точки одной прямой";
+    when verschiedene_punkte(a, b) and verschiedene_punkte(a, c)
+        and verschiedene_punkte(a, d) and verschiedene_punkte(b, c)
+        and verschiedene_punkte(b, d) and verschiedene_punkte(c, d)
+        and liegt_auf(a, l) and liegt_auf(b, l)
+        and liegt_auf(c, l) and liegt_auf(d, l);
+    then vier_punkte_einer_gerade(a, b, c, d);
+}
+
+@source(GDG_II_4)
+relation geordnete_vierergruppe(a: Punkt, b: Punkt, c: Punkt, d: Punkt) kind institutional {
+    label en official "B shall lie between A and C and also between A and D, and C shall lie between A and D and also between B and D";
+    label ru unofficial "четвёрка точек стои́т в порядке, которого требует аксиома II 4";
+}
+
+@source(GDG_II_4)
+rule GeordneteVierergruppe(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "порядок четвёрки: четыре требования аксиомы II 4 выполнены одновременно";
+    when zwischen(a, b, c) and zwischen(a, b, d)
+        and zwischen(a, c, d) and zwischen(b, c, d);
+    then geordnete_vierergruppe(a, b, c, d);
+}
+
+@source(GDG_II_4)
+relation anordenbar(a: Punkt, b: Punkt, c: Punkt, d: Punkt) kind institutional {
+    label en official "can always be so arranged";
+    label ru unofficial "четыре точки допускают расстановку, которой требует аксиома II 4";
+}
+
+@source(GDG_II_4)
+rule Anordenbar01(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 1 из двадцати четырёх: порядок даёт четвёрка (a, b, c, d)";
+    when geordnete_vierergruppe(a, b, c, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar02(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 2 из двадцати четырёх: порядок даёт четвёрка (a, b, d, c)";
+    when geordnete_vierergruppe(a, b, d, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar03(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 3 из двадцати четырёх: порядок даёт четвёрка (a, c, b, d)";
+    when geordnete_vierergruppe(a, c, b, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar04(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 4 из двадцати четырёх: порядок даёт четвёрка (a, c, d, b)";
+    when geordnete_vierergruppe(a, c, d, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar05(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 5 из двадцати четырёх: порядок даёт четвёрка (a, d, b, c)";
+    when geordnete_vierergruppe(a, d, b, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar06(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 6 из двадцати четырёх: порядок даёт четвёрка (a, d, c, b)";
+    when geordnete_vierergruppe(a, d, c, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar07(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 7 из двадцати четырёх: порядок даёт четвёрка (b, a, c, d)";
+    when geordnete_vierergruppe(b, a, c, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar08(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 8 из двадцати четырёх: порядок даёт четвёрка (b, a, d, c)";
+    when geordnete_vierergruppe(b, a, d, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar09(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 9 из двадцати четырёх: порядок даёт четвёрка (b, c, a, d)";
+    when geordnete_vierergruppe(b, c, a, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar10(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 10 из двадцати четырёх: порядок даёт четвёрка (b, c, d, a)";
+    when geordnete_vierergruppe(b, c, d, a);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar11(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 11 из двадцати четырёх: порядок даёт четвёрка (b, d, a, c)";
+    when geordnete_vierergruppe(b, d, a, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar12(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 12 из двадцати четырёх: порядок даёт четвёрка (b, d, c, a)";
+    when geordnete_vierergruppe(b, d, c, a);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar13(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 13 из двадцати четырёх: порядок даёт четвёрка (c, a, b, d)";
+    when geordnete_vierergruppe(c, a, b, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar14(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 14 из двадцати четырёх: порядок даёт четвёрка (c, a, d, b)";
+    when geordnete_vierergruppe(c, a, d, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar15(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 15 из двадцати четырёх: порядок даёт четвёрка (c, b, a, d)";
+    when geordnete_vierergruppe(c, b, a, d);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar16(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 16 из двадцати четырёх: порядок даёт четвёрка (c, b, d, a)";
+    when geordnete_vierergruppe(c, b, d, a);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar17(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 17 из двадцати четырёх: порядок даёт четвёрка (c, d, a, b)";
+    when geordnete_vierergruppe(c, d, a, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar18(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 18 из двадцати четырёх: порядок даёт четвёрка (c, d, b, a)";
+    when geordnete_vierergruppe(c, d, b, a);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar19(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 19 из двадцати четырёх: порядок даёт четвёрка (d, a, b, c)";
+    when geordnete_vierergruppe(d, a, b, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar20(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 20 из двадцати четырёх: порядок даёт четвёрка (d, a, c, b)";
+    when geordnete_vierergruppe(d, a, c, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar21(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 21 из двадцати четырёх: порядок даёт четвёрка (d, b, a, c)";
+    when geordnete_vierergruppe(d, b, a, c);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar22(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 22 из двадцати четырёх: порядок даёт четвёрка (d, b, c, a)";
+    when geordnete_vierergruppe(d, b, c, a);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar23(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 23 из двадцати четырёх: порядок даёт четвёрка (d, c, a, b)";
+    when geordnete_vierergruppe(d, c, a, b);
+    then anordenbar(a, b, c, d);
+}
+
+@source(GDG_II_4)
+rule Anordenbar24(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "расстановка 24 из двадцати четырёх: порядок даёт четвёрка (d, c, b, a)";
+    when geordnete_vierergruppe(d, c, b, a);
+    then anordenbar(a, b, c, d);
+}
+
+closure AnordnungsAbschluss {
+    label ru unofficial "замыкание §70: четвёрка, не допускающая ни одной из двадцати четырёх расстановок, её не допускает";
+    predicate anordenbar;
+    domain vier_punkte_einer_gerade;
+    snapshot "urn:de:hilbert:snapshot:anordnung:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_II_4)
+constraint AxiomII4(a: Punkt, b: Punkt, c: Punkt, d: Punkt) {
+    label en official "II, 4. Any four points A, B, C, D of a straight line can always be so arranged";
+    label ru unofficial "инвариант §93.1, аксиома II 4: любые четыре точки прямой допускают требуемую расстановку";
+    when vier_punkte_einer_gerade(a, b, c, d);
+    require anordenbar(a, b, c, d);
+    severity error;
+    message "аксиома II 4 нарушена: четыре различные точки одной прямой не допускают ни одной из двадцати четырёх расстановок, которых требует аксиома";
+}
+
+// ---------------------------------------------------------------------------
+// II 5, аксиома Паша. Прямая, лежащая в плоскости треугольника, не проходящая
+// ни через одну его вершину и вошедшая внутрь стороны AB, обязана выйти через
+// сторону BC либо через сторону AC.
+//
+// ПОСЫЛКА «НЕ ПРОХОДИТ НИ ЧЕРЕЗ ОДНУ ВЕРШИНУ» ЕСТЬ ТА САМАЯ, РАДИ КОТОРОЙ
+// СТОИТ ЗАМЫКАНИЕ §70. В открытом мире «прямая не проходит через точку» не
+// выводится вовсе, и инвариант Паша не имел бы ни одной применимой
+// подстановки: всякий ответ был бы UNDETERMINED.
+//
+// ВЫХОД ЗАПИСАН ДВУМЯ ПРАВИЛАМИ ОДНОЙ ГОЛОВЫ: «entweder … oder» есть
+// дизъюнкция, а дизъюнкция в теле правила запрещена (расщепление §206).
+// ---------------------------------------------------------------------------
+
+relation gerade_und_tripel(l: Gerade, a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label ru unofficial "прямая конфигурации и тройка её точек — область замыкания выхода";
+}
+
+rule GeradeUndTripel(l: Gerade, a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "область: прямая и тройка точек взяты из конфигурации";
+    when gerade_der_figur(l) and punkttripel(a, b, c);
+    then gerade_und_tripel(l, a, b, c);
+}
+
+@source(GDG_II_5)
+pub relation meidet(l: Gerade, p: Punkt) kind institutional {
+    label en official "not passing through any of the points A, B, C";
+    label ru unofficial "прямая не проходит через точку";
+}
+
+@source(GDG_II_5)
+rule Meidet(l: Gerade, p: Punkt) strict {
+    label ru unofficial "прямая минует точку, когда точка на ней не лежит";
+    when punkt_gerade_paar(p, l) and not liegt_auf(p, l);
+    then meidet(l, p);
+}
+
+@source(GDG_II_5)
+relation strecke_getroffen(l: Gerade, a: Punkt, b: Punkt) kind institutional {
+    label en official "the straight line a passes through a point of the segment AB";
+    label ru unofficial "прямая проходит через точку внутри отрезка";
+}
+
+@source(GDG_II_5)
+rule StreckeGetroffen(l: Gerade, a: Punkt, b: Punkt, x: Punkt) strict {
+    label ru unofficial "прямая встречает отрезок, когда несёт точку между его концами";
+    when liegt_auf(x, l) and zwischen(a, x, b);
+    then strecke_getroffen(l, a, b);
+}
+
+@source(GDG_II_5)
+relation gerade_in_dreiecksebene(l: Gerade, a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "a straight line lying in the plane ABC";
+    label ru unofficial "прямая лежит в плоскости треугольника";
+}
+
+@source(GDG_II_5)
+rule GeradeInDreiecksebene(l: Gerade, a: Punkt, b: Punkt, c: Punkt, e: Ebene) strict {
+    label ru unofficial "прямая лежит в плоскости, которой принадлежат все три вершины";
+    when liegt_in_ebene(l, e)
+        and gehoert_zur_ebene(a, e) and gehoert_zur_ebene(b, e) and gehoert_zur_ebene(c, e);
+    then gerade_in_dreiecksebene(l, a, b, c);
+}
+
+@source(GDG_II_5)
+relation austritt(l: Gerade, a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "it will also pass through either a point of the segment BC or a point of the segment AC";
+    label ru unofficial "прямая выходит через сторону BC либо через сторону AC";
+}
+
+@source(GDG_II_5)
+rule AustrittUeberBC(l: Gerade, a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "выход через сторону BC";
+    when punkt_der_figur(a) and strecke_getroffen(l, b, c);
+    then austritt(l, a, b, c);
+}
+
+@source(GDG_II_5)
+rule AustrittUeberAC(l: Gerade, a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "выход через сторону AC";
+    when punkt_der_figur(b) and strecke_getroffen(l, a, c);
+    then austritt(l, a, b, c);
+}
+
+closure AustrittsAbschluss {
+    label ru unofficial "замыкание §70: прямая, не встретившая ни одной из двух других сторон, их не встречает";
+    predicate austritt;
+    domain gerade_und_tripel;
+    snapshot "urn:de:hilbert:snapshot:austritt:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_II_5)
+constraint AxiomII5Pasch(l: Gerade, a: Punkt, b: Punkt, c: Punkt) {
+    label en official "II, 5. Then, if the straight line a passes through a point of the segment AB, it will also pass through either a point of the segment BC or a point of the segment AC";
+    label ru unofficial "инвариант §93.1, аксиома II 5 (Паша): вошедшая в треугольник прямая обязана из него выйти";
+    when dreieck(a, b, c) and gerade_in_dreiecksebene(l, a, b, c)
+        and meidet(l, a) and meidet(l, b) and meidet(l, c)
+        and strecke_getroffen(l, a, b);
+    require austritt(l, a, b, c);
+    severity error;
+    message "аксиома II 5 нарушена: прямая лежит в плоскости треугольника, не проходит ни через одну из вершин, входит внутрь стороны AB и не выходит ни через BC, ни через AC";
+}

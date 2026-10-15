@@ -1,0 +1,32 @@
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+// Пример САМОГО ГАУССА, артикул 47: «Si ex. gr. residuum e divisione
+// potestatis 3^1000 per 13 oriundum quaeritur … erit 3^1000 congruum
+// 3 (mod 13)». Порядок 3, 1000 mod 3 = 1, остаток читается из следа.
+// След вычислен возведением в степень по модулю и ПРОВЕРЯЕТСЯ движком
+// звено за звеном (артикул 46); воспроизводится строкой
+//   python3 -c "n,a=13,3;[print(e,pow(a,e,n)) for e in [1, 2, 3]]"
+
+test "urn:query:13-compendium-3-ad-1000-mod-13" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "flt-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 3) { origin case_input; }
+        assert "flt-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 3) { origin case_input; }
+        assert "flt-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) { origin case_input; }
+        assert "flt-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) { origin case_input; }
+        assert "flt-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) { origin case_input; }
+        assert "flt-ordo": ordo(entity_ref("urn:case:flt:probatio"), 3) { origin case_input; }
+        assert "flt-quaesitum": quaesitum(entity_ref("urn:case:flt:probatio"), 1000) { origin case_input; }
+    }
+    evaluate truth(residuum_quaesiti(entity_ref("urn:case:flt:probatio"), 1000, 3));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

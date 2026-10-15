@@ -1,0 +1,81 @@
+CAROLI FRIDERICI GAUSS DISQUISITIONES ARITHMETICAE
+Sectio tertia «De residuis potestatum», articuli 45—50: theorema Fermatianum.
+Fons: la.wikisource.org, «Gauss, Carl Friedrich - Werke (1870).djvu», paginae 48—52, revisiones 148409, 146658, 146657, 146659, 148411.
+
+Articulus 45.
+Residua terminorum progressionis geometricae ab unitate incipientis constituunt seriem periodicam.
+
+Theorema. In omni progressione geometrica $1, a, aa, a^3\!$ etc. praeter primum $1$, alius adhuc datur terminus $a^t\!$, secundum modulum $p$ ad $a$ primum unitati congruus, cuius eocponens $t<p$.
+
+Demonstr. Quoniam modulus $p$ ad $a$, adeoque ad quamvis ipsius $a$
+potestatem est primus, nullus progressionis terminus erit $\textstyle \equiv 0\pmod{p}$, sed quivis alicui ex his numeris $1, 2, 3 \ldots p-1$ congruus. Quorum multitudo quum sit $p-1$, manifestum est, si plures quam $p-1$ progressionis termini considerentur, omnes residua minima diversa habere non posse. Quocirca inter terminos $1, a, aa, a^3 \ldots a^{p-1}\!$ bini ad minimum congrui invenientur. Sit itaque $a^m \equiv a^n\!$ et $m>n$, fietque dividendo per $a^n, a^{m-n} \equiv 1$ (art. 22), ubi $m-n<p$, et $>0$. Q. E. D.
+
+Ex. In progressione $2, 4, 8$ etc. terminus primus, qui secundum
+modulum $13$ unitati est congruus, invenitur $2^{12} = 4096$. At secundum modulum $23$ in eadem progressione fit $2^{11} = 2048 \equiv 1$. Similiter numeri $5$ potestas sexta, $15625$, unitati congrua secundum modulum $7$, quinta vero, $3125$, secundum $11$. In aliis igitur casibus potestas exponentis minoris quam $p-1$ unitati congrua evadit, in aliis contra usque ad potestatem $p-1$^tum ascendere necesse est.
+
+Articulus 46.
+Quando progressio ultra terminum, qui unitati est congruus, continuatur,
+eadem, quae ab initio habebantur, residua prodeunt iterum. Scilicet si $a^{t} \equiv 1$, erit $a^{t+1} \equiv a$, $a^{t+2} \equiv aa$ etc., donec ad terminum $a^{2t}\!$ perveniatur, cuius residuum minimum iterum erit $\equiv 1$, atque residuorum periodum denuo inchoat. Habetur
+itaque periodus $t$ residua comprehendens, quae simulac finita est ab initio
+semper repetitur; neque alia residua quam quae in hac periodo continentur, in tota
+progressione occurrere possunt. Generaliter erit $a^{mt} \equiv 1$, et $a^{mt+n} \equiv a^{n}\!$,
+id quod per designationem nostram ita exhibetur:
+
+Si $\textstyle r \equiv \rho \pmod{t}$, erit $\textstyle a^{r} \equiv a^{\rho} \pmod{t}$.
+
+Articulus 47.
+Petitur ex hoc theoremate compendium potestatum quantumvis magno
+exponente affectarum residua expedite inveniendi, simulac potestas unitati congrua
+innotescat. Si ex. gr. residuum e divisione potestatis $3^{1000}\!$ per $13$ oriundum quaeritur, erit propter $\textstyle 3^{3} \equiv 1\pmod{13}$, $t \equiv 3$; quare quum sit $\textstyle 1000 \equiv 1\pmod{3}$, erit $\textstyle 3^{1000} \equiv 3\pmod{13}$.
+
+Articulus 48.
+Quando $a^{t}\!$ est infima potestas unitati congrua (praeter $a^{0} = 1$, ad quem casum hic non respicimus), illi $t$ termini, residuorum periodum constituentes omnes erunt diversi, uti ex demonstratione art. 45 nullo negotio perspicitur. Tum autem propositio art. 46 converti potest; scilicet si $\textstyle a^{m} \equiv a^{n}\!\pmod{p}$, erit $\textstyle m \equiv n\pmod{t}$. Si enim $m$, $n$ secundum modulum $t$ incongrui essent, residua eorum minima $\mu$, $\nu$ diversa forent. At $a^{\mu} \equiv a^{m}\!$, $a^{\nu} \equiv a^{n}\!$, quare $a^{\mu} \equiv a^{\nu}\!$ i. e. non omnes potestates infra $a^{t}\!$ incongruae forent contra hypoth.
+
+Si itaque $\textstyle a^{k} \equiv 1\pmod{p}$, erit $\textstyle k \equiv 0\pmod{t}$ i. e. $k$ per $t$ divisibilis.
+
+Hactenus de modulis quibuscunque si modo ad $a$ sint primi diximus. Iam
+modulos qui sunt numeri absolute primi seorsim consideremus atque huic
+fundamento investigationem generaliorem postea superstruamus.
+
+Articulus 49.
+Considerantur primo moduli qui sunt numeri primi.
+
+Theorema. Si $p$ est numerus primus ipsum $a$ non metiens, atque $a^{t}\!$ infima ipsius $a$ potestas secundum modulum $p$ unitati congrua, exponens $t$ aut erit $=p-1$ aut pars aliquota huius numeri.
+
+Conferantur exempla art. 45.
+
+Demonstr. Quum iam ostensum sit, $t$ esse aut $=p-1$, aut $<p-1$, superest, ut in posteriori casu $t$ semper ipsius $p-1$ partem aliquotam esse evincatur.
+
+I. Colligantur residua minima positiva omnium horum terminorum $1, a, aa \ldots a^{t-1}\!$, quae per $\alpha, \alpha', \alpha''\!$ etc. designentur, ita ut sit $\alpha=1$, $\alpha' \equiv a$, $\alpha'' \equiv aa$ etc. Perspicuum est, haec omnia fore diversa, si enim duo termini $a^{m}\!$, $a^{n}\!$ eadem praeberent, foret (supponendo $m>n$) $a^{m-n} \equiv 1$ atque $m-n<t$, Q. E. A. quum nulla inferior potestas quam $a^{t}\!$ unitati sit congrua (hyp.). Porro omnes $\alpha, \alpha', \alpha''\!$ etc. in serie numerorum $1, 2, 3...p-1$ continentur, quam tamen non exhaurient, quum $t<p-1$. Complexum omnium $\alpha, \alpha', \alpha''\!$ etc. per $(A)$ designabimus. Comprehendet igitur $(A)$ terminos $t$.
+
+II. Accipiatur numerus quicunque $\beta$ ex his $1, 2, 3 \ldots p-1$, qui in $(A)$ desit. Multiplicetur $\beta$ per omnes $\alpha, \alpha', \alpha''\!$ etc., sintque residua minima inde oriunda $\beta, \beta', \beta''\!$ etc., quorum numerus etiam erit $t$. At haec residua tum inter se quam ab omnibus $\alpha, \alpha', \alpha''\!$ etc. erunt diversa. Si enim prior assertio falsa esset, haberetur $\beta a^m \equiv \beta a^n\!$ adeoque dividendo per $\beta$, $a^m \equiv a^n\!$, contra ea quae modo demonstravimus; si vero posterior, haberetur $\beta a^m \equiv a^n\!$, unde, quando $m<n$, $\beta \equiv a^{m-n}\!$ i. e. $\beta$ alicui ex his $\alpha, \alpha', \alpha''\!$ etc. congruus contra hyp.; quando vero $m>n$, sequitur multiplicando per $a^{t-m}\!$, $\beta a^{t} \equiv a^{t+n-m}\!$, sive propter $a^{t} \equiv 1$, $\beta \equiv a^{t+n-m}\!$, quae est eadem absurditas. Designetur complexus omnium $\beta, \beta', \beta''\!$ etc., quorum multitudo $=t$, per $(B)$, habebunturque iam $2t$ numeri ex his $1, 2, 3 \ldots p-1$. Quodsi igitur $(A)$ et $(B)$ omnes hos numeros complectuntur, fit $\textstyle\tfrac{p-1}{2}= t$ adeoque theorema demonstratum.
+
+III. Si vero aliqui adhuc deficiunt, sit horum aliquis $\gamma$. Per hunc
+multiplicentur omnes $\alpha, \alpha', \alpha''\!$ etc., productorumque residua minima sint $\gamma, \gamma', \gamma''\!$ etc., omnium complexus per $(C)$ designetur. $(C)$ igitur comprehendet $t$ numeros
+ex his $1, 2, 3 \ldots p-1$, qui omnes tum inter se quam a numeris in $(A)$ et $(B)$
+contentis erunt diversi. Assertiones priores eodem modo demonstrantur ut in II,
+tertia ita. Si esset $\gamma a^{m} \equiv \beta a^{n}\!$, fieret $\gamma \equiv \beta a^{n-m}\!$, aut $\equiv \beta a^{t+n-m}\!$ prout $m<n$ aut $>n$, in utroque casu $\gamma$ alicui ex $(B)$ congrua contra hyp. Habentur igitur $3t$ numeri ex his $1, 2, 3 \ldots p - 1$, atque si nulli amplius desunt, fiet $\textstyle t = \tfrac{p-1}{3}$, adeoque theorema erit demonstratura.
+
+IV. Si vero etiamnum aliqui desunt, eodem modo ad quartum numerorum
+complexum $(D)$ progrediendum erit etc. Patet vero, quoniam numerorum
+$1, 2, 3 \ldots p-1$ multitudo est finita, tandem eam exhaustum iri, adeoque
+multiplum ipsius $t$ fore: quare $t$ erit pars aliquota numeri $p-1$. Q. E. D.
+
+Articulus 50.
+Fermatii Theorema.
+
+Quum igitur $\tfrac{p-1}{t}$ sit integer, sequitur evehendo utramque partem
+congruentiae $a^{t} \equiv 1$ ad potestatem exponentis $\tfrac{p-1}{t}$, $a^{p-1} \equiv 1$,
+sive $a^{p-1}-1$ semper per $p$ divisibilis est, quando $p$ est primus ipsum $a$ non metiens.
+
+Theorema hoc, quod tum propter elegantiam tum propter eximiam utilitatem
+omni attentione dignum, ab inventore theorema Fermatianum appellari solet. Vid.
+Fermatii Opera Mathem. Tolosae 1679 fol. p. 163. Demonstrationem inventor
+non adiecit, quam tamen in potestate sua esse professus est. Ill. Euler primus
+demonstrationem publici iuris fecit, in diss. cui titulus
+Theorematum quorundam ad numeros primos spectantium demonstratio, Comm. Acad. Petrop.  T. VIII [Nota: In comment. anteriore vir summus ad scopum nondum pervenerat. Comm. Petr. T. VI p. 106. — In controversia famosa inter Maupertuis et König, a principio actionis minimae orta, sed mox ad res heterogeneas egressa, König in manibus se habere dixit autographum Leibnitianum, in quo demonstratio huius theorematis cum Euleriana prorsus conspirans contineatur. Appel au public, p.  106. Licet vero fidem huic testimonio denegare nolimus, certe Leibnitius inventum suum numquam publicavit. Conf. Hist.de l'Ac. de Prusse, A. 1750 p. 530.]. Innititur ista evolutioni potestatis $(a+1)^{p}\!$, ubi ex coëfficientium forma facillime deducitur, $(a+1)^{p}-a^p-1$ semper per $p$ fore divisibilem, adeoque $(a+1)^{p}-(a+1)$ per $p$ divisibilem fore, quando $a^{p}-a$ per $p$ sit divisibilis. Iam quia
+$1^{p}-1$ semper per $p$ divisibilis est, etiam $2^{p}-2$ semper erit; hinc etiam $3^{p}-3$ etc. generaliterque $a^{p}-a$. Quodsi itaque $p$ ipsum $a$ non metitur, etiam $a^{p-1}-1$ per $p$ divisibilis erit. Haec sufficient ad methodi indolem declarandam. Clar. Lambert similem demonstrationem tradidit in Actis Erudit. 1769
+p. 109. Quia vero evolutio potestatis binomii a theoria numerorum satis aliena
+esse videbatur, aliam demonstrationem ill. Euler investigavit, quae exstat Comment. nov. Petr. T. VII p. 70, atque cum ea quam nos art. praec. exposuimus prorsus convenit. In sequentibus adhuc aliae quaedam se nobis offerent. Hoc loco unam
+superaddere liceat, quae similibus principiis innititur, uti prima ill. Euleri. Propositio sequens, cuius casus tantum particularis est theorema nostrum, etiam ad
+alias investigationes infra adhibebitur.

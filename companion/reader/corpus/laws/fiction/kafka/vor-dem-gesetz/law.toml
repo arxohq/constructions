@@ -1,0 +1,53 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "de.kafka.vor_dem_gesetz"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:de:kafka:clir:vor-dem-gesetz"
+
+# Каталожная метадата §10 `[metadata]` (DECISION-0051). Обязательна: без неё
+# MCP штамповал бы «Республика Казахстан» на ответы о вратах Закона.
+[metadata]
+act = "de-vor-dem-gesetz"
+title = "Кафка, «Vor dem Gesetz» (Selbstwehr, Прага, 1915): врата открыты, запрет объявлен, санкция не названа, а разрешение на вход — суждение привратника"
+primarySource = "VOR_DEM_GESETZ"
+
+# Выводимые. Совпадение с sources.law держат ворота, а не эти строки.
+# jurisdiction: у ПЕРВИЧНОГО источника — самой притчи — правопорядка нет:
+# рассказ не является актом никакого правопорядка. Правопорядок акта, который
+# притча ЗАСВИДЕТЕЛЬСТВОВАЛА (порядок привратника у врат — «mein Verbot»),
+# существует внутри вымысла. Приём — «Кощей», «Антигона», KHM 5.
+jurisdiction = "none"
+instrument = "parabel"
+sourceFidelity = "pinned_unofficial_copy"
+
+# Невыводимые.
+# issuer: у притчи автор есть, и это редкость среди literary-актов корпуса —
+# Франц Кафка, первопечатание в пражской «Selbstwehr» 7 сентября 1915 года.
+# Право же внутри вымысла творит привратник: запрет — его собственный
+# («meines Verbotes»), и притча нигде не говорит, что он объявляет его от
+# имени Закона. Названы оба уровня, и различать их обязательно: на этом
+# различии стоит вся экзегеза священника из «Процесса».
+issuer = "привратник у врат Закона (текст — Франц Кафка, «Selbstwehr. Unabhängige jüdische Wochenschrift», Jg. 9, Nr. 34, Прага, 7 сентября 1915)"
+# legalStatus: `literary` — правопорядок вымышлен, никогда не действовал и не
+# претендует; прецеденты — «Кощей», «Скотный двор», KHM 5.
+legalStatus = "literary"
+# verifiedAgainstSource: false — закреплены три страничные ревизии немецкой
+# Викитеки (вычитка по сканам, pagequality level=4), а не сам номер
+# «Selbstwehr» 1915 года; сверка с печатным оригиналом корпусу недоступна.
+verifiedAgainstSource = false
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "de.kafka.vor_dem_gesetz#authored"
+regression = false
+suites = ["tests/01-entry-requires-the-doorkeepers-judgment.lawtest", "tests/02-doorkeeper-grants-entry.lawtest", "tests/03-doorkeeper-refuses-closes-question-not-truth.lawtest", "tests/04-way-is-free-without-any-judgment.lawtest", "tests/05-entering-anyway-breaches-the-ban.lawtest", "tests/06-no-sanction-is-named.lawtest", "tests/07-destination-unknown-before-the-last-word.lawtest", "tests/08-destination-revealed-by-the-last-word.lawtest", "tests/09-gifts-accepted-create-no-claim.lawtest", "tests/10-all-attempts-do-not-move-the-answer.lawtest", "tests/11-closure-is-declared-not-narrated.lawtest"]
+world = ["de.kafka.vor_dem_gesetz"]
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "vor_dem_gesetz"
+suites = ["tests/vor-dem-gesetz.lawtest"]
+world = ["de.kafka.vor_dem_gesetz"]

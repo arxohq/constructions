@@ -1,0 +1,639 @@
+[
+  {
+    "contentHash": "sha256:fb34d73df173cec3175da94f37edfa16d8d7c035d146827bc83dc2f0c048a27d",
+    "exportEntityTypes": [
+      "Eutheia",
+      "Gonion",
+      "Kyklos",
+      "Parallelogrammon",
+      "Semeion",
+      "Trigonon"
+    ],
+    "exportKinds": {
+      "EktosApoParallel": "rule",
+      "EktosIsosDyoEntos": "rule",
+      "EnallaxApoParallel": "rule",
+      "Eutheia": "type_decl",
+      "Gonion": "type_decl",
+      "KataKoryphen": "rule",
+      "Kyklos": "type_decl",
+      "OrthogonionApoTetragonon": "rule",
+      "OrthogonionApoTetragononDeuterai": "rule",
+      "OrthogonionApoTetragononProtei": "rule",
+      "OrthogonionKataPythagoran": "rule",
+      "OukOrthogonionKataPythagoran": "rule",
+      "ParallelEkEktos": "rule",
+      "ParallelEkEnallax": "rule",
+      "ParallelEkParallel": "rule",
+      "ParallelEkSmeznykh": "rule",
+      "Parallelogrammon": "type_decl",
+      "STO_POST1": "fragment",
+      "STO_POST5": "fragment",
+      "Semeion": "type_decl",
+      "SmezhnyeIsosDyoOrthais": "rule",
+      "SmezhnyeOrthai": "rule",
+      "SmeznyeApoParallel": "rule",
+      "TreisGoniaiDyoOrthais": "rule",
+      "Trigonon": "type_decl",
+      "TrigononEstin": "rule",
+      "amblygonion": "symbol_decl",
+      "eutheia_tes_figuras": "symbol_decl",
+      "isopleuron": "symbol_decl",
+      "isos_dyo_goniais": "symbol_decl",
+      "isos_dyo_orthais": "symbol_decl",
+      "isos_gonia": "symbol_decl",
+      "isos_mikos": "symbol_decl",
+      "isoskeles": "symbol_decl",
+      "kata_koryphen": "symbol_decl",
+      "keitai_epi": "symbol_decl",
+      "onoma_eutheias": "symbol_decl",
+      "onoma_semeiou": "symbol_decl",
+      "orthogonion": "symbol_decl",
+      "orthos": "symbol_decl",
+      "oude_trigonon": "symbol_decl",
+      "ouk_orthogonion": "symbol_decl",
+      "oxygonion": "symbol_decl",
+      "paralleloi": "symbol_decl",
+      "pleurai_trigonou": "symbol_decl",
+      "pythagoras_apotelema": "symbol_decl",
+      "semeion_tes_figuras": "symbol_decl",
+      "smezhnye_gonia": "symbol_decl",
+      "treis_isos_dyo_orthais": "symbol_decl",
+      "trigonon_synistatai": "symbol_decl"
+    },
+    "exportRelationLabels": {
+      "amblygonion": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἀμβλυγώνιον τρίγωνον"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "тупоугольный треугольник"
+        }
+      ],
+      "eutheia_tes_figuras": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "прямая входит в предъявленную конфигурацию"
+        }
+      ],
+      "isopleuron": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἰσόπλευρον τρίγωνον"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "равносторонний треугольник"
+        }
+      ],
+      "isos_dyo_goniais": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "γωνία δυσὶ γωνίαις ἴση"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "угол равен двум другим, взятым вместе"
+        }
+      ],
+      "isos_dyo_orthais": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "δυσὶν ὀρθαῖς ἴσαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "два угла вместе равны двум прямым"
+        }
+      ],
+      "isos_gonia": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἴσαι γωνίαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "углы равны"
+        }
+      ],
+      "isos_mikos": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἴσαι εὐθεῖαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "отрезки равны по длине"
+        }
+      ],
+      "isoskeles": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἰσοσκελὲς τρίγωνον"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "равнобедренный треугольник"
+        }
+      ],
+      "kata_koryphen": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "αἱ κατὰ κορυφὴν γωνίαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "вертикальные углы"
+        }
+      ],
+      "keitai_epi": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "σημεῖον ἐπὶ εὐθείας"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "точка лежит на прямой"
+        }
+      ],
+      "onoma_eutheias": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "буква прямой на чертеже"
+        }
+      ],
+      "onoma_semeiou": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "буква точки на чертеже"
+        }
+      ],
+      "orthogonion": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ὀρθογώνιον τρίγωνον"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "прямоугольный треугольник"
+        }
+      ],
+      "orthos": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ὀρθὴ γωνία"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "прямой угол"
+        }
+      ],
+      "oude_trigonon": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "тройка не составляет треугольника"
+        }
+      ],
+      "ouk_orthogonion": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "треугольник не прямоугольный по контрапозиции I.47"
+        }
+      ],
+      "oxygonion": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ὀξυγώνιον τρίγωνον"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "остроугольный треугольник"
+        }
+      ],
+      "paralleloi": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "παράλληλοι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "прямые параллельны"
+        }
+      ],
+      "pleurai_trigonou": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "длины трёх сторон треугольника"
+        }
+      ],
+      "pythagoras_apotelema": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "пифагорово соотношение выполнено"
+        }
+      ],
+      "semeion_tes_figuras": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "точка входит в предъявленную конфигурацию"
+        }
+      ],
+      "smezhnye_gonia": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "ἐφεξῆς γωνίαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "смежные углы на прямой"
+        }
+      ],
+      "treis_isos_dyo_orthais": [
+        {
+          "language": "grc",
+          "status": "official",
+          "text": "τρεῖς γωνίαι δυσὶν ὀρθαῖς ἴσαι"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "три угла вместе равны двум прямым"
+        }
+      ],
+      "trigonon_synistatai": [
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "тройка составляет треугольник (I.20)"
+        }
+      ]
+    },
+    "exportRelationParameterNames": {
+      "amblygonion": [
+        "t"
+      ],
+      "eutheia_tes_figuras": [
+        "l"
+      ],
+      "isopleuron": [
+        "t"
+      ],
+      "isos_dyo_goniais": [
+        "a",
+        "b",
+        "c"
+      ],
+      "isos_dyo_orthais": [
+        "g",
+        "h"
+      ],
+      "isos_gonia": [
+        "a",
+        "b"
+      ],
+      "isos_mikos": [
+        "p",
+        "q",
+        "r",
+        "s"
+      ],
+      "isoskeles": [
+        "t"
+      ],
+      "kata_koryphen": [
+        "g",
+        "h"
+      ],
+      "keitai_epi": [
+        "p",
+        "l"
+      ],
+      "onoma_eutheias": [
+        "l",
+        "n"
+      ],
+      "onoma_semeiou": [
+        "p",
+        "n"
+      ],
+      "orthogonion": [
+        "t"
+      ],
+      "orthos": [
+        "g"
+      ],
+      "oude_trigonon": [
+        "t"
+      ],
+      "ouk_orthogonion": [
+        "t"
+      ],
+      "oxygonion": [
+        "t"
+      ],
+      "paralleloi": [
+        "l",
+        "m"
+      ],
+      "pleurai_trigonou": [
+        "t",
+        "a",
+        "b",
+        "c"
+      ],
+      "pythagoras_apotelema": [
+        "t"
+      ],
+      "semeion_tes_figuras": [
+        "p"
+      ],
+      "smezhnye_gonia": [
+        "g",
+        "h"
+      ],
+      "treis_isos_dyo_orthais": [
+        "a",
+        "b",
+        "c"
+      ],
+      "trigonon_synistatai": [
+        "t"
+      ]
+    },
+    "exportRelationParameters": {
+      "amblygonion": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "eutheia_tes_figuras": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Eutheia"
+        }
+      ],
+      "isopleuron": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "isos_dyo_goniais": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "isos_dyo_orthais": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "isos_gonia": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "isos_mikos": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        }
+      ],
+      "isoskeles": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "kata_koryphen": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "keitai_epi": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Eutheia"
+        }
+      ],
+      "onoma_eutheias": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Eutheia"
+        },
+        {
+          "name": "urn:law:std#Text"
+        }
+      ],
+      "onoma_semeiou": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        },
+        {
+          "name": "urn:law:std#Text"
+        }
+      ],
+      "orthogonion": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "orthos": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "oude_trigonon": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "ouk_orthogonion": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "oxygonion": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "paralleloi": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Eutheia"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Eutheia"
+        }
+      ],
+      "pleurai_trigonou": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        },
+        {
+          "name": "urn:law:std#Integer"
+        },
+        {
+          "name": "urn:law:std#Integer"
+        },
+        {
+          "name": "urn:law:std#Integer"
+        }
+      ],
+      "pythagoras_apotelema": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ],
+      "semeion_tes_figuras": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Semeion"
+        }
+      ],
+      "smezhnye_gonia": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "treis_isos_dyo_orthais": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        },
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Gonion"
+        }
+      ],
+      "trigonon_synistatai": [
+        {
+          "name": "urn:grc:euclid:clir:stoicheia-i#Trigonon"
+        }
+      ]
+    },
+    "exports": [
+      "EktosApoParallel",
+      "EktosIsosDyoEntos",
+      "EnallaxApoParallel",
+      "Eutheia",
+      "Gonion",
+      "KataKoryphen",
+      "Kyklos",
+      "OrthogonionApoTetragonon",
+      "OrthogonionApoTetragononDeuterai",
+      "OrthogonionApoTetragononProtei",
+      "OrthogonionKataPythagoran",
+      "OukOrthogonionKataPythagoran",
+      "ParallelEkEktos",
+      "ParallelEkEnallax",
+      "ParallelEkParallel",
+      "ParallelEkSmeznykh",
+      "Parallelogrammon",
+      "STO_POST1",
+      "STO_POST5",
+      "Semeion",
+      "SmezhnyeIsosDyoOrthais",
+      "SmezhnyeOrthai",
+      "SmeznyeApoParallel",
+      "TreisGoniaiDyoOrthais",
+      "Trigonon",
+      "TrigononEstin",
+      "amblygonion",
+      "eutheia_tes_figuras",
+      "isopleuron",
+      "isos_dyo_goniais",
+      "isos_dyo_orthais",
+      "isos_gonia",
+      "isos_mikos",
+      "isoskeles",
+      "kata_koryphen",
+      "keitai_epi",
+      "onoma_eutheias",
+      "onoma_semeiou",
+      "orthogonion",
+      "orthos",
+      "oude_trigonon",
+      "ouk_orthogonion",
+      "oxygonion",
+      "paralleloi",
+      "pleurai_trigonou",
+      "pythagoras_apotelema",
+      "semeion_tes_figuras",
+      "smezhnye_gonia",
+      "treis_isos_dyo_orthais",
+      "trigonon_synistatai"
+    ],
+    "features": [
+      "core-executable"
+    ],
+    "package": {
+      "name": "grc.euclid.stoicheia_i",
+      "namespace": "urn:grc:euclid:clir:stoicheia-i",
+      "semanticHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "version": "0.1.0"
+    }
+  }
+]

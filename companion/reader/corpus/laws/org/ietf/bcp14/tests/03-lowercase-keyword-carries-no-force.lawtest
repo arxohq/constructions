@@ -1,0 +1,27 @@
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// RFC 8174 §2: «The words have the meanings specified herein only when they
+// are in all capitals», и далее прямо — «When these words are not
+// capitalized, they have their normal English meanings and are not affected
+// by this document». Базовая теория обязана ОТРИЦАТЬ силу строчной формы, а
+// не молчать о ней: FALSE_ONLY, не NEITHER. Молчание было бы неотличимо от
+// недоделки.
+//
+// ЗЕРКАЛО — СОСЕДНИЙ ФАЙЛ 05: тот же факт под до-8174-м прочтением даёт
+// TRUE_ONLY. Ось §168.2 «context { interpretation X; }» поверхность §267
+// передаёт (до 29.08.2026 не передавала — форма принималась и молча
+// отбрасывалась предупреждением LDC-E1307, которого раннер тестов не
+// показывал ни текстом, ни в --json). Пара 03/05 и есть доказательство, что
+// прочтение содержательно: ожидание теста 05 недостижимо в базовой теории.
+test "urn:query:bcp14-test-lowercase-no-force" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @2026-08-30; timezone "UTC"; }
+        assert "bcp14-t3-a": keyword_written(entity_ref("urn:ietf:rfc:9110#allow"), Must, Lowercase) { origin case_input; }
+    }
+    evaluate truth(keyword_used(entity_ref("urn:ietf:rfc:9110#allow"), Must));
+    expect result_kind == PROPOSITION;
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

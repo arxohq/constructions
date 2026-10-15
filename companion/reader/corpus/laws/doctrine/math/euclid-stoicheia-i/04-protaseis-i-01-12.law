@@ -1,0 +1,228 @@
+// Προτάσεις α΄—ιβ΄ (I.1—I.12)
+//
+// I.1—3, 9—12 — построения: проверяется предъявленная конфигурация.
+// I.4, 5, 6, 8 — теоремы равенства треугольников (ἴσος, без градусов).
+// I.7 — невозможность второй конструкции на том же основании.
+
+use self::{
+    Eutheia,
+    Gonion,
+    STO_PROP1,
+    STO_PROP10,
+    STO_PROP11,
+    STO_PROP12,
+    STO_PROP2,
+    STO_PROP3,
+    STO_PROP4,
+    STO_PROP5,
+    STO_PROP6,
+    STO_PROP7,
+    STO_PROP8,
+    STO_PROP9,
+    Semeion,
+    Trigonon,
+    isopleuron,
+    isos_gonia,
+    isos_mikos,
+    isoskeles,
+    kathetos,
+    mikos,
+    orthos,
+    trigonon_apo,
+};
+
+relation kataskeue_isopleurou(t: Trigonon) kind empirical {
+    label ru unofficial "предъявлено построение равностороннего на данном отрезке";
+}
+
+relation prostetheisa_isos(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind empirical {
+    label ru unofficial "к точке a приложен отрезок ad, равный bc";
+}
+
+relation aphairetheisa_isos(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion, e: Semeion,
+) kind empirical {
+    label ru unofficial "от ab отнят отрезок ac, равный данному de";
+}
+
+relation sas_kataskeue(t: Trigonon, u: Trigonon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "SAS: две стороны и заключённый угол; g, h — остальные углы";
+}
+
+relation sas_baseis(
+    t: Trigonon, u: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) kind empirical {
+    label ru unofficial "основания двух треугольников в конфигурации SAS/SSS";
+}
+
+relation gonia_pros_basis(t: Trigonon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "углы равнобедренного при основании";
+}
+
+relation isai_dyo_goniai(t: Trigonon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "два угла треугольника равны";
+}
+
+relation pleura_upo_gonia(t: Trigonon, g: Gonion, p: Semeion, q: Semeion) kind empirical {
+    label ru unofficial "сторона, противолежащая углу";
+}
+
+relation conflict_systasis(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind empirical {
+    label ru unofficial "две конструкции на одном основании к разным точкам";
+}
+
+relation adynaton_systasis(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind institutional {
+    label ru unofficial "конструкция I.7 невозможна";
+}
+
+relation sss_kataskeue(t: Trigonon, u: Trigonon, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "SSS: три стороны равны; g, h — углы между ними";
+}
+
+relation dicha_tome_gonias(g: Gonion, h: Gonion, i: Gonion) kind empirical {
+    label ru unofficial "угол g разделён пополам на h и i";
+}
+
+relation dicha_tome_eutheias(a: Semeion, b: Semeion, m: Semeion) kind empirical {
+    label ru unofficial "m — середина ab";
+}
+
+relation kathodos_pros_eutheian(l: Eutheia, m: Eutheia, g: Gonion) kind empirical {
+    label ru unofficial "восставлен перпендикуляр m к прямой l под углом g";
+}
+
+relation kathodos_apo_exo(l: Eutheia, m: Eutheia, g: Gonion) kind empirical {
+    label ru unofficial "перпендикуляр m из внешней точки на прямую l";
+}
+
+@source(STO_PROP1)
+rule IsopleuronSynestatai(t: Trigonon, a: Semeion, b: Semeion, c: Semeion) strict {
+    label grc official "Ἐπὶ τῆς δοθείσης εὐθείας πεπερασμένης τρίγωνον ἰσόπλευρον συστήσασθαι";
+    label ru unofficial "I.1: предъявленное равностороннее построение";
+    when kataskeue_isopleurou(t)
+        and trigonon_apo(t, a, b, c)
+        and supported(isos_mikos(a, b, a, c))
+        and supported(isos_mikos(a, b, b, c));
+    then isopleuron(t);
+}
+
+@source(STO_PROP2)
+rule IsosEutheiaProstetheisa(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion, v: Integer,
+) strict {
+    label grc official "Πρὸς τῷ δοθέντι σημείῳ τῇ δοθείσῃ εὐθείᾳ ἴσην εὐθεῖαν θέσθαι";
+    label ru unofficial "I.2: к точке приложена прямая, равная данной";
+    when prostetheisa_isos(a, b, c, d) and mikos(b, c, v) and mikos(a, d, v);
+    then isos_mikos(a, d, b, c);
+}
+
+@source(STO_PROP3)
+rule AphairetheisaIsos(
+    a: Semeion, b: Semeion, c: Semeion, d: Semeion, e: Semeion, v: Integer,
+) strict {
+    label grc official "ἀπὸ τῆς μείζονος τῇ ἐλάσσονι ἴσην εὐθεῖαν ἀφελεῖν";
+    label ru unofficial "I.3: от большей отнята равная меньшей";
+    when aphairetheisa_isos(a, b, c, d, e) and mikos(a, c, v) and mikos(d, e, v);
+    then isos_mikos(a, c, d, e);
+}
+
+@source(STO_PROP4)
+rule CongruenceSASGoniai(t: Trigonon, u: Trigonon, g: Gonion, h: Gonion) strict {
+    label grc official "αἱ λοιπαὶ γωνίαι ταῖς λοιπαῖς γωνίαις ἴσαι ἔσονται";
+    label ru unofficial "I.4 SAS: остальные углы равны";
+    when sas_kataskeue(t, u, g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP4)
+rule CongruenceSASBaseis(
+    t: Trigonon, u: Trigonon, a: Semeion, b: Semeion, c: Semeion, d: Semeion,
+) strict {
+    label grc official "τὴν βάσιν τῇ βάσει ἴσην ἕξει";
+    label ru unofficial "I.4 SAS: основания равны";
+    when sas_baseis(t, u, a, b, c, d);
+    then isos_mikos(a, b, c, d);
+}
+
+@source(STO_PROP5)
+rule IsoskelesGoniaiProsBasis(t: Trigonon, g: Gonion, h: Gonion) strict {
+    label grc official "αἱ πρὸς τῇ βάσει γωνίαι ἴσαι ἀλλήλαις εἰσίν";
+    label ru unofficial "I.5: у равнобедренного углы при основании равны";
+    when supported(isoskeles(t)) and gonia_pros_basis(t, g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP6)
+rule IsaiGoniaiIsaiPleurai(
+    t: Trigonon, g: Gonion, h: Gonion,
+    p: Semeion, q: Semeion, r: Semeion, s: Semeion,
+) strict {
+    label grc official "αἱ ὑπὸ τὰς ἴσας γωνίας ὑποτείνουσαι πλευραὶ ἴσαι";
+    label ru unofficial "I.6: равные углы — противолежащие стороны равны";
+    when isai_dyo_goniai(t, g, h)
+        and pleura_upo_gonia(t, g, p, q)
+        and pleura_upo_gonia(t, h, r, s);
+    then isos_mikos(p, q, r, s);
+}
+
+@source(STO_PROP7)
+rule ProtasisI7Adynaton(a: Semeion, b: Semeion, c: Semeion, d: Semeion) strict {
+    label grc official "δύο ταῖς αὐταῖς εὐθείαις ἄλλαι δύο … οὐ συσταθήσονται";
+    label ru unofficial "I.7: две равные конструкции на одном основании невозможны";
+    when conflict_systasis(a, b, c, d);
+    then adynaton_systasis(a, b, c, d);
+}
+
+@source(STO_PROP8)
+rule CongruenceSSS(t: Trigonon, u: Trigonon, g: Gonion, h: Gonion) strict {
+    label grc official "τὴν γωνίαν τῇ γωνίᾳ ἴσην ἕξει";
+    label ru unofficial "I.8 SSS: угол между равными сторонами равен";
+    when sss_kataskeue(t, u, g, h);
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP9)
+rule DichaTemneiGonian(g: Gonion, h: Gonion, i: Gonion) strict {
+    label grc official "τὴν δοθεῖσαν γωνίαν εὐθύγραμμον δίχα τεμεῖν";
+    label ru unofficial "I.9: половины предъявленной биссекции равны";
+    when dicha_tome_gonias(g, h, i);
+    then isos_gonia(h, i);
+}
+
+@source(STO_PROP10)
+rule DichaTemneiEutheian(a: Semeion, b: Semeion, m: Semeion, v: Integer) strict {
+    label grc official "τὴν δοθεῖσαν εὐθεῖαν πεπερασμένην δίχα τεμεῖν";
+    label ru unofficial "I.10: середина отрезка — половины равны";
+    when dicha_tome_eutheias(a, b, m) and mikos(a, m, v) and mikos(m, b, v);
+    then isos_mikos(a, m, m, b);
+}
+
+@source(STO_PROP11)
+rule KathodosProstheisa(l: Eutheia, m: Eutheia, g: Gonion) strict {
+    label grc official "πρὸς τῇ δοθείσῃ εὐθείᾳ … ὀρθὴν γωνίαν ἀναγράψαι";
+    label ru unofficial "I.11: восставленный перпендикуляр даёт прямой угол";
+    when kathodos_pros_eutheian(l, m, g);
+    then orthos(g);
+}
+
+@source(STO_PROP11)
+rule KathodosKathetos(l: Eutheia, m: Eutheia, g: Gonion) strict {
+    label ru unofficial "I.11: восставленный перпендикуляр — κάθετος";
+    when kathodos_pros_eutheian(l, m, g);
+    then kathetos(m, l);
+}
+
+@source(STO_PROP12)
+rule KathodosApoExo(l: Eutheia, m: Eutheia, g: Gonion) strict {
+    label grc official "κάθετον εὐθεῖαν γραμμὴν ἀγαγεῖν";
+    label ru unofficial "I.12: перпендикуляр из внешней точки — прямой угол";
+    when kathodos_apo_exo(l, m, g);
+    then orthos(g);
+}
+
+@source(STO_PROP12)
+rule KathodosApoExoKathetos(l: Eutheia, m: Eutheia, g: Gonion) strict {
+    label ru unofficial "I.12: опущенный перпендикуляр — κάθετος";
+    when kathodos_apo_exo(l, m, g);
+    then kathetos(m, l);
+}

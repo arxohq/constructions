@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:42ecbf6dffd6fbdf8752c5da2b16ac7cf6a103b306e1c847dd3a9851468a2402",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:cec167869fd7fb68042ec6820c05537fd3a9c90c16f6dd9aa95e82e35763947b",
+    "name": "la.gauss.theorema_fermatianum",
+    "namespace": "urn:la:gauss:clir:theorema-fermatianum",
+    "sourceHash": "sha256:0e16ec11624519ac38ccaf9e3889be29b632f52010b541d1f73a5399d231590a",
+    "version": "0.1.0"
+  }
+}

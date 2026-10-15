@@ -1,0 +1,60 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "bipm.si_brochure"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:bipm:clir:si-brochure"
+
+# Реестр единиц §49.2 (DECISION-0154): таблицы 4, 7 и 8 брошюры сверяются с
+# ним равенствами величин в модуле 06.
+[dependencies]
+"units.si" = "0.1.0"
+
+# `law.units/0.1` — вход ПАКЕТА для алгебры §49.1: без него модуль 06 не
+# вправе звать `magnitude` и `unit_convert`.
+[features]
+enabled = ["law.units/0.1"]
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md).
+[metadata]
+act = "bipm-si-brochure"
+title = "Брошюра SI (BIPM): определяющие константы, базовые и производные единицы, префиксы и внесистемные единицы; переопределение 20.05.2019 как смена редакции"
+primarySource = "SI_BROCHURE"
+# jurisdiction: International — BIPM действует по Метрической конвенции
+# (1875), брошюра собирает резолюции ГКМВ; как у резолюций МАС и ICZN.
+jurisdiction = "International"
+instrument = "standard"
+sourceFidelity = "pinned_unofficial_copy"
+
+# Невыводимые: их не сверяет никто, поэтому причина выбора записана.
+#
+# issuer: BIPM издаёт брошюру по поручению CIPM; резолюции принимает ГКМВ.
+issuer = "Bureau International des Poids et Mesures (BIPM), по резолюциям Генеральной конференции по мерам и весам (CGPM)"
+# legalStatus: in_force — 9-е издание действует с 20.05.2019; 8-е закреплено
+# как прежняя редакция с окном до этой даты.
+legalStatus = "in_force"
+# verifiedAgainstSource: фрагменты вырезаны генератором из закреплённого
+# извлечения по тексту строк; таблицы 1, 2, 4, 7, 8 перенесены в факты
+# построчно и сверены с фрагментами глазами при формализации.
+verifiedAgainstSource = true
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "bipm_si_brochure"
+suites = [
+  "tests/01-kilogram-redefinition.lawtest",
+  "tests/02-units-unchanged-across-editions.lawtest",
+  "tests/03-ampere-kelvin-mole-editions.lawtest",
+  "tests/04-defining-constants.lawtest",
+  "tests/05-derived-units.lawtest",
+  "tests/06-prefixes-and-kilogram.lawtest",
+  "tests/07-compound-prefix.lawtest",
+  "tests/08-prefixes-2022.lawtest",
+  "tests/09-non-si-units.lawtest",
+  "tests/10-why-not-before-redefinition.lawtest",
+  "tests/11-algebra-verifies-tables.lawtest",
+  "tests/12-algebra-remaining-rows.lawtest",
+  "tests/13-celsius.lawtest",
+]
+world = ["bipm.si_brochure", "units.si"]

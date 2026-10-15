@@ -1,0 +1,1513 @@
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+// Сценарии перенесены из прежнего Python-раннера семейства `fermat`.
+// Заголовки — прежние ID сценариев (scenario-manifest); ожидания
+// выведены из ПРЕЖНИХ проверок, а не из ответов движка.
+
+test "FLT-01-PROBATIO-7-BASIS-2" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-02-PRIMUS-7-PRAESUMITUR" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(primus(7));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-03-PROBATIO-7-BASIS-3" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-04-PSEUDOPRIMUS-341-BASIS-2" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-05-PROBATIO-341-BASIS-3-CADIT" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 81) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 243) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 56) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 201) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 163) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 312) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 254) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 56) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "FLT-06-PRIMUS-341-DIVISORE-VICTUS" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+
+        assert "assert-divisor": divisor_allatus(entity_ref("urn:case:flt:probatio"), 11) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(primus(341));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-07-PRIMUS-341-SINE-DIVISORE" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(primus(341));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-08-CARMICHAEL-561-BASIS-2" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 256) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 460) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 359) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 412) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 263) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 166) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-09-CARMICHAEL-561-BASIS-5" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 5) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 5) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 25) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 64) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 169) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 511) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 311) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 229) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 23) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 529) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 463) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-10-CARMICHAEL-561-BASIS-7" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 7) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 7) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 49) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 157) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 526) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 103) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 160) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 355) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 241) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 298) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 166) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-11-PRIMUS-561-DIVISORE-VICTUS" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 256) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 460) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 359) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 412) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 263) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 166) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) {
+            origin case_input;
+        }
+
+        assert "assert-divisor": divisor_allatus(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(primus(561));
+    expect truth_status == FALSE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-12-DIVISOR-NON-METIENS-NIHIL-AGIT" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 256) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 460) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 359) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 412) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 263) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 166) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 67) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) {
+            origin case_input;
+        }
+
+        assert "assert-divisor": divisor_allatus(entity_ref("urn:case:flt:probatio"), 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(primus(561));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-13-VESTIGIUM-FALSUM-IN-GRADU" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 33) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_falsum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-14-VESTIGIUM-FALSUM-IN-DUPLICATIONE" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_falsum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-15-VESTIGIUM-INTEGRUM" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_falsum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "FLT-16-VESTIGIUM-RUPTUM" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_ruptum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-17-VESTIGIUM-CONTINUUM" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_ruptum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "FLT-18-COMPENDIUM-3-AD-1000-MOD-13" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-quaesitum": quaesitum(entity_ref("urn:case:flt:probatio"), 1000) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(residuum_quaesiti(entity_ref("urn:case:flt:probatio"), 1000, 3));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-19-COMPENDIUM-IN-PERIODO" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-quaesitum": quaesitum(entity_ref("urn:case:flt:probatio"), 999) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(residuum_quaesiti(entity_ref("urn:case:flt:probatio"), 999, 1));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-20-PROBATIO-PER-ORDINEM" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-quaesitum": quaesitum(entity_ref("urn:case:flt:probatio"), 1000) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(probatio_fermatiana_transacta(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-21-ORDO-NON-MINOR-MODULO" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 7) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-22-ORDO-SINE-UNITATE" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 2) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-23-ORDO-ANTICIPATUS" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-24-ORDO-NON-DIVIDENS" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 12) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 8) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 12) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 12, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 5) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "FLT-25-ORDO-PROBATUS" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 13, 3) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 9) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-ordo": ordo(entity_ref("urn:case:flt:probatio"), 3) {
+            origin case_input;
+        }
+
+        assert "assert-quaesitum": quaesitum(entity_ref("urn:case:flt:probatio"), 1000) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "FLT-26-VESTIGIUM-FALSUM-IN-INITIO" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @0001-01-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) {
+            origin case_input;
+        }
+
+        assert "assert-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 3) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) {
+            origin case_input;
+        }
+
+        assert "assert-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(vestigium_falsum(entity_ref("urn:case:flt:probatio")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}

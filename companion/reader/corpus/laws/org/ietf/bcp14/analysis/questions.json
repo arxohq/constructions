@@ -1,0 +1,294 @@
+{
+  "$comment": "Каталог вопросов пакета (DECISION-0190, law.package-questions/0.1). Карточка — параметризованный шаблон запроса §172, а не ответ. Свидетельства — сценарии tests/, в том числе порождённые (tests/catalog): каждый выполняет посылки правила и спрашивает вывод.",
+  "format": "law.package-questions/0.1",
+  "package": "ietf.bcp14",
+  "tasks": [
+    {
+      "id": "rfc2119-abstract",
+      "title": "RFC2119_ABSTRACT",
+      "source_units": [
+        "RFC2119_ABSTRACT"
+      ]
+    },
+    {
+      "id": "rfc2119-s1",
+      "title": "RFC2119_S1",
+      "source_units": [
+        "RFC2119_S1"
+      ]
+    },
+    {
+      "id": "rfc2119-s2",
+      "title": "RFC2119_S2",
+      "source_units": [
+        "RFC2119_S2"
+      ]
+    },
+    {
+      "id": "rfc2119-s3",
+      "title": "RFC2119_S3",
+      "source_units": [
+        "RFC2119_S3"
+      ]
+    },
+    {
+      "id": "rfc2119-s4",
+      "title": "RFC2119_S4",
+      "source_units": [
+        "RFC2119_S4"
+      ]
+    },
+    {
+      "id": "rfc2119-s5",
+      "title": "RFC2119_S5",
+      "source_units": [
+        "RFC2119_S5"
+      ]
+    },
+    {
+      "id": "rfc2119-s6",
+      "title": "RFC2119_S6",
+      "source_units": [
+        "RFC2119_S6"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "poziciya-abstainfromprohibitedbehaviour",
+      "task": "rfc2119-s2",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «AbstainFromProhibitedBehaviour»?",
+      "kind": "positions",
+      "norms": [
+        "AbstainFromProhibitedBehaviour"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(AbstainFromProhibitedBehaviour, <статус>)",
+      "tests": [
+        "BCP14-03-MUST-NOT-OBSERVED-IS-ACTIVE",
+        "BCP14-04-MUST-NOT-BREACHED-IS-VIOLATED"
+      ],
+      "source_units": [
+        "RFC2119_S2"
+      ]
+    },
+    {
+      "id": "poziciya-avoiddiscouragedbehaviour",
+      "task": "rfc2119-s4",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «AvoidDiscouragedBehaviour»?",
+      "kind": "positions",
+      "norms": [
+        "AvoidDiscouragedBehaviour"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(AvoidDiscouragedBehaviour, <статус>)",
+      "tests": [
+        "BCP14-10-SHOULD-NOT-BREACHED-IS-VIOLATED"
+      ],
+      "source_units": [
+        "RFC2119_S4"
+      ]
+    },
+    {
+      "id": "poziciya-followrecommendation",
+      "task": "rfc2119-s3",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «FollowRecommendation»?",
+      "kind": "positions",
+      "norms": [
+        "FollowRecommendation"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(FollowRecommendation, <статус>)",
+      "tests": [
+        "BCP14-07-SHOULD-DEVIATION-REQUIRES-JUDGMENT",
+        "BCP14-09-VALID-REASON-WITHOUT-WEIGHING-DOES-NOT-RELEASE"
+      ],
+      "source_units": [
+        "RFC2119_S3"
+      ]
+    },
+    {
+      "id": "poziciya-includeoromittheoption",
+      "task": "rfc2119-s5",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «IncludeOrOmitTheOption»?",
+      "kind": "positions",
+      "norms": [
+        "IncludeOrOmitTheOption"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(IncludeOrOmitTheOption, <статус>)",
+      "tests": [
+        "BCP14-12-OMITTING-IMPLEMENTATION-MUST-INTEROPERATE",
+        "BCP14-13-INCLUDING-IMPLEMENTATION-MUST-INTEROPERATE"
+      ],
+      "source_units": [
+        "RFC2119_S5"
+      ]
+    },
+    {
+      "id": "poziciya-interoperatewithincludingimplementation",
+      "task": "rfc2119-s5",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «InteroperateWithIncludingImplementation»?",
+      "kind": "positions",
+      "norms": [
+        "InteroperateWithIncludingImplementation"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(InteroperateWithIncludingImplementation, <статус>)",
+      "tests": [
+        "BCP14-12-OMITTING-IMPLEMENTATION-MUST-INTEROPERATE"
+      ],
+      "source_units": [
+        "RFC2119_S5"
+      ]
+    },
+    {
+      "id": "poziciya-interoperatewithomittingimplementation",
+      "task": "rfc2119-s5",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «InteroperateWithOmittingImplementation»?",
+      "kind": "positions",
+      "norms": [
+        "InteroperateWithOmittingImplementation"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(InteroperateWithOmittingImplementation, <статус>)",
+      "tests": [
+        "BCP14-13-INCLUDING-IMPLEMENTATION-MUST-INTEROPERATE"
+      ],
+      "source_units": [
+        "RFC2119_S5"
+      ]
+    },
+    {
+      "id": "poziciya-prerfc8174securityduty-elaboratesecurityimplications",
+      "task": "rfc2119-abstract",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «PreRfc8174SecurityDuty/ElaborateSecurityImplications»?",
+      "kind": "positions",
+      "norms": [
+        "PreRfc8174SecurityDuty/ElaborateSecurityImplications"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(PreRfc8174SecurityDuty/ElaborateSecurityImplications, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-PRERFC8174SECURITYDUTY/ELABORATESECURITYIMPLICATIONS"
+      ],
+      "source_units": [
+        "RFC2119_ABSTRACT"
+      ]
+    },
+    {
+      "id": "poziciya-satisfyabsoluterequirement",
+      "task": "rfc2119-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «SatisfyAbsoluteRequirement»?",
+      "kind": "positions",
+      "norms": [
+        "SatisfyAbsoluteRequirement"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(SatisfyAbsoluteRequirement, <статус>)",
+      "tests": [
+        "BCP14-01-MUST-SATISFIED-IS-ACTIVE",
+        "BCP14-02-MUST-BREACHED-IS-VIOLATED",
+        "BCP14-06-PRE-8174-READING-REVIVES-LOWERCASE",
+        "BCP14-21-FIRST-DAY-OF-THE-NAMED-MONTH-IS-ACTIVE"
+      ],
+      "source_units": [
+        "RFC2119_S1"
+      ]
+    },
+    {
+      "id": "poziciya-useimperativesonlywhereallowed",
+      "task": "rfc2119-s6",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «UseImperativesOnlyWhereAllowed»?",
+      "kind": "positions",
+      "norms": [
+        "UseImperativesOnlyWhereAllowed"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(UseImperativesOnlyWhereAllowed, <статус>)",
+      "tests": [
+        "BCP14-14-IMPERATIVE-ADMISSIBILITY-GOES-TO-THE-WORKING-GROUP",
+        "BCP14-15-IMPERATIVE-USED-WHERE-NOT-ALLOWED-IS-VIOLATED",
+        "BCP14-16-IMPERATIVE-REQUIRED-FOR-INTEROPERATION-IS-ACTIVE"
+      ],
+      "source_units": [
+        "RFC2119_S6"
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "granica-01",
+      "task": "rfc2119-abstract",
+      "question": "Покрывает ли пакет весь акт — значит ли отсутствие карточки, что право молчит?",
+      "reason_kind": "not_formalized",
+      "limitation": "Правила заведены у 10 закреплённых фрагментов из 15: остальные закреплены байтами публикации, но исполняемых норм не несут. Отсутствие карточки означает «в модели нормы нет», а не «право молчит».",
+      "source_units": [
+        "RFC2119_ABSTRACT"
+      ]
+    },
+    {
+      "id": "granica-02",
+      "task": "rfc2119-abstract",
+      "question": "Все ли позиции пакета подтверждены положительным сценарием?",
+      "reason_kind": "not_formalized",
+      "limitation": "1 норм пакета подтверждены только отрицательным сценарием («на этих фактах позиция не возникает»): построить мир, который их активирует, порождающий проход не смог. Положительное свидетельство — долг.",
+      "source_units": [
+        "RFC2119_ABSTRACT"
+      ]
+    }
+  ],
+  "internal": [
+    {
+      "predicate": "absolute_prohibition",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (AbsoluteProhibitionBindsTheImplementation, AbstentionIsPresumed, ProhibitedBehaviourBreaksAbstention); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "absolute_requirement",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (AbsoluteRequirementBindsTheImplementation); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "abstains_from",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "deviation_from_recommendation_justified",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (JustifiedDeviationReleasesFromTheRecommendation); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "discouraged_behaviour_acceptable",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (AcceptableBehaviourReleasesFromTheDiscouragement); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "discouraged_item",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (AbstentionFromDiscouragedBehaviourIsPresumed, AcceptableBehaviourReleasesFromTheDiscouragement, DiscouragedBehaviourPerformedBreaksAbstention…); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "discouragement_binding",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (DiscouragementCreatesADefeasibleDutyOfAbstention); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "imperative_use_admissible",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "keyword_used",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (MayDenotesTrueOptionality, MustDenotesAnAbsoluteRequirement, MustNotDenotesAnAbsoluteProhibition…); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "lowercase_carries_force_by_earlier_practice",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (LowercaseKeywordUnderEarlierPracticeCarriesTheDefinedMeaning); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "recommendation_binding",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (RecommendationCreatesADefeasibleDuty); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "recommended_item",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (JustifiedDeviationReleasesFromTheRecommendation, RecommendationBindsUnlessJustifiedOtherwise); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "requirement_satisfied",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "subject_to",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (AbsoluteProhibitionBindsTheImplementation, AbsoluteRequirementBindsTheImplementation, AbstentionFromDiscouragedBehaviourIsPresumed…); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "truly_optional",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (IncludingImplementationMustInteroperate, OmittingImplementationMustInteroperate, OptionalItemMayBeIncludedOrOmitted); самостоятельным вопросом к пакету он не является."
+    }
+  ]
+}

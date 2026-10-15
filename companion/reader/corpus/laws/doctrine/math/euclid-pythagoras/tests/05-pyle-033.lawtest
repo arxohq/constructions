@@ -1,0 +1,20 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// Гейт существования держит признак: тройка 0-3-3 удовлетворяет
+// пифагоровой арифметике (0 + 9 == 9), но по I.20 треугольника не
+// составляет (0+3 не больше 3) — признак I.48 обязан молчать. Без посылки
+// trigonon_estin это дело зеленило бы «прямоугольный треугольник» нулевой
+// стороны.
+test "urn:query:eucl-033" {
+    given {
+        assert "eucl-t05-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 0, 3, 3) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}

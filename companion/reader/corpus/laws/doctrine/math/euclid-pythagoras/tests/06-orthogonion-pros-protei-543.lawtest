@@ -1,0 +1,34 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// МАШИННЫЙ СВИДЕТЕЛЬ, А НЕ АВТОРСКИЙ ПРИМЕР. Стороны здесь не выбраны
+// человеком: их подобрал z3 под гард правила OrthogonionProsProtei
+// (b*b + c*c == a*a) — то есть решатель ПЕРЕОТКРЫЛ пифагорову тройку,
+// зная только арифметику гарда и ничего не зная о Пифагоре. Модель
+// воспроизводится:
+//
+//   python3 verify/ci/tools/smt_witness.py \
+//       --package corpus/clir/grc-euclid-pythagoras.lawir.json \
+//       --rule OrthogonionProsProtei
+//
+// Прямой угол здесь против ПЕРВОЙ стороны записи: 16 + 9 == 25.
+// Конвенции «гипотенуза последняя» у пакета нет, и эта тройка —
+// та же египетская 3-4-5, записанная в другом порядке.
+test "urn:query:eucl-smt-543" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "eucl-t06-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 5, 4, 3) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

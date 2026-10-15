@@ -1,0 +1,193 @@
+// Три прочтения термина «кислота» §152 и группа §155.
+//
+// ЧТО ЗДЕСЬ ПРОИСХОДИТ. Общий вопрос дела — `is_acid(s)` / `is_base(s)`. Ответ
+// на него даёт РОВНО ОДНО прочтение, выбранное контекстом дела строкой
+// `interpretation ArrheniusReading;`. Правило невыбранного прочтения не
+// исполняется вовсе (§104.4), поэтому ответы прочтений не смешиваются: аммиак
+// не оказывается «кислотой и не кислотой одновременно», он оказывается не
+// кислотой по Аррениусу и основанием по Брёнстеду — двумя разными ответами на
+// два разных вопроса.
+//
+// `selection exactly_one` (§155) ВЫБРАН СОЗНАТЕЛЬНО, и он строже химии. Одна
+// частица может быть кислотой по Льюису и не быть по Аррениусу без всякого
+// противоречия — прочтения не исключают друг друга. Но вопрос «кислота ли
+// она» без названного определения ОТВЕТА НЕ ИМЕЕТ, и `exactly_one` делает это
+// громким: дело без выбранного прочтения получает `INTERPRETATION_REQUIRED`
+// §156, а не тихий NEITHER, неотличимый от «сведений не хватает». Решение
+// владельца 06.09.2026; парная форма `any_of` показана группой растворителя в
+// `chem/acid-strength`.
+//
+// СТАТУС ПРОЧТЕНИЙ §154. Все три — `authoritative`: ни одно из них учебник не
+// объявляет ошибочным или устаревшим. Определение Аррениуса он называет
+// историческим, а определения Брёнстеда—Лоури и Льюиса — «more general» и
+// «generalized»; общность не отменяет частного, и «кислота в водном растворе»
+// остаётся полноценным вопросом. Различие определений несёт не статус, а
+// сама группа.
+//
+// СВЯЗЫВАЮЩАЯ ПОСЫЛКА У ОТРИЦАТЕЛЬНЫХ ГОЛОВ. `refuted(P(s))` переменную не
+// связывает (§190), поэтому каждое правило «не кислота по этому прочтению»
+// несёт предмет дела `species_in_question(s)` позитивным конъюнктом. Здесь это
+// не формальность: до errata E-0137 (тот же день) отказ обнаруживал только
+// ОРАКУЛ на исполнении («литерал с несвязанными [v0]»), а `lawc check`
+// правило внутри `interpretation` пропускал — проход §190 не спускался в
+// члены прочтения. Теперь та же голова без связывателя даёт LDC-E4101 на
+// `check` (вектор T260).
+//
+// ПРОЧТЕНИЯ `pub` (DECISION-0152 §3 и §7): их выбирает не только своё дело,
+// но и дело ПОТРЕБИТЕЛЯ — `interpretation chem.acid_base::BronstedReading;`
+// в контексте §168.2 у `chem/acid-strength`. Без `pub` состав экспорта §24
+// их не содержит, и потребитель получает LDC-E1105 вместо выбора.
+//
+// ПОЧЕМУ ПРОЧТЕНИЯ СТОЯТ НА ФРАГМЕНТАХ УЧЕБНИКА, А НЕ ПЕРВОИСТОЧНИКОВ.
+// `of openstax.chemistry_acids::OS_14_1_ARRHENIUS` — межпакетная ссылка §152
+// (DECISION-0152) на закреплённый абзац Chemistry 2e. Байты публикаций
+// Аррениуса (1887), Брёнстеда и Лоури (1923) и Льюиса (1923) 06.09.2026 из
+// окружения сборки недостижимы; они объявлены в `sources.law` соседа с
+// `materialization_status UNAVAILABLE`. Когда байты появятся, каждый
+// первоисточник станет своим пакетом, а `of` переедет на его фрагмент — форма
+// ссылки от этого не изменится.
+
+language "law.core" version "0.2";
+package chem.acid_base version "0.1.0";
+namespace "urn:chem:clir:acid-base";
+
+use self::{
+    arrhenius_acid,
+    arrhenius_base,
+    bronsted_acid,
+    bronsted_base,
+    is_acid,
+    is_base,
+    lewis_acid,
+    lewis_base,
+};
+
+pub interpretation ArrheniusReading of openstax.chemistry_acids::OS_14_1_ARRHENIUS {
+    status authoritative;
+    label ru unofficial "прочтение Аррениуса: кислота — то, что даёт в воде катионы водорода";
+    label en unofficial "Arrhenius reading: an acid yields hydrogen cations in water";
+    source_anchor openstax.chemistry_acids::OS_14_1_ARRHENIUS;
+
+    @source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+    rule AcidIsArrheniusAcid(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Аррениуса кислота — кислота Аррениуса";
+        label en unofficial "under the Arrhenius reading, an acid is an Arrhenius acid";
+        when arrhenius_acid(s);
+        then is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+    rule BaseIsArrheniusBase(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Аррениуса основание — основание Аррениуса";
+        label en unofficial "under the Arrhenius reading, a base is an Arrhenius base";
+        when arrhenius_base(s);
+        then is_base(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+    rule NotAcidUnderArrhenius(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Аррениуса опровергнутая кислотность Аррениуса опровергает кислотность";
+        label en unofficial "under the Arrhenius reading, a refuted Arrhenius acid is not an acid";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(arrhenius_acid(s));
+        then not is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+    rule NotBaseUnderArrhenius(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Аррениуса опровергнутая основность Аррениуса опровергает основность";
+        label en unofficial "under the Arrhenius reading, a refuted Arrhenius base is not a base";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(arrhenius_base(s));
+        then not is_base(s);
+    }
+}
+
+pub interpretation BronstedReading of openstax.chemistry_acids::OS_14_1_BRONSTED {
+    status authoritative;
+    label ru unofficial "прочтение Брёнстеда—Лоури: кислота — донор протона";
+    label en unofficial "Brønsted-Lowry reading: an acid is a proton donor";
+    source_anchor openstax.chemistry_acids::OS_14_1_BRONSTED;
+
+    @source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+    rule AcidIsBronstedAcid(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Брёнстеда кислота — кислота Брёнстеда";
+        label en unofficial "under the Brønsted-Lowry reading, an acid is a Brønsted-Lowry acid";
+        when bronsted_acid(s);
+        then is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+    rule BaseIsBronstedBase(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Брёнстеда основание — основание Брёнстеда";
+        label en unofficial "under the Brønsted-Lowry reading, a base is a Brønsted-Lowry base";
+        when bronsted_base(s);
+        then is_base(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+    rule NotAcidUnderBronsted(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Брёнстеда опровергнутая кислотность Брёнстеда опровергает кислотность";
+        label en unofficial "under the Brønsted-Lowry reading, a refuted Brønsted-Lowry acid is not an acid";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(bronsted_acid(s));
+        then not is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+    rule NotBaseUnderBronsted(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Брёнстеда опровергнутая основность Брёнстеда опровергает основность";
+        label en unofficial "under the Brønsted-Lowry reading, a refuted Brønsted-Lowry base is not a base";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(bronsted_base(s));
+        then not is_base(s);
+    }
+}
+
+pub interpretation LewisReading of openstax.chemistry_acids::OS_15_2_LEWIS {
+    status authoritative;
+    label ru unofficial "прочтение Льюиса: кислота — акцептор электронной пары";
+    label en unofficial "Lewis reading: an acid is an electron-pair acceptor";
+    source_anchor openstax.chemistry_acids::OS_15_2_LEWIS;
+
+    @source(openstax.chemistry_acids::OS_15_2_LEWIS)
+    rule AcidIsLewisAcid(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Льюиса кислота — кислота Льюиса";
+        label en unofficial "under the Lewis reading, an acid is a Lewis acid";
+        when lewis_acid(s);
+        then is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_15_2_LEWIS)
+    rule BaseIsLewisBase(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Льюиса основание — основание Льюиса";
+        label en unofficial "under the Lewis reading, a base is a Lewis base";
+        when lewis_base(s);
+        then is_base(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_15_2_LEWIS)
+    rule NotAcidUnderLewis(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Льюиса опровергнутая кислотность Льюиса опровергает кислотность";
+        label en unofficial "under the Lewis reading, a refuted Lewis acid is not an acid";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(lewis_acid(s));
+        then not is_acid(s);
+    }
+
+    @source(openstax.chemistry_acids::OS_15_2_LEWIS)
+    rule NotBaseUnderLewis(s: openstax.chemistry_acids::Species) strict {
+        label ru unofficial "по прочтению Льюиса опровергнутая основность Льюиса опровергает основность";
+        label en unofficial "under the Lewis reading, a refuted Lewis base is not a base";
+        when openstax.chemistry_acids::species_in_question(s)
+            and refuted(lewis_base(s));
+        then not is_base(s);
+    }
+}
+
+// Метка группе §218 не ставится: `interpretation_group` §155 её не принимает —
+// именуются сами прочтения, а группа лишь называет их и политику выбора.
+interpretation_group AcidDefinition {
+    alternatives ArrheniusReading, BronstedReading, LewisReading;
+    selection exactly_one;
+}

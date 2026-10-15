@@ -1,0 +1,427 @@
+// «Grundlagen der Geometrie» Гильберта, Festschrift 1899, глава I: группы
+// аксиом I (Verknüpfung), II (Anordnung) и III (Parallelen) — инварианты
+// предъявленной конечной конфигурации точек, прямых и плоскостей.
+//
+// ЧТО ЭТО ЗА ПАКЕТ И ЧЕМ ОН ОТЛИЧАЕТСЯ ОТ ОСТАЛЬНОГО КОРПУСА. Здесь движок не
+// выводит обязанность и не решает задачу — он ПРОВЕРЯЕТ МОДЕЛЬ. Дело есть
+// чертёж: несколько точек, прямых и плоскостей, отношения принадлежности и
+// «между» между ними. Аксиома — не правило, а инвариант §93.1: она
+// утверждается о КАЖДОЙ подстановке, и её исход — `SATISFIED`, `VIOLATED`
+// либо `UNDETERMINED` с узлом доказательства, в подстановке которого стоят
+// те самые точки, на которых аксиома нарушена. Три вопроса пакета: является
+// ли конфигурация моделью групп I—III; какая аксиома нарушена и на какой
+// тройке точек; следует ли из фактов дела, что две прямые совпадают.
+//
+// ПОЧЕМУ ИНВАРИАНТ, А НЕ ПРАВИЛО. Правило выводит новый факт из имеющихся;
+// аксиома ничего не выводит — она отсекает конфигурации. Записать I 1
+// правилом («если две различные точки, то существует прямая») значило бы
+// ПОРОДИТЬ прямую, которой в конфигурации нет, и модель перестала бы быть
+// предъявленной. Единственные аксиомы, записанные ещё и правилом, — I 2 и
+// I 4: у них голова содержательна («эти две прямые суть одна и та же»), и
+// именно её спрашивает третий вопрос пакета. Инвариант при этом остаётся и
+// у них: правило говорит «совпадают», инвариант — «а различными их
+// объявлять нельзя».
+//
+// КОНЕЧНОСТЬ МОДЕЛИ ВВОДИТ ЗАМЫКАНИЯ §70, И БЕЗ НИХ ПАКЕТА НЕТ. В открытом
+// мире «прямая a не проходит через точку A» не выводится: отсутствие записи
+// даёт `NEITHER`, а не `FALSE_ONLY` (§93.2). Тогда аксиома Паша не может
+// проверить условие «прямая не встречает ни одной из вершин», а
+// нарушенный инвариант не отличим от неизвестного: всякий ответ был бы
+// `UNDETERMINED`. Поэтому каждый предикат чертежа замкнут §70 над КОНЕЧНОЙ
+// областью, которую сам чертёж и перечисляет: точки, прямые, плоскости,
+// их пары, тройки и четвёрки. Область — выводимый предикат той же арности
+// (E-0087), а не список в деле: перечислять n³ троек руками значило бы
+// сделать дело нечитаемым и уронить его на первой же опечатке.
+//
+// РАЗЛИЧИЕ ТОЧЕК ВЫРАЖЕНО ИМЕНАМИ, А НЕ НЕРАВЕНСТВОМ СУЩНОСТЕЙ, И ЭТО
+// ЗАМЕР, А НЕ ВКУС. «Zwei von einander verschiedene Punkte» стои́т в
+// половине аксиом группы I, но `a != b` над сущностями даёт TYPE_ERROR на
+// исполнении (измерено сценарием QK-78 пакета `kz.corpus.qazaq_kuresi`
+// 02.09.2026). У чертежа же есть то, чего нет у абстрактной точки, — БУКВА:
+// «A», «B», «C» суть часть предъявленного, и Гильберт ими и пользуется.
+// Поэтому дело даёт каждой точке имя `Text`, а различие выводится
+// сравнением имён одним правилом на сорт. Плата названа: две сущности с
+// одной буквой суть одна точка чертежа, и инвариант `NamesAreUnique`
+// сторожит это громко.
+//
+// ЧТО ЗНАЧИТ «МОДЕЛЬ» ЗДЕСЬ И ЧЕГО ЭТОТ ПАКЕТ НЕ ДЕЛАЕТ. Он не строит
+// конфигурацию и не ищет её: он проверяет ПРЕДЪЯВЛЕННУЮ. Аксиомы
+// существования (I 1, I 3, I 7, II 2) поэтому читаются как требования к
+// уже перечисленному, а не как порождение новых элементов; правило,
+// порождающее термы, запрещено §190 дословно, и замыкание §70 запрета не
+// снимает — оно замыкает предикат, а не домен термов.
+//
+// РАЗРЕЗ МОДУЛЕЙ ЗЕРКАЛИТ ИСТОЧНИК (docs/PACKAGE-LAYOUT.ru.md, «зеркалить
+// структурированный источник»): у Гильберта группа аксиом есть § документа.
+//
+//   00-package.law       словарь чертежа, области замыканий, общие понятия
+//   01-verknuepfung.law  § 2, группа I: аксиомы соединения, I 1—7
+//   02-anordnung.law     § 3, группа II: аксиомы порядка, II 1—5
+//   03-parallelen.law    § 5, группа III: аксиома параллельных (Плейфэр)
+//
+// ЧЕГО В ПАКЕТЕ НЕТ — ГРАНИЦЫ, ОБЪЯВЛЕННЫЕ СЛОВАМИ, А НЕ ЗАБЫТЫЕ.
+//
+// 1. ГРУППА IV (Congruenz) — отдельный заход: она вводит второе примитивное
+//    отношение (≡ отрезков и углов) и вместе с ним весь конструктивный
+//    слой. На вопрос «модель ли конфигурация для групп I—III» конгруэнтность
+//    не отвечает ни одной посылкой.
+// 2. ГРУППА V (Stetigkeit) — аксиома Архимеда: существование утверждается о
+//    члене БЕСКОНЕЧНОЙ последовательности, которую сама аксиома и порождает.
+//    Это граница языка (§190), названная вслух.
+// 3. АКСИОМА ПОЛНОТЫ (Vollständigkeit) закреплена байтами перевода и
+//    исключена из измеряемой редакции: в Festschrift'е 1899 года её нет,
+//    она добавлена Гильбертом во французском переводе 1900 года — так
+//    говорит сноска самого перевода.
+// 4. ТЕОРЕМЫ 1—20 (§§ 4 и 7) закреплены байтами и не формализованы: это
+//    СЛЕДСТВИЯ аксиом, а не аксиомы. Пакет применяет аксиомы, а не
+//    доказывает теоремы; §33.1 меряет выводимость, а не доказанность.
+
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+// ---------------------------------------------------------------------------
+// Три сорта вещей § 1. У сущностей нет атрибутов и быть не должно: всё, что
+// пакет о них утверждает, выражено отношениями, а сами они не определяются
+// вовсе — «Wir denken drei verschiedene Systeme von Dingen».
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_1)
+pub entity Punkt {
+    label en official "point";
+    label de unofficial "Punkt";
+    label ru unofficial "точка";
+}
+
+@source(GDG_I_1)
+pub entity Gerade {
+    label en official "straight line";
+    label de unofficial "Gerade";
+    label ru unofficial "прямая";
+}
+
+@source(GDG_I_3)
+entity Ebene {
+    label en official "plane";
+    label de unofficial "Ebene";
+    label ru unofficial "плоскость";
+}
+
+// ---------------------------------------------------------------------------
+// Чертёж: что предъявляет дело. Всё в этом разделе — `empirical`: движок
+// ничего из этого не выводит, он это ПРОВЕРЯЕТ.
+// ---------------------------------------------------------------------------
+
+pub relation punkt_der_figur(p: Punkt) kind empirical {
+    label ru unofficial "точка входит в предъявленную конфигурацию";
+}
+
+pub relation gerade_der_figur(l: Gerade) kind empirical {
+    label ru unofficial "прямая входит в предъявленную конфигурацию";
+}
+
+relation ebene_der_figur(e: Ebene) kind empirical {
+    label ru unofficial "плоскость входит в предъявленную конфигурацию";
+}
+
+// Буква чертежа. Ключ §45.1: у точки ровно одно имя, два имени одной точки —
+// `KEY_CONFLICT` §196, а не молчаливый выбор одного из них.
+pub relation punktname(p: Punkt, n: Text) kind empirical {
+    label ru unofficial "буква, которой точка обозначена на чертеже";
+    key(p);
+}
+
+pub relation geradenname(l: Gerade, n: Text) kind empirical {
+    label ru unofficial "буква, которой прямая обозначена на чертеже";
+    key(l);
+}
+
+relation ebenenname(e: Ebene, n: Text) kind empirical {
+    label ru unofficial "буква, которой плоскость обозначена на чертеже";
+    key(e);
+}
+
+// Принадлежность § 2: «A liegt auf a». Ориентации у отношения нет — Гильберт
+// перечисляет полдюжины равнозначных оборотов («bestimmen», «liegt auf»,
+// «geht durch», «verbindet»), и все они об одном.
+@source(GDG_I_1)
+pub relation liegt_auf(p: Punkt, l: Gerade) kind empirical {
+    label en official "A lies upon a";
+    label ru unofficial "точка лежит на прямой";
+}
+
+@source(GDG_I_3)
+relation liegt_in(p: Punkt, e: Ebene) kind empirical {
+    label en official "A, B, C lie in α";
+    label ru unofficial "точка лежит в плоскости";
+}
+
+// «Между» § 3: `zwischen(a, b, c)` читается «b лежит между a и c». Порядок
+// аргументов — средний ВТОРОЙ, как в записи «B zwischen A und C»; ни одна
+// другая раскладка не читается с текстом построчно.
+@source(GDG_II_1)
+relation zwischen(a: Punkt, b: Punkt, c: Punkt) kind empirical {
+    label en official "B lies between A and C";
+    label ru unofficial "вторая точка лежит между первой и третьей";
+}
+
+// Дело объявляет, что предъявляет ПРОСТРАНСТВЕННУЮ конфигурацию, а не
+// плоскую: третье требование аксиомы I 7 («im Raum … wenigstens vier nicht in
+// einer Ebene gelegene Punkte») к плоскому чертежу не предъявляется, и
+// молчаливо считать всякий чертёж пространственным значило бы объявлять
+// нарушенной аксиому, о которой дело не говорит.
+@source(GDG_I_7)
+relation raeumliche_figur() kind empirical {
+    label ru unofficial "предъявленная конфигурация объявлена пространственной, а не плоской";
+}
+
+// ---------------------------------------------------------------------------
+// Области замыканий §70. Каждая — выводимый предикат ТОЙ ЖЕ арности, что и
+// замыкаемый (E-0087): его установленные кортежи и есть закрытая область.
+// Перечисляет их сам чертёж, поэтому область конечна и точно определена.
+// ---------------------------------------------------------------------------
+
+relation punktpaar(a: Punkt, b: Punkt) kind institutional {
+    label ru unofficial "упорядоченная пара точек конфигурации";
+}
+
+rule Punktpaare(a: Punkt, b: Punkt) strict {
+    label ru unofficial "область пар: обе точки взяты из конфигурации";
+    when punkt_der_figur(a) and punkt_der_figur(b);
+    then punktpaar(a, b);
+}
+
+relation punkttripel(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label ru unofficial "упорядоченная тройка точек конфигурации";
+}
+
+rule Punkttripel(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "область троек: все три точки взяты из конфигурации";
+    when punkt_der_figur(a) and punkt_der_figur(b) and punkt_der_figur(c);
+    then punkttripel(a, b, c);
+}
+
+relation punktquadrupel(a: Punkt, b: Punkt, c: Punkt, d: Punkt) kind institutional {
+    label ru unofficial "упорядоченная четвёрка точек конфигурации";
+}
+
+rule Punktquadrupel(a: Punkt, b: Punkt, c: Punkt, d: Punkt) strict {
+    label ru unofficial "область четвёрок: все четыре точки взяты из конфигурации";
+    when punkt_der_figur(a) and punkt_der_figur(b) and punkt_der_figur(c)
+        and punkt_der_figur(d);
+    then punktquadrupel(a, b, c, d);
+}
+
+relation geradenpaar(l: Gerade, m: Gerade) kind institutional {
+    label ru unofficial "упорядоченная пара прямых конфигурации";
+}
+
+rule Geradenpaare(l: Gerade, m: Gerade) strict {
+    label ru unofficial "область пар прямых: обе прямые взяты из конфигурации";
+    when gerade_der_figur(l) and gerade_der_figur(m);
+    then geradenpaar(l, m);
+}
+
+relation ebenenpaar(e: Ebene, f: Ebene) kind institutional {
+    label ru unofficial "упорядоченная пара плоскостей конфигурации";
+}
+
+rule Ebenenpaare(e: Ebene, f: Ebene) strict {
+    label ru unofficial "область пар плоскостей: обе плоскости взяты из конфигурации";
+    when ebene_der_figur(e) and ebene_der_figur(f);
+    then ebenenpaar(e, f);
+}
+
+relation punkt_gerade_paar(p: Punkt, l: Gerade) kind institutional {
+    label ru unofficial "пара «точка и прямая» конфигурации";
+}
+
+rule PunktGeradePaare(p: Punkt, l: Gerade) strict {
+    label ru unofficial "область инцидентности: точка и прямая взяты из конфигурации";
+    when punkt_der_figur(p) and gerade_der_figur(l);
+    then punkt_gerade_paar(p, l);
+}
+
+relation punkt_ebene_paar(p: Punkt, e: Ebene) kind institutional {
+    label ru unofficial "пара «точка и плоскость» конфигурации";
+}
+
+rule PunktEbenePaare(p: Punkt, e: Ebene) strict {
+    label ru unofficial "область принадлежности плоскости: точка и плоскость взяты из конфигурации";
+    when punkt_der_figur(p) and ebene_der_figur(e);
+    then punkt_ebene_paar(p, e);
+}
+
+relation gerade_ebene_paar(l: Gerade, e: Ebene) kind institutional {
+    label ru unofficial "пара «прямая и плоскость» конфигурации";
+}
+
+rule GeradeEbenePaare(l: Gerade, e: Ebene) strict {
+    label ru unofficial "область «прямая лежит в плоскости»: прямая и плоскость взяты из конфигурации";
+    when gerade_der_figur(l) and ebene_der_figur(e);
+    then gerade_ebene_paar(l, e);
+}
+
+// Замыкание чертежа: пара «точка, прямая», не записанная инцидентной,
+// инцидентной НЕ является. Отсюда выводится «прямая не проходит через точку»
+// — посылка, без которой аксиома Паша не проверяется вовсе.
+closure InzidenzAbschluss {
+    label ru unofficial "замыкание §70: точка, не записанная лежащей на прямой, на ней не лежит";
+    predicate liegt_auf;
+    domain punkt_gerade_paar;
+    snapshot "urn:de:hilbert:snapshot:inzidenz:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+closure EbenenAbschluss {
+    label ru unofficial "замыкание §70: точка, не записанная лежащей в плоскости, в ней не лежит";
+    predicate liegt_in;
+    domain punkt_ebene_paar;
+    snapshot "urn:de:hilbert:snapshot:ebene:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+closure ZwischenAbschluss {
+    label ru unofficial "замыкание §70: тройка, не записанная в отношении «между», в нём не состоит";
+    predicate zwischen;
+    domain punkttripel;
+    snapshot "urn:de:hilbert:snapshot:zwischen:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+// ---------------------------------------------------------------------------
+// Различие элементов. Выводится из имён чертежа; см. шапку файла о том,
+// почему не неравенством сущностей.
+// ---------------------------------------------------------------------------
+
+@source(GDG_I_1)
+pub relation verschiedene_punkte(a: Punkt, b: Punkt) kind institutional {
+    label en official "two distinct points";
+    label ru unofficial "две различные точки — буквы чертежа не совпадают";
+}
+
+rule VerschiedenePunkte(a: Punkt, b: Punkt, na: Text, nb: Text) strict {
+    label ru unofficial "точки различны, когда различны их буквы";
+    when punktname(a, na) and punktname(b, nb) and na != nb;
+    then verschiedene_punkte(a, b);
+}
+
+closure PunktdifferenzAbschluss {
+    label ru unofficial "замыкание §70: точки, не признанные различными, различными не являются";
+    predicate verschiedene_punkte;
+    domain punktpaar;
+    snapshot "urn:de:hilbert:snapshot:punktdifferenz:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+pub relation verschiedene_geraden(l: Gerade, m: Gerade) kind institutional {
+    label ru unofficial "две различные прямые — буквы чертежа не совпадают";
+}
+
+rule VerschiedeneGeraden(l: Gerade, m: Gerade, nl: Text, nm: Text) strict {
+    label ru unofficial "прямые различны, когда различны их буквы";
+    when geradenname(l, nl) and geradenname(m, nm) and nl != nm;
+    then verschiedene_geraden(l, m);
+}
+
+closure GeradendifferenzAbschluss {
+    label ru unofficial "замыкание §70: прямые, не признанные различными, различными не являются";
+    predicate verschiedene_geraden;
+    domain geradenpaar;
+    snapshot "urn:de:hilbert:snapshot:geradendifferenz:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+relation verschiedene_ebenen(e: Ebene, f: Ebene) kind institutional {
+    label ru unofficial "две различные плоскости — буквы чертежа не совпадают";
+}
+
+rule VerschiedeneEbenen(e: Ebene, f: Ebene, ne: Text, nf: Text) strict {
+    label ru unofficial "плоскости различны, когда различны их буквы";
+    when ebenenname(e, ne) and ebenenname(f, nf) and ne != nf;
+    then verschiedene_ebenen(e, f);
+}
+
+closure EbenendifferenzAbschluss {
+    label ru unofficial "замыкание §70: плоскости, не признанные различными, различными не являются";
+    predicate verschiedene_ebenen;
+    domain ebenenpaar;
+    snapshot "urn:de:hilbert:snapshot:ebenendifferenz:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+// Сторож чертежа, а не аксиома Гильберта: две сущности с одной буквой суть
+// одна точка. Без него «две различные точки» тихо теряло бы подстановки, и
+// всякая аксиома существования оказывалась бы выполненной по недосмотру.
+relation gleichnamige_punkte(a: Punkt, b: Punkt) kind institutional {
+    label ru unofficial "две сущности-точки несут одну и ту же букву чертежа";
+}
+
+rule GleichnamigePunkte(a: Punkt, b: Punkt, n: Text) strict {
+    label ru unofficial "две сущности с одной буквой — одна точка чертежа";
+    when punktname(a, n) and punktname(b, n) and not verschiedene_punkte(a, b);
+    then gleichnamige_punkte(a, b);
+}
+
+// ---------------------------------------------------------------------------
+// Общие понятия, которыми пользуются обе группы.
+// ---------------------------------------------------------------------------
+
+// «Nicht auf ein und derselben Geraden liegend» — коллинеарность. Замкнута
+// §70: без замыкания «не лежат на одной прямой» не выводится, и ни аксиома
+// I 3, ни аксиома Паша не имеют посылки.
+relation kollinear(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "situated in the same straight line";
+    label ru unofficial "три точки лежат на одной прямой";
+}
+
+rule Kollinear(a: Punkt, b: Punkt, c: Punkt, l: Gerade) strict {
+    label ru unofficial "три точки коллинеарны, когда есть прямая, несущая все три";
+    when liegt_auf(a, l) and liegt_auf(b, l) and liegt_auf(c, l);
+    then kollinear(a, b, c);
+}
+
+closure KollinearAbschluss {
+    label ru unofficial "замыкание §70: тройка без общей прямой коллинеарной не является";
+    predicate kollinear;
+    domain punkttripel;
+    snapshot "urn:de:hilbert:snapshot:kollinear:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+// «Drei nicht in gerader Linie gelegene Punkte» — посылка I 3 и аксиомы Паша.
+@source(GDG_I_3, GDG_II_5)
+relation dreieck(a: Punkt, b: Punkt, c: Punkt) kind institutional {
+    label en official "three points not lying in the same straight line";
+    label ru unofficial "три попарно различные точки, не лежащие на одной прямой";
+}
+
+rule Dreieck(a: Punkt, b: Punkt, c: Punkt) strict {
+    label ru unofficial "треугольник: три попарно различные точки, не коллинеарные";
+    when punkttripel(a, b, c)
+        and verschiedene_punkte(a, b) and verschiedene_punkte(b, c)
+        and verschiedene_punkte(a, c)
+        and not kollinear(a, b, c);
+    then dreieck(a, b, c);
+}
+
+// Принадлежность плоскости, выводимая: дело даёт `liegt_in`, аксиома I 5
+// добавляет к нему точки прямой, целиком лежащей в плоскости. Разведены
+// намеренно: инвариант I 5 сравнивает выведенное с записанным, и слить их
+// значило бы сделать его тавтологией.
+relation gehoert_zur_ebene(p: Punkt, e: Ebene) kind institutional {
+    label ru unofficial "точка принадлежит плоскости — из чертежа либо по аксиоме I 5";
+}
+
+rule GehoertZurEbeneGegeben(p: Punkt, e: Ebene) strict {
+    label ru unofficial "принадлежность плоскости из чертежа";
+    when liegt_in(p, e);
+    then gehoert_zur_ebene(p, e);
+}

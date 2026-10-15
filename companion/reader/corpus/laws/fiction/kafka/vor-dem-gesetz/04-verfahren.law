@@ -1,0 +1,148 @@
+// Притча как процесс §160: стадии, переходы и два пути за врата.
+//
+// РАДИ ЧЕГО ЗАВЕДЁН ЭТОТ МОДУЛЬ. Вопрос «был ли вход достижим хоть при
+// каком-нибудь ходе просителя» не имеет ответа в отдельно взятом деле:
+// дело отвечает о положении вещей, а спрашивается о ДОСТИЖИМОСТИ, то есть о
+// свойстве графа. Автомат отдаёт этот вопрос разбору `lawref process`
+// (недостижимые стадии, мёртвые переходы) и прогону `lawref process-run` по
+// журналу — и оба отвечают вычислением, а не чтением наших комментариев.
+//
+// ЧТО ОТВЕЧАЕТ РАЗБОР, ЕСЛИ ЕГО СПРОСИТЬ. Обе стадии за вратами достижимы, и
+// достижимы РАЗНЫМИ путями — в этом весь результат:
+//
+//   `Eingelassen`             гард читает суждение привратника §47.3;
+//                             вопрос честно отдаёт REQUIRES_JUDGMENT.
+//   `UnerlaubtEingetreten`    гард читает свободу пути и факт прохода;
+//                             никакого суждения не спрашивается вовсе.
+//
+// Второй путь существует не оттого, что мы его придумали, а оттого, что
+// притча его называет дважды: врата открыты «wie immer», привратник
+// «tritt beiseite», и он же предлагает — «versuche es doch trotz meines
+// Verbotes hineinzugehen». Проситель не ступил на него ни разу: он выбрал
+// ждать разрешения (`warten_gewaehlt`, 02-erlaubnis.law).
+//
+// ПОЧЕМУ ВХОДА ВОПРЕКИ ЗАПРЕТУ ДВА ПЕРЕХОДА, А НЕ ОДИН. Приглашение
+// произнесено, пока проситель ещё стоит у врат, — отсюда `SofortHineingehen`
+// из `AmTor`. Но врата стоят открытыми «wie immer», и в последней реплике
+// привратник обещает закрыть их лишь ТЕПЕРЬ («Ich gehe jetzt und schließe
+// ihn») — значит все годы ожидания они были открыты, и `SpaeterHineingehen`
+// из `Wartend` есть утверждение текста, а не наша достройка. Один переход с
+// двумя `from` записать нельзя, и сливать две разные минуты притчи в одну
+// незачем: они различаются тем, сколько лет к тому времени прошло.
+//
+// СТАДИИ СМЕРТИ НЕТ, И ЭТО НЕ ПРОПУСК. Текст смерти НЕ ПОВЕСТВУЕТ: он её
+// предполагает («Vor seinem Tode…») и обрывается на словах привратника.
+// Засвидетельствовано, что проситель «schon an seinem Ende ist», — отсюда
+// `AmEnde`. Стадия «Gestorben» была бы нашим выводом, а не показанием.
+//
+// ЧЕГО АВТОМАТ НЕ ЗНАЕТ ВОВСЕ. Что лежит за первым входом. «Von Saal zu
+// Saal stehen aber Türhüter, einer mächtiger als der andere» — залы названы,
+// условия прохода через них не названы ни одним словом, и потому стадий у
+// них нет. `Eingelassen` есть «впущен ЭТИМ привратником в ЭТОТ вход», а не
+// «вошёл в Закон»; различие своё и текстовое, а не наша осторожность.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    Person,
+    TO_JETZT_NICHT,
+    TO_SCHLIESSUNG,
+    TO_SPAETER_MOEGLICH,
+    TO_VERBOT,
+    TO_WARTEPLATZ,
+    einlass_gestattet,
+    letzte_auskunft_erteilt,
+    letzte_frage_gestellt,
+    ohne_erlaubnis_eingetreten,
+    weg_frei,
+};
+
+// --- Факт стадии ожидания -----------------------------------------------------
+
+relation schemel_angenommen(m: Person) kind empirical {
+    label de official "der Türhüter gibt ihm einen Schemel und läßt ihn seitwärts von der Tür sich niedersetzen";
+    label ru official "привратник даёт ему скамеечку и позволяет сесть сбоку от двери";
+}
+
+// --- Автомат §160 --------------------------------------------------------------
+
+@source(TO_JETZT_NICHT, TO_SPAETER_MOEGLICH, TO_VERBOT, TO_WARTEPLATZ, TO_SCHLIESSUNG)
+// Метки у самой процедуры не ставятся: §160 допускает в её теле только
+// `state` и `transition` (LDC-E0201), и своё имя несут они. Приём — тяжба
+// `Controversia` в la.gellius.protagoras_euathlus.
+procedure Zutritt(m: Person) {
+    state AmTor initial {
+        label de official "Vor dem Tor: er ist gekommen und hat um Eintritt gebeten; der Türhüter hat ihn für jetzt versagt";
+        label ru official "У врат: пришёл и попросил о входе; привратник отказал на теперь";
+    }
+    state Wartend {
+        label de official "Wartend auf dem Schemel seitwärts von der Tür — Tage und Jahre";
+        label ru official "Ожидание на скамеечке сбоку от двери — дни и годы";
+    }
+    state Eingelassen terminal {
+        label de official "Eingelassen: der Türhüter hat den Einlaß gewährt";
+        label ru official "Впущен: привратник дал впуск";
+    }
+    state UnerlaubtEingetreten terminal {
+        label de official "Ohne Erlaubnis eingetreten: durch das offene Tor trotz des Verbotes";
+        label ru official "Вошёл без разрешения: в открытые врата вопреки запрету";
+    }
+    state AmEnde {
+        label de official "An seinem Ende: die letzte Frage ist gestellt";
+        label ru official "При конце: последний вопрос задан";
+    }
+    state Geschlossen terminal {
+        label de official "Der Eingang ist zu schließen erklärt: «Ich gehe jetzt und schließe ihn»";
+        label ru official "Вход объявлен к закрытию: «Сейчас пойду и закрою его»";
+    }
+
+    transition Niedersetzen {
+        label de official "Er nimmt den Schemel und setzt sich seitwärts von der Tür nieder";
+        label ru official "Он принимает скамеечку и садится сбоку от двери";
+        from AmTor;
+        to Wartend;
+        when schemel_angenommen(m);
+    }
+
+    transition SofortHineingehen {
+        label de official "Er geht sogleich trotz des Verbotes hinein — der Türhüter hat es selbst vorgeschlagen, und das Tor steht offen";
+        label ru official "Он сразу входит вопреки запрету — привратник сам это предложил, и врата открыты";
+        from AmTor;
+        to UnerlaubtEingetreten;
+        when weg_frei(m) and ohne_erlaubnis_eingetreten(m);
+    }
+
+    transition SpaeterHineingehen {
+        label de official "Er geht nach Jahren des Wartens trotz des Verbotes hinein — das Tor steht offen wie immer, bis der Türhüter es schließt";
+        label ru official "Он входит после лет ожидания вопреки запрету — врата стоят открытыми, как всегда, пока привратник их не закроет";
+        from Wartend;
+        to UnerlaubtEingetreten;
+        when weg_frei(m) and ohne_erlaubnis_eingetreten(m);
+    }
+
+    transition EingelassenWerden {
+        label de official "Er wird eingelassen — der Türhüter gewährt den Einlaß";
+        label ru official "Его впускают — привратник даёт впуск";
+        from Wartend;
+        to Eingelassen;
+        when einlass_gestattet(m);
+    }
+
+    transition AnsEndeKommen {
+        label de official "Er kommt an sein Ende und stellt die Frage, die er bisher nicht gestellt hat";
+        label ru official "Он приходит к своему концу и задаёт вопрос, которого прежде не задавал";
+        from Wartend;
+        to AmEnde;
+        when letzte_frage_gestellt(m);
+    }
+
+    transition TorSchliessen {
+        label de official "Der Türhüter gibt die letzte Auskunft und erklärt, den Eingang jetzt zu schließen";
+        label ru official "Привратник даёт последний ответ и объявляет, что сейчас закроет вход";
+        from AmEnde;
+        to Geschlossen;
+        when letzte_auskunft_erteilt(m);
+    }
+}

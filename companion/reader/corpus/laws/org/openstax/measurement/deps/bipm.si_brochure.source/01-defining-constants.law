@@ -1,0 +1,52 @@
+// §2.2 и таблица 1: семь определяющих констант и SI как система единиц, в
+// которой их численные значения фиксированы.
+//
+// Значения — `Decimal` с экспонентой и текст единицы: алгебра размерностей
+// здесь не используется (граница в package.law). Символы и единицы —
+// как в таблице 1. О «пороге» в метке (`lint.py`, проверка 4): «(Table 1)» —
+// номер таблицы, не величина.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    DefiningConstant,
+    SI9_APP1_2018_INDEX,
+    SI9_S2_2_DEFINITION_OF_SI,
+    SI9_TABLE_1,
+};
+
+@source(SI9_TABLE_1, SI9_S2_2_DEFINITION_OF_SI)
+pub relation defining_constant(c: DefiningConstant, symbol: Text, value: Decimal, unit: Text) kind empirical {
+    label en official "the defining constant has the given symbol, exact numerical value and unit (Table 1)";
+    label ru unofficial "определяющая константа имеет данный символ, точное численное значение и единицу (таблица 1)";
+}
+
+@source(SI9_TABLE_1)
+facts Table1 {
+    label en official "Table 1: the seven defining constants of the SI and the units they define";
+    label ru unofficial "Таблица 1: семь определяющих констант SI и единицы, которые они определяют";
+    assert "t1-dnu-cs": defining_constant(CaesiumFrequency, "∆νCs", 9192631770.0, "Hz") { }
+    assert "t1-c": defining_constant(SpeedOfLight, "c", 299792458.0, "m s−1") { }
+    assert "t1-h": defining_constant(PlanckConstant, "h", 6.62607015e-34, "J s") { }
+    assert "t1-e": defining_constant(ElementaryCharge, "e", 1.602176634e-19, "C") { }
+    assert "t1-k": defining_constant(BoltzmannConstant, "k", 1.380649e-23, "J K−1") { }
+    assert "t1-na": defining_constant(AvogadroConstant, "NA", 6.02214076e23, "mol−1") { }
+    assert "t1-kcd": defining_constant(LuminousEfficacy, "Kcd", 683.0, "lm W−1") { }
+}
+
+pub relation si_defining_constant(c: DefiningConstant) kind institutional {
+    label en official "§2.2: the constant is one of the seven whose fixed numerical values define the SI";
+    label ru unofficial "§2.2: константа — одна из семи, чьи фиксированные значения определяют SI";
+}
+
+// §2.2 в силе с 20 мая 2019 (приложение 1, 26-я ГКМВ 2018).
+@source(SI9_S2_2_DEFINITION_OF_SI, SI9_APP1_2018_INDEX)
+rule SIDefinedByConstants(c: DefiningConstant, s: Text, v: Decimal, un: Text) strict {
+    label en official "§2.2: the SI is the system of units in which the seven defining constants have their fixed numerical values (in force from 20 May 2019)";
+    label ru unofficial "§2.2: SI — система единиц, в которой семь определяющих констант имеют фиксированные численные значения (в силе с 20 мая 2019)";
+    when defining_constant(c, s, v, un);
+    then si_defining_constant(c);
+    effective [@2019-05-20, infinity);
+}

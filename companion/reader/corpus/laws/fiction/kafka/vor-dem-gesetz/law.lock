@@ -1,0 +1,23 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:3c61a97b7c24841175d6bc3381d6096004ccf5539fd8174f36432f38171d323b",
+  "resources": [
+    {
+      "capability": "presentation",
+      "contentHash": "sha256:7cd492c34e610c0bae402565a0bd707d7cbc65c70647cb1794f7a3e61ec3bdaf",
+      "id": "i18n:en",
+      "kind": "label-overlay",
+      "path": "i18n/en.json"
+    }
+  ],
+  "root": {
+    "artifactHash": "sha256:bc43319976fabeecd6713b241e9216767845beb38449fe358291cf20194f3110",
+    "name": "de.kafka.vor_dem_gesetz",
+    "namespace": "urn:de:kafka:clir:vor-dem-gesetz",
+    "sourceHash": "sha256:35fe17de4a89c1a551773ad0fadf4a618dbcf1c3f43296f66ac48b14e5174833",
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,20 @@
+language "law.core" version "0.2";
+package openstax.chemistry_acids version "0.1.0";
+namespace "urn:openstax:clir:chemistry-acids";
+
+test "urn:query:openstax-chem-acids-14-book-water-both-roles-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k14-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k14-2": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmphiproticDonatesAndAccepts);
+}

@@ -1,0 +1,16 @@
+{
+  "name": "constructions-reader-companion",
+  "version": "2026.10.1",
+  "private": true,
+  "description": "Versioned reader materials for Constructions: The Craft of Formalization",
+  "scripts": {
+    "check": "python3 -B tools/check.py",
+    "test": "python3 -B tools/check.py --runtime"
+  },
+  "dependencies": {
+    "@arxo/cli": "0.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

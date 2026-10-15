@@ -1,0 +1,251 @@
+// Учебный пакет «Возмещение расхода» — демонстрация исполнимого профиля
+// EvidencePolicy §78.2 (DECISION-0126).
+//
+// ЭТО НЕ ФОРМАЛИЗАЦИЯ ЗАКОНОДАТЕЛЬСТВА. Правило возмещения придумано для
+// демонстрации: организация возмещает сотруднику одну согласованную покупку,
+// если согласование, сумма расхода и оплата ЭТОЙ покупки установлены без
+// противоречия, а сумма не превышает предела.
+//
+// Смысл демонстрации в том, ЧТО делает эти три факта установленными: не
+// голое утверждение дела, а принятая политикой опора конкретного документа.
+// Правила принятия (ниже, раздел «Политика доказательств») живут здесь, в
+// пакете; в движках нет ни одного условия про банк, RUB, 10 000 и возмещение.
+
+language "law.core" version "0.2";
+package demo.expense_evidence version "0.1.0";
+namespace "urn:demo:expense-evidence";
+
+// --- Онтология -------------------------------------------------------------
+
+entity Purchase;
+entity Employee;
+
+// --- Эмпирические факты дела (ЗАЩИЩЁННЫЕ политикой) ------------------------
+//
+// Каждый из трёх входит в поддержку ТОЛЬКО через принятую опору §78.2.4:
+// `assert paid(P42)` в деле политику не обходит.
+
+relation approved(purchase: Purchase) kind empirical;
+relation expense_amount(purchase: Purchase, amount: Money) kind empirical;
+relation paid(purchase: Purchase) kind empirical;
+
+// Кто понёс расход — обычный факт дела, политикой не защищённый: он приходит
+// из кадрового учёта организации, а не из предъявленного документа.
+relation incurred_by(purchase: Purchase, employee: Employee) kind empirical;
+
+// --- Норма возмещения ------------------------------------------------------
+
+relation reimbursable(purchase: Purchase, employee: Employee) kind institutional;
+
+const REIMBURSEMENT_CAP: Money = 10000 RUB;
+
+rule Reimbursement(p: Purchase, e: Employee, a: Money) strict {
+    when approved(p)
+      and expense_amount(p, a)
+      and paid(p)
+      and incurred_by(p, e)
+      and a <= REIMBURSEMENT_CAP;
+    then reimbursable(p, e);
+}
+
+// --- Политика доказательств ExpenseEvidenceV1 ------------------------------
+//
+// Проекция §78.2.3 приходит в ЭТИ отношения. Они объявлены пакетом, поэтому
+// их сигнатуры видны автору и проверяются компилятором; движок не знает ни
+// одного из этих имён.
+
+relation ev_edge(edge: Text, document: Text, link: Text) kind empirical;
+relation ev_status(document: Text, status: Text) kind empirical;
+relation ev_issuer(document: Text, issuer: Text) kind empirical;
+relation ev_available(document: Text) kind empirical;
+relation ev_current(document: Text) kind empirical;
+relation ev_authentic(document: Text, verifier: Text, outcome: Text) kind empirical;
+
+// Ключи payload предъявленного документа.
+relation doc_kind(document: Text, kind: Text) kind empirical;
+relation doc_purchase(document: Text, purchase: Purchase) kind empirical;
+relation doc_employee(document: Text, employee: Employee) kind empirical;
+relation doc_amount(document: Text, amount: Money) kind empirical;
+
+// Разобранная пропозиция опоры.
+relation edge_purchase(edge: Text, purchase: Purchase) kind empirical;
+relation edge_amount(edge: Text, amount: Money) kind empirical;
+relation edge_is_approved(edge: Text) kind empirical;
+relation edge_is_amount(edge: Text) kind empirical;
+relation edge_is_paid(edge: Text) kind empirical;
+
+// Голова политики: решение о ПРИНЯТИИ опоры.
+relation accepted_support(edge: Text) kind institutional;
+
+// Промежуточный вывод фазы: документ выдержан по времени и подлинности.
+relation sound_document(document: Text) kind institutional;
+
+// Закреплённый перечень доверенных проверяющих подлинности — ДАННЫЕ ПАКЕТА,
+// а не привилегия движка. Кем проверка выполнена, решает политика.
+const TRUSTED_VERIFIER: Text = "urn:demo:verifier:audit-desk";
+
+// Издатели, которым политика доверяет по роду документа.
+const BANK_ALPHA: Text = "urn:demo:issuer:bank-alpha";
+const VENDOR_BETA: Text = "urn:demo:issuer:vendor-beta";
+const FINANCE_OFFICE: Text = "urn:demo:issuer:finance-office";
+
+// Документ пригоден, если он доступен по времени знания, действует на дату
+// права и подтверждён доверенным проверяющим по хэшу документа.
+// Само поле `status verified` документа привилегии не даёт: оно лишь одно из
+// ТРЁХ условий, и без независимой проверки не принимает ничего.
+rule SoundDocument(d: Text) strict {
+    when ev_available(d)
+      and ev_current(d)
+      and ev_status(d, "verified")
+      and ev_authentic(d, TRUSTED_VERIFIER, "verified");
+    then sound_document(d);
+}
+
+// Согласование покупки: приказ финансовой службы о ТОЙ ЖЕ покупке И О ТОМ ЖЕ
+// сотруднике. Приказ о другом сотруднике опору согласования не принимает:
+// до ревизии 05.09.2026 поле `employee` проецировалось и не читалось ни одним
+// правилом, и подмена сотрудника в приказе проезжала молча.
+rule AcceptApproval(edge: Text, d: Text, p: Purchase, e: Employee) strict {
+    when ev_edge(edge, d, "supports")
+      and edge_is_approved(edge)
+      and edge_purchase(edge, p)
+      and sound_document(d)
+      and doc_kind(d, "approval_order")
+      and doc_issuer_ok_finance(d)
+      and doc_purchase(d, p)
+      and doc_employee(d, e)
+      and claim_employee(p, e);
+    then accepted_support(edge);
+}
+
+relation doc_issuer_ok_finance(document: Text) kind institutional;
+relation doc_issuer_ok_vendor(document: Text) kind institutional;
+relation doc_issuer_ok_bank(document: Text) kind institutional;
+
+rule IssuerFinance(d: Text) strict {
+    when ev_issuer(d, FINANCE_OFFICE);
+    then doc_issuer_ok_finance(d);
+}
+
+rule IssuerVendor(d: Text) strict {
+    when ev_issuer(d, VENDOR_BETA);
+    then doc_issuer_ok_vendor(d);
+}
+
+rule IssuerBank(d: Text) strict {
+    when ev_issuer(d, BANK_ALPHA);
+    then doc_issuer_ok_bank(d);
+}
+
+
+// --- Якорь политики: чек поставщика ----------------------------------------
+//
+// Полный предмет платежа и согласования связывается с делом ЧЕРЕЗ ЧЕК: его
+// собственная опора принята сопоставлением с пропозицией дела (`edge_amount`),
+// а всё остальное обязано сойтись с ним. Иначе подлинный документ о ТОЙ ЖЕ
+// покупке, но на другую сумму или другого сотрудника, принимался бы опорой —
+// ревизия 05.09.2026 показала ровно это (1 KZT и EMP999 проезжали молча).
+//
+// Читать нормативные факты дела здесь нельзя: фаза их не видит (§78.2.5).
+
+relation claim_amount(purchase: Purchase, amount: Money) kind institutional;
+relation claim_employee(purchase: Purchase, employee: Employee) kind institutional;
+
+rule ClaimFromReceipt(d: Text, p: Purchase, a: Money) strict {
+    when sound_document(d)
+      and doc_kind(d, "vendor_receipt")
+      and doc_issuer_ok_vendor(d)
+      and doc_purchase(d, p)
+      and doc_amount(d, a);
+    then claim_amount(p, a);
+}
+
+rule ClaimEmployeeFromReceipt(d: Text, p: Purchase, e: Employee) strict {
+    when sound_document(d)
+      and doc_kind(d, "vendor_receipt")
+      and doc_issuer_ok_vendor(d)
+      and doc_purchase(d, p)
+      and doc_employee(d, e);
+    then claim_employee(p, e);
+}
+
+// Сумма расхода: чек поставщика о той же покупке И на ту же сумму.
+// Сравнение точное: Money сравнивается вместе с валютой (§50), поэтому
+// «10 000 KZT» чужой валютой опору суммы «10 000 RUB» не принимает.
+rule AcceptAmount(edge: Text, d: Text, p: Purchase, a: Money) strict {
+    when ev_edge(edge, d, "supports")
+      and edge_is_amount(edge)
+      and edge_purchase(edge, p)
+      and edge_amount(edge, a)
+      and sound_document(d)
+      and doc_kind(d, "vendor_receipt")
+      and doc_issuer_ok_vendor(d)
+      and doc_purchase(d, p)
+      and doc_amount(d, a);
+    then accepted_support(edge);
+}
+
+// Оплата: банковское подтверждение о ТОЙ ЖЕ покупке.
+// Подлинное подтверждение чужой покупки эту опору не принимает — и это не
+// доказательство того, что покупка не оплачена (§78.2.2).
+rule AcceptPayment(edge: Text, d: Text, p: Purchase, a: Money, e: Employee) strict {
+    when ev_edge(edge, d, "supports")
+      and edge_is_paid(edge)
+      and edge_purchase(edge, p)
+      and sound_document(d)
+      and doc_kind(d, "bank_confirmation")
+      and doc_issuer_ok_bank(d)
+      and doc_purchase(d, p)
+      and doc_amount(d, a)
+      and claim_amount(p, a)
+      and doc_employee(d, e)
+      and claim_employee(p, e);
+    then accepted_support(edge);
+}
+
+// Опровержение оплаты: банковская выписка о возврате платежа по той же
+// покупке. Принятая опора `refutes` даёт ОТРИЦАТЕЛЬНУЮ поддержку `paid(p)`;
+// вместе с принятой положительной она даёт BOTH, а не NEITHER (§78.2.6).
+rule AcceptPaymentReversal(edge: Text, d: Text, p: Purchase, a: Money, e: Employee) strict {
+    when ev_edge(edge, d, "refutes")
+      and edge_is_paid(edge)
+      and edge_purchase(edge, p)
+      and sound_document(d)
+      and doc_kind(d, "bank_reversal")
+      and doc_issuer_ok_bank(d)
+      and doc_purchase(d, p)
+      and doc_amount(d, a)
+      and claim_amount(p, a)
+      and doc_employee(d, e)
+      and claim_employee(p, e);
+    then accepted_support(edge);
+}
+
+evidence policy ExpenseEvidenceV1 {
+    profile "law.core.evidence-policy/0.1";
+    accepts accepted_support;
+    protects approved, expense_amount, paid;
+
+    input edge      ev_edge;
+    input status    ev_status;
+    input issuer    ev_issuer;
+    input available ev_available;
+    input current   ev_current;
+    input authentic ev_authentic;
+
+    field kind      doc_kind;
+    field purchase  doc_purchase;
+    field employee  doc_employee;
+    field amount    doc_amount;
+
+    arg 0 edge_purchase;
+    arg 1 edge_amount;
+
+    target approved       edge_is_approved;
+    target expense_amount edge_is_amount;
+    target paid           edge_is_paid;
+
+    rule SoundDocument, IssuerFinance, IssuerVendor, IssuerBank;
+    rule ClaimFromReceipt, ClaimEmployeeFromReceipt;
+    rule AcceptApproval, AcceptAmount, AcceptPayment, AcceptPaymentReversal;
+}

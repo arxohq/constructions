@@ -1,0 +1,329 @@
+// Экзегеза притчи: четыре прочтения, которые никто не уполномочен выбрать.
+//
+// ЗАЧЕМ ЭТОТ ФАЙЛ ОТДЕЛЬНО. Модули 01—05 записывают то, что притча
+// УТВЕРЖДАЕТ; здесь записано то, о чём о ней СПОРЯТ. Различие не
+// стилистическое: спор живёт не в baseline 0.1, а в отдельном профиле §274
+// (`law.argumentation/0.2`, DECISION-0039), доступном ТОЛЬКО видом запроса
+// `argumentation`. Профиль аддитивен по построению: ни один другой вид
+// запроса от него не меняется, и ядро пакета остаётся ровно тем же.
+//
+// ═══ ПОЧЕМУ ЭТОТ ИСТОЧНИК ЗДЕСЬ УМЕСТЕН, КАК МАЛО ГДЕ ═══
+//
+// Обычно доводы приходится РЕКОНСТРУИРОВАТЬ: источник даёт норму, а посылки,
+// точки атаки и порядок опровержений формализатор выводит сам. Здесь всё это
+// названо прямой речью. Священник не просто толкует притчу — он перечисляет
+// ЧУЖИЕ МНЕНИЯ, называет их основания, приводит возражения на них и прямо
+// отказывается выбирать: «ich zeige dir nur die Meinungen, die darüber
+// bestehn». Доводы, атаки и отказ от разрешения спора — всё из текста.
+//
+// ═══ ЧЕТЫРЕ ПРОЧТЕНИЯ ═══
+//
+//   1. ПРИВРАТНИК ОБМАНУЛ ПРОСИТЕЛЯ (Йозеф К.). Спасительное сообщение — что
+//      вход был предназначен ему одному — сделано лишь тогда, когда помочь
+//      уже не могло.
+//   2. ОН ИСПОЛНИЛ СВОЙ ДОЛГ (священник). Раньше его не спрашивали; он был
+//      только привратником; между двумя его объявлениями нет противоречия, а
+//      будь оно — обман был бы доказан. Возражение К.: долгом было, быть
+//      может, отвергать чужих, но ЭТОГО, кому вход предназначен, он был
+//      обязан впустить.
+//   3. ОБМАНУТ САМ ПРИВРАТНИК. Внутренностей Закона он не знает, боится того,
+//      чем пугает, подчинён просителю (свободный выше связанного) и не сможет
+//      закрыть врата, которые стоят открытыми ВСЕГДА.
+//   4. СУДИТЬ ЕГО НЕ ВПРАВЕ НИКТО. Он служитель Закона, стало быть
+//      принадлежит Закону, стало быть изъят из человеческого суда.
+//      Возражение К.: тогда пришлось бы держать за истину всё, что он
+//      говорит, — а невозможность этого священник обосновал сам.
+//
+// ═══ ЧЕТВЁРТОЕ ПРОЧТЕНИЕ БЬЁТ НЕ ТУДА, КУДА ОСТАЛЬНЫЕ, И ЭТО ВИДНО МАШИНЕ ═══
+//
+// Первые три спорят о ФАКТЕ (обманул? исполнил?), четвёртое — о ПРАВЕ СУДИТЬ.
+// Разница выражена строением, а не комментарием: три первых довода несут в
+// теле допущение `not_known(dem_urteil_entrueckt(h))` — «поскольку не
+// установлено, что он изъят из человеческого суда», — и четвёртый ПОДРЫВАЕТ
+// (§274.3, undermine) ровно это допущение, а не их заключения. Возражение К.
+// на четвёртое опровергает его в лоб (rebut), и спор замыкается.
+//
+// ═══ ПРИОРИТЕТА ЗДЕСЬ НЕТ, И ЭТО ГЛАВНОЕ РЕШЕНИЕ ФАЙЛА ═══
+//
+// Соблазн поставить `priority` велик: он свернул бы четыре мнения в один
+// ответ, и пакет «отвечал бы на вопрос». Но приоритет — утверждение о том,
+// какое прочтение сильнее, и такого утверждения в источнике НЕТ. Есть прямо
+// обратное: «Du mußt nicht zuviel auf Meinungen achten. Die Schrift ist
+// unveränderlich und die Meinungen sind oft nur ein Ausdruck der Verzweiflung
+// darüber». Священник показывает мнения и не выбирает; Йозеф К. выбирает — и
+// тут же слышит, что не понял. Вписать сюда приоритет значило бы сделать за
+// текст то, чего он не сделал, и сделать молча, одной строкой.
+//
+// Поэтому ответ профиля на «обманут ли проситель» — не «да» и не «нет», а
+// КЛАСС ОТВЕТА: заключение принято доверчиво (есть допустимое множество, где
+// оно держится) и не принято скептически (есть и такое, где не держится).
+// Ровно это и говорит текст.
+//
+// Сравнение с соседями корпуса. У `kz.corpus.zhirenshe` приоритет есть, и он
+// ИЗ ИСТОЧНИКА — свидетель ранжирует прямой речью («увиденное глазом правда,
+// услышанное ухом ложь»). У `kz.corpus.valikhanov` приоритетов нет вовсе, и
+// все ответы там — подрывы. Здесь есть и подрыв, и опровержение, и нет ни
+// одного приоритета: сочетание, которого у корпуса до сих пор не было.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    AU_ALLES_FUER_WAHR,
+    AU_DER_GETAEUSCHTE,
+    AU_DIENER_DES_GESETZES,
+    AU_EINFALT_TRUEBT,
+    AU_KEIN_WIDERSPRUCH,
+    AU_KENNT_DAS_INNERE_NICHT,
+    AU_PFLICHT_ERFUELLT,
+    AU_PFLICHT_WAR_EINLASSEN,
+    AU_TAEUSCHUNG_DES_MANNES,
+    AU_TAEUSCHUNG_UEBERTRAEGT_SICH,
+    Person,
+    eingang_nur_fuer,
+    mann_vom_lande,
+};
+
+// --- Посылки прочтений: факты ДЕЛА, а не утверждения пакета -------------------
+//
+// ГРАНИЦА ПРОВЕДЕНА ПО §71, И ОНА ЗДЕСЬ СОДЕРЖАТЕЛЬНА. Пакетное утверждение
+// кладётся истинным для ВСЯКОГО дела; посылка прочтения истинна лишь для
+// того, кто это прочтение разделяет. Заассертить их значило бы предъявить все
+// четыре мнения разом на любом вопросе — и лишить смысла дело, где спрашивают
+// об одном прочтении, а не обо всех.
+
+relation nur_tuerhueter(h: Person) kind institutional {
+    label de official "er war nur Türhüter — nicht mehr und nicht weniger als das";
+    label ru official "он был только привратником — не более и не менее того";
+}
+
+relation erloesende_mitteilung_zu_spaet(h: Person, m: Person) kind empirical {
+    label de official "er hat die erlösende Mitteilung erst dann gemacht, als sie dem Manne nicht mehr helfen konnte";
+    label ru official "спасительное сообщение он сделал лишь тогда, когда помочь просителю оно уже не могло";
+}
+
+relation nicht_frueher_gefragt(h: Person) kind empirical {
+    label de official "er wurde nicht früher gefragt";
+    label ru official "раньше его об этом не спрашивали";
+}
+
+relation zwei_erklaerungen_ohne_widerspruch(h: Person) kind institutional {
+    label de official "zwischen seinen beiden Erklärungen über den Einlaß besteht kein Widerspruch — die erste deutet sogar auf die zweite hin";
+    label ru official "между двумя его объявлениями о впуске нет противоречия — первое даже указывает на второе";
+}
+
+relation nicht_eingelassen(h: Person, m: Person) kind empirical {
+    label de official "er hat ihn nicht eingelassen";
+    label ru official "он его не впустил";
+}
+
+relation kennt_das_innere_nicht(h: Person) kind empirical {
+    label de official "er kennt das Innere des Gesetzes nicht, sondern nur den Weg, den er vor dem Eingang immer wieder abgehn muß";
+    label ru official "внутренностей Закона он не знает — знает лишь путь, который обходит перед входом";
+}
+
+relation frei(m: Person) kind institutional {
+    label de official "er ist frei: er kann hingehn, wohin er will, und sitzt freiwillig — die Geschichte erzählt von keinem Zwang";
+    label ru official "он свободен: волен идти куда хочет и сидит добровольно — о принуждении притча не говорит";
+}
+
+relation an_den_posten_gebunden(h: Person) kind institutional {
+    label de official "er ist durch sein Amt an seinen Posten gebunden und darf sich nicht entfernen";
+    label ru official "он привязан к своему посту службой и отлучиться не вправе";
+}
+
+relation diener_des_gesetzes(h: Person) kind institutional {
+    label de official "er ist ein Diener des Gesetzes, also zum Gesetz gehörig";
+    label ru official "он служитель Закона, стало быть Закону и принадлежит";
+}
+
+relation auffassung_getruebt(h: Person) kind empirical {
+    label de official "seine Auffassung ist durch Einfalt und Überhebung getrübt — es sind Lücken im Charakter des Türhüters";
+    label ru official "его понимание замутнено простотой и самомнением — это трещины в характере привратника";
+}
+
+// --- Спорные заключения --------------------------------------------------------
+//
+// ОБМАН ПРОСИТЕЛЯ И ОБМАН ПРИВРАТНИКА — ДВА ПРЕДИКАТА, И ЭТО ВЫНУЖДЕННО.
+// Источник говорит о них ОДНИМ словом («gerade der Türhüter der Getäuschte
+// ist»), и записать их одним предикатом было бы точнее: ход Йозефа К.
+// связывает их прямо — «wenn der Türhüter aber getäuscht ist, dann muß sich
+// seine Täuschung notwendig auf den Mann übertragen». Но такая запись
+// РЕКУРСИВНА (getäuscht → getäuscht через defeasible-ребро), и её отвергает
+// `lawc check`: LDC-E4102, «программа не стратифицируема» (§110/§191).
+//
+// ГРАНИЦА ЗДЕСЬ НЕ ТАМ, ГДЕ ЕЁ ЖДЁШЬ, И ЭТО СТОИТ ЗАПИСАТЬ. Профиль §274.2
+// рекурсию РАЗРЕШАЕТ дословно: «стратификация §110 профилем не требуется»,
+// терминируемость держит запрет повторов на пути от корня к листу. Но правила
+// профиля живут в той же программе, что и baseline, и §110 проверяется у
+// ВСЕЙ программы — до того, как профиль что-нибудь построит. Способа
+// объявить правило «только для профиля» у поверхности нет, и потому
+// разрешённая рекурсия невыразима. Это пробел SPEC (часть XXXVII — открытые
+// вопросы 0.2), а не дефект реализации: baseline с таким набором правил
+// действительно нестратифицируем, и компилятор прав.
+//
+// Разрез сделан по РОЛИ, а не по удобству: `getaeuscht` — о просителе,
+// `tuerhueter_getaeuscht` — о привратнике, и ход К. записан мостом между
+// ними. Ценой потеряно то, что источник называет их одним словом.
+
+relation getaeuscht(p: Person) kind institutional {
+    label de official "er ist der Getäuschte";
+    label ru official "он обманут";
+}
+
+relation tuerhueter_getaeuscht(h: Person) kind institutional {
+    label de official "gerade der Türhüter ist der Getäuschte";
+    label ru official "обманут как раз привратник";
+}
+
+relation pflicht_erfuellt(h: Person) kind institutional {
+    label de official "er hat seine Pflicht erfüllt";
+    label ru official "он исполнил свой долг";
+}
+
+relation untergeordnet(h: Person, m: Person) kind institutional {
+    label de official "er ist diesem Mann untergeordnet";
+    label ru official "он подчинён этому человеку";
+}
+
+relation dem_urteil_entrueckt(h: Person) kind institutional {
+    label de official "er ist dem menschlichen Urteil entrückt: an seiner Würdigkeit zu zweifeln, hieße am Gesetze zweifeln";
+    label ru official "он изъят из человеческого суда: сомневаться в его достоинстве значит сомневаться в Законе";
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОЧТЕНИЕ ПЕРВОЕ: привратник обманул просителя
+// ═══════════════════════════════════════════════════════════════════════════
+
+@source(AU_TAEUSCHUNG_DES_MANNES)
+rule TuerhueterHatDenMannGetaeuscht(h: Person, m: Person) defeasible {
+    label de official "Der Türhüter hat die erlösende Mitteilung erst dann gemacht, als sie dem Manne nicht mehr helfen konnte — also hat er ihn getäuscht";
+    label ru official "Спасительное сообщение привратник сделал лишь тогда, когда помочь просителю оно уже не могло, — стало быть, обманул";
+    when nur_tuerhueter(h) and mann_vom_lande(m)
+        and erloesende_mitteilung_zu_spaet(h, m)
+        and not_known(dem_urteil_entrueckt(h));
+    then getaeuscht(m);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОЧТЕНИЕ ВТОРОЕ: он исполнил свой долг
+// ═══════════════════════════════════════════════════════════════════════════
+
+@source(AU_PFLICHT_ERFUELLT)
+rule PflichtErfuellt(h: Person) defeasible {
+    label de official "Er wurde nicht früher gefragt, und er war nur Türhüter — als solcher hat er seine Pflicht erfüllt";
+    label ru official "Раньше его не спрашивали, и он был только привратником — а как привратник исполнил свой долг";
+    when nur_tuerhueter(h) and nicht_frueher_gefragt(h)
+        and not_known(dem_urteil_entrueckt(h));
+    then pflicht_erfuellt(h);
+}
+
+// ОТВЕТ НА ПЕРВОЕ ПРОЧТЕНИЕ, и он опровержение §274.3, а не подрыв: голова
+// прямо противоположна. Условная форма источника («Bestände zwischen diesen
+// beiden Erklärungen ein Widerspruch, dann hättest du recht») делает довод
+// проверяемым — священник сам называет условие, при котором обман был бы
+// доказан, и утверждает, что оно не выполнено.
+@source(AU_KEIN_WIDERSPRUCH)
+rule KeinWiderspruchAlsoKeineTaeuschung(h: Person, m: Person) defeasible {
+    label de official "Zwischen den beiden Erklärungen des Türhüters besteht kein Widerspruch — bestände einer, wäre die Täuschung erwiesen";
+    label ru official "Между двумя объявлениями привратника нет противоречия — будь оно, обман был бы доказан";
+    when nur_tuerhueter(h) and mann_vom_lande(m)
+        and zwei_erklaerungen_ohne_widerspruch(h)
+        and not_known(dem_urteil_entrueckt(h));
+    then not getaeuscht(m);
+}
+
+// ВОЗРАЖЕНИЕ К. ВТОРОМУ ПРОЧТЕНИЮ. Оно читает `eingang_nur_fuer` — вывод
+// модуля 05, доступный лишь после последней реплики привратника. Тем самым
+// довод К. держится на факте, который до конца притчи невыводим: возразить
+// так можно было только задним числом, и пакет это показывает исполнением.
+@source(AU_PFLICHT_WAR_EINLASSEN)
+rule PflichtWarIhnEinzulassen(h: Person, m: Person) defeasible {
+    label de official "Seine Pflicht war es vielleicht, alle Fremden abzuwehren — diesen Mann aber, für den der Eingang bestimmt war, hätte er einlassen müssen";
+    label ru official "Долгом его было, быть может, отвергать всех чужих — но этого, кому вход был предназначен, он был обязан впустить";
+    when nur_tuerhueter(h) and mann_vom_lande(m) and eingang_nur_fuer(m)
+        and nicht_eingelassen(h, m)
+        and not_known(dem_urteil_entrueckt(h));
+    then not pflicht_erfuellt(h);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОЧТЕНИЕ ТРЕТЬЕ: обманут сам привратник
+// ═══════════════════════════════════════════════════════════════════════════
+
+@source(AU_KENNT_DAS_INNERE_NICHT)
+rule DerTuerhueterIstDerGetaeuschte(h: Person) defeasible {
+    label de official "Er kennt das Innere des Gesetzes nicht und fürchtet selbst, wovor er dem Manne Furcht machen will — gerade er ist der Getäuschte";
+    label ru official "Внутренностей Закона он не знает и сам боится того, чем пугает просителя, — обманут как раз он";
+    when nur_tuerhueter(h) and kennt_das_innere_nicht(h)
+        and not_known(dem_urteil_entrueckt(h));
+    then tuerhueter_getaeuscht(h);
+}
+
+// ХОД ЙОЗЕФА К., КОТОРЫМ ТРЕТЬЕ ПРОЧТЕНИЕ ВОЗВРАЩАЕТСЯ К ПЕРВОМУ: «wenn der
+// Türhüter aber getäuscht ist, dann muß sich seine Täuschung notwendig auf
+// den Mann übertragen». Довод РЕКУРСИВЕН — он стои́т на заключении другого
+// довода, а не на факте дела, — и профиль §274 такие берёт без стратификации.
+// Допущения о праве судить у него нет: право судить уже допущено доводом, на
+// котором он стои́т. Через ДВА предиката, а не через один, — по причине,
+// записанной выше у объявления `tuerhueter_getaeuscht`.
+@source(AU_TAEUSCHUNG_UEBERTRAEGT_SICH)
+rule TaeuschungUebertraegtSich(h: Person, m: Person) defeasible {
+    label de official "Ist der Türhüter getäuscht, so muß sich seine Täuschung notwendig auf den Mann übertragen";
+    label ru official "Если обманут привратник, обман его неизбежно переносится на просителя";
+    when nur_tuerhueter(h) and mann_vom_lande(m)
+        and tuerhueter_getaeuscht(h);
+    then getaeuscht(m);
+}
+
+@source(AU_DER_GETAEUSCHTE)
+rule TuerhueterIstUntergeordnet(h: Person, m: Person) defeasible {
+    label de official "Vor allem ist der Freie dem Gebundenen übergeordnet: der Mann ist frei, der Türhüter durch sein Amt gebunden";
+    label ru official "Прежде всего свободный выше связанного: проситель свободен, привратник же привязан к посту службой";
+    when nur_tuerhueter(h) and mann_vom_lande(m) and frei(m)
+        and an_den_posten_gebunden(h)
+        and not_known(dem_urteil_entrueckt(h));
+    then untergeordnet(h, m);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ПРОЧТЕНИЕ ЧЕТВЁРТОЕ: судить его не вправе никто
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// БЬЁТ В ДОПУЩЕНИЕ, А НЕ В ЗАКЛЮЧЕНИЕ, и потому подрывает ВСЕ довода о
+// привратнике разом — включая благосклонный. Это не наша конструкция: текст
+// говорит «über den Türhüter zu urteilen», то есть о суждении как таковом, а
+// не об осуждении.
+
+@source(AU_DIENER_DES_GESETZES)
+rule DemMenschlichenUrteilEntrueckt(h: Person) defeasible {
+    label de official "Er ist ein Diener des Gesetzes, also zum Gesetz gehörig, also dem menschlichen Urteil entrückt";
+    label ru official "Он служитель Закона, стало быть принадлежит Закону, стало быть изъят из человеческого суда";
+    when nur_tuerhueter(h) and diener_des_gesetzes(h);
+    then dem_urteil_entrueckt(h);
+}
+
+// Отдельным правилом — и отдельной строкой источника: «Man darf dann auch
+// nicht glauben, daß der Türhüter dem Manne untergeordnet ist».
+@source(AU_DIENER_DES_GESETZES)
+rule NichtUntergeordnet(h: Person, m: Person) defeasible {
+    label de official "Durch seinen Dienst auch nur an den Eingang des Gesetzes gebunden zu sein, ist unvergleichlich mehr als frei in der Welt zu leben";
+    label ru official "Быть привязанным службой хотя бы ко входу в Закон несравненно больше, чем жить свободным в миру";
+    when nur_tuerhueter(h) and mann_vom_lande(m) and diener_des_gesetzes(h);
+    then not untergeordnet(h, m);
+}
+
+// ВОЗРАЖЕНИЕ К. ЧЕТВЁРТОМУ ПРОЧТЕНИЮ. Оно ПРИНИМАЕТ его посылку (служитель
+// Закона) и берёт вторую посылку у самого священника: тот на протяжении
+// страницы обосновывал, что понимание привратника замутнено. Отсюда: держать
+// за истину всё, что он говорит, невозможно, — а четвёртое прочтение этого
+// требует.
+@source(AU_ALLES_FUER_WAHR, AU_EINFALT_TRUEBT)
+rule NichtAllesFuerWahrZuHalten(h: Person) defeasible {
+    label de official "Wer sich dieser Meinung anschließt, muß alles, was der Türhüter sagt, für wahr halten — daß das nicht möglich ist, hat der Geistliche selbst ausführlich begründet";
+    label ru official "Приняв это мнение, пришлось бы держать за истину всё, что говорит привратник, — а невозможность этого священник обосновал сам";
+    when nur_tuerhueter(h) and diener_des_gesetzes(h)
+        and auffassung_getruebt(h);
+    then not dem_urteil_entrueckt(h);
+}

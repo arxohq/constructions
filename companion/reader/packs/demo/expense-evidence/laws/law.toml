@@ -1,0 +1,7 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "demo.expense_evidence"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:demo:expense-evidence"

@@ -1,0 +1,43 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// 2024: постоянная Планка — определяющая константа SI (§2.2).
+test "urn:query:si-t04a-planck-is-defining-2024" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_defining_constant(PlanckConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SIDefinedByConstants);
+}
+
+// 2010: §2.2 9-го издания ещё не в силе — константа не «определяющая».
+test "urn:query:si-t04b-planck-not-defining-2010" {
+    given {
+        context { decision_time @2010-01-01T12:00:00Z; knowledge_time @2010-01-01T12:00:00Z; legal_time @2010-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_defining_constant(PlanckConstant));
+    expect truth_status == NEITHER;
+}
+
+// Таблица 1: h = 6.626 070 15 × 10^−34 J s.
+test "urn:query:si-t04c-planck-value" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defining_constant(PlanckConstant, "h", 6.62607015e-34, "J s"));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// Таблица 1: ∆νCs = 9 192 631 770 Hz.
+test "urn:query:si-t04d-caesium-value" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defining_constant(CaesiumFrequency, "∆νCs", 9192631770.0, "Hz"));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

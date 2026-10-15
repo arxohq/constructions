@@ -1,0 +1,709 @@
+// Source-модель: закреплённые байты брошюры SI (BIPM) — 9-е издание на
+// английском и французском и английская часть 8-го издания — и фрагменты
+// английских текстов обеих редакций.
+//
+// ФАЙЛ ПОРОЖДАЕТСЯ. Правится только генератором —
+// `corpus/tools/sources/sync/sync_bipm_si_brochure_fragments.py`; сверка без
+// записи — его же ключом `--check`. Тексты вырезаются из
+// `sources/si-brochure/{en9,en8}.txt`, поэтому разойтись с публикацией они
+// не могут.
+//
+// ПРОВЕНАНС. Байты получены воспроизводимым извлечением из PDF со страницы
+// публикаций BIPM штатным `pdftotext -layout` при poppler 25.06.0; входные
+// PDF пинуются хэшем: 9-е изд. EN sha256:5442eea2c680caf77a9d96879205a97f57c7c270b98a0bd0126c18fefe47e02c,
+// 9-е изд. FR sha256:e8395750d374c5aca5ea170c51243fa69b1ddd01cac54bdbdba51f9a61d49cba,
+// 8-е изд. (двуязычный) sha256:68eb39b47ee611f7b1810a0b45fae39680dcf12a2233ec7365b8bafdbceacd68.
+// Лицензия — Creative Commons Attribution 4.0 (страница BIPM и с. 2 PDF).
+// `materialization_status` — PINNED_UNOFFICIAL_COPY: закреплено извлечение из
+// PDF, а не байты самого PDF. `retrieved_at` — константа (DECISION-0005 п. 6).
+//
+// ДВЕ РЕДАКЦИИ ОДНОГО ДОКУМЕНТА, И ОНИ РАСХОДЯТСЯ ПО СУЩЕСТВУ: 8-е издание
+// определяет килограмм через международный прототип, ампер через силу между
+// проводниками, кельвин через тройную точку воды, моль через 0,012 кг
+// углерода-12; 9-е издание — все семь единиц через семь определяющих
+// констант, в силе с 20 мая 2019 (резолюция 1 26-й ГКМВ, 2018; приложение 1).
+// Секунда, метр и кандела определены через те же константы в обеих
+// редакциях, разница только в формулировке.
+//
+// ФРАНЦУЗСКИЙ ТЕКСТ — ПОДЛИННИК (так говорит сама брошюра). Он закреплён
+// редакцией `SI_BROCHURE_9_FR` без фрагментов: формализация ведётся по
+// английскому тексту, разметка французского — названный долг. Английская
+// редакция объявлена `officiality official`: BIPM публикует её сам.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+source SI_BROCHURE {
+    // `standard` — справочный документ межправительственной организации
+    // (Метрическая конвенция), собирающий резолюции ГКМВ; юрисдикция
+    // `International`, как у резолюций МАС и кодекса ICZN.
+    kind standard;
+    jurisdiction International;
+    number "BIPM, The International System of Units (SI), 8th edition (2006) and 9th edition (2019, v4.01)";
+    label en official "The International System of Units (SI)";
+    label fr official "Le Système international d’unités (SI)";
+    label ru unofficial "Международная система единиц (SI), брошюра BIPM";
+}
+
+edition SI_BROCHURE_8_EN of SI_BROCHURE {
+    label en official "The International System of Units (SI), 8th edition, 2006 — English text of the bilingual edition";
+    label ru unofficial "8-е издание (2006), английская часть двуязычного издания";
+    language en;
+    officiality official;
+    adopted @2006-01-01;
+    in_force [@2006-01-01, @2019-05-20);
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+publication SI_BROCHURE_8_EN_TEXT of SI_BROCHURE_8_EN {
+    media_type "text/plain; charset=utf-8";
+    uri "https://www.bipm.org/documents/20126/41483022/si_brochure_8.pdf";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:75189f3babd57d9246af75c773507d027a0df049e5fb9eceb71fb9bb958f60e1";
+    local_path "sources/si-brochure/en8.txt";
+}
+
+edition SI_BROCHURE_9_EN of SI_BROCHURE {
+    label en official "The International System of Units (SI), 9th edition, 2019, version 4.01";
+    label ru unofficial "9-е издание (2019), версия 4.01, английский текст";
+    language en;
+    officiality official;
+    adopted @2018-11-16;
+    in_force [@2019-05-20, infinity);
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+publication SI_BROCHURE_9_EN_TEXT of SI_BROCHURE_9_EN {
+    media_type "text/plain; charset=utf-8";
+    uri "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:e4de27dc33f988f97fc94da61a28830deb61d82944ff9023c1b8e8e119f2b980";
+    local_path "sources/si-brochure/en9.txt";
+}
+
+edition SI_BROCHURE_9_FR of SI_BROCHURE {
+    label fr official "Le Système international d’unités (SI), 9e édition, 2019, version 4.01";
+    label ru unofficial "9-е издание (2019), версия 4.01, французский подлинник; фрагменты не размечены";
+    language fr;
+    officiality official;
+    adopted @2018-11-16;
+    in_force [@2019-05-20, infinity);
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+publication SI_BROCHURE_9_FR_TEXT of SI_BROCHURE_9_FR {
+    media_type "text/plain; charset=utf-8";
+    uri "https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-FR.pdf";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:bceec64d96fc9c791aea38592c93bfa852600adecddfcac295c155d3646456b9";
+    local_path "sources/si-brochure/fr9.txt";
+}
+
+// --- 9-е издание, английский текст ---------------------------------------
+
+// §2.2: SI — система единиц, в которой семь констант имеют фиксированные значения
+fragment SI9_S2_2_DEFINITION_OF_SI in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.2/definition";
+    text en official """The International System of Units, the SI, is the system of units in which
+• the unperturbed ground state hyperfine transition frequency of the caesium
+133 atom, ∆νCs, is 9 192 631 770 Hz,
+• the speed of light in vacuum, c, is 299 792 458 m/s,
+• the Planck constant, h, is 6.626 070 15 × 10−34 J s,
+• the elementary charge, e, is 1.602 176 634 × 10−19 C,
+• the Boltzmann constant, k, is 1.380 649 × 10−23 J/K,
+• the Avogadro constant, NA, is 6.022 140 76 × 1023 mol−1,
+• the luminous efficacy of monochromatic radiation of frequency
+540 × 1012 Hz, Kcd, is 683 lm/W,""";
+    content_hash "sha256:186bea9a7e8e45241bf08305fc7f7d05fee96c1d1df4b8b841043bb2a9deeb52";
+}
+
+// §2.2: связь Hz, J, C, lm, W с базовыми единицами; значения констант без неопределённости
+pub fragment SI9_S2_2_UNIT_RELATIONS in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.2/relations";
+    text en official """where the hertz, joule, coulomb, lumen, and watt, with unit symbols Hz, J, C, lm, and W,
+respectively, are related to the units second, metre, kilogram, ampere, kelvin, mole, and
+candela, with unit symbols s, m, kg, A, K, mol, and cd, respectively, according to Hz = s–1,
+J = kg m2 s– 2, C = A s, lm = cd sr, and W = kg m2 s–3.
+The numerical values of the seven defining constants have no uncertainty.""";
+    content_hash "sha256:a2129c13bcd907dfdd657785e5d386188697524d86979439e0d86f0898e496a4";
+}
+
+// Таблица 1: семь определяющих констант и единицы, которые они определяют
+pub fragment SI9_TABLE_1 in SI_BROCHURE_9_EN {
+    kind table;
+    locator "section/2.2/table-1";
+    text en official """Table 1. The seven defining constants of the SI and the seven corresponding units
+they define
+___________________________________________________________________________
+Defining constant Symbol Numerical value Unit
+___________________________________________________________________________
+hyperfine transition
+frequency of Cs ∆νCs 9 192 631 770 Hz
+speed of light in vacuum c 299 792 458 m s−1
+Planck constant h 6.626 070 15 × 10−34 Js
+elementary charge e 1.602 176 634 × 10−19 C
+Boltzmann constant k 1.380 649 × 10 −23
+J K−1
+Avogadro constant NA 6.022 140 76 × 1023 mol−1
+luminous efficacy Kcd 683 lm W−1""";
+    content_hash "sha256:7af45fae4cb7a313e6c6425db7389d026287af5edadb25837e7fd871ec1e9fbb";
+}
+
+// Таблица 2: базовые величины и базовые единицы
+fragment SI9_TABLE_2 in SI_BROCHURE_9_EN {
+    kind table;
+    locator "section/2.3.1/table-2";
+    text en official """Table 2. SI base units
+_____________________________________________________________________________
+Base quantity Base unit
+_____________________________________________________________________________
+Name Typical symbol Name Symbol
+_____________________________________________________________________________
+time t second s
+length l, x, r, etc. metre m
+mass m kilogram kg
+electric current I, i ampere A
+thermodynamic temperature T kelvin K
+amount of substance n mole mol
+luminous intensity Iv candela cd""";
+    content_hash "sha256:bdd9a6b3aadcc3e36539d3972cbe501a92940a3328bf1920d89660a3acc9e77b";
+}
+
+// §2.3.1: определение секунды через ∆νCs
+fragment SI9_DEF_SECOND in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/second";
+    text en official """The second, symbol s, is the SI unit of time. It is defined by taking the fixed numerical
+value of the caesium frequency, ∆νCs, the unperturbed ground-state hyperfine
+transition frequency of the caesium 133 atom, to be 9 192 631 770 when expressed in the
+unit Hz, which is equal to s−1.""";
+    content_hash "sha256:a2b330de77b8fb6a298ffbbc5e22952db51f936a67c6a911f6df4afc0a5df01b";
+}
+
+// §2.3.1: определение метра через c
+fragment SI9_DEF_METRE in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/metre";
+    text en official """The metre, symbol m, is the SI unit of length. It is defined by taking the fixed numerical
+value of the speed of light in vacuum, c, to be 299 792 458 when expressed in the unit m
+s−1, where the second is defined in terms of the caesium frequency ∆νCs.""";
+    content_hash "sha256:9776d44ec57958c405378e1585c171bf44eebe01426be027f959a77064d4c8e0";
+}
+
+// §2.3.1: определение килограмма через h
+fragment SI9_DEF_KILOGRAM in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/kilogram";
+    text en official """The kilogram, symbol kg, is the SI unit of mass. It is defined by taking the fixed
+numerical value of the Planck constant, h, to be 6.626 070 15 × 10−34 when expressed in
+the unit J s, which is equal to kg m2 s−1, where the metre and the second are defined in
+terms of c and ∆νCs.""";
+    content_hash "sha256:96dae548d302b9211c1c70f6e206bf377de3b0c9fbb7327d36e875da4063d572";
+}
+
+// §2.3.1: определение ампера через e
+fragment SI9_DEF_AMPERE in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/ampere";
+    text en official """The ampere, symbol A, is the SI unit of electric current. It is defined by taking the fixed
+numerical value of the elementary charge, e, to be 1.602 176 634 × 10−19 when expressed
+in the unit C, which is equal to A s, where the second is defined in terms of ∆νCs.""";
+    content_hash "sha256:ee5d176bd7c10a5fd04b88fca6c4230500668da6aac99d1d3c36a4cefebe9e2e";
+}
+
+// §2.3.1: определение кельвина через k
+fragment SI9_DEF_KELVIN in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/kelvin";
+    text en official """The kelvin, symbol K, is the SI unit of thermodynamic temperature. It is defined by
+taking the fixed numerical value of the Boltzmann constant, k, to be 1.380 649 × 10−23
+when expressed in the unit J K−1, which is equal to kg m2 s−2 K−1, where the kilogram,
+metre and second are defined in terms of h, c and ∆νCs.""";
+    content_hash "sha256:e7d9ee6b2f490124223d1accc13282a3b5738bb04df8ca36916189010fd2388d";
+}
+
+// §2.3.1: определение моля через NA
+fragment SI9_DEF_MOLE in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/mole";
+    text en official """The mole, symbol mol, is the SI unit of amount of substance. One mole contains exactly
+6.022 140 76 × 1023 elementary entities. This number is the fixed numerical value of the
+Avogadro constant, NA, when expressed in the unit mol−1 and is called the Avogadro
+number.""";
+    content_hash "sha256:a11e8e01b96d54037f81044afa61838d441ef84f48bcdf4855c3a7ebf94bac16";
+}
+
+// §2.3.1: определение канделы через Kcd
+fragment SI9_DEF_CANDELA in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/candela";
+    text en official """The candela, symbol cd, is the SI unit of luminous intensity in a given direction. It is
+defined by taking the fixed numerical value of the luminous efficacy of monochromatic
+radiation of frequency 540 × 1012 Hz, Kcd, to be 683 when expressed in the unit lm W−1,
+which is equal to cd sr W−1, or cd sr kg−1 m−2 s3, where the kilogram, metre and second
+are defined in terms of h, c and ∆νCs.""";
+    content_hash "sha256:e0ef37a23e1dd6bb5def7debca8079b9612fe024405e5bef9b40d84e7ecb37ec";
+}
+
+// §2.3.1: градус Цельсия равен кельвину по величине; t/°C = T/K − 273.15
+fragment SI9_S2_3_1_CELSIUS in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.1/celsius";
+    text en official """The unit of Celsius temperature is the degree Celsius, symbol °C, which is by definition equal
+in magnitude to the unit kelvin. A difference or interval of temperature may be expressed in
+kelvins or in degrees Celsius, the numerical value of the temperature difference being the
+same in either case. However, the numerical value of a Celsius temperature expressed in
+degrees Celsius is related to the numerical value of the thermodynamic temperature expressed
+in kelvins by the relation
+t/°C = T/K − 273.15""";
+    content_hash "sha256:81773254636a642ed6da3aec77e32cafb409eae407b17017686a27135b328f9a";
+}
+
+// §2.3.4: производные и когерентные производные единицы
+fragment SI9_S2_3_4_COHERENT in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.4/coherent";
+    text en official """Derived units are defined as products of powers of the base units. When the numerical factor
+of this product is one, the derived units are called coherent derived units. The base and
+coherent derived units of the SI form a coherent set, designated the set of coherent SI units.
+The word “coherent” here means that equations between the numerical values of quantities
+take exactly the same form as the equations between the quantities themselves.""";
+    content_hash "sha256:b9e6a117312c189b30c283ce54aee8fdfdea00c8fe550f1c0236e766dc9186cb";
+}
+
+// §2.3.4: 22 единицы со специальными названиями; вместе с базовыми — 29
+fragment SI9_S2_3_4_SPECIAL_NAMES in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.4/special-names";
+    text en official """Some of the coherent derived units in the SI are given special names. Table 4 lists 22 SI units
+with special names. Together with the seven base units (Table 2) they form the core of the
+set of SI units. All other SI units are combinations of some of these 29 units.""";
+    content_hash "sha256:515a61fe3b5e76008a87be79f0c0d988a935aee92c2d22abefed37564313eba0";
+}
+
+// §2.3.4: префиксы применимы к 29 единицам со специальными названиями, кроме килограмма
+fragment SI9_S2_3_4_PREFIX_EXCEPTION in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.4/prefix-exception";
+    text en official """The CGPM has adopted a series of prefixes for use in forming the decimal multiples and sub-
+multiples of the coherent SI units (see chapter 3). They are convenient for expressing the
+values of quantities that are much larger than or much smaller than the coherent unit.
+However, when prefixes are used with SI units, the resulting units are no longer coherent,
+because the prefix introduces a numerical factor other than one. Prefixes may be used with
+any of the 29 SI units with special names with the exception of the base unit kilogram, which
+is further explained in chapter 3.""";
+    content_hash "sha256:c093af4db37dce32abaf0950fef702d7f2a024f35700fa39bfc5a3875e4db083";
+}
+
+// Таблица 4: 22 единицы со специальными названиями, выражение через базовые
+fragment SI9_TABLE_4 in SI_BROCHURE_9_EN {
+    kind table;
+    locator "section/2.3.4/table-4";
+    text en official """Table 4. The 22 SI units with special names and symbols
+_____________________________________________________________________________________________
+Special name Unit expressed in Unit expressed in
+Derived quantity of unit Symbol terms of base units (a) terms of other SI units
+______________________________________________________________________________________________
+plane angle radian (b) rad (b) 1
+solid angle steradian (c) sr (c) 1
+frequency hertz (d) Hz s−1
+force newton N kg m s−2
+pressure, stress pascal Pa kg m−1 s−2 N/m2
+energy, work, joule J kg m2 s−2 Nm
+amount of heat
+power, radiant flux watt W kg m2 s−3 J/s
+electric charge coulomb C As
+electric potential difference (e) volt V kg m2 s−3 A−1 W/A
+capacitance farad F kg−1 m−2 s4 A2 C/V
+electric resistance ohm Ω kg m2 s−3 A−2 V/A
+electric conductance siemens S kg −1 m−2 s3 A2 A/V
+magnetic flux weber Wb kg m2 s−2 A−1 Vs
+magnetic flux density tesla T kg s−2 A−1 Wb/m2
+inductance henry H kg m 2 s−2 A−2 Wb/A
+134 • The International System of Units
+Celsius temperature degree Celsius (f) °C K
+luminous flux lumen lm cd sr (g) cd sr
+illuminance lux lx cd sr m−2 lm/m2
+activity referred to becquerel Bq s−1
+a radionuclide (d, h)
+absorbed dose, kerma gray Gy m2 s−2 J/kg
+dose equivalent sievert (i) Sv m2 s−2 J/kg
+catalytic activity katal kat mol s −1""";
+    content_hash "sha256:fd0d2e3ba1b4f130bcf6fbeb2bc54f86b671e4e4cab5a195f3a165f8c72d8070";
+}
+
+// §2.3.4: полный набор единиц SI — когерентные плюс кратные и дольные
+fragment SI9_S2_3_4_COMPLETE_SET in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/2.3.4/complete-set";
+    text en official """The seven base units and 22 units with special names and symbols may be used in
+combination to express the units of other derived quantities. Since the number of quantities
+is without limit, it is not possible to provide a complete list of derived quantities and derived
+units. Table 5 lists some examples of derived quantities and the corresponding coherent
+derived units expressed in terms of base units. In addition, Table 6 lists examples of coherent
+derived units whose names and symbols also include derived units. The complete set of SI
+units includes both the coherent set and the multiples and sub-multiples formed by using the
+SI prefixes.""";
+    content_hash "sha256:ba07f1b3c6f8c3772a950b6e0b74315712b3c468206b9b83cc70ec6b0ee93720";
+}
+
+// §3: кратные и дольные от 10^30 до 10^−30
+fragment SI9_S3_INTRO in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/3/intro";
+    text en official """Decimal multiples and submultiples ranging from 1030 to 10−30 are provided for use with the
+SI units. The names and symbols of these multiple and sub-multiple prefixes are presented
+in Table 7.""";
+    content_hash "sha256:287904741f4b52ca7afad9cf582c6821a418beb6ad4c42871ec10793d20aecd9";
+}
+
+// Таблица 7: префиксы SI
+fragment SI9_TABLE_7 in SI_BROCHURE_9_EN {
+    kind table;
+    locator "section/3/table-7";
+    text en official """Table 7. SI prefixes
+_____________________________________________________________________________
+Factor Name Symbol Factor Name Symbol
+101 deca da 10−1 deci d
+10 2
+hecto h 10−2 centi c
+10 3
+kilo k 10 −3
+milli m
+106 mega M 10−6 micro µ
+109 giga G 10−9 nano n
+10 12
+tera T 10 −12
+pico p
+1015 peta P 10−15 femto f
+1018 exa E 10−18 atto a
+1021 zetta Z 10−21 zepto z
+10 24
+yotta Y 10 −24
+yocto y
+10 27
+ronna R 10 −27
+ronto r
+1030 quetta Q 10−30 quecto q""";
+    content_hash "sha256:12e43dffddcc8f179c629bcd2a1de930f970f632899c8a4da3f5ff3643c05559";
+}
+
+// §3: префикс с единицей — новый неразделимый символ
+fragment SI9_S3_INSEPARABLE in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/3/inseparable";
+    text en official """The grouping formed by a prefix symbol attached to a unit symbol constitutes a new
+inseparable unit symbol (forming a multiple or sub-multiple of the unit concerned) that can
+be raised to a positive or negative power and that can be combined with other unit symbols
+to form compound unit symbols.""";
+    content_hash "sha256:f100b1f76283e004d1b8c8b32f818afc84c62ffb98e7a0416a2057b8fbaec48b";
+}
+
+// §3: составные префиксы не допускаются
+fragment SI9_S3_COMPOUND in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/3/compound";
+    text en official """Compound prefix symbols, i.e. prefix symbols formed by the juxtaposition of two or more
+prefix symbols, are not permitted. This rule also applies to two or more compound prefix
+names.""";
+    content_hash "sha256:7271a37ae1b8b3f1bdc28994ba3fc71acb0ddbeb089df35c4c5052706b44e846";
+}
+
+// §3: килограмм — единственная когерентная единица с префиксом; кратные образуются от грамма
+fragment SI9_S3_KILOGRAM in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/3/kilogram";
+    text en official """For historical reasons, the kilogram is the only coherent SI unit that includes a prefix in its
+name and symbol. Names and symbols for decimal multiples and sub-multiples of the unit of
+mass are formed by attaching prefix names and symbols to the unit name “gram” and the unit
+symbol “g” respectively. For example, 10−6 kg is written as milligram, mg, not as
+microkilogram, µkg.""";
+    content_hash "sha256:c745c0e5afd6eb4cc7d18f307b66172592a9256bc528d5e54d8997168a615dca";
+}
+
+// §4: внесистемные единицы, допускаемые к применению
+fragment SI9_S4_INTRO in SI_BROCHURE_9_EN {
+    kind provision;
+    locator "section/4/intro";
+    text en official """It is recognized that some non-SI units are widely used and that this is expected to continue
+for many years. It is therefore important to recall the values of these non-SI units in terms of
+SI units, because the SI is the internationally agreed reference with respect to which all other
+units are defined. A non-exhaustive list of non-SI units is given in Table 8, grouped into
+indicative unit categories to aid explanation.""";
+    content_hash "sha256:29b0a429548094c549dbe93554a0d57bb24f970ccc798244745252608e18d734";
+}
+
+// Таблица 8: внесистемные единицы и их значения в SI
+fragment SI9_TABLE_8 in SI_BROCHURE_9_EN {
+    kind table;
+    locator "section/4/table-8";
+    text en official """Table 8. Non-SI units
+Symbol
+Unit category Quantity Name of unit Value in SI units
+for unit
+Long-standing time minute min 1 min = 60 s
+units of time and hour h 1 h = 60 min = 3600 s
+angle day d 1 d = 24 h = 86 400 s
+plane and degree ° 1° = (π/180) rad
+phase angle minute ′ 1′ = (1/60)° = (π/10 800) rad
+second (a) ″ 1″ = (1/60)′ = (π/648 000) rad
+Historical names area are (b) a 1 a = 1 dam2 = 102 m2
+for decimal hectare (b) ha 1 ha = 1 hm2 = 104 m2
+multiples and barn (c) b 1 b = 100 fm2 = 10−28 m2
+submultiples
+of SI units volume litre (d) l, L 1 l = 1 L = 1 dm3 = 10−3 m3
+mass tonne (e) t 1 t = 1 Mg = 103 kg
+length angstrom (f) Å 1 Å = 0.1 nm = 10−10 m
+acceleration gal (g) Gal 1 Gal = 1 cm/s2 = 10−2 m/s2
+pressure bar (h) bar 1 bar = 0.1 MPa = 105 Pa
+Internationally mass dalton (i) Da 1 Da =
+recognised units 1.660 539 068 92(52) × 10−27 kg
+that are not
+decimal multiples length astronomical unit (j) au 1 au = 149 597 870 700 m
+or submultiples nautical mile (k) 1 nautical mile = 1852 m
+of SI units speed knot (k) 1 nautical mile per hour =
+(1852/3600) m/s
+energy electronvolt (l) eV 1 eV = 1.602 176 634 × 10−19 J
+Units used in logarithmic neper (m) Np (m)
+specialized ratio quantities bel (m) B (m)
+technical decibel (m) dB (m)
+disciplines
+reactive power var (n) var 1 var = 1 V A = 1 W""";
+    content_hash "sha256:57b8a23b0a6cc65a2174b77ede19272cc5689173c83bf8a600ed04f5a8699743";
+}
+
+// Приложение 1, указатель: 26-я ГКМВ (2018), пересмотр SI, вступает в силу 20 мая 2019
+fragment SI9_APP1_2018_INDEX in SI_BROCHURE_9_EN {
+    kind note;
+    locator "appendix/1/index/26th-cgpm-2018";
+    text en official """26th CGPM, 2018: revision of the International System of Units, the SI 194
+(to enter into force on 20 May 2019)""";
+    content_hash "sha256:db245688b99edbdfcbd6564bfe291cefaa4af217ce12e0885bce05255ce5af8b";
+}
+
+// Приложение 1, указатель: 27-я ГКМВ (2022) добавляет ronna, ronto, quetta, quecto
+fragment SI9_APP1_2022_INDEX in SI_BROCHURE_9_EN {
+    kind note;
+    locator "appendix/1/index/27th-cgpm-2022";
+    text en official """27th CGPM, 2022: decides to add ronna, ronto, quetta, and quecto to the 196""";
+    content_hash "sha256:c9c4db4b2e2e564c569165ac05736da2065ab50827c2613fe78a88fbdb6a19da";
+}
+
+// Приложение 1: резолюция 3 27-й ГКМВ (2022) о расширении ряда префиксов
+fragment SI9_APP1_2022_RESOLUTION_3 in SI_BROCHURE_9_EN {
+    kind resolution;
+    locator "appendix/1/27th-cgpm-2022/resolution-3";
+    text en official """ On the extension of the range of SI prefixes (CR, 397 and Metrologia, 2023, 60,
+013001)
+Resolution 3
+The General Conference on Weights and Measures (CGPM), at its 27th meeting,
+recalling
+that decisions were made at previous meetings when it was considered timely to extend the
+range of SI prefixes including Resolution 12 (paragraph 3) adopted by the CGPM at its
+11th meeting (1960), Resolution 8 adopted by the CGPM at its 12th meeting (1964),
+Resolution 10 adopted by the CGPM at its 15th meeting (1975), and Resolution 4 adopted by
+the CGPM at its 19th meeting (1991),
+considering
+− the essential role of the International System of Units (SI) in providing confidence in the
+accuracy and global comparability of measurements needed for international trade,
+manufacturing, human health and safety, protection of the environment, global climate
+studies and scientific research,
+− the benefits of encouraging the use of SI units by providing new SI prefixes for scientific
+communities that depend on measurements that are not covered by the current range,
+Appendix 1 • 197
+− the needs of data science in the near future to express quantities of digital information
+using orders of magnitude in excess of 1024,
+− the importance of timely action to prevent unofficial prefix names being de facto adopted in
+other communities,
+decides
+to add to the list of SI prefixes to be used for multiples and submultiples of units the
+following prefixes:
+Multiplying factor Name Symbol
+1027 ronna R
+10−27 ronto r
+1030 quetta Q
+10−30 quecto q""";
+    content_hash "sha256:da9a754f29e9b1412a8e324261700aa844550bca5e2efbe04d4362790bc2c8b3";
+}
+
+// --- 8-е издание, английский текст ---------------------------------------
+
+// 8-е изд., §2.1.1.1: определение метра (17-я ГКМВ, 1983)
+fragment SI8_DEF_METRE in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.1/metre";
+    text en official """The metre is the length of the path travelled by light in vacuum during a
+time interval of 1/299 792 458 of a second. The symbol, c0 (or""";
+    content_hash "sha256:aa913b40afb141ef278181a4252b925f790d5fd49e42b79b79c96a5945dd70fa";
+}
+
+// 8-е изд., §2.1.1.2: килограмм — масса международного прототипа (3-я ГКМВ, 1901)
+fragment SI8_DEF_KILOGRAM in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.2/kilogram";
+    text en official """The kilogram is the unit of mass; it is equal to the mass of the
+international prototype of the kilogram.""";
+    content_hash "sha256:fbe54492cb934a3683c27e50785952ae370f8ef1be02524b78c29aa84ddcbb93";
+}
+
+// 8-е изд., §2.1.1.3: определение секунды (13-я ГКМВ, 1967/68)
+fragment SI8_DEF_SECOND in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.3/second";
+    text en official """The second is the duration of 9 192 631 770 periods of the radiation
+corresponding to the transition between the two hyperfine levels of the
+ground state of the caesium 133 atom.""";
+    content_hash "sha256:29fd4f242ae205c2f4eff4c1829d0869885f4ceaad825d125a5010925fcc6edd";
+}
+
+// 8-е изд., §2.1.1.4: ампер через силу между проводниками (9-я ГКМВ, 1948)
+fragment SI8_DEF_AMPERE in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.4/ampere";
+    text en official """The ampere is that constant current which, if maintained in two straight
+parallel conductors of infinite length, of negligible circular cross-section,
+and placed 1 metre apart in vacuum, would produce between these
+conductors a force equal to 2 × 10−7 newton per metre of length.""";
+    content_hash "sha256:cda56b70652b58497b97a21036988e3c2b7e92a80c82133dca270aa89a625b83";
+}
+
+// 8-е изд., §2.1.1.5: кельвин через тройную точку воды (13-я ГКМВ, 1967/68)
+fragment SI8_DEF_KELVIN in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.5/kelvin";
+    text en official """The kelvin, unit of thermodynamic temperature, is the fraction 1/273.16 of
+the thermodynamic temperature of the triple point of water.""";
+    content_hash "sha256:e5eb5d219f4a2ccc5f2af5343fd9da756c5f197316eb25a3e71709b52673873d";
+}
+
+// 8-е изд., §2.1.1.6: моль через 0,012 кг углерода-12 (14-я ГКМВ, 1971)
+fragment SI8_DEF_MOLE in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.6/mole";
+    text en official """1. The mole is the amount of substance of a system which contains as many
+elementary entities as there are atoms in 0.012 kilogram of carbon 12; its
+symbol is “mol”.""";
+    content_hash "sha256:139b4e53cf1c1f254e9b624c1bb33033dfb95d81b98ad9c773fd42554fc05687";
+}
+
+// 8-е изд., §2.1.1.7: определение канделы (16-я ГКМВ, 1979)
+fragment SI8_DEF_CANDELA in SI_BROCHURE_8_EN {
+    kind provision;
+    locator "section/2.1.1.7/candela";
+    text en official """The candela is the luminous intensity, in a given direction, of a source
+that emits monochromatic radiation of frequency 540 × 1012 hertz and that
+has a radiant intensity in that direction of 1/683 watt per steradian.""";
+    content_hash "sha256:e0fb4dd0e599bac1b91546c9af5aa1a6650e0e66ac8a2c9d1a028b686f7c309c";
+}
+
+// 8-е изд., таблица 1: базовые единицы SI
+fragment SI8_TABLE_1 in SI_BROCHURE_8_EN {
+    kind table;
+    locator "section/2.1/table-1";
+    text en official """Table 1. SI base units
+Base quantity SI base unit
+_________________________________ ___________________________
+Name Symbol Name Symbol
+The symbols for quantities
+length l, x, r, etc. metre m are generally single letters
+mass m kilogram kg of the Latin or Greek
+time, duration t second s alphabets, printed in an
+electric current I, i ampere A italic font, and are
+thermodynamic temperature T kelvin K recommendations.
+amount of substance n mole mol
+The symbols for units are
+luminous intensity Iv candela cd mandatory, see chapter 5.""";
+    content_hash "sha256:6a98194b74b8b00e83c16010c51563c02e10c281acd51dde2e1bf1ce725026f7";
+}
+
+// 8-е изд., таблица 3: когерентные производные единицы со специальными названиями
+fragment SI8_TABLE_3 in SI_BROCHURE_8_EN {
+    kind table;
+    locator "section/2.2.2/table-3";
+    text en official """Table 3. Coherent derived units in the SI with special names and symbols
+SI coherent derived unit (a)
+——————————————————————————
+Expressed Expressed
+in terms of in terms of
+Derived quantity Name Symbol other SI units SI base units
+plane angle radian (b) rad 1 (b) m/m
+solid angle steradian (b) sr (c) 1 (b) m2/m2
+frequency hertz (d) Hz s−1
+force newton N m kg s−2
+pressure, stress pascal Pa N/m2 m−1 kg s−2
+energy, work, joule J Nm m2 kg s−2
+amount of heat
+power, radiant flux watt W J/s m2 kg s−3
+electric charge, coulomb C sA
+amount of electricity
+electric potential difference, volt V W/A m2 kg s−3 A−1
+electromotive force
+capacitance farad F C/V m−2 kg−1 s4 A2
+electric resistance ohm Ω V/A m2 kg s−3 A−2
+electric conductance siemens S A/V m−2 kg−1 s3 A2
+magnetic flux weber Wb Vs m2 kg s−2 A−1
+magnetic flux density tesla T Wb/m2 kg s−2 A−1
+inductance henry H Wb/A m2 kg s−2 A−2
+Celsius temperature degree Celsius (e) o
+C K
+luminous flux lumen lm cd sr (c) cd
+illuminance lux lx lm/m2 m−2 cd
+activity referred to becquerel (d) Bq s−1
+a radionuclide (f)
+absorbed dose, gray Gy J/kg m2 s−2
+specific energy (imparted),
+kerma
+dose equivalent, sievert (g) Sv J/kg m2 s−2
+ambient dose equivalent,
+directional dose equivalent,
+personal dose equivalent
+catalytic activity katal kat s−1 mol""";
+    content_hash "sha256:70c7c475f65a3e98d87c1ddf205e4d9809a2f2061473863c9e6f689fc1145e09";
+}
+
+// 8-е изд., таблица 6: внесистемные единицы, допускаемые к применению
+fragment SI8_TABLE_6 in SI_BROCHURE_8_EN {
+    kind table;
+    locator "section/4.1/table-6";
+    text en official """Table 6. Non-SI units accepted for use with the International System of Units
+Quantity Name of unit Symbol for unit Value in SI units
+time minute min 1 min = 60 s
+hour (a) h 1 h = 60 min = 3600 s
+day d 1 d = 24 h = 86 400 s
+plane angle degree (b, c) o
+1o = (π/180) rad
+minute ′ 1′ = (1/60)o = (π/ 10 800) rad
+second (d) ″ 1″ = (1/60)′ = (π/ 648 000) rad
+area hectare (e) ha 1 ha = 1 hm2 = 104 m2
+volume litre (f) L, l 1 L = 1 l = 1 dm3 = 103 cm3 = 10−3 m3
+mass tonne (g) t 1 t = 103 kg""";
+    content_hash "sha256:50ec898ce13fb38212455e5847b2ff223fbacb138b28b57319764cd4ef10f256";
+}
+
+// 8-е изд., таблица 5: префиксы SI от йотта до йокто
+fragment SI8_TABLE_5 in SI_BROCHURE_8_EN {
+    kind table;
+    locator "section/3.1/table-5";
+    text en official """Table 5. SI prefixes Telecommunications and
+electronics. The names and
+symbols for the prefixes
+Factor Name Symbol Factor Name Symbol
+corresponding to 210, 220,
+230, 240, 250, and 260 are,
+101 deca da 10−1 deci d respectively: kibi, Ki; mebi,
+102 hecto h 10−2 centi c Mi; gibi, Gi; tebi, Ti; pebi,
+103 kilo k 10−3 milli m Pi; and exbi, Ei. Thus, for
+106 mega M 10−6 micro µ example, one kibibyte
+would be written:
+109 giga G 10−9 nano n
+1 KiB = 210 B = 1024 B,
+1012 tera T 10−12 pico p where B denotes a byte.
+1015 peta P 10−15 femto f Although these prefixes are
+1018 exa E 10−18 atto a not part of the SI, they
+1021 zetta Z 10−21 zepto z should be used in the field
+1024 yotta Y 10−24 yocto y of information technology""";
+    content_hash "sha256:033ee040cd3b4a114dbe4e5fa1373cbbe6336dfe99324ee9ae51b65f9c7c871e";
+}

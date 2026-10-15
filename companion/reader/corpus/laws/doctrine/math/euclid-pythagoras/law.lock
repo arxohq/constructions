@@ -1,0 +1,36 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "grc.eukleides.pythagoras",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "grc.euclid.stoicheia_i"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:fb34d73df173cec3175da94f37edfa16d8d7c035d146827bc83dc2f0c048a27d",
+      "features": [
+        "core-executable"
+      ],
+      "name": "grc.euclid.stoicheia_i",
+      "namespace": "urn:grc:euclid:clir:stoicheia-i",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/grc.euclid.stoicheia_i/0.1.0",
+      "sourceHash": "sha256:88783a68ef0b2303b06d06d621e752caaa079020aaeba67d05e462d1a7f143b9",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:47b19f0f2c9625b66df7f78faa492499bd056bec09bb65b54f6e049bb08f5b66",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:4ac87e46ec544204095bbcab30fb8c8f66965b0598dc84b00ad936898e2769f9",
+    "name": "grc.eukleides.pythagoras",
+    "namespace": "urn:grc:eukleides:clir:pythagoras",
+    "sourceHash": "sha256:138b7a00d6cef02da4bd6838f3cc6b4782095203e7922149ca7900129d3aca30",
+    "version": "0.1.0"
+  }
+}

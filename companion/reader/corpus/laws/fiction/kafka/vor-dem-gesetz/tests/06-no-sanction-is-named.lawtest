@@ -1,0 +1,18 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Пара к делу 05 на ТЕХ ЖЕ фактах: запрет нарушен, а последствие — молчание.
+// Притча за вход вопреки запрету не назначает ни лишения, ни взыскания, ни
+// изгнания; названы лишь следующие привратники, и это сообщение о власти, а
+// не о санкции. Дело падает, если кто-нибудь допишет последствие правилом.
+test "urn:query:vor-dem-gesetz-no-sanction" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg06-1": ohne_erlaubnis_eingetreten(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+    }
+    evaluate truth(strafe_fuer_verbotsverstoss(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}

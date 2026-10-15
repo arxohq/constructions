@@ -1,0 +1,211 @@
+// §3 и таблица 7: префиксы SI, их применимость и запреты.
+//
+// Два слоя префиксов: двадцать, стоящие в таблице 5 8-го издания (до йотта и
+// йокто), — без даты; четыре 2022 года (ronna, ronto, quetta, quecto) — с
+// окном от дня резолюции 3 27-й ГКМВ. Резолюция и её публикация названы в
+// закреплённом тексте (приложение 1), день принятия — 18 ноября 2022 —
+// взят из протокола ГКМВ и в брошюре не напечатан; это единственная дата
+// пакета вне закреплённых байтов.
+//
+// Запреты §3 записаны отрицательными головами: «микрокилограмм» и
+// «составной префикс» получают FALSE_ONLY со ссылкой на абзац.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    Prefix,
+    SI8_TABLE_5,
+    SI9_APP1_2022_INDEX,
+    SI9_APP1_2022_RESOLUTION_3,
+    SI9_S2_3_4_COMPLETE_SET,
+    SI9_S2_3_4_PREFIX_EXCEPTION,
+    SI9_S3_COMPOUND,
+    SI9_S3_INSEPARABLE,
+    SI9_S3_KILOGRAM,
+    SI9_TABLE_7,
+    SiUnit,
+};
+
+@source(SI9_TABLE_7, SI8_TABLE_5)
+pub relation prefix_factor(p: Prefix, symbol: Text, exponent: Integer) kind empirical {
+    label en official "the prefix has the given symbol and denotes the factor ten to the given power (Table 7)";
+    label ru unofficial "префикс имеет данный символ и обозначает множитель десять в данной степени (таблица 7)";
+}
+
+@source(SI9_TABLE_7, SI8_TABLE_5)
+facts Table7 {
+    label en official "Table 7: SI prefixes";
+    label ru unofficial "Таблица 7: префиксы SI";
+    assert "t7-da": prefix_factor(Deca, "da", 1) { }
+    assert "t7-h": prefix_factor(Hecto, "h", 2) { }
+    assert "t7-k": prefix_factor(Kilo, "k", 3) { }
+    assert "t7-M": prefix_factor(Mega, "M", 6) { }
+    assert "t7-G": prefix_factor(Giga, "G", 9) { }
+    assert "t7-T": prefix_factor(Tera, "T", 12) { }
+    assert "t7-P": prefix_factor(Peta, "P", 15) { }
+    assert "t7-E": prefix_factor(Exa, "E", 18) { }
+    assert "t7-Z": prefix_factor(Zetta, "Z", 21) { }
+    assert "t7-Y": prefix_factor(Yotta, "Y", 24) { }
+    assert "t7-R": prefix_factor(Ronna, "R", 27) { }
+    assert "t7-Q": prefix_factor(Quetta, "Q", 30) { }
+    assert "t7-d": prefix_factor(Deci, "d", -1) { }
+    assert "t7-c": prefix_factor(Centi, "c", -2) { }
+    assert "t7-m": prefix_factor(Milli, "m", -3) { }
+    assert "t7-u": prefix_factor(Micro, "µ", -6) { }
+    assert "t7-n": prefix_factor(Nano, "n", -9) { }
+    assert "t7-p": prefix_factor(Pico, "p", -12) { }
+    assert "t7-f": prefix_factor(Femto, "f", -15) { }
+    assert "t7-a": prefix_factor(Atto, "a", -18) { }
+    assert "t7-z": prefix_factor(Zepto, "z", -21) { }
+    assert "t7-y": prefix_factor(Yocto, "y", -24) { }
+    assert "t7-r": prefix_factor(Ronto, "r", -27) { }
+    assert "t7-q": prefix_factor(Quecto, "q", -30) { }
+}
+
+@source(SI8_TABLE_5, SI9_TABLE_7)
+relation prefix_in_8th_edition(p: Prefix) kind empirical {
+    label en official "the prefix is listed in Table 5 of the 8th edition (yotta to yocto)";
+    label ru unofficial "префикс стоит в таблице 5 8-го издания (от йотта до йокто)";
+}
+
+@source(SI8_TABLE_5, SI9_TABLE_7)
+facts Table5Of8thEdition {
+    label en official "8th edition, Table 5: the twenty SI prefixes from yotta to yocto";
+    label ru unofficial "8-е издание, таблица 5: двадцать префиксов от йотта до йокто";
+    assert "t5-da": prefix_in_8th_edition(Deca) { }
+    assert "t5-h": prefix_in_8th_edition(Hecto) { }
+    assert "t5-k": prefix_in_8th_edition(Kilo) { }
+    assert "t5-M": prefix_in_8th_edition(Mega) { }
+    assert "t5-G": prefix_in_8th_edition(Giga) { }
+    assert "t5-T": prefix_in_8th_edition(Tera) { }
+    assert "t5-P": prefix_in_8th_edition(Peta) { }
+    assert "t5-E": prefix_in_8th_edition(Exa) { }
+    assert "t5-Z": prefix_in_8th_edition(Zetta) { }
+    assert "t5-Y": prefix_in_8th_edition(Yotta) { }
+    assert "t5-d": prefix_in_8th_edition(Deci) { }
+    assert "t5-c": prefix_in_8th_edition(Centi) { }
+    assert "t5-m": prefix_in_8th_edition(Milli) { }
+    assert "t5-u": prefix_in_8th_edition(Micro) { }
+    assert "t5-n": prefix_in_8th_edition(Nano) { }
+    assert "t5-p": prefix_in_8th_edition(Pico) { }
+    assert "t5-f": prefix_in_8th_edition(Femto) { }
+    assert "t5-a": prefix_in_8th_edition(Atto) { }
+    assert "t5-z": prefix_in_8th_edition(Zepto) { }
+    assert "t5-y": prefix_in_8th_edition(Yocto) { }
+}
+
+@source(SI9_APP1_2022_RESOLUTION_3, SI9_APP1_2022_INDEX)
+relation prefix_added_2022(p: Prefix) kind empirical {
+    label en official "the prefix was added by Resolution 3 of the 27th CGPM (2022)";
+    label ru unofficial "префикс добавлен резолюцией 3 27-й ГКМВ (2022)";
+}
+
+@source(SI9_APP1_2022_RESOLUTION_3)
+facts Resolution3Of2022 {
+    label en official "Resolution 3 of the 27th CGPM (2022): ronna, quetta, ronto, quecto";
+    label ru unofficial "Резолюция 3 27-й ГКМВ (2022): ronna, quetta, ronto, quecto";
+    assert "r3-R": prefix_added_2022(Ronna) { }
+    assert "r3-Q": prefix_added_2022(Quetta) { }
+    assert "r3-r": prefix_added_2022(Ronto) { }
+    assert "r3-q": prefix_added_2022(Quecto) { }
+}
+
+relation si_prefix(p: Prefix) kind institutional {
+    label en official "the prefix is an SI prefix in force";
+    label ru unofficial "префикс — действующий префикс SI";
+}
+
+@source(SI8_TABLE_5, SI9_TABLE_7)
+rule LongStandingPrefix(p: Prefix) strict {
+    label en official "§3: the prefixes listed in the 8th edition are SI prefixes (both editions)";
+    label ru unofficial "§3: префиксы, перечисленные в 8-м издании, — префиксы SI (обе редакции)";
+    when prefix_in_8th_edition(p);
+    then si_prefix(p);
+}
+
+// Дата — из протокола 27-й ГКМВ (18.11.2022), см. шапку.
+@source(SI9_APP1_2022_RESOLUTION_3, SI9_TABLE_7)
+rule PrefixAdded2022(p: Prefix) strict {
+    label en official "Resolution 3 of the 27th CGPM (2022): ronna, quetta, ronto and quecto are SI prefixes (from 18 November 2022)";
+    label ru unofficial "Резолюция 3 27-й ГКМВ (2022): ronna, quetta, ronto и quecto — префиксы SI (с 18 ноября 2022)";
+    when prefix_added_2022(p);
+    then si_prefix(p);
+    effective [@2022-11-18, infinity);
+}
+
+@source(SI9_S2_3_4_PREFIX_EXCEPTION, SI9_S3_KILOGRAM)
+relation prefix_attaches_to(u: SiUnit) kind empirical {
+    label en official "prefixes may be attached to the unit: any of the 29 units with special names except the kilogram, and the gram";
+    label ru unofficial "к единице присоединяются префиксы: любая из 29 единиц со специальными названиями, кроме килограмма, и грамм";
+}
+
+@source(SI9_S2_3_4_PREFIX_EXCEPTION, SI9_S3_KILOGRAM)
+facts PrefixableUnits {
+    label en official "§2.3.4 and §3: the units to which prefixes attach — 28 named units other than the kilogram, and the gram";
+    label ru unofficial "§2.3.4 и §3: единицы, к которым присоединяются префиксы — 28 именованных единиц кроме килограмма, и грамм";
+    assert "pa-s": prefix_attaches_to(Second) { }
+    assert "pa-m": prefix_attaches_to(Metre) { }
+    assert "pa-a": prefix_attaches_to(Ampere) { }
+    assert "pa-k": prefix_attaches_to(Kelvin) { }
+    assert "pa-mol": prefix_attaches_to(Mole) { }
+    assert "pa-cd": prefix_attaches_to(Candela) { }
+    assert "pa-g": prefix_attaches_to(Gram) { }
+    assert "pa-rad": prefix_attaches_to(Radian) { }
+    assert "pa-sr": prefix_attaches_to(Steradian) { }
+    assert "pa-hz": prefix_attaches_to(Hertz) { }
+    assert "pa-n": prefix_attaches_to(Newton) { }
+    assert "pa-pa": prefix_attaches_to(Pascal) { }
+    assert "pa-j": prefix_attaches_to(Joule) { }
+    assert "pa-w": prefix_attaches_to(Watt) { }
+    assert "pa-c": prefix_attaches_to(Coulomb) { }
+    assert "pa-v": prefix_attaches_to(Volt) { }
+    assert "pa-f": prefix_attaches_to(Farad) { }
+    assert "pa-ohm": prefix_attaches_to(Ohm) { }
+    assert "pa-si": prefix_attaches_to(Siemens) { }
+    assert "pa-wb": prefix_attaches_to(Weber) { }
+    assert "pa-t": prefix_attaches_to(Tesla) { }
+    assert "pa-h": prefix_attaches_to(Henry) { }
+    assert "pa-degc": prefix_attaches_to(DegreeCelsius) { }
+    assert "pa-lm": prefix_attaches_to(Lumen) { }
+    assert "pa-lx": prefix_attaches_to(Lux) { }
+    assert "pa-bq": prefix_attaches_to(Becquerel) { }
+    assert "pa-gy": prefix_attaches_to(Gray) { }
+    assert "pa-sv": prefix_attaches_to(Sievert) { }
+    assert "pa-kat": prefix_attaches_to(Katal) { }
+}
+
+relation prefixed_si_unit(p: Prefix, u: SiUnit) kind institutional {
+    label en official "the prefix attached to the unit forms an SI unit: a decimal multiple or sub-multiple";
+    label ru unofficial "префикс с единицей образует единицу SI — десятичную кратную или дольную";
+}
+
+@source(SI9_S3_INSEPARABLE, SI9_S2_3_4_COMPLETE_SET)
+rule PrefixAttachesToUnit(p: Prefix, u: SiUnit) strict {
+    label en official "§3: a prefix symbol attached to a unit symbol forms a new inseparable unit symbol; such multiples and sub-multiples belong to the complete set of SI units";
+    label ru unofficial "§3: символ префикса с символом единицы образует новый неразделимый символ единицы; такие кратные и дольные входят в полный набор единиц SI";
+    when si_prefix(p) and prefix_attaches_to(u);
+    then prefixed_si_unit(p, u);
+}
+
+@source(SI9_S3_KILOGRAM)
+rule NoPrefixOnKilogram(p: Prefix) strict {
+    label en official "§3: multiples and sub-multiples of the unit of mass are formed from the gram; a prefix is not attached to the kilogram (10^−6 kg is mg, not µkg)";
+    label ru unofficial "§3: кратные и дольные единицы массы образуются от грамма; префикс к килограмму не присоединяется (10^−6 кг — это мг, а не мккг)";
+    when si_prefix(p);
+    then not prefixed_si_unit(p, Kilogram);
+}
+
+relation compound_prefix_permitted(p: Prefix, q: Prefix) kind institutional {
+    label en official "juxtaposing the two prefix symbols is permitted";
+    label ru unofficial "соположение двух символов префиксов допускается";
+}
+
+@source(SI9_S3_COMPOUND)
+rule NoCompoundPrefix(p: Prefix, q: Prefix) strict {
+    label en official "§3: compound prefix symbols, formed by the juxtaposition of two or more prefix symbols, are not permitted";
+    label ru unofficial "§3: составные символы префиксов, образованные соположением двух и более символов, не допускаются";
+    when si_prefix(p) and si_prefix(q);
+    then not compound_prefix_permitted(p, q);
+}

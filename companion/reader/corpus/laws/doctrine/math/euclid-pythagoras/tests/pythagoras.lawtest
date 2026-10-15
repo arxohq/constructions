@@ -1,0 +1,524 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// Сценарии перенесены из прежнего Python-раннера семейства `pythagoras`.
+// Заголовки — прежние ID сценариев (scenario-manifest); ожидания
+// выведены из ПРЕЖНИХ проверок, а не из ответов движка.
+
+test "EUCL-01-TRIANGLE-234" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 2, 3, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::trigonon_synistatai(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-02-DEGENERATE-123" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 2, 3) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::trigonon_synistatai(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-03-NO-TRIANGLE-1-2-10" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 2, 10) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-04-EGYPTIAN-345" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 5) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-05-TRIPLE-5-12-13" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 5, 12, 13) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-06-SCALED-6-8-10" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 6, 8, 10) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-07-HYPOTENUSE-FIRST-534" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 5, 3, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-08-HYPOTENUSE-MIDDLE-354" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 5, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-09-PRIMITIVE-20-21-29" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 20, 21, 29) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-10-ACUTE-456" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 4, 5, 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::ouk_orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-11-OBTUSE-234" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 2, 3, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::ouk_orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-12-NEIGHBOUR-346" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::ouk_orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-13-ANGLE-CONTRADICTION-234" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 2, 3, 4) {
+            origin case_input;
+        }
+
+        assert "assert-angle": dedilotai_orthe_gonia(entity_ref("urn:case:eucl:trigonon")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(enantiosis_gonias_kai_pleuron(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-13N-ANGLE-AGREES-345" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 5) {
+            origin case_input;
+        }
+
+        assert "assert-angle": dedilotai_orthe_gonia(entity_ref("urn:case:eucl:trigonon")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(enantiosis_gonias_kai_pleuron(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-14-EQUILATERAL-111" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 1, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::ouk_orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-15-ISOSCELES-CANDIDATE-112" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 1, 2) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-16-GATE-033" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 0, 3, 3) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-17-OBTUSE-234" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 2, 3, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-18-ACUTE-456" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 4, 5, 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-19-RIGHT-IS-NEITHER-345" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 5) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-20-LADDER-OBTUSE-346" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 4, 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-21-LADDER-ACUTE-456" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 4, 5, 6) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-22-OBTUSE-FIRST-634" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 6, 3, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-23-OBTUSE-MIDDLE-364" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 6, 4) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}
+
+test "EUCL-24-GATE-TRICHOTOMY-033" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 0, 3, 3) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-25-GATE-TRICHOTOMY-123" {
+    given {
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 2, 3) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::amblygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "EUCL-26-EQUILATERAL-ACUTE-111" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2026-08-31;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-sides": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 1, 1) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(grc.euclid.stoicheia_i::oxygonion(entity_ref("urn:case:eucl:trigonon")));
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+}

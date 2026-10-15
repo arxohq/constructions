@@ -1,0 +1,66 @@
+// §§33—34: произносится ровно та форма, что дана; в стихе окончание -ды
+// сокращается до -д и звучит даже с т.
+
+
+use self::{
+    EtistikTulgasy,
+    YQSH_F_SOZ_33,
+    YQSH_F_SOZ_34,
+    auyspaly_shaq_ushinshi_zhaq_zhalgauy,
+    berilgen_turinde_aitylady,
+    olengde_olshem_uiqas_talap_etedi,
+    t_dybysymen_de_aitylady,
+    tolyq_turinde_berilgen,
+    tolyqty_qysqartyp_aituga_bolmaidy,
+    yqsham_turinde_berilgen,
+    yqshamdy_tolyq_etip_aituga_bolmaidy,
+    zhalang_d_turinde_qoldanyluy_mumkin,
+};
+
+@source(YQSH_F_SOZ_33) {
+    rule YqshamBerilgenTurinde(w: EtistikTulgasy) strict {
+        label kk-KZ official "§ 33: ықшам берілген тұлға сол берілген түрінде айтылады";
+        label ru-KZ translation "§ 33: данная сокращённо форма произносится в данном виде";
+        when yqsham_turinde_berilgen(w);
+        then berilgen_turinde_aitylady(w);
+    }
+
+    rule TolyqBerilgenTurinde(w: EtistikTulgasy) strict {
+        label kk-KZ official "§ 33: толық берілген тұлға да сол берілген түрінде айтылады";
+        label ru-KZ translation "§ 33: данная полностью форма тоже произносится в данном виде";
+        when tolyq_turinde_berilgen(w);
+        then berilgen_turinde_aitylady(w);
+    }
+
+    rule YqshamdyTolyqAituBolmaidy(w: EtistikTulgasy) strict {
+        label kk-KZ official "§ 33: ықшам жазылғанды толық етіп айтуға болмайды";
+        label ru-KZ translation "§ 33: написанное сокращённо нельзя произносить полным";
+        when yqsham_turinde_berilgen(w);
+        then yqshamdy_tolyq_etip_aituga_bolmaidy(w);
+    }
+
+    rule TolyqtyQysqartuBolmaidy(w: EtistikTulgasy) strict {
+        label kk-KZ official "§ 33: керісінше, толық түрінде беріліп тұрса, оны қысқартып айтуға болмайды";
+        label ru-KZ translation "§ 33: и наоборот — данное полностью нельзя произносить сокращённо";
+        when tolyq_turinde_berilgen(w);
+        then tolyqty_qysqartyp_aituga_bolmaidy(w);
+    }
+}
+
+@source(YQSH_F_SOZ_34) {
+    rule OlengdeZhalangD(w: EtistikTulgasy) strict {
+        label kk-KZ official "§ 34: өлең өлшемі, ұйқасы сияқты шарттарға орай ды, ді жалғауы жалаң -д түрінде қолданылуы мүмкін";
+        label ru-KZ translation "§ 34: ради размера и рифмы окончание -ды, -ді может сокращаться до -д";
+        when auyspaly_shaq_ushinshi_zhaq_zhalgauy(w);
+        when olengde_olshem_uiqas_talap_etedi(w);
+        then zhalang_d_turinde_qoldanyluy_mumkin(w);
+    }
+
+    rule OlengdeTDybysymenDe(w: EtistikTulgasy) defeasible {
+        label kk-KZ official "§ 34: мұндай тұлғалар тіпті т дыбысымен де айтылады (тілдесет, есет)";
+        label ru-KZ translation "§ 34: такие формы произносятся даже со звуком т";
+        when auyspaly_shaq_ushinshi_zhaq_zhalgauy(w);
+        when olengde_olshem_uiqas_talap_etedi(w);
+        then t_dybysymen_de_aitylady(w);
+    }
+}

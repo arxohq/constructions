@@ -1,0 +1,819 @@
+// ПОРОЖДЁННЫЙ ФАЙЛ. Источник истины — units.json; правки вносятся туда и
+// раскатываются `python3 packs/units/si/tools/gen_units.py` (инвариант 2).
+//
+// Пакет единиц SI (DECISION-0154, §49.2). Это НЕ словарь `vocab.*` и не
+// ресурс §85: объявления единиц — программные узлы, приходящие потребителю
+// закреплённой зависимостью, и алгебра §49.1 разрешает по ним теги величин.
+
+language "law.core" version "0.2";
+package units.si version "0.1.0";
+namespace "urn:law:units:si";
+
+// --- Простые единицы: атом с точным масштабом и размерностью ---
+
+@requires_feature("law.units/0.1")
+pub unit A dimension Current scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias ampere = A;
+@requires_feature("law.units/0.1")
+pub unit Ga dimension Time scale 31557600000000000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias gigaannum = Ga;
+@requires_feature("law.units/0.1")
+pub unit K dimension Temperature scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias kelvin = K;
+@requires_feature("law.units/0.1")
+pub unit alias degC_interval = K;
+@requires_feature("law.units/0.1")
+pub unit Ma dimension Time scale 31557600000000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias megaannum = Ma;
+@requires_feature("law.units/0.1")
+pub unit a_julian dimension Time scale 31557600 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias julian_year = a_julian;
+@requires_feature("law.units/0.1")
+pub unit angstrom dimension Length scale 1 / 10000000000;
+@requires_feature("law.units/0.1")
+pub unit ar dimension Length * Length scale 100 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias are = ar;
+@requires_feature("law.units/0.1")
+pub unit au dimension Length scale 149597870700 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias astronomical_unit = au;
+@requires_feature("law.units/0.1")
+pub unit barn dimension Length * Length scale 1 / 10000000000000000000000000000;
+@requires_feature("law.units/0.1")
+pub unit cd dimension Luminosity scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias candela = cd;
+@requires_feature("law.units/0.1")
+pub unit cm dimension Length scale 1 / 100;
+@requires_feature("law.units/0.1")
+pub unit alias centimetre = cm;
+@requires_feature("law.units/0.1")
+pub unit alias centimeter = cm;
+@requires_feature("law.units/0.1")
+pub unit ct dimension Mass scale 1 / 5000;
+@requires_feature("law.units/0.1")
+pub unit alias carat = ct;
+@requires_feature("law.units/0.1")
+pub unit day dimension Time scale 86400 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias d = day;
+@requires_feature("law.units/0.1")
+pub unit dl dimension Length * Length * Length scale 1 / 10000;
+@requires_feature("law.units/0.1")
+pub unit alias decilitre = dl;
+@requires_feature("law.units/0.1")
+pub unit dm dimension Length scale 1 / 10;
+@requires_feature("law.units/0.1")
+pub unit g dimension Mass scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit alias gram = g;
+@requires_feature("law.units/0.1")
+pub unit h dimension Time scale 3600 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias hour = h;
+@requires_feature("law.units/0.1")
+pub unit ha dimension Length * Length scale 10000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias hectare = ha;
+@requires_feature("law.units/0.1")
+pub unit ka dimension Time scale 31557600000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias kiloannum = ka;
+@requires_feature("law.units/0.1")
+pub unit kg dimension Mass scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias kilogram = kg;
+@requires_feature("law.units/0.1")
+pub unit km dimension Length scale 1000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias kilometre = km;
+@requires_feature("law.units/0.1")
+pub unit alias kilometer = km;
+@requires_feature("law.units/0.1")
+pub unit l dimension Length * Length * Length scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit alias litre = l;
+@requires_feature("law.units/0.1")
+pub unit alias liter = l;
+@requires_feature("law.units/0.1")
+pub unit m dimension Length scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias metre = m;
+@requires_feature("law.units/0.1")
+pub unit alias meter = m;
+@requires_feature("law.units/0.1")
+pub unit mA dimension Current scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit alias milliampere = mA;
+@requires_feature("law.units/0.1")
+pub unit mg dimension Mass scale 1 / 1000000;
+@requires_feature("law.units/0.1")
+pub unit alias milligram = mg;
+@requires_feature("law.units/0.1")
+pub unit min dimension Time scale 60 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias minute = min;
+@requires_feature("law.units/0.1")
+pub unit ml dimension Length * Length * Length scale 1 / 1000000;
+@requires_feature("law.units/0.1")
+pub unit alias millilitre = ml;
+@requires_feature("law.units/0.1")
+pub unit alias milliliter = ml;
+@requires_feature("law.units/0.1")
+pub unit mm dimension Length scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit mmol dimension Amount scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit alias millimole = mmol;
+@requires_feature("law.units/0.1")
+pub unit mol dimension Amount scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias mole = mol;
+@requires_feature("law.units/0.1")
+pub unit ms dimension Time scale 1 / 1000;
+@requires_feature("law.units/0.1")
+pub unit alias millisecond = ms;
+@requires_feature("law.units/0.1")
+pub unit ng dimension Mass scale 1 / 1000000000000;
+@requires_feature("law.units/0.1")
+pub unit alias nanogram = ng;
+@requires_feature("law.units/0.1")
+pub unit nm dimension Length scale 1 / 1000000000;
+@requires_feature("law.units/0.1")
+pub unit alias nanometre = nm;
+@requires_feature("law.units/0.1")
+pub unit alias nanometer = nm;
+@requires_feature("law.units/0.1")
+pub unit ns dimension Time scale 1 / 1000000000;
+@requires_feature("law.units/0.1")
+pub unit alias nanosecond = ns;
+@requires_feature("law.units/0.1")
+pub unit s dimension Time scale 1 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias second = s;
+@requires_feature("law.units/0.1")
+pub unit t dimension Mass scale 1000 / 1;
+@requires_feature("law.units/0.1")
+pub unit alias tonne = t;
+@requires_feature("law.units/0.1")
+pub unit ug dimension Mass scale 1 / 1000000000;
+@requires_feature("law.units/0.1")
+pub unit alias microgram = ug;
+@requires_feature("law.units/0.1")
+pub unit ul dimension Length * Length * Length scale 1 / 1000000000;
+@requires_feature("law.units/0.1")
+pub unit alias microlitre = ul;
+@requires_feature("law.units/0.1")
+pub unit alias microliter = ul;
+@requires_feature("law.units/0.1")
+pub unit um dimension Length scale 1 / 1000000;
+@requires_feature("law.units/0.1")
+pub unit alias micrometre = um;
+@requires_feature("law.units/0.1")
+pub unit alias micrometer = um;
+@requires_feature("law.units/0.1")
+pub unit alias micron = um;
+@requires_feature("law.units/0.1")
+pub unit umol dimension Amount scale 1 / 1000000;
+@requires_feature("law.units/0.1")
+pub unit alias micromole = umol;
+@requires_feature("law.units/0.1")
+pub unit us dimension Time scale 1 / 1000000;
+@requires_feature("law.units/0.1")
+pub unit alias microsecond = us;
+
+// --- Производные единицы: произведение и частное простых ---
+
+@requires_feature("law.units/0.1")
+pub derived unit A_h = A * h;
+@requires_feature("law.units/0.1")
+pub unit alias ampere_hour = A_h;
+@requires_feature("law.units/0.1")
+pub derived unit A_per_m2 = A / m * m;
+@requires_feature("law.units/0.1")
+pub derived unit Bq = 1 / s;
+@requires_feature("law.units/0.1")
+pub unit alias becquerel = Bq;
+@requires_feature("law.units/0.1")
+pub derived unit C_coulomb = A * s;
+@requires_feature("law.units/0.1")
+pub derived unit C_per_kg = A * s / kg;
+@requires_feature("law.units/0.1")
+pub derived unit C_per_m = s * A / m;
+@requires_feature("law.units/0.1")
+pub derived unit C_per_m2 = s * A / m * m;
+@requires_feature("law.units/0.1")
+pub derived unit C_per_m3 = s * A / m * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit F = s * s * s * s * A * A / kg * m * m;
+@requires_feature("law.units/0.1")
+pub unit alias farad = F;
+@requires_feature("law.units/0.1")
+pub derived unit F_per_m = s * s * s * s * A * A / kg * m * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit GBq = 1 / ns;
+@requires_feature("law.units/0.1")
+pub unit alias gigabecquerel = GBq;
+@requires_feature("law.units/0.1")
+pub derived unit GHz = 1 / ns;
+@requires_feature("law.units/0.1")
+pub unit alias gigahertz = GHz;
+@requires_feature("law.units/0.1")
+pub derived unit GJ = t * km * km / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias gigajoule = GJ;
+@requires_feature("law.units/0.1")
+pub derived unit GPa = t / um * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias gigapascal = GPa;
+@requires_feature("law.units/0.1")
+pub derived unit GWh = t * km * km * h / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias gigawatt_hour = GWh;
+@requires_feature("law.units/0.1")
+pub derived unit Gy = m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias gray = Gy;
+@requires_feature("law.units/0.1")
+pub derived unit H = kg * m * m / s * s * A * A;
+@requires_feature("law.units/0.1")
+pub unit alias henry = H;
+@requires_feature("law.units/0.1")
+pub derived unit H_per_m = kg * m / s * s * A * A;
+@requires_feature("law.units/0.1")
+pub derived unit Hz = 1 / s;
+@requires_feature("law.units/0.1")
+pub unit alias hertz = Hz;
+@requires_feature("law.units/0.1")
+pub derived unit J = kg * m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias joule = J;
+@requires_feature("law.units/0.1")
+pub derived unit J_per_K = kg * m * m / s * s * K;
+@requires_feature("law.units/0.1")
+pub derived unit J_per_kg_K = kg * m * m / s * s * kg * K;
+@requires_feature("law.units/0.1")
+pub derived unit J_per_mol = kg * m * m / s * s * mol;
+@requires_feature("law.units/0.1")
+pub derived unit J_per_mol_K = kg * m * m / s * s * mol * K;
+@requires_feature("law.units/0.1")
+pub derived unit J_s = kg * m * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit MBq = 1 / us;
+@requires_feature("law.units/0.1")
+pub unit alias megabecquerel = MBq;
+@requires_feature("law.units/0.1")
+pub derived unit MHz = 1 / us;
+@requires_feature("law.units/0.1")
+pub unit alias megahertz = MHz;
+@requires_feature("law.units/0.1")
+pub derived unit MJ = kg * km * km / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias megajoule = MJ;
+@requires_feature("law.units/0.1")
+pub derived unit MPa = t / mm * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias megapascal = MPa;
+@requires_feature("law.units/0.1")
+pub derived unit MWh = kg * km * km * h / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias megawatt_hour = MWh;
+@requires_feature("law.units/0.1")
+pub derived unit N = kg * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias newton = N;
+@requires_feature("law.units/0.1")
+pub derived unit N_m = kg * m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias newton_metre = N_m;
+@requires_feature("law.units/0.1")
+pub derived unit N_m2_per_C2 = kg * m * m * m / s * s * s * s * A * A;
+@requires_feature("law.units/0.1")
+pub derived unit N_per_C = kg * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub derived unit N_per_m = kg / s * s;
+@requires_feature("law.units/0.1")
+pub derived unit N_s = kg * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit N_s_per_m = kg / s;
+@requires_feature("law.units/0.1")
+pub derived unit Ohm = kg * m * m / s * s * s * A * A;
+@requires_feature("law.units/0.1")
+pub unit alias ohm = Ohm;
+@requires_feature("law.units/0.1")
+pub derived unit Ohm_m = kg * m * m * m / s * s * s * A * A;
+@requires_feature("law.units/0.1")
+pub derived unit Pa = kg / m * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias pascal = Pa;
+@requires_feature("law.units/0.1")
+pub derived unit Pa_s = kg / m * s;
+@requires_feature("law.units/0.1")
+pub unit alias pascal_second = Pa_s;
+@requires_feature("law.units/0.1")
+pub derived unit S = s * s * s * A * A / kg * m * m;
+@requires_feature("law.units/0.1")
+pub unit alias siemens = S;
+@requires_feature("law.units/0.1")
+pub derived unit Sv = m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias sievert = Sv;
+@requires_feature("law.units/0.1")
+pub derived unit T = kg / s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias tesla = T;
+@requires_feature("law.units/0.1")
+pub derived unit V = kg * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias volt = V;
+@requires_feature("law.units/0.1")
+pub derived unit V_m = kg * m * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub derived unit V_per_m = kg * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub derived unit W = kg * m * m / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias watt = W;
+@requires_feature("law.units/0.1")
+pub derived unit W_per_m2 = kg / s * s * s;
+@requires_feature("law.units/0.1")
+pub derived unit Wb = kg * m * m / s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias weber = Wb;
+@requires_feature("law.units/0.1")
+pub derived unit Wh = kg * m * m * h / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias watt_hour = Wh;
+@requires_feature("law.units/0.1")
+pub derived unit bar = t / cm * s * s;
+@requires_feature("law.units/0.1")
+pub derived unit cd_per_m2 = cd / m * m;
+@requires_feature("law.units/0.1")
+pub unit alias nit = cd_per_m2;
+@requires_feature("law.units/0.1")
+pub derived unit cm2 = cm * cm;
+@requires_feature("law.units/0.1")
+pub derived unit cm3 = cm * cm * cm;
+@requires_feature("law.units/0.1")
+pub unit alias cubic_centimetre = cm3;
+@requires_feature("law.units/0.1")
+pub derived unit cm_per_s = cm / s;
+@requires_feature("law.units/0.1")
+pub derived unit cm_per_s2 = cm / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias gal = cm_per_s2;
+@requires_feature("law.units/0.1")
+pub derived unit dyn = g * cm / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias dyne = dyn;
+@requires_feature("law.units/0.1")
+pub derived unit erg = g * cm * cm / s * s;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_cm3 = g / cm * cm * cm;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_dl = g / dl;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_m2 = g / m * m;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_m2_per_a = g / m * m * a_julian;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_ml = g / ml;
+@requires_feature("law.units/0.1")
+pub derived unit g_per_mol = g / mol;
+@requires_feature("law.units/0.1")
+pub derived unit hPa = kg / cm * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias hectopascal = hPa;
+@requires_feature("law.units/0.1")
+pub unit alias mbar = hPa;
+@requires_feature("law.units/0.1")
+pub unit alias millibar = hPa;
+@requires_feature("law.units/0.1")
+pub derived unit kHz = 1 / ms;
+@requires_feature("law.units/0.1")
+pub unit alias kilohertz = kHz;
+@requires_feature("law.units/0.1")
+pub derived unit kJ = t * m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias kilojoule = kJ;
+@requires_feature("law.units/0.1")
+pub derived unit kJ_per_m2_per_a = t * m * m / s * s * m * m * a_julian;
+@requires_feature("law.units/0.1")
+pub derived unit kJ_per_mol = t * m * m / s * s * mol;
+@requires_feature("law.units/0.1")
+pub derived unit kN = t * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias kilonewton = kN;
+@requires_feature("law.units/0.1")
+pub derived unit kOhm = t * m * m / s * s * s * A * A;
+@requires_feature("law.units/0.1")
+pub unit alias kiloohm = kOhm;
+@requires_feature("law.units/0.1")
+pub derived unit kPa = t / m * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias kilopascal = kPa;
+@requires_feature("law.units/0.1")
+pub derived unit kV = t * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias kilovolt = kV;
+@requires_feature("law.units/0.1")
+pub derived unit kW = t * m * m / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias kilowatt = kW;
+@requires_feature("law.units/0.1")
+pub derived unit kWh = t * m * m * h / s * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias kilowatt_hour = kWh;
+@requires_feature("law.units/0.1")
+pub derived unit kWh_per_m2 = t * m * m * h / s * s * s * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit kat = mol / s;
+@requires_feature("law.units/0.1")
+pub unit alias katal = kat;
+@requires_feature("law.units/0.1")
+pub derived unit kg_m2 = kg * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit kg_m2_per_s = kg * m * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit kg_m_per_s = kg * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit kg_per_ha = kg / ha;
+@requires_feature("law.units/0.1")
+pub derived unit kg_per_m2 = kg / m * m;
+@requires_feature("law.units/0.1")
+pub unit alias body_mass_index = kg_per_m2;
+@requires_feature("law.units/0.1")
+pub derived unit kg_per_m3 = kg / m * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit km2 = km * km;
+@requires_feature("law.units/0.1")
+pub derived unit km3 = km * km * km;
+@requires_feature("law.units/0.1")
+pub unit alias cubic_kilometre = km3;
+@requires_feature("law.units/0.1")
+pub derived unit km_per_h = km / h;
+@requires_feature("law.units/0.1")
+pub derived unit km_per_s = km / s;
+@requires_feature("law.units/0.1")
+pub derived unit l_per_min = l / min;
+@requires_feature("law.units/0.1")
+pub derived unit lm = cd;
+@requires_feature("law.units/0.1")
+pub unit alias lumen = lm;
+@requires_feature("law.units/0.1")
+pub derived unit lm_per_W = cd * s * s * s / kg * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit lx = cd / m * m;
+@requires_feature("law.units/0.1")
+pub unit alias lux = lx;
+@requires_feature("law.units/0.1")
+pub derived unit m2 = m * m;
+@requires_feature("law.units/0.1")
+pub unit alias sq_m = m2;
+@requires_feature("law.units/0.1")
+pub unit alias square_metre = m2;
+@requires_feature("law.units/0.1")
+pub derived unit m2_per_s = m * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit m3 = m * m * m;
+@requires_feature("law.units/0.1")
+pub unit alias cubic_metre = m3;
+@requires_feature("law.units/0.1")
+pub derived unit m3_per_kg = m * m * m / kg;
+@requires_feature("law.units/0.1")
+pub derived unit m3_per_mol = m * m * m / mol;
+@requires_feature("law.units/0.1")
+pub derived unit m3_per_s = m * m * m / s;
+@requires_feature("law.units/0.1")
+pub derived unit mGy = mm * mm / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias milligray = mGy;
+@requires_feature("law.units/0.1")
+pub derived unit mN = g * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias millinewton = mN;
+@requires_feature("law.units/0.1")
+pub derived unit mS = s * s * s * A * A / t * m * m;
+@requires_feature("law.units/0.1")
+pub unit alias millisiemens = mS;
+@requires_feature("law.units/0.1")
+pub derived unit mSv = mm * mm / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias millisievert = mSv;
+@requires_feature("law.units/0.1")
+pub derived unit mV = g * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias millivolt = mV;
+@requires_feature("law.units/0.1")
+pub derived unit mW_per_m2 = g * m * m / s * s * s * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit m_per_s = m / s;
+@requires_feature("law.units/0.1")
+pub unit alias metre_per_second = m_per_s;
+@requires_feature("law.units/0.1")
+pub derived unit m_per_s2 = m / s * s;
+@requires_feature("law.units/0.1")
+pub derived unit mg_per_dl = mg / dl;
+@requires_feature("law.units/0.1")
+pub derived unit mg_per_kg = mg / kg;
+@requires_feature("law.units/0.1")
+pub derived unit mg_per_l = mg / l;
+@requires_feature("law.units/0.1")
+pub derived unit ml_per_h = ml / h;
+@requires_feature("law.units/0.1")
+pub derived unit ml_per_kg = ml / kg;
+@requires_feature("law.units/0.1")
+pub derived unit ml_per_min = ml / min;
+@requires_feature("law.units/0.1")
+pub derived unit mm2 = mm * mm;
+@requires_feature("law.units/0.1")
+pub derived unit mm_per_a = mm / a_julian;
+@requires_feature("law.units/0.1")
+pub derived unit mm_per_day = mm / day;
+@requires_feature("law.units/0.1")
+pub derived unit mm_per_h = mm / h;
+@requires_feature("law.units/0.1")
+pub derived unit mm_per_s = mm / s;
+@requires_feature("law.units/0.1")
+pub derived unit mmol_per_l = mmol / l;
+@requires_feature("law.units/0.1")
+pub derived unit mol_per_kg = mol / kg;
+@requires_feature("law.units/0.1")
+pub derived unit mol_per_l = mol / l;
+@requires_feature("law.units/0.1")
+pub unit alias molar = mol_per_l;
+@requires_feature("law.units/0.1")
+pub derived unit mol_per_m3 = mol / m * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit nJ = ug * m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias nanojoule = nJ;
+@requires_feature("law.units/0.1")
+pub derived unit nV = ug * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias nanovolt = nV;
+@requires_feature("law.units/0.1")
+pub derived unit ng_per_ml = ng / ml;
+@requires_feature("law.units/0.1")
+pub derived unit pJ = ng * m * m / s * s;
+@requires_feature("law.units/0.1")
+pub unit alias picojoule = pJ;
+@requires_feature("law.units/0.1")
+pub derived unit per_m = 1 / m;
+@requires_feature("law.units/0.1")
+pub unit alias diopter = per_m;
+@requires_feature("law.units/0.1")
+pub unit alias dioptre = per_m;
+@requires_feature("law.units/0.1")
+pub derived unit per_mol = 1 / mol;
+@requires_feature("law.units/0.1")
+pub derived unit per_s = 1 / s;
+@requires_feature("law.units/0.1")
+pub derived unit t_km = t * km;
+@requires_feature("law.units/0.1")
+pub unit alias tonne_kilometre = t_km;
+@requires_feature("law.units/0.1")
+pub derived unit t_per_a = t / a_julian;
+@requires_feature("law.units/0.1")
+pub derived unit t_per_ha = t / ha;
+@requires_feature("law.units/0.1")
+pub derived unit uPa = g / km * s * s;
+@requires_feature("law.units/0.1")
+pub unit alias micropascal = uPa;
+@requires_feature("law.units/0.1")
+pub derived unit uS = s * s * s * A * A / kg * km * km;
+@requires_feature("law.units/0.1")
+pub unit alias microsiemens = uS;
+@requires_feature("law.units/0.1")
+pub derived unit uT = mg / s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias microtesla = uT;
+@requires_feature("law.units/0.1")
+pub derived unit uV = mg * m * m / s * s * s * A;
+@requires_feature("law.units/0.1")
+pub unit alias microvolt = uV;
+@requires_feature("law.units/0.1")
+pub derived unit ug_per_kg = ug / kg;
+@requires_feature("law.units/0.1")
+pub derived unit ug_per_l = ug / l;
+@requires_feature("law.units/0.1")
+pub derived unit umol_per_l = umol / l;
+@requires_feature("law.units/0.1")
+pub derived unit umol_per_min = umol / min;
+@requires_feature("law.units/0.1")
+pub unit alias enzyme_unit = umol_per_min;
+@requires_feature("law.units/0.1")
+pub derived unit mm3 = mm * mm * mm;
+@requires_feature("law.units/0.1")
+pub unit alias cubic_millimetre = mm3;
+@requires_feature("law.units/0.1")
+pub derived unit W_per_m_K = kg * m / s * s * s * K;
+@requires_feature("law.units/0.1")
+pub derived unit per_K = 1 / K;
+@requires_feature("law.units/0.1")
+pub unit alias reciprocal_kelvin = per_K;
+@requires_feature("law.units/0.1")
+pub derived unit m4 = m * m * m * m;
+@requires_feature("law.units/0.1")
+pub derived unit mm4 = mm * mm * mm * mm;
+
+// --- Масштабированные атомы (§49.2, DECISION-0157) ---
+
+// Стандартная атмосфера: точно 101325 Pa; определение 10-й CGPM (1954), резолюция 4, SI Brochure, приложение 1.
+// https://www.bipm.org/en/committees/cg/cgpm/10-1954/resolution-4
+@requires_feature("law.units/0.1")
+pub unit atm = 101325 * Pa;
+// Электронвольт: точно 1.602176634e-19 J через фиксированный элементарный заряд SI; SI Brochure, таблица 8.
+// https://www.bipm.org/documents/20126/41483022/SI-Brochure-9.pdf
+@requires_feature("law.units/0.1")
+pub unit eV = (1602176634 / 10000000000000000000000000000) * J;
+// Термохимическая калория: точно 4.184 J; не международная паровая калория cal_IT. NIST SP 811, сноски 9–10.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-footnotes
+@requires_feature("law.units/0.1")
+pub unit cal_th = (4184 / 1000) * J;
+// Конвенциональный миллиметр ртутного столба: 0.001 m × 13595.1 kg/m³ × 9.80665 m/s² = точно 133.322387415 Pa; фиксированные конвенциональные плотность и стандартное ускорение, NIST SP 811, сноска 12 (ISO 80000-3). Не измеренная плотность и не Torr = atm/760.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-footnotes
+@requires_feature("law.units/0.1")
+pub unit mmHg = (133322387415 / 1000000000) * Pa;
+// Метрическая лошадиная сила (л.с., PS, ch): точно 75 kgf·m/s = 75 × 9.80665 W = 735.49875 W через стандартное ускорение свободного падения; не механическая horsepower 745.699… W. NIST SP 811, приложение B.8, «horsepower (metric)».
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit hp_metric = (73549875 / 100000) * W;
+@requires_feature("law.units/0.1")
+pub unit alias metric_horsepower = hp_metric;
+// Международная (паровая) калория: точно 4.1868 J, Пятая международная конференция по свойствам пара (1956); не термохимическая cal_th = 4.184 J. NIST SP 811, приложение B.8, «calorie (International Table)».
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit cal_IT = (41868 / 10000) * J;
+@requires_feature("law.units/0.1")
+pub unit alias calorie_IT = cal_IT;
+// Гигакалория тепловых тарифов: точно 10^9 cal_IT = 4.1868 GJ; калория теплоснабжения — международная (паровая), а не термохимическая. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit Gcal = 1000000000 * cal_IT;
+@requires_feature("law.units/0.1")
+pub unit alias gigacalorie = Gcal;
+// Тройская унция драгоценных металлов: точно 480 гранов × 0.06479891 g = 31.1034768 g (международный фунт 1959 года — 0.45359237 kg = 7000 гранов). NIST SP 811, приложение B.8, «ounce (troy or apothecary)».
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit troy_ounce = (311034768 / 10000000) * g;
+@requires_feature("law.units/0.1")
+pub unit alias oz_t = troy_ounce;
+// Нефтяной баррель: точно 42 галлона США = 42 × 231 in³ при 1 in = 2.54 cm = 158.987294928 l. Перевод в массу (коэффициент баррелизации) зависит от плотности партии и остаётся фактом дела, не единицей. NIST SP 811, приложение B.8, «barrel [for petroleum, 42 gallons (U.S.)]».
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit barrel = (158987294928 / 1000000000) * l;
+@requires_feature("law.units/0.1")
+pub unit alias bbl = barrel;
+@requires_feature("law.units/0.1")
+pub unit alias petroleum_barrel = barrel;
+// Международная морская миля: точно 1852 m (Первая международная гидрографическая конференция, Монако, 1929). SI Brochure, 9-е издание, таблица 8.
+// https://www.bipm.org/documents/20126/41483022/SI-Brochure-9.pdf
+@requires_feature("law.units/0.1")
+pub unit nmi = 1852 * m;
+@requires_feature("law.units/0.1")
+pub unit alias nautical_mile = nmi;
+// Узел: точно одна морская миля в час = 1852/3600 m/s. SI Brochure, 9-е издание, таблица 8.
+// https://www.bipm.org/documents/20126/41483022/SI-Brochure-9.pdf
+@requires_feature("law.units/0.1")
+pub unit knot = (1852 / 3600) * m_per_s;
+@requires_feature("law.units/0.1")
+pub unit alias kn = knot;
+// Торр: точно 1/760 стандартной атмосферы = 101325/760 Pa ≈ 133.3224 Pa; отличается от конвенционального mmHg (133.322387415 Pa) на 1.5·10⁻⁷ относительных, и обе единицы держатся раздельно. NIST SP 811, приложение B.8, «torr».
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit Torr = (101325 / 760) * Pa;
+@requires_feature("law.units/0.1")
+pub unit alias torr = Torr;
+// Килограмм-сила: точно 9.80665 N через стандартное ускорение свободного падения (3-я CGPM, 1901). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit kgf = (980665 / 100000) * N;
+@requires_feature("law.units/0.1")
+pub unit alias kilogram_force = kgf;
+// Тонна-сила: точно 1000 kgf = 9806.65 N. NIST SP 811, приложение B.8 («ton-force (metric)»).
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit tf = (980665 / 100) * N;
+@requires_feature("law.units/0.1")
+pub unit alias tonne_force = tf;
+// Фунт-сила: точно 0.45359237 kg × 9.80665 m/s² = 4.4482216152605 N (международный фунт 1959 года и стандартное ускорение). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit lbf = (44482216152605 / 10000000000000) * N;
+@requires_feature("law.units/0.1")
+pub unit alias pound_force = lbf;
+// Фунт-сила на квадратный дюйм: точно lbf / in² = 4.4482216152605 N / 0.00064516 m² ≈ 6894.757293 Pa; дробь точная. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit psi = (44482216152605 / 6451600000) * Pa;
+@requires_feature("law.units/0.1")
+pub unit alias pound_per_square_inch = psi;
+// Кюри: точно 3.7×10¹⁰ Bq. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit Ci = 37000000000 * Bq;
+@requires_feature("law.units/0.1")
+pub unit alias curie = Ci;
+// Рад (поглощённая доза): точно 0.01 Gy. Имя `rad_dose`, чтобы не занимать `rad` радиана — углы за владельцем. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit rad_dose = (1 / 100) * Gy;
+// Бэр (эквивалентная доза): точно 0.01 Sv. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit rem = (1 / 100) * Sv;
+// Рентген (экспозиционная доза): точно 2.58×10⁻⁴ C/kg. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit roentgen = (258 / 1000000) * C_per_kg;
+@requires_feature("law.units/0.1")
+pub unit alias R = roentgen;
+// Пуаз (динамическая вязкость, СГС): точно 0.1 Pa·s. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit poise = (1 / 10) * Pa_s;
+// Стокс (кинематическая вязкость, СГС): точно 10⁻⁴ m²/s. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit stokes = (1 / 10000) * m2_per_s;
+@requires_feature("law.units/0.1")
+pub unit alias St = stokes;
+// Световой год: точно c × юлианский год = 299792458 m/s × 31557600 s = 9460730472580800 m (IAU: юлианский год и точная скорость света). Парсек не заводится — в его определении π.
+// https://www.iau.org/public/themes/measuring/
+@requires_feature("law.units/0.1")
+pub unit ly = 9460730472580800 * m;
+@requires_feature("law.units/0.1")
+pub unit alias light_year = ly;
+// Неделя как единица ВЕЛИЧИНЫ: точно 7 суток = 604800 s (ISO 80000-3). Не календарная единица срока §86 (`week` политики срока) — у той свой шаг и снимок §85.
+// https://www.iso.org/standard/64974.html
+@requires_feature("law.units/0.1")
+pub unit wk = 7 * day;
+@requires_feature("law.units/0.1")
+pub unit alias week = wk;
+// Международный дюйм: точно 25.4 mm (соглашение 1959 года). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit inch = (254 / 10000) * m;
+// Международный фут: точно 0.3048 m (12 дюймов; соглашение 1959 года). Не геодезический фут США. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit ft = (3048 / 10000) * m;
+@requires_feature("law.units/0.1")
+pub unit alias foot = ft;
+// Международный ярд: точно 0.9144 m (соглашение 1959 года). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit yd = (9144 / 10000) * m;
+@requires_feature("law.units/0.1")
+pub unit alias yard = yd;
+// Международная (уставная) миля: точно 1609.344 m = 5280 международных футов. Не морская миля `nmi`. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit mi = (1609344 / 1000) * m;
+@requires_feature("law.units/0.1")
+pub unit alias mile = mi;
+@requires_feature("law.units/0.1")
+pub unit alias statute_mile = mi;
+// Международный фунт (avoirdupois): точно 0.45359237 kg (соглашение 1959 года). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit lb = (45359237 / 100000000) * kg;
+@requires_feature("law.units/0.1")
+pub unit alias pound = lb;
+// Унция avoirdupois: точно lb/16 = 28.349523125 g. Не тройская `troy_ounce`. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit oz = (28349523125 / 1000000000) * g;
+@requires_feature("law.units/0.1")
+pub unit alias ounce = oz;
+// Галлон США (жидкостный): точно 231 in³ = 3.785411784 l. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit gallon_US = (3785411784 / 1000000000) * l;
+@requires_feature("law.units/0.1")
+pub unit alias gal_US = gallon_US;
+// Имперский галлон (Великобритания, Канада): точно 4.54609 l (Weights and Measures Act 1985). NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit gallon_UK = (454609 / 100000) * l;
+@requires_feature("law.units/0.1")
+pub unit alias gal_UK = gallon_UK;
+@requires_feature("law.units/0.1")
+pub unit alias imperial_gallon = gallon_UK;
+// Бушель США (Winchester): точно 2150.42 in³ = 35.23907016688 l. Имперский бушель (36.36872 l) не заводится до спроса. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit bushel_US = (3523907016688 / 100000000000) * l;
+@requires_feature("law.units/0.1")
+pub unit alias bu_US = bushel_US;
+// Международный акр: точно 4840 yd² = 4046.8564224 m² по международному ярду 1959 года; акр по геодезическому футу США (4046.873 m²) не заводится — геодезический фут упразднён с 2023 года. NIST SP 811, приложение B.8.
+// https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8
+@requires_feature("law.units/0.1")
+pub unit acre = (40468564224 / 10000000) * m2;

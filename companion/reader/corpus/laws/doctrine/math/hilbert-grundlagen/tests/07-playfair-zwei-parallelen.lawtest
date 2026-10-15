@@ -1,0 +1,48 @@
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+// Две различные параллели через A вне прямой a: ключ playfair_parallele
+// даёт KEY_CONFLICT, инвариант III — CONSTRAINT_VIOLATED.
+test "urn:query:hilb-test-07-playfair-zwei" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "h07-pA": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:A")) { origin case_input; }
+        assert "h07-nA": punktname(entity_ref("urn:de:hilbert:case:point:A"), "A") { origin case_input; }
+        assert "h07-pB": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:B")) { origin case_input; }
+        assert "h07-nB": punktname(entity_ref("urn:de:hilbert:case:point:B"), "B") { origin case_input; }
+        assert "h07-pC": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:C")) { origin case_input; }
+        assert "h07-nC": punktname(entity_ref("urn:de:hilbert:case:point:C"), "C") { origin case_input; }
+        assert "h07-pD": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:D")) { origin case_input; }
+        assert "h07-nD": punktname(entity_ref("urn:de:hilbert:case:point:D"), "D") { origin case_input; }
+        assert "h07-pE": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:E")) { origin case_input; }
+        assert "h07-nE": punktname(entity_ref("urn:de:hilbert:case:point:E"), "E") { origin case_input; }
+        assert "h07-la": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:a")) { origin case_input; }
+        assert "h07-na": geradenname(entity_ref("urn:de:hilbert:case:line:a"), "a") { origin case_input; }
+        assert "h07-lm": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:m")) { origin case_input; }
+        assert "h07-nm": geradenname(entity_ref("urn:de:hilbert:case:line:m"), "m") { origin case_input; }
+        assert "h07-ln": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:n")) { origin case_input; }
+        assert "h07-nn": geradenname(entity_ref("urn:de:hilbert:case:line:n"), "n") { origin case_input; }
+        assert "h07-Ba": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:a")) { origin case_input; }
+        assert "h07-Ca": liegt_auf(entity_ref("urn:de:hilbert:case:point:C"), entity_ref("urn:de:hilbert:case:line:a")) { origin case_input; }
+        assert "h07-Am": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:m")) { origin case_input; }
+        assert "h07-Dm": liegt_auf(entity_ref("urn:de:hilbert:case:point:D"), entity_ref("urn:de:hilbert:case:line:m")) { origin case_input; }
+        assert "h07-An": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:n")) { origin case_input; }
+        assert "h07-En": liegt_auf(entity_ref("urn:de:hilbert:case:point:E"), entity_ref("urn:de:hilbert:case:line:n")) { origin case_input; }
+    }
+    evaluate truth(playfair_parallele(
+        entity_ref("urn:de:hilbert:case:point:A"),
+        entity_ref("urn:de:hilbert:case:line:a"),
+        entity_ref("urn:de:hilbert:case:line:m"),
+    ));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == NON_EXECUTABLE;
+    expect issue(KEY_CONFLICT);
+    expect issue(CONSTRAINT_VIOLATED);
+}

@@ -1,0 +1,21 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-TEAMMAYINVITEADVISERS" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": event_kind(entity_ref("urn:law:catalog:teammayinviteadvisers:v2"), SprintPlanning) { origin case_input; }
+        assert "cat-1": event_of_sprint(entity_ref("urn:law:catalog:teammayinviteadvisers:v2"), entity_ref("urn:law:catalog:teammayinviteadvisers:v3")) { origin case_input; }
+        assert "cat-2": sprint_of_team(entity_ref("urn:law:catalog:teammayinviteadvisers:v3"), entity_ref("urn:law:catalog:teammayinviteadvisers:v0")) { origin case_input; }
+        assert "cat-3": invites_to_planning(entity_ref("urn:law:catalog:teammayinviteadvisers:v0"), entity_ref("urn:law:catalog:teammayinviteadvisers:v1"), entity_ref("urn:law:catalog:teammayinviteadvisers:v2")) { origin case_input; }
+    }
+    evaluate truth(adviser_admitted(entity_ref("urn:law:catalog:teammayinviteadvisers:v1"), entity_ref("urn:law:catalog:teammayinviteadvisers:v2")));
+    expect truth_status == TRUE_ONLY;
+}

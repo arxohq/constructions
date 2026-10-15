@@ -1,0 +1,518 @@
+// Source-модель: закреплённые байты главы I «Grundlagen der Geometrie»
+// Гильберта — пяти групп аксиом — и фрагменты двадцати одной аксиомы.
+//
+// ФАЙЛ ПОРОЖДАЕТСЯ. Правится только генератором —
+// `corpus/tools/sources/sync/sync_hilbert_grundlagen_fragments.py`; сверка
+// без записи — его же ключом `--check`. Тексты вырезаются из
+// `sources/hilbert-grundlagen/en.txt` по таблице `headings` из
+// `articles.json` — той самой, которую читают обе меры §33.1, — поэтому
+// фрагменты, знаменатель и публикация расходиться не могут.
+//
+// ПРОВЕНАНС И ПОЧЕМУ ЗАКРЕПЛЁН ПЕРЕВОД, А НЕ ПОДЛИННИК. «Grundlagen der
+// Geometrie» напечатаны первым отделом Festschrift'а к открытию памятника
+// Гауссу и Веберу (Teubner, Лейпциг, 1899). Немецкий подлинник в вычитанном
+// наборе НЕДОСТУПЕН: Викитека держит только страницу автора, Deutsches
+// Textarchiv — «Mathematische Probleme» 1900 года, Gutenberg немецкого
+// издания не держит. Доступны три независимых РАСПОЗНАВАНИЯ первого издания,
+// и ни одно не несёт двенадцать аксиом групп I—II без порчи, причём портят
+// они разное: в экземпляре Wellesley (ABBYY) аксиомы II 2 и II 4 распознаны с
+// «B» и «G» на месте «D» и «C» — то есть с ДРУГИМИ ИМЕНАМИ ТОЧЕК, отчего
+// II 2 читается противоречиво; в обоих сканах Google целы имена, но разрушены
+// ярлыки групп («1 1.», «14.», «n 3.»), которыми обе меры §33.1 адресуют
+// единицу. Замер воспроизводим ключом `--collate` закрепляющего скрипта.
+// Поэтому закреплён АВТОРИЗОВАННЫЙ английский перевод Э. Дж. Таунсенда
+// (Open Court; права на перевод 1902, репринт 1950) в вычитанном наборе
+// Project Gutenberg (ebook 17384, исходник LaTeX — набор, а не
+// распознавание). Тот же ход и по той же причине сделан в
+// `it.pacioli.computis`; немецкое первое издание объявлено здесь редакцией
+// БЕЗ байтов (`UNAVAILABLE`) — пакет знает, чего у него нет.
+//
+// ЧТО ПЕРЕВОД ДОБАВЛЯЕТ К ПОДЛИННИКУ. За аксиомой V в § 8 перевода стои́т
+// «Remark» со сноской «Added by Professor Hilbert in the French
+// translation.—Tr.» и «Axiom of Completeness (Vollständigkeit)». В немецком
+// издании 1899 года этого нет: § 8 обрывается фразой «Das Archimedische
+// Axiom ist ein lineares Axiom» (сверено на обоих сканах Festschrift'а).
+// Единица закреплена байтами и объявлена ИСКЛЮЧЁННОЙ из измеряемой редакции
+// (`excluded` в articles.json): она принадлежит французскому переводу 1900
+// года, а не Festschrift'у, ради которого пакет заведён.
+//
+// НУМЕРАЦИЯ ГРУПП — ПЕРВОГО ИЗДАНИЯ, А НЕ ПРИВЫЧНАЯ ПОЗДНЯЯ. Здесь
+// I Verknüpfung, II Anordnung, III Parallelen, IV Congruenz, V Stetigkeit, и
+// группа V состоит из одной аксиомы Архимеда. Перестановка групп (конгруэнция
+// третьей, параллели четвёртой) приходит с седьмым изданием 1930 года — это
+// другое произведение, а не редакция этого, и смена пина обязана переписать
+// границы вместе с номерами.
+//
+// СТАТУС МАТЕРИАЛИЗАЦИИ НЕ МОЖЕТ БЫТЬ ВЫШЕ. Между Гильбертом и этими байтами
+// — перевод Таунсенда, репринт Open Court и набор волонтёров Gutenberg.
+// `materialization_status` — PINNED_UNOFFICIAL_COPY, `officiality` —
+// unofficial: органа, который объявил бы редакцию официальной, у
+// математического сочинения нет и быть не может.
+//
+// ЗАКРЕПЛЕНА ГЛАВА I, А НЕ КНИГА: §§ 1—8, пять групп аксиом и обе главы
+// следствий между ними. Главы II—VII (непротиворечивость и независимость,
+// учение о пропорциях, площади, теорема Дезарга, построения циркулем и
+// линейкой) в закреплённый срез не входят вовсе: предмет пакета — аксиомы,
+// а не выведенная из них геометрия.
+//
+// ДАТА ПРИНЯТИЯ НЕ ОБЪЯВЛЕНА: у математического сочинения нет ни органа, ни
+// вступления в силу. Тем же путём идут `grc.euclid.angles`,
+// `la.newton.principia` и `grc.aristoteles.analytica_priora`.
+//
+// ПРАВА. Текст 1899 года и перевод 1902 года — общественное достояние по
+// давности; вклад Project Gutenberg — набор и вычитка, распространяемые
+// лицензией Gutenberg. Закрепляется текст, а не оформление.
+
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+source GRUNDLAGEN_DER_GEOMETRIE {
+    kind treatise;
+    jurisdiction "none";
+    number "Hilbert, Grundlagen der Geometrie, Festschrift 1899, Kapitel I";
+    label de official "Grundlagen der Geometrie";
+    label en unofficial "The Foundations of Geometry";
+    label ru unofficial "Основания геометрии";
+}
+
+// Подлинник: первый отдел Festschrift'а, Teubner 1899. Байты НЕ закреплены —
+// см. шапку файла; вычитанного набора не существует, а все три доступных
+// распознавания портят аксиомы групп I—II, каждое по-своему.
+edition GDG_1899_DE of GRUNDLAGEN_DER_GEOMETRIE {
+    label de official "Grundlagen der Geometrie, Festschrift zur Feier der Enthüllung des Gauss-Weber-Denkmals in Göttingen, I. Theil, Leipzig: Teubner 1899";
+    label ru unofficial "Первое издание, Лейпциг 1899 — немецкий подлинник";
+    language de;
+    officiality unofficial;
+    materialization_status UNAVAILABLE;
+}
+
+edition GDG_TOWNSEND_EN of GRUNDLAGEN_DER_GEOMETRIE {
+    label en unofficial "The Foundations of Geometry, authorized translation by E. J. Townsend, Chapter I: The Five Groups of Axioms";
+    label ru unofficial "Авторизованный перевод Э. Дж. Таунсенда, глава I: пять групп аксиом";
+    language en;
+    officiality unofficial;
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+publication GDG_TOWNSEND_GUTENBERG of GDG_TOWNSEND_EN {
+    media_type "text/plain; charset=utf-8";
+    uri "https://www.gutenberg.org/files/17384/17384-t/17384-t.tex";
+    retrieved_at @2026-09-03T09:00:00Z;
+    content_hash "sha256:a0d1553a7360b4cc10c81a97c2fbdeea13ac634fc8ec00fc2a3d1c5da2b9ffbf";
+    local_path "sources/hilbert-grundlagen/en.txt";
+}
+
+// I 1: две различные точки всегда определяют прямую
+pub fragment GDG_I_1 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/1";
+    text en unofficial """I, 1.
+Two distinct points A and B always completely
+determine a straight line a. We write AB = a
+or BA = a.
+
+Instead of “determine,” we may also employ other
+forms of expression; for example, we may say A
+“lies upon” a, A “is a point of” a, a “goes through”
+A “and through” B, a “joins” A “and” or “with”
+B, etc. If A lies upon a and at the same time upon
+another straight line b, we make use also of the expression:
+“The straight lines” a “and” b “have the
+point A in common,” etc.""";
+    content_hash "sha256:a53106fa53a742c1c5e252d66b0e71f095b92a301997053dcef438873dd2fbc0";
+}
+
+// I 2: любые две различные точки прямой определяют эту прямую
+pub fragment GDG_I_2 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/2";
+    text en unofficial """I, 2.
+Any two distinct points of a straight line completely
+determine that line; that is, if AB = a and
+AC=a, where B ≠ C, then is also BC=a.""";
+    content_hash "sha256:cd359d370c31cc64529df27cb3b9a954427d0351757702299663cfa8551e1965";
+}
+
+// I 3: три точки не на одной прямой всегда определяют плоскость
+fragment GDG_I_3 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/3";
+    text en unofficial """I, 3.
+Three points A, B, C not situated in the same
+straight line always completely determine a plane
+α. We write ABC=α.
+
+We employ also the expressions: A, B, C, “lie
+in” α; A, B, C “are points of” α, etc.""";
+    content_hash "sha256:3567a4f30918ffc9cc685632c78ccd43d08a42b52739915dcc172ab61c265e86";
+}
+
+// I 4: любые три точки плоскости, не лежащие на одной прямой, определяют эту плоскость
+fragment GDG_I_4 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/4";
+    text en unofficial """I, 4.
+Any three points A, B, C of a plane α, which
+do not lie in the same straight line, completely determine
+that plane.""";
+    content_hash "sha256:6cfb4fa017b2283b09efb753f0b1c611e785bc58f1ed03cc6deef8583e0defd6";
+}
+
+// I 5: если две точки прямой лежат в плоскости, то в ней лежит каждая точка прямой
+fragment GDG_I_5 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/5";
+    text en unofficial """I, 5.
+If two points A, B of a straight line a lie in
+a plane α, then every point of a lies in a.
+
+In this case we say: “The straight line a lies in
+the plane α,” etc.""";
+    content_hash "sha256:83bd822e09014cba8ef57792a044fb5d5abcd0f7cacbdb9ddb227a069f44373e";
+}
+
+// I 6: две плоскости с общей точкой имеют по меньшей мере ещё одну общую точку
+fragment GDG_I_6 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/6";
+    text en unofficial """I, 6.
+If two planes α, β have a point A in common,
+then they have at least a second point B in common.""";
+    content_hash "sha256:6c3544b226d362fd8327afa6c1a1cf7c6b67c93b0367bc1b128cc416650b1d40";
+}
+
+// I 7: на прямой есть не менее двух точек, в плоскости — не менее трёх не на одной прямой, в пространстве — не менее четырёх не в одной плоскости
+fragment GDG_I_7 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/7";
+    text en unofficial """I, 7.
+Upon every straight line there exist at least two
+points, in every plane at least three points not
+lying in the same straight line, and in space there
+exist at least four points not lying in a plane.
+
+Axioms I, 1–2 contain statements concerning points
+and straight lines only; that is, concerning the elements
+of plane geometry. We will call them, therefore,
+the plane axioms of group I, in order to distinguish
+them from the axioms I, 3–7, which we will
+designate briefly as the space axioms of this group.
+
+Of the theorems which follow from the axioms
+I, 3–7, we shall mention only the following:""";
+    content_hash "sha256:abdf6c83a69c3adee474ea15f9a717e2dba8885d5f1ff8c911e403e28ebd1de6";
+}
+
+// II 1: «между» симметрично по краям — если B между A и C, то B между C и A
+fragment GDG_II_1 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/8";
+    text en unofficial """II, 1.
+If A, B, C are points of a straight line and
+B lies between A and C, then B lies also between
+C and A.""";
+    content_hash "sha256:582e26c4531c73d0d526f4f7196035a78abfd23d9a800e9c0dd52db5fce41249";
+}
+
+// II 2: между двумя точками прямой есть точка, и есть точка, за которую вторая оказывается посередине
+fragment GDG_II_2 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/9";
+    text en unofficial """II, 2.
+If A and C are two points of a straight line,
+then there exists at least one point B lying between
+A and C and at least one point D so situated that
+C lies between A and D.""";
+    content_hash "sha256:2cde85f0b8af176693672d9cb0c7b8cdc4d199caab41379981f27715afdda675";
+}
+
+// II 3: из трёх точек прямой ровно одна лежит между двумя другими
+fragment GDG_II_3 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/10";
+    text en unofficial """II, 3.
+Of any three points situated on a straight line,
+there is always one and only one which lies between
+the other two.""";
+    content_hash "sha256:5c0bc3a89105ff53813ce08b21e292775d4512fa793e3fdcef6d06f364860e48";
+}
+
+// II 4: любые четыре точки прямой можно расположить в порядок
+fragment GDG_II_4 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/11";
+    text en unofficial """II, 4.
+Any four points A, B, C, D of a straight line
+can always be so arranged that B shall lie between
+A and C and also between A and D, and, furthermore,
+that C shall lie between A and D and also
+between B and D.
+
+Definition. We will call the system of two points
+A and B, lying upon a straight line, a segment and
+denote it by AB or BA. The points lying between A
+and B are called the points of the segment AB or the
+points lying within the segment AB. All other points
+of the straight line are referred to as the points lying
+outside the segment AB. The points A and B are called
+the extremities of the segment AB.""";
+    content_hash "sha256:0641f729844fdd148c13bf9cb03110d3cb6faa8bc6f04495076c556dbf5a63e0";
+}
+
+// II 5, аксиома Паша: прямая, вошедшая в треугольник через сторону AB, выходит через BC либо через AC
+fragment GDG_II_5 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/12";
+    text en unofficial """II, 5.
+Let A, B, C be three points not lying in the
+same straight line and
+let a be a straight line lying in the plane ABC and not passing through any of the
+points A, B, C. Then, if the straight line a passes through a point
+of the segment AB, it will also pass through either a point of the segment
+BC or a point of the segment AC.
+Axioms II, 1–4 contain statements concerning the
+points of a straight line only, and, hence, we will call
+them the linear axioms of group II. Axiom II, 5 relates
+to the elements of plane geometry and, consequently,
+shall be called the plane axiom of group II.""";
+    content_hash "sha256:5c198918f121fa7dc8039e9e4b5102e770f7a7e528c3b1539687bf3f29ccf2ba";
+}
+
+// III: аксиома параллельных (евклидова) — Плейфэр на конечном чертеже
+pub fragment GDG_III in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/13";
+    text en unofficial """III. In a plane α there can be drawn through any
+point A, lying outside of a straight line a, one and
+only one straight line which does not intersect the
+line a. This straight line is called the parallel to
+a through the given point A.
+
+This statement of the axiom of parallels contains
+two assertions. The first of these is that, in the plane
+α, there is always a straight line passing through A
+which does not intersect the given line a. The second
+states that only one such line is possible. The latter
+of these statements is the essential one, and it may
+also be expressed as follows:""";
+    content_hash "sha256:72129956c128c360ec86178c3978e4eb7ef3344162da2cddf1510ca717fb4dc4";
+}
+
+// IV 1: откладывание отрезка — вне среза, объявленная граница
+fragment GDG_IV_1 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/14";
+    text en unofficial """IV, I. If A, B are two points on a straight line a,
+and if A' is a point upon the same or another
+straight line a', then, upon a given side of A' on
+the straight line a', we can always find one and
+only one point B' so that the segment AB (or BA)
+is congruent to the segment A'B'. We indicate
+this relation by writing
+
+AB≡ A'B'.
+
+Every segment is congruent to itself; that is, we
+always have
+
+AB≡ AB.
+
+We can state the above axiom briefly by saying
+that every segment can be laid off upon a given side
+of a given point of a given straight line in one and
+and only one way.""";
+    content_hash "sha256:43ce7e45cc51047756e93b959fb81aa181e214787362da11917d348cd35e38df";
+}
+
+// IV 2: транзитивность конгруэнтности отрезков — вне среза, объявленная граница
+fragment GDG_IV_2 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/15";
+    text en unofficial """IV, 2. If a segment AB is congruent to the segment
+A'B' and also to the segment A”B”, then the segment
+A'B' is congruent to the segment A”B”; that
+is, if AB ≡ A'B and AB ≡ A”B”, then
+A'B' ≡ A”B”.""";
+    content_hash "sha256:d8e4b26f58cb3f6c296a87617efa728da934bc35bf8bdadcf51e7a02cd86c6c3";
+}
+
+// IV 3: сложение конгруэнтных отрезков — вне среза, объявленная граница
+fragment GDG_IV_3 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/16";
+    text en unofficial """IV, 3. Let AB and BC be two segments of a straight
+line a which have no points in common aside from
+the point B, and, furthermore, let A'B' and B'C'
+be two segments of the same or of another straight
+line a' having, likewise, no point other than B' in
+common. Then, if AB ≡ A'B' and BC ≡ B'C',
+we have AC ≡ A'C'.
+
+Definitions. Let α be any arbitrary plane and h,
+k any two distinct half-rays lying in α and emanating
+from the point O so as to form a part of two different
+straight lines. We call the system formed by these
+two half-rays h, k an angle and represent it by the
+symbol ∠(h, k) or ∠(k, h). From axioms II, 1–5, it
+follows readily that the half-rays h and k, taken together
+with the point O, divide the remaining points
+of the plane a into two regions having the following
+property: If A is a point of one region and B a point
+of the other, then every broken line joining A and B
+either passes through O or has a point in common
+with one of the half-rays h, k. If, however, A, A'
+both lie within the same region, then it is always possible
+to join these two points by a broken line which
+neither passes through O nor has a point in common
+with either of the half-rays h, k. One of these two
+regions is distinguished from the other in that the segment
+joining any two points of this region lies entirely
+within the region. The region so characterised is
+called the interior of the angle (h,k). To distinguish
+the other region from this, we call it the exterior of
+the angle (h,k). The half rays h and k are called the
+sides of the angle, and the point O is called the vertex
+of the angle.""";
+    content_hash "sha256:c0bef09ea7d2787224efebac615a7671413df183608aeccca7c988d196d4e8f5";
+}
+
+// IV 4: откладывание угла — вне среза, объявленная граница
+fragment GDG_IV_4 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/17";
+    text en unofficial """IV, 4.
+Let an angle (h,k) be given in the plane
+α and let a straight line a' be given in a plane α'.
+Suppose also that, in the plane α', a definite side
+of the straight line a' be assigned. Denote by h' a
+half-ray of the straight line a' emanating from a
+point O' of this line. Then in the plane α' there
+is one and only one half-ray k' such that the angle
+(h,k), or (k,h), is congruent to the angle (h',k')
+and at the same time all interior points of the angle
+(h',k') lie upon the given side of a'. We express
+this relation by means of the notation
+
+ ∠ (h,k) ≡ ∠ (h',k')
+
+Every angle is congruent to itself; that is,
+
+∠ (h,k) ≡ ∠ (h,k)
+
+or
+
+∠ (h,k) ≡ ∠ (k,h)
+
+We say, briefly, that every angle in a given plane
+can be laid off upon a given side of a given half-ray in
+one and only one way.""";
+    content_hash "sha256:0ee149aba3f9436590e4eb2457ec4c11817d32a46c181105894fba4627d5dffd";
+}
+
+// IV 5: транзитивность конгруэнтности углов — вне среза, объявленная граница
+fragment GDG_IV_5 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/18";
+    text en unofficial """IV, 5.
+If the angle (h,k) is congruent to the angle
+(h',k') and to the angle (h”,k”), then the angle
+(h',k') is congruent to the angle (h”,k”); that is
+to say, if ∠ (h, k) ≡ ∠ (h', k') and
+∠ (h, k) ≡ ∠ (h”,k”), then
+∠ (h',k') ≡ ∠ (h”,k”).
+
+Suppose we have given a triangle ABC. Denote
+by h, k the two half-rays emanating from A and passing
+respectively through B and C. The angle (h,k)
+is then said to be the angle included by the sides AB
+and AC, or the one opposite to the side BC in the
+triangle ABC. It contains all of the interior points
+of the triangle ABC and is represented by the symbol
+∠ BAC, or by ∠ A.""";
+    content_hash "sha256:cb55100e7b71e2bd5d12c14c460826b9ec40c061a59567d6f346f9fe52ed0e50";
+}
+
+// IV 6: первый признак конгруэнтности треугольников — вне среза, объявленная граница
+fragment GDG_IV_6 in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/19";
+    text en unofficial """IV, 6.
+If, in the two triangles ABC and A'B'C'
+the congruences
+
+AB ≡ A'B', AC ≡ A'C', ∠ BAC ≡ ∠ B'A'C'
+
+hold, then the congruences
+
+∠ ABC ≡ ∠ A'B'C' and ∠ ACB ≡ ∠ A'C'B'
+
+also hold.
+
+Axioms IV, 1–3 contain statements concerning the
+congruence of segments of a straight line only. They
+may, therefore, be called the linear axioms of group
+IV. Axioms IV, 4, 5 contain statements relating to
+the congruence of angles. Axiom IV, 6 gives the connection
+between the congruence of segments and the
+congruence of angles. Axioms IV, 4–6 contain statements
+regarding the elements of plane geometry and
+may be called the plane axioms of group IV.""";
+    content_hash "sha256:8660e8a9eeb7282625b53f9fe773a23be9e2b2a1aef018bbb22cf8feb184224d";
+}
+
+// V: аксиома Архимеда — вне среза, объявленная граница (квантор по бесконечной последовательности)
+fragment GDG_V in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/20";
+    text en unofficial """V. Let A₁ be any point upon a straight line between
+the arbitrarily chosen points A and B. Take the
+points A₂, A₃, A₄,… so that A₁ lies between A
+and A₂, A₂ between A₁ and A₃, A₃ between A₂ and
+A₄ etc. Moreover, let the segments
+
+ A A₁, A₁ A₂, A₂ A₃, A₃ A₄, …
+
+be equal to one another. Then, among this series
+of points, there always exists a certain point Aₙ
+such that B lies between A and Aₙ.
+
+The axiom of Archimedes is a linear axiom.""";
+    content_hash "sha256:1d579f0d9f6729d840cab7858495029e190d4fe04ebe9210128b9eca902b809b";
+}
+
+// Аксиома полноты — добавлена Гильбертом во французском переводе; в Festschrift'е 1899 года её нет, единица исключена из измеряемой редакции
+fragment GDG_VOLLST in GDG_TOWNSEND_EN {
+    kind article;
+    locator "section/21";
+    text en unofficial """Axiom of Completeness.
+Footnote — See Hilbert,
+“Ueber den Zahlenbegriff,” Berichte der deutschen Mathematiker-Vereinigung,
+1900.
+(Vollständigkeit): To a
+system of points, straight lines, and planes, it is
+impossible to add other elements in such a manner
+that the system thus generalized shall form a new
+geometry obeying all of the five groups of axioms.
+In other words, the elements of geometry form a
+system which is not susceptible of extension, if we
+regard the five groups of axioms as valid.
+
+This axiom gives us nothing directly concerning
+the existence of limiting points, or of the idea of convergence.
+Nevertheless, it enables us to demonstrate
+Bolzano's theorem by virtue of which, for all sets of
+points situated upon a straight line between two definite
+points of the same line, there exists necessarily
+a point of condensation, that is to say, a limiting point.
+From a theoretical point of view, the value of this
+axiom is that it leads indirectly to the introduction
+of limiting points, and, hence, renders it possible to
+establish a one-to-one correspondence between the
+points of a segment and the system of real numbers.
+However, in what is to follow, no use will be made of
+the “axiom of completeness.”
+
+COMPATIBILITY AND MUTUAL INDEPENDENCE OF THE AXIOMS.""";
+    content_hash "sha256:141cb7fd6a9132784ce2dd4992c698a7d11d4cb5e10745ff7569543707eac63e";
+}

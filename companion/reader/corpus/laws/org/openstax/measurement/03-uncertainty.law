@@ -1,0 +1,217 @@
+// §1.6 «Significant Figures»: значащие цифры, погрешность, точность против
+// правильности, расхождение и относительная погрешность.
+//
+// ЧЕТЫРЕ ПОНЯТИЯ, КОТОРЫЕ ПУТАЮТ, И ПАКЕТ ИХ РАЗВОДИТ. §1.6 говорит прямо:
+// «Uncertainty is a quantitative measure of precision. Discrepancy is a
+// quantitative measure of accuracy». То есть погрешность мерит РАЗБРОС
+// повторных измерений, а расхождение — отклонение от принятого значения; и
+// измерение бывает точным (precise) без того, чтобы быть правильным
+// (accurate). Пара сцен по обе стороны этой границы — 03-a и 03-b набора.
+//
+// ОТНОСИТЕЛЬНАЯ ПОГРЕШНОСТЬ БЕЗРАЗМЕРНА, И ЭТО СЧИТАЕТ ЯЗЫК. §1.6:
+// «Notice the percent uncertainty is dimensionless because the units of
+// weight in δA = 0.3 lb canceled those in A = 5.1 lb when we took the ratio».
+// Ровно это и делает деление величин тождественной единицы (E-0068): частное
+// безразмерно и получает вид точного числа. Единица здесь не «сокращается в
+// уме автора» — её сокращает операция, и на РАЗНЫХ единицах она отказывает.
+//
+// ГРАНИЦА. Среднее и стандартное отклонение §1.6 упоминает («taking the
+// range… or finding the standard deviation»), но выбирает половину размаха;
+// пакет берёт то, что предъявлено делом: размах или готовую δA. Корня в
+// языке нет (§58), поэтому стандартное отклонение невыразимо, и это граница
+// языка, а не пробел пакета.
+
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+use self::{
+    Measurement,
+    UP_M58274_ACCURACY,
+    UP_M58274_DISCREPANCY,
+    UP_M58274_PERCENT_UNCERTAINTY,
+    UP_M58274_PRECISION,
+    UP_M58274_SIGNIFICANT_FIGURES,
+    UP_M58274_UNCERTAINTY,
+    measured_value,
+};
+
+// --- Что дело предъявляет ----------------------------------------------------
+
+@source(UP_M58274_UNCERTAINTY)
+relation stated_uncertainty(m: Measurement, delta: Quantity) kind empirical {
+    label en official "the case presents the uncertainty δA of the measurement";
+    label ru unofficial "дело предъявляет погрешность δA измерения";
+}
+
+@source(UP_M58274_DISCREPANCY)
+relation accepted_reference_value(m: Measurement, accepted: Quantity) kind empirical {
+    label en official "the case presents the accepted reference value against which the measurement is judged";
+    label ru unofficial "дело предъявляет принятое опорное значение, с которым сверяется измерение";
+}
+
+@source(UP_M58274_SIGNIFICANT_FIGURES)
+relation significant_figures(m: Measurement, figures: Integer) kind empirical {
+    label en official "the case states how many significant figures the measured value carries";
+    label ru unofficial "дело сообщает, сколько значащих цифр несёт измеренное значение";
+}
+
+// Порог, с которым дело просит сравнить погрешность и расхождение. §1.6
+// самого порога не называет — он приходит задачей («off by 0.50 cm over
+// 20 m»), и подставлять свой значило бы вынести решение из дела.
+@source(UP_M58274_UNCERTAINTY)
+relation tolerance(m: Measurement, allowed: Quantity) kind empirical {
+    label en official "the tolerance the case asks the measurement to be judged against";
+    label ru unofficial "допуск, с которым дело просит сверить измерение";
+}
+
+// --- Расхождение и правильность ----------------------------------------------
+
+relation discrepancy(m: Measurement, value: Quantity) kind institutional {
+    label en official "§1.6: the discrepancy is the difference between the measured value and the accepted reference value";
+    label ru unofficial "§1.6: расхождение есть разность измеренного значения и принятого опорного";
+}
+
+@source(UP_M58274_DISCREPANCY)
+rule DiscrepancyFromAccepted(m: Measurement, value: Quantity, accepted: Quantity) strict {
+    label en official "§1.6: discrepancy (measurement error) is the difference between the measured value and a given standard or expected value";
+    label ru unofficial "§1.6: расхождение (погрешность измерения) есть разность измеренного значения и данного эталонного или ожидаемого";
+    when measured_value(m, value) and accepted_reference_value(m, accepted);
+    then discrepancy(m, abs(value - accepted));
+}
+
+relation accurate(m: Measurement) kind institutional {
+    label en official "§1.6: accuracy — the measurement lies within the asked tolerance of the accepted reference value";
+    label ru unofficial "§1.6: правильность — измерение отстоит от принятого опорного значения не далее запрошенного допуска";
+}
+
+@source(UP_M58274_ACCURACY)
+rule AccurateWhenDiscrepancyWithinTolerance(m: Measurement, d: Quantity, allowed: Quantity) strict {
+    label en official "§1.6: accuracy refers to how close a measurement is to an accepted reference value";
+    label ru unofficial "§1.6: правильность — насколько измерение близко к принятому опорному значению";
+    when discrepancy(m, d) and tolerance(m, allowed) and d <= allowed;
+    then accurate(m);
+}
+
+// Отрицательная голова: расхождение БОЛЬШЕ допуска опровергает правильность,
+// а не оставляет её невыведенной. Ответ — FALSE_ONLY.
+@source(UP_M58274_ACCURACY)
+rule NotAccurateWhenDiscrepancyExceedsTolerance(
+    m: Measurement,
+    d: Quantity,
+    allowed: Quantity,
+) strict {
+    label en official "§1.6: a discrepancy larger than the asked tolerance refutes accuracy";
+    label ru unofficial "§1.6: расхождение больше запрошенного допуска опровергает правильность";
+    when discrepancy(m, d) and tolerance(m, allowed) and d > allowed;
+    then not accurate(m);
+}
+
+// --- Погрешность и точность ---------------------------------------------------
+
+relation precise(m: Measurement) kind institutional {
+    label en official "§1.6: precision — the uncertainty of the measurement is within the asked tolerance";
+    label ru unofficial "§1.6: точность — погрешность измерения не превышает запрошенного допуска";
+}
+
+@source(UP_M58274_PRECISION)
+rule PreciseWhenUncertaintyWithinTolerance(
+    m: Measurement,
+    delta: Quantity,
+    allowed: Quantity,
+) strict {
+    label en official "§1.6: precision refers to how close the agreement is between repeated measurements; uncertainty is its quantification";
+    label ru unofficial "§1.6: точность — насколько согласуются повторные измерения; погрешность есть её мера";
+    when stated_uncertainty(m, delta) and tolerance(m, allowed) and delta <= allowed;
+    then precise(m);
+}
+
+@source(UP_M58274_PRECISION)
+rule NotPreciseWhenUncertaintyExceedsTolerance(
+    m: Measurement,
+    delta: Quantity,
+    allowed: Quantity,
+) strict {
+    label en official "§1.6: an uncertainty larger than the asked tolerance refutes precision";
+    label ru unofficial "§1.6: погрешность больше запрошенного допуска опровергает точность";
+    when stated_uncertainty(m, delta) and tolerance(m, allowed) and delta > allowed;
+    then not precise(m);
+}
+
+// §1.6 разводит два понятия ЯВНО, и пакет делает вывод об этой разводке:
+// точное и неправильное измерение существует, и его существование есть
+// утверждение учебника, а не оговорка.
+relation precise_but_not_accurate(m: Measurement) kind institutional {
+    label en official "§1.6: the measurement is precise yet not accurate — repeated readings agree, but they agree away from the accepted value";
+    label ru unofficial "§1.6: измерение точное, но неправильное — повторные отсчёты согласуются, но согласуются в стороне от принятого значения";
+}
+
+@source(UP_M58274_ACCURACY, UP_M58274_PRECISION)
+rule PrecisionDoesNotImplyAccuracy(m: Measurement) strict {
+    label en official "§1.6: uncertainty measures precision and discrepancy measures accuracy — a precise measurement whose accuracy is refuted is precise but not accurate";
+    label ru unofficial "§1.6: погрешность мерит точность, расхождение — правильность; точное измерение с опровергнутой правильностью точно, но неправильно";
+    when precise(m) and refuted(accurate(m));
+    then precise_but_not_accurate(m);
+}
+
+// --- Относительная погрешность ------------------------------------------------
+
+relation percent_uncertainty(m: Measurement, share: Rational) kind institutional {
+    label en official "§1.6: percent uncertainty is δA divided by A, times one hundred percent";
+    label ru unofficial "§1.6: относительная погрешность есть δA, делённое на A, умноженное на сто процентов";
+}
+
+// Деление величин тождественной единицы (E-0068): частное БЕЗРАЗМЕРНО, и
+// единица сокращается операцией, а не автором. На разных единицах — громкий
+// отказ, и это ровно то, чего §1.6 требует от отношения δA к A.
+@source(UP_M58274_PERCENT_UNCERTAINTY)
+rule PercentUncertaintyFromRatio(m: Measurement, value: Quantity, delta: Quantity) strict {
+    label en official "§1.6: percent uncertainty = δA / A × 100%; the units cancel when the ratio is taken, so the result is dimensionless";
+    label ru unofficial "§1.6: относительная погрешность = δA / A × 100 %; при взятии отношения единицы сокращаются, и результат безразмерен";
+    when measured_value(m, value) and stated_uncertainty(m, delta);
+    then percent_uncertainty(m, scalar_of(magnitude(delta) / magnitude(value)) * 100);
+}
+
+// --- Значащие цифры в произведении --------------------------------------------
+
+@source(UP_M58274_SIGNIFICANT_FIGURES)
+relation computed_from(product: Measurement, first: Measurement, second: Measurement) kind empirical {
+    label en official "the case says the measurement was computed by multiplying or dividing the two others";
+    label ru unofficial "дело сообщает, что измерение получено умножением или делением двух других";
+}
+
+relation significant_figures_allowed(m: Measurement, figures: Integer) kind institutional {
+    label en official "§1.6: when multiplying or dividing measured values, the answer may contain only as many significant figures as the least precise value";
+    label ru unofficial "§1.6: при умножении и делении измеренных значений ответ несёт не больше значащих цифр, чем наименее точное из них";
+}
+
+@source(UP_M58274_SIGNIFICANT_FIGURES)
+rule LeastPreciseFactorLimitsFigures(
+    product: Measurement,
+    first: Measurement,
+    second: Measurement,
+    a: Integer,
+    b: Integer,
+) strict {
+    label en official "§1.6: the final answer of a multiplication or division can contain only as many significant figures as the least precise value used in the calculation";
+    label ru unofficial "§1.6: итог умножения или деления несёт ровно столько значащих цифр, сколько их у наименее точного из использованных значений";
+    when computed_from(product, first, second)
+        and significant_figures(first, a)
+        and significant_figures(second, b);
+    then significant_figures_allowed(product, min(a, b));
+}
+
+relation figures_overstated(m: Measurement) kind institutional {
+    label en official "§1.6: the measurement is reported with more significant figures than the calculation allows";
+    label ru unofficial "§1.6: измерение записано с бо́льшим числом значащих цифр, чем допускает расчёт";
+}
+
+@source(UP_M58274_SIGNIFICANT_FIGURES)
+rule ReportedFiguresExceedAllowed(m: Measurement, reported: Integer, allowed: Integer) strict {
+    label en official "§1.6: reporting more significant figures than the least precise input allows overstates the precision of the result";
+    label ru unofficial "§1.6: запись большего числа значащих цифр, чем допускает наименее точный вход, преувеличивает точность результата";
+    when significant_figures(m, reported)
+        and significant_figures_allowed(m, allowed)
+        and reported > allowed;
+    then figures_overstated(m);
+}

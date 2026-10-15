@@ -1,0 +1,58 @@
+// Работа постоянной силы, кинетическая энергия и импульс.
+
+language "law.core" version "0.2";
+package calc.mechanics version "0.1.0";
+namespace "urn:law:calc:mechanics";
+
+use self::{
+    Calculation,
+};
+
+pub relation given_force_and_distance(c: Calculation, f: Quantity, d: Quantity) kind empirical {
+    label en official "the constant force and the distance along which it acts";
+    label ru unofficial "постоянная сила и путь, вдоль которого она действует";
+}
+
+pub relation given_mass_and_speed(c: Calculation, m: Quantity, v: Quantity) kind empirical {
+    label en official "the mass and the speed given for the calculation";
+    label ru unofficial "масса и путевая скорость, данные для расчёта";
+}
+
+pub relation work(c: Calculation, w: Quantity) kind institutional {
+    label en official "W = Fd — the work of a constant force along a distance";
+    label ru unofficial "W = Fd — работа постоянной силы на пути";
+}
+
+rule WorkOfConstantForce(c: Calculation, f: Quantity, d: Quantity) strict {
+    label en official "W = Fd; newton times metre is the joule";
+    label ru unofficial "W = Fd; ньютон на метр даёт джоуль";
+    when given_force_and_distance(c, f, d);
+    then work(c, quantity_of(unit_convert(magnitude(f), "N")
+                             * unit_convert(magnitude(d), "m"), "J"));
+}
+
+pub relation kinetic_energy(c: Calculation, k: Quantity) kind institutional {
+    label en official "K = ½mv² — the kinetic energy";
+    label ru unofficial "K = ½mv² — кинетическая энергия";
+}
+
+rule KineticEnergy(c: Calculation, m: Quantity, v: Quantity) strict {
+    label en official "K = ½mv²";
+    label ru unofficial "K = ½mv²";
+    when given_mass_and_speed(c, m, v);
+    then kinetic_energy(c, quantity_of((1 / 2) * unit_convert(magnitude(m), "kg")
+        * unit_convert(magnitude(v), "m_per_s") * unit_convert(magnitude(v), "m_per_s"), "J"));
+}
+
+pub relation momentum(c: Calculation, p: Quantity) kind institutional {
+    label en official "p = mv — the linear momentum";
+    label ru unofficial "p = mv — импульс";
+}
+
+rule Momentum(c: Calculation, m: Quantity, v: Quantity) strict {
+    label en official "p = mv";
+    label ru unofficial "p = mv";
+    when given_mass_and_speed(c, m, v);
+    then momentum(c, quantity_of(unit_convert(magnitude(m), "kg")
+                                 * unit_convert(magnitude(v), "m_per_s"), "kg_m_per_s"));
+}

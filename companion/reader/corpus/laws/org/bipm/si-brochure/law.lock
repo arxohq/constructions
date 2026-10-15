@@ -1,0 +1,36 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "bipm.si_brochure",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "units.si"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:94f079ef2cef7b9ef14d9a9c6352c783ec260a8abe62c1d6353f6d816a03646f",
+      "features": [
+        "core-executable"
+      ],
+      "name": "units.si",
+      "namespace": "urn:law:units:si",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/units.si/0.1.0",
+      "sourceHash": "sha256:0d21b2ad2160bdee197ef84b28fac45edd11ac81dab52efbe631be9fc6f8e07b",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:2d8ba702afc0883a1c90a9ec6d42218e161462263762ad4ed32893b60734c3a5",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:577fbb9b40a108e018ee2496838c482f646df9ca9f9b3ecd585f549c652b65a9",
+    "name": "bipm.si_brochure",
+    "namespace": "urn:bipm:clir:si-brochure",
+    "sourceHash": "sha256:0884634794a1027170c0732d0995f6fe71628bb7d35ba688d4bc58eb7faecebb",
+    "version": "0.1.0"
+  }
+}

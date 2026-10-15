@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:09c84f8a1c67365c964adb56017429ce1b13e82fa0671392261e1630f5f58643",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:fb34d73df173cec3175da94f37edfa16d8d7c035d146827bc83dc2f0c048a27d",
+    "name": "grc.euclid.stoicheia_i",
+    "namespace": "urn:grc:euclid:clir:stoicheia-i",
+    "sourceHash": "sha256:88783a68ef0b2303b06d06d621e752caaa079020aaeba67d05e462d1a7f143b9",
+    "version": "0.1.0"
+  }
+}

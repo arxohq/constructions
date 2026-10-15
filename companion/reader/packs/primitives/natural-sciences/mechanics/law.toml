@@ -1,0 +1,29 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Заголовки §22 в самих
+# `.law` обязаны совпадать с этим именем (LDC-E1109, lawc check).
+#
+# ВЫЧИСЛИТЕЛЬНЫЙ пакет (DECISION-0123): нормативного источника у него нет,
+# юрисдикции нет, правового статуса нет. Каталожная секция `[metadata]`
+# DECISION-0051 описывает АКТ и здесь намеренно отсутствует — подставить
+# `jurisdiction`/`instrument`/`legalStatus` значило бы объявить общий
+# расчёт нормативным актом. Ворота `check_package_metadata.py` читают
+# только `corpus/laws/`, поэтому отсутствие секции их не касается.
+[package]
+name = "calc.mechanics"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:law:calc:mechanics"
+
+# `law.units/0.1` — вход ПАКЕТА для алгебры §49.1: без него `magnitude`
+# не вправе разрешать теги величин.
+[dependencies]
+"units.si" = "0.1.0"
+
+[features]
+enabled = ["law.units/0.1"]
+semanticLayer = "L1"
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "calc_mechanics"
+suites = ["tests/calc-mechanics.lawtest"]
+world = ["calc.mechanics", "units.si"]

@@ -1,0 +1,120 @@
+// Попытки без правового эффекта §164: просьбы, дары, блохи.
+//
+// ПРИТЧА САМА НАЗЫВАЕТ ЭТОТ КЛАСС, И ЭТО РЕДКОСТЬ. Обычно «действие
+// совершено, эффекта нет» приходится выводить из молчания нормы; здесь
+// привратник произносит это вслух, принимая дары: «Ich nehme es nur an,
+// damit du nicht glaubst, etwas versäumt zu haben» — беру лишь затем, чтобы
+// ты не думал, будто что-то упустил. То есть: приём состоялся, притязания не
+// возникло, и сказано это тем самым лицом, чьё принятие могло бы притязание
+// породить.
+//
+// ТРИ ПОПЫТКИ РАЗНОГО РОДА — И ТРИ ОБЪЯВЛЕНИЯ, А НЕ ОДНО. Просьбы
+// («ermüdet den Türhüter durch seine Bitten»), дары («verwendet alles, und
+// sei es noch so wertvoll») и обращение к блохам в воротнике различны по
+// природе, и слить их в один предикат `versucht` значило бы потерять то, что
+// притча выстраивает лестницей: от разумного к отчаянному и дальше к
+// детскому. В журнале процессного слоя каждая приходит своим шагом, и каждая
+// видна как СОВЕРШЁННАЯ и НИЧЕГО НЕ ИЗМЕНИВШАЯ.
+//
+// ПОЧЕМУ ЗДЕСЬ НЕТ НИ ОДНОГО ПРАВИЛА, ВЕДУЩЕГО К ВПУСКУ. Не потому, что мы
+// решили, будто взятка не действует, — а потому, что притча сообщает обратное
+// прямо. Ни просьба, ни дар, ни блохи не названы основанием впуска ни разу; а
+// единственное названное основание — разрешение привратника — живёт в
+// 02-erlaubnis.law и приходит каналом суждения. Проверяется это не чтением
+// кода, а прогоном: журнал притчи даёт три `ATTEMPT_WITHOUT_EFFECT` и ни
+// одного перехода в «впущен».
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    DerTuerhueter,
+    Person,
+    TO_ANNAHME_OHNE_WIRKUNG,
+    TO_NOCH_NICHT,
+    einlass_jetzt_versagt,
+    mann_vom_lande,
+    tuerhueter,
+};
+
+// --- Три рода попыток ------------------------------------------------------------
+
+relation bitte_vorgebracht(m: Person) kind empirical {
+    label de official "er hat gebeten, eingelassen zu werden, und den Türhüter mit Bitten ermüdet";
+    label ru official "он просил о впуске и утомлял привратника просьбами";
+}
+
+relation gabe_angeboten(m: Person) kind empirical {
+    label de official "er hat alles verwendet, und sei es noch so wertvoll, um den Türhüter zu bestechen";
+    label ru official "он истратил всё, сколь угодно ценное, чтобы подкупить привратника";
+}
+
+relation floehe_gebeten(m: Person) kind empirical {
+    label de official "er hat die Flöhe im Pelzkragen gebeten, ihm zu helfen und den Türhüter umzustimmen";
+    label ru official "он просил блох в меховом воротнике помочь и переменить привратника";
+}
+
+// --- Приём даров и то, чего он не порождает ---------------------------------------
+//
+// ДВА ФАКТА, А НЕ ОДИН: дары приняты (`gabe_angenommen`), и приняты они с
+// оговоркой (`annahme_ohne_anspruch`). Второе — институциональное
+// объявление привратника о собственном действии, и без него первое читалось
+// бы как обычное принятие, из которого что-то следует.
+
+relation gabe_angenommen(h: Person, m: Person) kind empirical {
+    label de official "der Türhüter nimmt zwar alles an";
+    label ru official "привратник, правда, принимает всё";
+}
+
+relation annahme_ohne_anspruch(h: Person) kind institutional {
+    label de official "der Türhüter erklärt, er nehme es nur an, damit der Mann nicht glaube, etwas versäumt zu haben";
+    label ru official "привратник объявляет, что берёт лишь затем, чтобы проситель не думал, будто что-то упустил";
+}
+
+@source(TO_ANNAHME_OHNE_WIRKUNG)
+assert annahme_ohne_anspruch(DerTuerhueter) { evidence VDG_1915_TEXT; }
+
+// --- Приём не порождает притязания -------------------------------------------------
+//
+// ГОЛОВА ПОЛОЖИТЕЛЬНА, ХОТЯ ГОВОРИТ ОБ ОТСУТСТВИИ. `kein_anspruch_aus_annahme`
+// — это не молчание и не отрицание: это ВЫВЕДЕННОЕ утверждение о том, что
+// принятие даров состоялось и притязания не создало. Молчание сказало бы «о
+// последствиях приёма ничего не известно»; здесь известно, и известно от
+// самого принявшего.
+
+relation kein_anspruch_aus_annahme(m: Person) kind institutional {
+    label de official "aus der Annahme der Gaben erwächst ihm kein Anspruch auf Einlaß";
+    label ru official "из принятия даров у него не возникает притязания на впуск";
+}
+
+@source(TO_ANNAHME_OHNE_WIRKUNG)
+rule AnnahmeBegruendetKeinenAnspruch(h: Person, m: Person) strict {
+    label de official "Der Türhüter nimmt alles an und erklärt zugleich, daß er es nur annehme, damit der Mann nicht glaube, etwas versäumt zu haben — ein Anspruch entsteht daraus nicht";
+    label ru official "Привратник принимает всё и тут же объявляет, что берёт лишь затем, чтобы проситель не думал, будто что-то упустил, — притязания из этого не возникает";
+    when tuerhueter(h) and mann_vom_lande(m) and gabe_angeboten(m)
+        and gabe_angenommen(h, m) and annahme_ohne_anspruch(h);
+    then kein_anspruch_aus_annahme(m);
+}
+
+// --- Просьбы не порождают впуска ---------------------------------------------------
+//
+// ТЕКСТ ГОВОРИТ ЭТО ПРЯМО, и потому вывод здесь законен: сколько бы допросов
+// привратник ни устраивал, «zum Schlusse sagt er ihm immer wieder, daß er ihn
+// noch nicht einlassen könne» — итог всегда один и тот же. Не «пока не
+// решено», а ПОВТОРЕНО: число просьб на ответ не влияет. Пара к правилу о
+// дарах: там ничего не даёт принятие, здесь — настояние.
+
+relation kein_einlass_aus_bitten(m: Person) kind institutional {
+    label de official "aus seinen Bitten erwächst ihm kein Einlaß: zum Schlusse heißt es immer wieder, er könne noch nicht eingelassen werden";
+    label ru official "из его просьб впуска не возникает: под конец всякий раз сказано, что впустить его ещё нельзя";
+}
+
+@source(TO_NOCH_NICHT)
+rule BittenBegruendenKeinenEinlass(h: Person, m: Person) strict {
+    label de official "Er macht viele Versuche und ermüdet den Türhüter durch seine Bitten — zum Schlusse sagt dieser ihm immer wieder, daß er ihn noch nicht einlassen könne";
+    label ru official "Он делает много попыток и утомляет привратника просьбами — под конец тот всякий раз говорит, что впустить его ещё не может";
+    when tuerhueter(h) and mann_vom_lande(m) and bitte_vorgebracht(m)
+        and einlass_jetzt_versagt(h, m);
+    then kein_einlass_aus_bitten(m);
+}

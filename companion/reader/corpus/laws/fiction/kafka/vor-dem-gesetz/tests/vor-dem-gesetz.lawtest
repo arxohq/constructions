@@ -1,0 +1,310 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Сценарии перенесены из прежнего Python-раннера семейства `vor_dem_gesetz`.
+// Заголовки — прежние ID сценариев (scenario-manifest); ожидания
+// выведены из ПРЕЖНИХ проверок, а не из ответов движка.
+
+test "VG-01 впуск без ответа привратника: REQUIRES_JUDGMENT, орган Tuerhueter" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+    }
+
+    evaluate truth(einlass_gestattet(Mann));
+    expect evaluation_status == REQUIRES_JUDGMENT;
+    expect truth_status == NEITHER;
+    expect judgment_requests(1);
+    expect judgment_request(tuerhueter_gewaehrt_einlass);
+}
+
+test "VG-02 привратник дал впуск: вывод замкнулся" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-adj0": tuerhueter_gewaehrt_einlass(Mann) {
+            origin adjudicated;
+        }
+    }
+
+    evaluate truth(einlass_gestattet(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect judgment_requests(0);
+}
+
+test "VG-03 привратник отказал: вопрос закрыт, а отрицание всё равно не выводится — открытый мир" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-adj0": not tuerhueter_gewaehrt_einlass(Mann) {
+            origin adjudicated;
+        }
+    }
+
+    evaluate truth(einlass_gestattet(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+    expect judgment_requests(0);
+}
+
+test "VG-04 не входил — состава нарушения нет" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+    }
+
+    evaluate truth(verbot_verletzt(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+}
+
+test "VG-05 вошёл вопреки запрету — запрет нарушен, хотя войти предложил сам привратник" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": ohne_erlaubnis_eingetreten(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(verbot_verletzt(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-06 запрет нарушен, а последствие — молчание: притча санкции не назначает" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": ohne_erlaubnis_eingetreten(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(strafe_fuer_verbotsverstoss(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+}
+
+test "VG-07 путь в врата свободен — и выведен без единого обращения к привратнику" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+    }
+
+    evaluate truth(weg_frei(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-08 дары приняты — притязания не возникло, и сказал это сам принявший" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": gabe_angeboten(Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f1": gabe_angenommen(DerTuerhueter, Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(kein_anspruch_aus_annahme(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-09 дары предложены и не приняты — вопрос о притязании не возникает вовсе" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": gabe_angeboten(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(kein_anspruch_aus_annahme(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+}
+
+test "VG-10 просьбы принесены — итог всякий раз тот же: «ещё не»" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": bitte_vorgebracht(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(kein_einlass_aus_bitten(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-11 до последней реплики предназначенность входа невыводима" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": letzte_frage_gestellt(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(eingang_nur_fuer(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+}
+
+test "VG-12 последняя реплика открывает предназначенность входа" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": letzte_frage_gestellt(Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f1": letzte_auskunft_erteilt(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(eingang_nur_fuer(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-13 закрытие входа объявлено — а совершения его текст уже не повествует" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": letzte_auskunft_erteilt(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(schliessung_erklaert(Tor));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+}
+
+test "VG-14 просьбы, дары и блохи вместе: ответ тот же — решает привратник" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+
+        assert "assert-f0": schemel_angenommen(Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f1": bitte_vorgebracht(Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f2": gabe_angeboten(Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f3": gabe_angenommen(DerTuerhueter, Mann) {
+            origin case_input;
+        }
+
+        assert "assert-f4": floehe_gebeten(Mann) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(einlass_gestattet(Mann));
+    expect evaluation_status == REQUIRES_JUDGMENT;
+    expect truth_status == NEITHER;
+    expect judgment_requests(1);
+    expect judgment_request(tuerhueter_gewaehrt_einlass);
+}
+
+test "VG-15 «Закон доступен каждому и всегда» — истинно как мысль просителя и не двигает вопрос о впуске" {
+    given {
+        context {
+            decision_time @1000-01-05T12:00:00Z;
+            knowledge_time @1000-01-05T12:00:00Z;
+            legal_time @1000-01-05;
+            timezone "UTC";
+        }
+    }
+
+    evaluate truth(zugang_fuer_jeden_erwartet(Mann));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+
+    evaluate truth(einlass_gestattet(Mann));
+    expect evaluation_status == REQUIRES_JUDGMENT;
+    expect truth_status == NEITHER;
+}

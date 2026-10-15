@@ -1,0 +1,635 @@
+// Source-модель: закреплённые байты 13 модулей CNXML
+// University Physics Volume 1, chapters 1–2 и 27 фрагментов по идентификаторам элементов —
+// определения и нормативные утверждения учебника.
+//
+// ФАЙЛ ПОРОЖДАЕТСЯ. Правится только генератором —
+// `corpus/tools/sources/sync/sync_openstax_fragments.py`; сверка без записи —
+// его же ключом `--check`. Тексты вырезаются из `sources/measurement/*.cnxml`,
+// поэтому разойтись с публикацией они не могут.
+//
+// ПРОВЕНАНС. Байты — CNXML-исходники модулей на коммите main
+// d0ed34a5851119a42e3d972dfc0ff49e4663977c репозитория
+// github.com/openstax/osbooks-university-physics-bundle (2026-06-11).
+// PINNED_OFFICIAL_BYTES: это те самые байты, которые издатель публикует, а не
+// извлечение из рендера. `retrieved_at` — константа (DECISION-0005 п. 6).
+//
+// ЛИЦЕНЗИЯ ИСТОЧНИКА — CC BY-NC-SA 4.0. University Physics распространяется
+// под Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+// (лицензия объявлена в самом `university-physics-volume-N.collection.xml`,
+// элемент `md:license`). У неё ДВА ограничения, которых нет у прочих
+// источников корпуса: некоммерческое использование и share-alike. Закрепление
+// байтов с атрибуцией лицензией допускается; ограничение названо здесь и в
+// `[metadata]` пакета — решение владельца проекта 06.09.2026.
+//
+// ЕДИНИЦА ЦИТИРОВАНИЯ — ЭЛЕМЕНТ МОДУЛЯ. Локатор `module/<модуль>#<id>`;
+// разметка CNXML внутри фрагмента сохранена как есть (§13).
+
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+source M58268 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58268";
+    label en official "Introduction";
+}
+
+edition M58268_MAIN of M58268 {
+    label en official "m58268/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58268/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58268_CNXML of M58268_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58268/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:499dfb5d64df05e3bcb59723588a4f6428c6bd004d3b368361a1a3ada5f7261a";
+    local_path "sources/measurement/m58268.cnxml";
+}
+
+source M58269 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58269";
+    label en official "The Scope and Scale of Physics";
+}
+
+edition M58269_MAIN of M58269 {
+    label en official "m58269/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58269/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58269_CNXML of M58269_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58269/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:f16c5725898ec4e66db1687639afa5f229895312adf24911e94abf70216c6322";
+    local_path "sources/measurement/m58269.cnxml";
+}
+
+source M58270 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58270";
+    label en official "Units and Standards";
+}
+
+edition M58270_MAIN of M58270 {
+    label en official "m58270/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58270/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58270_CNXML of M58270_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58270/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:4116491d82fc9c69d374b14aefa1caa822e3258a18ef214ee4d0cc3724cb0f9c";
+    local_path "sources/measurement/m58270.cnxml";
+}
+
+source M58271 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58271";
+    label en official "Unit Conversion";
+}
+
+edition M58271_MAIN of M58271 {
+    label en official "m58271/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58271/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58271_CNXML of M58271_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58271/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:d29f5478b77cada00bdb769b4b87dd7f0e51ed39dffdba07a1d1a1dd1c283184";
+    local_path "sources/measurement/m58271.cnxml";
+}
+
+source M58272 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58272";
+    label en official "Dimensional Analysis";
+}
+
+edition M58272_MAIN of M58272 {
+    label en official "m58272/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58272/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58272_CNXML of M58272_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58272/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:ea6c3b0bc1942a32691d8ae39c9ded766900429ce8a567d504963e8c7ec66028";
+    local_path "sources/measurement/m58272.cnxml";
+}
+
+source M58273 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58273";
+    label en official "Estimates and Fermi Calculations";
+}
+
+edition M58273_MAIN of M58273 {
+    label en official "m58273/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58273/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58273_CNXML of M58273_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58273/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:3ce8fd926c05a7479b685746bf7feea23c20dab6c909dc52ee920d04ca552494";
+    local_path "sources/measurement/m58273.cnxml";
+}
+
+source M58274 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58274";
+    label en official "Significant Figures";
+}
+
+edition M58274_MAIN of M58274 {
+    label en official "m58274/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58274/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58274_CNXML of M58274_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58274/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:91a1f32c827e3993d02e5c2b69ab72204a33a69d894ad5694523a8e8b903aade";
+    local_path "sources/measurement/m58274.cnxml";
+}
+
+source M58275 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 1 Units and Measurement, module m58275";
+    label en official "Solving Problems in Physics";
+}
+
+edition M58275_MAIN of M58275 {
+    label en official "m58275/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58275/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58275_CNXML of M58275_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58275/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:5a1b0fff5b0763a19f3ab2238614bd65a21e6fb769e7b9a53355dfbeb86b61a4";
+    local_path "sources/measurement/m58275.cnxml";
+}
+
+source M58276 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 2 Vectors, module m58276";
+    label en official "Introduction";
+}
+
+edition M58276_MAIN of M58276 {
+    label en official "m58276/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58276/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58276_CNXML of M58276_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58276/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:c65e6709a3bd92b46d7e13c1c2f0ec35da6bc62bbd3b64a72e2b8da104e4a942";
+    local_path "sources/measurement/m58276.cnxml";
+}
+
+source M58277 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 2 Vectors, module m58277";
+    label en official "Scalars and Vectors";
+}
+
+edition M58277_MAIN of M58277 {
+    label en official "m58277/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58277/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58277_CNXML of M58277_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58277/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:90c66fec7014d2a2e4d26e0724af07d2ed238cdda4aa55d9e4497c007c6f8c71";
+    local_path "sources/measurement/m58277.cnxml";
+}
+
+source M58278 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 2 Vectors, module m58278";
+    label en official "Coordinate Systems and Components of a Vector";
+}
+
+edition M58278_MAIN of M58278 {
+    label en official "m58278/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58278/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58278_CNXML of M58278_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58278/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:e2ecdce98b5ecfa4472faf6749fd4683c8675a3f06f4e09c3b106eedf51cc45b";
+    local_path "sources/measurement/m58278.cnxml";
+}
+
+source M58279 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 2 Vectors, module m58279";
+    label en official "Algebra of Vectors";
+}
+
+edition M58279_MAIN of M58279 {
+    label en official "m58279/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58279/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58279_CNXML of M58279_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58279/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:7f31ae189b90e5b9a0491c376b2567b6189fb705db67513f7f08f34f1df08ced";
+    local_path "sources/measurement/m58279.cnxml";
+}
+
+source M58280 {
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax University Physics, ch. 2 Vectors, module m58280";
+    label en official "Products of Vectors";
+}
+
+edition M58280_MAIN of M58280 {
+    label en official "m58280/index.cnxml at commit d0ed34a (main, 2026-06-11)";
+    label ru unofficial "Файл m58280/index.cnxml на коммите d0ed34a ветки main";
+    language en;
+    officiality official;
+    adopted @2026-06-11;
+    materialization_status PINNED_OFFICIAL_BYTES;
+}
+
+publication M58280_CNXML of M58280_MAIN {
+    media_type "application/xml; charset=utf-8";
+    uri "https://raw.githubusercontent.com/openstax/osbooks-university-physics-bundle/d0ed34a5851119a42e3d972dfc0ff49e4663977c/modules/m58280/index.cnxml";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:ea9ae700aa4a47517fda9ff985f9190bb0e4e809f07f66a96e80088b676f3803";
+    local_path "sources/measurement/m58280.cnxml";
+}
+
+// m58270 «Units and Standards» — fs-id1168329175859
+fragment UP_M58270_PHYSICAL_QUANTITY in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168329175859";
+    text en official """<definition id="fs-id1168329175859">
+<term>physical quantity</term>
+<meaning id="fs-id1168329168545">characteristic or property of an object that can be measured or calculated from other measurements</meaning>
+</definition>""";
+    content_hash "sha256:7b91b18aa309fecd9be73f11d1ede4822e6b0661a9efac723f18940553a31ac8";
+}
+
+// m58270 «Units and Standards» — fs-id1168329139829
+fragment UP_M58270_BASE_QUANTITY in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168329139829";
+    text en official """<definition id="fs-id1168329139829">
+<term>base quantity</term>
+<meaning id="fs-id1168326798190">physical quantity chosen by convention and practical considerations such that all other physical quantities can be expressed as algebraic combinations of them</meaning>
+</definition>""";
+    content_hash "sha256:2b9dd6b8ad43720df89c29fb51a106cea42e1b9061ba6b66d5a41707b202697e";
+}
+
+// m58270 «Units and Standards» — fs-id1168329127240
+fragment UP_M58270_BASE_UNIT in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168329127240";
+    text en official """<definition id="fs-id1168329127240">
+<term>base unit</term>
+<meaning id="fs-id1168329101575">standard for expressing the measurement of a base quantity within a particular system of units; defined by a particular procedure used to measure the corresponding base quantity</meaning>
+</definition>""";
+    content_hash "sha256:11d34eada8fd5d798f7193a2e1e5d42d1af6ec19824021b4a58da88dafe9f77a";
+}
+
+// m58270 «Units and Standards» — fs-id1168326842432
+fragment UP_M58270_DERIVED_UNITS in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168326842432";
+    text en official """<definition id="fs-id1168326842432">
+<term>derived units</term>
+<meaning id="fs-id1168326841207">units that can be calculated using algebraic combinations of the fundamental units</meaning>
+</definition>""";
+    content_hash "sha256:0578bdac8760b50b73aeb8f39b651597d9f2f1557f52a67c5a5876bd5387138e";
+}
+
+// m58270 «Units and Standards» — fs-id1168329486946
+fragment UP_M58270_UNITS in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168329486946";
+    text en official """<definition id="fs-id1168329486946">
+<term>units</term>
+<meaning id="fs-id1168329063081">standards used for expressing and comparing measurements</meaning>
+</definition>""";
+    content_hash "sha256:7861fb6134376d509cac8839e09bc0f0ea171f4b009e81099a9d8b63570b02e9";
+}
+
+// m58270 «Units and Standards» — fs-id1168326860103
+fragment UP_M58270_SI_UNITS in M58270_MAIN {
+    kind defn;
+    locator "module/m58270#fs-id1168326860103";
+    text en official """<definition id="fs-id1168326860103">
+<term>SI units</term>
+<meaning id="fs-id1168329151186">the international system of units that scientists in most countries have agreed to use; includes units such as meters, liters, and grams</meaning>
+</definition>""";
+    content_hash "sha256:783ec2e734a71a89aea17dfd2bdc47f41bebe1a8ddf099c4c49bee33bc9f32c6";
+}
+
+// m58271 «Unit Conversion» — fs-id1168327920641
+fragment UP_M58271_CONVERSION_FACTOR in M58271_MAIN {
+    kind defn;
+    locator "module/m58271#fs-id1168327920641";
+    text en official """<definition id="fs-id1168327920641">
+<term>conversion factor</term>
+<meaning id="fs-id1168328329236">a ratio that expresses how many of one unit are equal to another unit</meaning>
+</definition>""";
+    content_hash "sha256:7b62ba607539a05228e1e7482c6bc36c047390c222fbcbb3ba0ae8259dbcd88f";
+}
+
+// m58272 «Dimensional Analysis» — fs-id1168327872808
+fragment UP_M58272_DIMENSION in M58272_MAIN {
+    kind defn;
+    locator "module/m58272#fs-id1168327872808";
+    text en official """<definition id="fs-id1168327872808">
+<term>dimension</term>
+<meaning id="fs-id1168327908525">expression of the dependence of a physical quantity on the base quantities as a product of powers of symbols representing the base quantities; in general, the dimension of a quantity has the form <m:math><m:mrow><m:msup><m:mtext>L</m:mtext><m:mtext>a</m:mtext></m:msup><m:msup><m:mtext>M</m:mtext><m:mtext>b</m:mtext></m:msup><m:msup><m:mtext>T</m:mtext><m:mtext>c</m:mtext></m:msup><m:msup><m:mtext>I</m:mtext><m:mtext>d</m:mtext></m:msup><m:msup><m:mtext>Θ</m:mtext><m:mtext>e</m:mtext></m:msup><m:msup><m:mtext>N</m:mtext><m:mtext>f</m:mtext></m:msup><m:msup><m:mtext>J</m:mtext><m:mtext>g</m:mtext></m:msup></m:mrow></m:math> for some powers a, b, c, d, e, f, and g.</meaning>
+</definition>""";
+    content_hash "sha256:8bcad42fd10cb106d8e153ff96414b9b01f1efc0fa4ff84ac1541f1301c93333";
+}
+
+// m58272 «Dimensional Analysis» — fs-id1168328321073
+fragment UP_M58272_DIMENSIONLESS in M58272_MAIN {
+    kind defn;
+    locator "module/m58272#fs-id1168328321073";
+    text en official """<definition id="fs-id1168328321073">
+<term>dimensionless</term>
+<meaning id="fs-id1168327949717">quantity with a dimension of <m:math><m:mrow><m:msup><m:mtext>L</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>M</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>T</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>I</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>Θ</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>N</m:mtext><m:mn>0</m:mn></m:msup><m:msup><m:mtext>J</m:mtext><m:mn>0</m:mn></m:msup><m:mo>=</m:mo><m:mn>1</m:mn><m:mo>;</m:mo></m:mrow></m:math> also called quantity of dimension 1 or a pure number</meaning>
+</definition>""";
+    content_hash "sha256:345c4265c2a3bbe020cc9c4a20f41a50c4d6453a6d49aa25b5c64a0d3b3844b8";
+}
+
+// m58272 «Dimensional Analysis» — fs-id1168328228670
+fragment UP_M58272_CONSISTENCY_RULES in M58272_MAIN {
+    kind section;
+    locator "module/m58272#fs-id1168328228670";
+    text en official """<list id="fs-id1168328228670" list-type="bulleted" bullet-style="bullet">
+<item>Every term in an expression must have the same dimensions; it does not make sense to add or subtract quantities of differing dimension (think of the old saying: “You can’t add apples and oranges”). In particular, the expressions on each side of the equality in an equation must have the same dimensions.</item>
+<item>The arguments of any of the standard mathematical functions such as trigonometric functions (such as sine and cosine), logarithms, or exponential functions that appear in the equation must be dimensionless. These functions require pure numbers as inputs and give pure numbers as outputs.</item>
+</list>""";
+    content_hash "sha256:b56e633ebfab3ea113ad65221720c35fc003348fa85680925c72ea51394513cd";
+}
+
+// m58272 «Dimensional Analysis» — fs-id1168327924785
+fragment UP_M58272_INCONSISTENT_CANNOT_BE_LAW in M58272_MAIN {
+    kind section;
+    locator "module/m58272#fs-id1168327924785";
+    text en official """<para id="fs-id1168327924785">If either of these rules is violated, an equation is not dimensionally consistent and cannot possibly be a correct statement of physical law. This simple fact can be used to check for typos or algebra mistakes, to help remember the various laws of physics, and even to suggest the form that new laws of physics might take. This last use of dimensions is beyond the scope of this text, but is something you may learn later in your academic career.</para>""";
+    content_hash "sha256:0a727ab95588c37848807e3e93d26e85c4a4bddff0a83da52b156fa915fd6162";
+}
+
+// m58274 «Significant Figures» — fs-id1168328241816
+fragment UP_M58274_UNCERTAINTY in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168328241816";
+    text en official """<definition id="fs-id1168328241816">
+<term>uncertainty</term>
+<meaning id="fs-id1168328329079">a quantitative measure of how much measured values deviate from one another</meaning>
+</definition>""";
+    content_hash "sha256:6515faac2fc45508435942efdd82c7fdad2fbf734cf919ee9d8d5cf88c2284cb";
+}
+
+// m58274 «Significant Figures» — fs-id1168328328497
+fragment UP_M58274_DISCREPANCY in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168328328497";
+    text en official """<definition id="fs-id1168328328497">
+<term>discrepancy</term>
+<meaning id="fs-id1168327873821">the difference between the measured value and a given standard or expected value</meaning>
+</definition>""";
+    content_hash "sha256:42c054fc576bcb0512c12ee9516ae1c8cd4ed6f0b0c15023871ce93cc56a4db3";
+}
+
+// m58274 «Significant Figures» — fs-id1168328355532
+fragment UP_M58274_ACCURACY in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168328355532";
+    text en official """<definition id="fs-id1168328355532">
+<term>accuracy</term>
+<meaning id="fs-id1168328238378">the degree to which a measured value agrees with an accepted reference value for that measurement</meaning>
+</definition>""";
+    content_hash "sha256:71aa5c53e6aacf809df9321633f424f11c9e3aeb0ca328f7e55bae85dd5a9933";
+}
+
+// m58274 «Significant Figures» — fs-id1168328286055
+fragment UP_M58274_PRECISION in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168328286055";
+    text en official """<definition id="fs-id1168328286055">
+<term>precision</term>
+<meaning id="fs-id1168328357317">the degree to which repeated measurements agree with each other</meaning>
+</definition>""";
+    content_hash "sha256:abc69aab050a9ba49bfcd88d100b7b977e14cb53cb102e3bcc9043e108ea2b5a";
+}
+
+// m58274 «Significant Figures» — fs-id1168327925704
+fragment UP_M58274_SIGNIFICANT_FIGURES in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168327925704";
+    text en official """<definition id="fs-id1168327925704">
+<term>significant figures</term>
+<meaning id="fs-id1168328367297">used to express the precision of a measuring tool used to measure a value</meaning>
+</definition>""";
+    content_hash "sha256:583aacd8439c64876babf3f9d4a20923e72580922f17f430bd1f9077fe4e03c3";
+}
+
+// m58274 «Significant Figures» — fs-id1168327927708
+fragment UP_M58274_PERCENT_UNCERTAINTY in M58274_MAIN {
+    kind defn;
+    locator "module/m58274#fs-id1168327927708";
+    text en official """<definition id="fs-id1168327927708">
+<term>percent uncertainty</term>
+<meaning id="fs-id1168328290905">the ratio of the uncertainty of a measurement to the measured value, expressed as a percentage</meaning>
+</definition>""";
+    content_hash "sha256:e80cc8ca64177c90b8b7bf457deb80a2222033129f49cf0362ae811c56e21885";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132550493
+fragment UP_M58277_VECTOR in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132550493";
+    text en official """<definition id="fs-id1167132550493">
+<term>vector</term>
+<meaning id="fs-id1167132550498">mathematical object with magnitude and direction</meaning>
+</definition>""";
+    content_hash "sha256:cb9437de58f1350e545c0687e84f1fbe540d19a621372d0bddadf553acb5617f";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132586350
+fragment UP_M58277_SCALAR_QUANTITY in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132586350";
+    text en official """<definition id="fs-id1167132586350">
+<term>scalar quantity</term>
+<meaning id="fs-id1167132586355">quantity that can be specified completely by a single number with an appropriate physical unit</meaning>
+</definition>""";
+    content_hash "sha256:70f575b39601268bf3a67b2a927513e605950cf85db7391ab4b43ac9e11af166";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132579726
+fragment UP_M58277_VECTOR_QUANTITY in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132579726";
+    text en official """<definition id="fs-id1167132579726">
+<term>vector quantity</term>
+<meaning id="fs-id1167132579731">physical quantity described by a mathematical vector—that is, by specifying both its magnitude and its direction; synonymous with a vector in physics</meaning>
+</definition>""";
+    content_hash "sha256:b8ca5955607e3392b6a1ff771c53f198aca038a5b027f725554fe47663ddfffd";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132520196
+fragment UP_M58277_PARALLEL_VECTORS in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132520196";
+    text en official """<definition id="fs-id1167132520196">
+<term>parallel vectors</term>
+<meaning id="fs-id1167132520201">two vectors with exactly the same direction angles</meaning>
+</definition>""";
+    content_hash "sha256:5a62281ba19097dc970a020ac65bacc7b1b495bc858ac3526976517921a51732";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132688517
+fragment UP_M58277_ANTIPARALLEL_VECTORS in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132688517";
+    text en official """<definition id="fs-id1167132688517">
+<term>antiparallel vectors</term>
+<meaning id="fs-id1167132688522">two vectors with directions that differ by <m:math><m:mrow><m:mn>180</m:mn><m:mtext>°</m:mtext></m:mrow></m:math></meaning>
+</definition>""";
+    content_hash "sha256:69e2e00a9bfa51f2018701c4e4fd24365d1bc1eb3bfd718dd92d7a376f5cc055";
+}
+
+// m58277 «Scalars and Vectors» — fs-id1167132504151
+fragment UP_M58277_ORTHOGONAL_VECTORS in M58277_MAIN {
+    kind defn;
+    locator "module/m58277#fs-id1167132504151";
+    text en official """<definition id="fs-id1167132504151">
+<term>orthogonal vectors</term>
+<meaning id="fs-id1167132504156">two vectors with directions that differ by exactly <m:math><m:mrow><m:mn>90</m:mn><m:mtext>°</m:mtext></m:mrow></m:math>, synonymous with perpendicular vectors</meaning>
+</definition>""";
+    content_hash "sha256:c7a6fd08a11b92f220aaddb4d04f69c1ab8bf962744a0e47eda58e9ed0486306";
+}
+
+// m58278 «Coordinate Systems and Components of a Vector» — fs-id1167132546151
+fragment UP_M58278_VECTOR_COMPONENTS in M58278_MAIN {
+    kind defn;
+    locator "module/m58278#fs-id1167132546151";
+    text en official """<definition id="fs-id1167132546151">
+<term>vector components</term>
+<meaning id="fs-id1167132266674">orthogonal components of a vector; a vector is the vector sum of its vector components.</meaning>
+</definition>""";
+    content_hash "sha256:23d4e9f881d42572c02049fb9198bed521185538adcebb667c6587e9abd95ee6";
+}
+
+// m58278 «Coordinate Systems and Components of a Vector» — fs-id1167132612567
+fragment UP_M58278_DIRECTION_ANGLE in M58278_MAIN {
+    kind defn;
+    locator "module/m58278#fs-id1167132612567";
+    text en official """<definition id="fs-id1167132612567">
+<term>direction angle</term>
+<meaning id="fs-id1167132612572">in a plane, an angle between the positive direction of the <emphasis effect="italics">x</emphasis>-axis and the vector, measured counterclockwise from the axis to the vector</meaning>
+</definition>""";
+    content_hash "sha256:68e6ac9ab93378bd07d3cb205f5d14fd716b34d0e4bec5d034f698d3dd285474";
+}
+
+// m58279 «Algebra of Vectors» — fs-id1167133549546
+fragment UP_M58279_EQUAL_VECTORS in M58279_MAIN {
+    kind defn;
+    locator "module/m58279#fs-id1167133549546";
+    text en official """<definition id="fs-id1167133549546">
+<term>equal vectors</term>
+<meaning id="fs-id1167133768492">two vectors are equal if and only if all their corresponding components are equal; alternately, two parallel vectors of equal magnitudes</meaning>
+</definition>""";
+    content_hash "sha256:c2b6adf8fdc83a994f8aa429d137cdccac8e826e5dbfbba91cc39c70df8de784";
+}
+
+// m58279 «Algebra of Vectors» — fs-id1167132506101
+fragment UP_M58279_NULL_VECTOR in M58279_MAIN {
+    kind defn;
+    locator "module/m58279#fs-id1167132506101";
+    text en official """<definition id="fs-id1167132506101">
+<term>null vector</term>
+<meaning id="fs-id1167133844322">a vector with all its components equal to zero</meaning>
+</definition>""";
+    content_hash "sha256:2df92fea27fccba64ddb858b184dd6fb8d439100cbbb036f736fa2de8b1df46d";
+}

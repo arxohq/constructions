@@ -1,0 +1,16 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Ответ привратника подан adjudicated assertion §73 — и вывод замыкается.
+// Пара к делу 03: тот же вопрос, другой ответ органа.
+test "urn:query:vor-dem-gesetz-doorkeeper-grants" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg02-1": tuerhueter_gewaehrt_einlass(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin adjudicated; }
+    }
+    evaluate truth(einlass_gestattet(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

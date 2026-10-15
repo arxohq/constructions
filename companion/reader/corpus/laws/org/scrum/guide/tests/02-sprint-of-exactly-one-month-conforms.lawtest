@@ -1,0 +1,18 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Раздел 6-1: «one month or less» — КАЛЕНДАРНЫЙ месяц, не тридцать дней.
+// 1 сентября → 1 октября есть ровно месяц и соответствует; тридцатидневное
+// прочтение дало бы здесь превышение. Политика §86 подаётся профилем.
+test "urn:query:scrum-test-sprint-exact-month" {
+    given {
+        context { decision_time @2026-09-15T12:00:00Z; knowledge_time @2026-09-15T12:00:00Z; legal_time @2026-09-15; timezone "UTC"; deadline_policy CONSTRUCTIONS_SAME_DAY_NO_ROLL_MONTH_END_LAST_DAY; }
+        assert "sg-t2-a": sprint_starts(entity_ref("urn:scrum:sprint:s"), @2026-09-01) { origin case_input; }
+        assert "sg-t2-b": sprint_ends(entity_ref("urn:scrum:sprint:s"), @2026-10-01) { origin case_input; }
+    }
+    evaluate truth(sprint_length_conforms(entity_ref("urn:scrum:sprint:s")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,200 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// Таблица 4, последний столбец: Pa = N/m² по реестру.
+test "urn:query:si-t12-other-pascal" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Pascal));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PascalViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: J = N m по реестру.
+test "urn:query:si-t12-other-joule" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Joule));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(JouleViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: W = J/s по реестру.
+test "urn:query:si-t12-other-watt" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Watt));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(WattViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: V = W/A по реестру.
+test "urn:query:si-t12-other-volt" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Volt));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(VoltViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: F = C/V по реестру.
+test "urn:query:si-t12-other-farad" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Farad));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(FaradViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: Ω = V/A по реестру.
+test "urn:query:si-t12-other-ohm" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Ohm));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(OhmViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: S = A/V по реестру.
+test "urn:query:si-t12-other-siemens" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Siemens));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SiemensViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: Wb = V s по реестру.
+test "urn:query:si-t12-other-weber" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Weber));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(WeberViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: T = Wb/m² по реестру.
+test "urn:query:si-t12-other-tesla" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Tesla));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TeslaViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: H = Wb/A по реестру.
+test "urn:query:si-t12-other-henry" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Henry));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(HenryViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: lx = lm/m² по реестру.
+test "urn:query:si-t12-other-lux" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Lux));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LuxViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: Gy = J/kg по реестру.
+test "urn:query:si-t12-other-gray" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Gray));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(GrayViaOtherUnitsVerified);
+}
+
+// Таблица 4, последний столбец: Sv = J/kg по реестру.
+test "urn:query:si-t12-other-sievert" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(other_units_expression_verified(Sievert));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SievertViaOtherUnitsVerified);
+}
+
+// §2.3.1: единица константы PlanckConstant раскрывается в базовые, как говорит текст определения.
+test "urn:query:si-t12-constant-unit-planckconstant" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(constant_unit_verified(PlanckConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PlanckUnitVerified);
+}
+
+// §2.3.1: единица константы ElementaryCharge раскрывается в базовые, как говорит текст определения.
+test "urn:query:si-t12-constant-unit-elementarycharge" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(constant_unit_verified(ElementaryCharge));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ElementaryChargeUnitVerified);
+}
+
+// §2.3.1: единица константы BoltzmannConstant раскрывается в базовые, как говорит текст определения.
+test "urn:query:si-t12-constant-unit-boltzmannconstant" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(constant_unit_verified(BoltzmannConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BoltzmannUnitVerified);
+}
+
+// §2.3.1: единица константы LuminousEfficacy раскрывается в базовые, как говорит текст определения.
+test "urn:query:si-t12-constant-unit-luminousefficacy" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(constant_unit_verified(LuminousEfficacy));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LuminousEfficacyUnitVerified);
+}
+
+// Таблица 1 как величина: h = 6.626 070 15 × 10⁻³⁴ J s.
+test "urn:query:si-t12-planck-quantity" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defining_constant_quantity(PlanckConstant, 6.62607015e-34 J_s));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

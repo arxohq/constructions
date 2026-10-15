@@ -1,0 +1,200 @@
+// BCP 14 — словарь, общий для всех модулей пакета.
+//
+// ЧТО ЭТО ЗА АКТ. RFC 2119 не регулирует ни одного протокола: он определяет
+// ЗНАЧЕНИЕ СЛОВ, которыми другие RFC выражают требования, — то есть является
+// нормой о нормах, как закон «О правовых актах» в пакете kz.corpus.legal_acts.
+// Раздел 6 идёт дальше и предписывает САМИМ АВТОРАМ, когда императив
+// употреблять можно, а когда нельзя.
+//
+// ЧТО ФОРМАЛИЗОВАНО, А ЧТО НЕТ — ГРАНИЦА ОБЪЯВЛЕНА ЗДЕСЬ, НЕ В README.
+// Формализован СВОД BCP 14 целиком: оба его документа закреплены байтами
+// издателя, у всех четырнадцати их разделов есть адресуемый фрагмент, и
+// каждый раздел либо несёт норму, либо объявлен границей с причиной в
+// `sources/<rfc>/articles.json`. НЕ формализован НИ ОДИН ДРУГОЙ RFC: ни
+// 9110, ни 9111, ни 2616. Требования этих документов приходят В ДЕЛЕ как
+// факты («в разделе таком-то стоит MUST заглавными»), и пакет отвечает,
+// какая позиция из этого следует и нарушена ли она. Это не недоделка и не
+// заготовка: BCP 14 ровно так и устроен — он придаёт силу чужим словам, не
+// зная, о чём они. Сценарии семейства `bcp14` пользуются требованиями
+// RFC 9110 (MUST NOT на повторные строки поля §5.3, MUST на Allow у 405
+// §15.5.6) именно так — как ФАКТАМИ ДЕЛА.
+//
+// КАРТА МОДУЛЕЙ:
+//   package.law            — этот словарь: лица, документы, требования, слова;
+//   01-capitalization.law  — RFC 8174: специальное значение только у ЗАГЛАВНЫХ,
+//                            и прочтение до 2017 года как отдельная надстройка;
+//   02-requirement-levels.law — RFC 2119 §§1–5: пять уровней требования и
+//                            позиции, которые из них следуют;
+//   03-imperatives.law     — RFC 2119 §§6–7: норма о нормотворчестве и
+//                            раскрытие последствий неисполнения;
+//   sources.law            — ПОРОЖДАЕТСЯ генератором; байты и фрагменты.
+
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+use self::{
+    RFC2119_ABSTRACT,
+};
+
+// --- Лица и предметы --------------------------------------------------------
+
+pub entity Document {
+    label en official "an IETF document in which the key words may be used";
+}
+
+pub entity Requirement {
+    label en official "an item, a definition or a particular behavior to which a key word is attached";
+}
+
+pub entity Implementation {
+    label en official "an implementation of the specification";
+}
+
+pub entity Author {
+    label en official "the author of an IETF document, who chooses which imperatives to use";
+}
+
+// --- Ключевые слова и регистр ---------------------------------------------
+//
+// ПЕРЕЧЕНЬ ЗАКРЫТ САМИМ ИСТОЧНИКОМ, и это редкий случай, когда закрытость не
+// приходится обосновывать: разделы 1…5 RFC 2119 перечисляют все слова, а
+// формула включения, которую RFC 8174 предписывает вставлять в документ,
+// повторяет тот же список поимённо («MUST», «MUST NOT», «REQUIRED», «SHALL»,
+// «SHALL NOT», «SHOULD», «SHOULD NOT», «RECOMMENDED», «NOT RECOMMENDED»,
+// «MAY», «OPTIONAL»). Одиннадцать имён: десять из RFC 2119 плюс
+// «NOT RECOMMENDED», добавленное в формулу самим RFC 8174.
+
+// ПОЧЕМУ ЭТО КОНСТАНТЫ, А НЕ `enum`. Сначала ключевые слова и регистр были
+// объявлены перечислениями — форма естественнее, и закрытость списка давал
+// сам тип. Так их НЕЛЬЗЯ ОТДАТЬ НАРУЖУ: `visibility` §24 — префикс
+// ВЕРХНЕУРОВНЕВОЙ декларации (`top_declaration = {annotation}, [visibility],
+// declaration` в grammar.ebnf), у члена перечисления его нет, и `pub enum`
+// экспортирует ТИП, но не его члены. Замер 30.08.2026: у пакета 32 экспорта,
+// среди них `Keyword` и `Casing`, а `ietf.bcp14::Must` даёт `LDC-E1105` на
+// `lower` при полностью зелёном `check`.
+//
+// Для словарного акта это решает дело: словарь, чьи СЛОВА не пересекают
+// границу пакета, не словарь. Документ, принявший BCP 14, обязан уметь
+// сказать «здесь стоит MUST заглавными», и говорит он это именно этими
+// константами.
+//
+// ЧТО ПОТЕРЯНО И ЧТО НЕТ. Потерян тип-перечисление: двенадцатое слово теперь
+// не отвергается проверкой типов. Не потеряно ничего сверх этого — ни одно
+// правило пакета не квантифицировало по «всем ключевым словам», а
+// несуществующее слово в теле правила просто не найдёт подстановки. Ссылка на
+// константу лоуверится тем же `const_ref` с тем же StableId, каким лоуверился
+// член перечисления (`urn:ietf:clir:bcp14#Must`), поэтому дела и сценарии от
+// замены не изменились ни на байт.
+
+pub entity Keyword {
+    label en official "a BCP 14 key word";
+}
+
+pub const Must: Keyword = entity_ref("urn:ietf:clir:bcp14#Must") {
+    label en official "MUST — an absolute requirement of the specification (RFC 2119, Section 1)";
+}
+pub const MustNot: Keyword = entity_ref("urn:ietf:clir:bcp14#MustNot") {
+    label en official "MUST NOT — an absolute prohibition of the specification (RFC 2119, Section 2)";
+}
+pub const Required: Keyword = entity_ref("urn:ietf:clir:bcp14#Required") {
+    label en official "REQUIRED — synonym of MUST (RFC 2119, Section 1)";
+}
+pub const Shall: Keyword = entity_ref("urn:ietf:clir:bcp14#Shall") {
+    label en official "SHALL — synonym of MUST (RFC 2119, Section 1)";
+}
+pub const ShallNot: Keyword = entity_ref("urn:ietf:clir:bcp14#ShallNot") {
+    label en official "SHALL NOT — synonym of MUST NOT (RFC 2119, Section 2)";
+}
+pub const Should: Keyword = entity_ref("urn:ietf:clir:bcp14#Should") {
+    label en official "SHOULD — valid reasons may exist to ignore the item (RFC 2119, Section 3)";
+}
+pub const ShouldNot: Keyword = entity_ref("urn:ietf:clir:bcp14#ShouldNot") {
+    label en official "SHOULD NOT — valid reasons may exist when the behavior is acceptable (RFC 2119, Section 4)";
+}
+pub const Recommended: Keyword = entity_ref("urn:ietf:clir:bcp14#Recommended") {
+    label en official "RECOMMENDED — synonym of SHOULD (RFC 2119, Section 3)";
+}
+pub const NotRecommended: Keyword = entity_ref("urn:ietf:clir:bcp14#NotRecommended") {
+    label en official "NOT RECOMMENDED — synonym of SHOULD NOT; added to the inclusion phrase by RFC 8174";
+}
+pub const May: Keyword = entity_ref("urn:ietf:clir:bcp14#May") {
+    label en official "MAY — the item is truly optional (RFC 2119, Section 5)";
+}
+pub const Optional: Keyword = entity_ref("urn:ietf:clir:bcp14#Optional") {
+    label en official "OPTIONAL — synonym of MAY (RFC 2119, Section 5)";
+}
+
+// РЕГИСТР — ЮРИДИЧЕСКИ ЗНАЧИМОЕ СВОЙСТВО ТЕКСТА, а не типографика. До RFC 8174
+// это было спорно (RFC 2119 сказал лишь «These words are often capitalized»),
+// с мая 2017 года — нет: специальное значение несут ТОЛЬКО заглавные формы.
+// Поэтому регистр входит в факт о документе, а не выводится из него.
+pub entity Casing {
+    label en official "whether a key word appears in all capitals or not";
+}
+
+pub const AllCapitals: Casing = entity_ref("urn:ietf:clir:bcp14#AllCapitals") {
+    label en official "the key word appears in all capitals and so carries its defined meaning (RFC 8174)";
+}
+pub const Lowercase: Casing = entity_ref("urn:ietf:clir:bcp14#Lowercase") {
+    label en official "the key word is not capitalized and so has its normal English meaning (RFC 8174)";
+}
+
+// --- Словарь фактов о документе ---------------------------------------------
+
+pub relation stated_in(r: Requirement, d: Document) kind empirical {
+    label en official "the requirement is stated in the document";
+}
+
+pub relation keyword_written(r: Requirement, k: Keyword, c: Casing) kind empirical {
+    label en official "the key word is written next to the requirement in the given casing";
+}
+
+pub relation adopted_bcp14(d: Document) kind empirical {
+    label en official "the document incorporates the BCP 14 phrase and so adopts these definitions";
+}
+
+pub relation authored_by(d: Document, a: Author) kind empirical {
+    label en official "the document is authored by the person";
+}
+
+// --- Словарь фактов о реализации --------------------------------------------
+
+pub relation claims_conformance(i: Implementation, d: Document) kind empirical {
+    label en official "the implementation claims conformance to the document";
+}
+
+pub relation behaviour_conforms(i: Implementation, r: Requirement) kind empirical {
+    label en official "the observed behaviour of the implementation conforms to the requirement";
+}
+
+pub relation behaviour_deviates(i: Implementation, r: Requirement) kind empirical {
+    label en official "the observed behaviour of the implementation deviates from the requirement";
+}
+
+// --- Выводимое, общее для модулей 01…03 -------------------------------------
+
+pub relation keyword_used(r: Requirement, k: Keyword) kind institutional {
+    label en official "the key word carries its BCP 14 meaning for this requirement";
+}
+
+// ПОЧЕМУ ПОДЧИНЁННОСТЬ ВЫВОДИТСЯ, А НЕ ЗАЯВЛЯЕТСЯ ДЕЛОМ. RFC 2119 нигде не
+// говорит «реализация обязана исполнять требование»: он говорит, что́ ЗНАЧИТ
+// слово «в спецификации». Носителем требование становится через притязание на
+// соответствие — единственное, что связывает конкретную программу с чужим
+// текстом. Заяви подчинённость фактом — и дело смогло бы объявить реализацию
+// связанной требованием документа, соответствия которому она не заявляла.
+pub relation subject_to(i: Implementation, r: Requirement) kind institutional {
+    label en official "the implementation is bound by the requirement";
+}
+
+@source(RFC2119_ABSTRACT)
+rule ConformanceClaimBindsToTheRequirementsOfTheDocument(
+    i: Implementation,
+    r: Requirement,
+    d: Document,
+) strict {
+    label en official "an implementation which claims conformance to a document is bound by the requirements stated in it";
+    when claims_conformance(i, d) and stated_in(r, d) and adopted_bcp14(d);
+    then subject_to(i, r);
+}

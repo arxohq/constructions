@@ -1,0 +1,47 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// 2010: секунда через ∆νCs (8-е изд.).
+test "urn:query:si-t02a-second-2010" {
+    given {
+        context { decision_time @2010-01-01T12:00:00Z; knowledge_time @2010-01-01T12:00:00Z; legal_time @2010-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Second, CaesiumFrequency));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SecondByCaesiumFrequency);
+}
+
+// 2024: секунда через ∆νCs (9-е изд.), то же правило.
+test "urn:query:si-t02b-second-2024" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Second, CaesiumFrequency));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(SecondByCaesiumFrequency);
+}
+
+// 2010: метр через c.
+test "urn:query:si-t02c-metre-2010" {
+    given {
+        context { decision_time @2010-01-01T12:00:00Z; knowledge_time @2010-01-01T12:00:00Z; legal_time @2010-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Metre, SpeedOfLight));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MetreBySpeedOfLight);
+}
+
+// 2024: кандела через Kcd.
+test "urn:query:si-t02d-candela-2024" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Candela, LuminousEfficacy));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(CandelaByLuminousEfficacy);
+}

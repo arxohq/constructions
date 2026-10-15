@@ -1,0 +1,78 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// 19.05.2019: ампер через силу между проводниками.
+test "urn:query:si-t03a-ampere-force-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_reference(Ampere, ForceBetweenParallelConductors));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmpereByForceBetweenConductors);
+}
+
+// 20.05.2019: ампер через элементарный заряд.
+test "urn:query:si-t03b-ampere-charge-after" {
+    given {
+        context { decision_time @2019-05-20T12:00:00Z; knowledge_time @2019-05-20T12:00:00Z; legal_time @2019-05-20; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Ampere, ElementaryCharge));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmpereByElementaryCharge);
+}
+
+// 19.05.2019: кельвин через тройную точку воды.
+test "urn:query:si-t03c-kelvin-triple-point-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_reference(Kelvin, TriplePointOfWater));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KelvinByTriplePointOfWater);
+}
+
+// 20.05.2019: кельвин через постоянную Больцмана.
+test "urn:query:si-t03d-kelvin-boltzmann-after" {
+    given {
+        context { decision_time @2019-05-20T12:00:00Z; knowledge_time @2019-05-20T12:00:00Z; legal_time @2019-05-20; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Kelvin, BoltzmannConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KelvinByBoltzmannConstant);
+}
+
+// 19.05.2019: моль через 0,012 кг углерода-12.
+test "urn:query:si-t03e-mole-carbon-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_reference(Mole, CarbonTwelve));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MoleByCarbonTwelve);
+}
+
+// 20.05.2019: моль через постоянную Авогадро.
+test "urn:query:si-t03f-mole-avogadro-after" {
+    given {
+        context { decision_time @2019-05-20T12:00:00Z; knowledge_time @2019-05-20T12:00:00Z; legal_time @2019-05-20; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Mole, AvogadroConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MoleByAvogadroConstant);
+}
+
+// 19.05.2019: постоянная Авогадро ещё не определяет моль.
+test "urn:query:si-t03g-mole-avogadro-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Mole, AvogadroConstant));
+    expect truth_status == NEITHER;
+}

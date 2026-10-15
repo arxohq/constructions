@@ -1,0 +1,45 @@
+language "law.core" version "0.1";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+// Книга «Построения», глава 7: пара к сценарию 04. Точка D объявлена в
+// чертеже, но ни одной записи «лежит на» о ней нет: пара «D, ab» теперь в
+// области замыкания InzidenzAbschluss, и молчание даёт отрицание.
+// Замыкание сработало не потому, что о D что-то узнали, а потому, что
+// сведения о D объявлены полными. Статус документа NON_EXECUTABLE как у 01–04.
+test "urn:query:hilb-test-05-book-point-declared-without-incidence" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "hilb-t01-1": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:A")) { origin case_input; }
+        assert "hilb-t01-2": punktname(entity_ref("urn:de:hilbert:case:point:A"), "A") { origin case_input; }
+        assert "hilb-t01-3": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:B")) { origin case_input; }
+        assert "hilb-t01-4": punktname(entity_ref("urn:de:hilbert:case:point:B"), "B") { origin case_input; }
+        assert "hilb-t01-5": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:C")) { origin case_input; }
+        assert "hilb-t05-d1": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:D")) { origin case_input; }
+        assert "hilb-t05-d2": punktname(entity_ref("urn:de:hilbert:case:point:D"), "D") { origin case_input; }
+        assert "hilb-t01-6": punktname(entity_ref("urn:de:hilbert:case:point:C"), "C") { origin case_input; }
+        assert "hilb-t01-7": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t01-8": geradenname(entity_ref("urn:de:hilbert:case:line:ab"), "ab") { origin case_input; }
+        assert "hilb-t01-9": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t01-10": geradenname(entity_ref("urn:de:hilbert:case:line:bc"), "bc") { origin case_input; }
+        assert "hilb-t01-11": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+        assert "hilb-t01-12": geradenname(entity_ref("urn:de:hilbert:case:line:ac"), "ac") { origin case_input; }
+        assert "hilb-t01-13": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t01-14": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t01-15": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t01-16": liegt_auf(entity_ref("urn:de:hilbert:case:point:C"), entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t01-17": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+        assert "hilb-t01-18": liegt_auf(entity_ref("urn:de:hilbert:case:point:C"), entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+    }
+    evaluate truth(liegt_auf(entity_ref("urn:de:hilbert:case:point:D"), entity_ref("urn:de:hilbert:case:line:ab")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == NON_EXECUTABLE;
+    expect issue(CONSTRAINT_VIOLATED);
+    expect issues_within(info, CONSTRAINT_VIOLATED);
+}

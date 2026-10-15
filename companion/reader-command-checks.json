@@ -1,0 +1,115 @@
+{
+  "status": "accepted",
+  "checks": [
+    {
+      "chapter": "prologue",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "b59fe273b369519bb227ae73a39a0a1dcecbd344bc49a393b853d1d98b778131"
+    },
+    {
+      "chapter": "chapter-01",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "6f2be5492bc32e0b270349741bbdc7ec63c486b7eb3eb39ad20ed76625d50362"
+    },
+    {
+      "chapter": "chapter-02",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "940e1fc09f71c1d978850c18b4905c3343f3d2f625add5d3e4d6a84cae63db2f"
+    },
+    {
+      "chapter": "chapter-03",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "f2c1f209090855b733e5e22d5f56f717492c7a4936c6d5f8cde4eb19f540d25e"
+    },
+    {
+      "chapter": "chapter-04",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "59885aea7b12457a390326aeee8968a42e8ef24492d61b9037f505f3313d38da"
+    },
+    {
+      "chapter": "chapter-05",
+      "ok": true,
+      "printed_blocks": 4,
+      "source_sha256": "2122fdf113741ba7a2fb71e4bad4c891bf213ac238099259eb0bf479c142550e"
+    },
+    {
+      "chapter": "chapter-06",
+      "ok": true,
+      "printed_blocks": 5,
+      "source_sha256": "4b4553411a3e972b5ca5a072ac35b63ec4e8bb6eb5cc2ad2ed99fb8d91efb81c"
+    },
+    {
+      "chapter": "chapter-07",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "1f5c2ae9b61f41575d6be9e05dfa92e2d71f1d03a44e1505a941d2008485d8a5"
+    },
+    {
+      "chapter": "chapter-08",
+      "ok": true,
+      "printed_blocks": 7,
+      "source_sha256": "1750cf0d00a80d5f2ecb4021626ab7fdbf58b658ef83365f0534170f7ed8cf66"
+    },
+    {
+      "chapter": "chapter-09",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "96c28731e826b47f22e80341327ccda090edce8e7a0d23147396e7df234ca082"
+    },
+    {
+      "chapter": "chapter-10",
+      "ok": true,
+      "printed_blocks": 1,
+      "source_sha256": "522dad2d153262cffe277f08f7456a3559ec72a1485508588728f423eec09805"
+    },
+    {
+      "chapter": "chapter-11",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "e4e250f19b9791b350b99cb84af3c9c90e5cb06fdb8055dad6fc4889d9f9d50f"
+    },
+    {
+      "chapter": "chapter-12",
+      "ok": true,
+      "printed_blocks": 3,
+      "source_sha256": "ea8f1c395a2fa545021e699d9af70c7b9bcd044cdb1dad91e78e3021b08adb31"
+    },
+    {
+      "chapter": "chapter-13",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "fa5d670935e068b3f8862f7ef90bb029298b3f87bbbe1111f5342e9234a39c6a"
+    },
+    {
+      "chapter": "chapter-14",
+      "ok": true,
+      "printed_blocks": 2,
+      "source_sha256": "547ed4d5e6dff6dea9d55a7b36d0c0dd272e7652d0d553b6f73e0075a0f78bbf"
+    },
+    {
+      "chapter": "chapter-16",
+      "ok": true,
+      "printed_blocks": 6,
+      "source_sha256": "8416232ff98d2710fa7a68b3ec38df9518bcacfce345155f36129b3bd97f3a7f"
+    },
+    {
+      "chapter": "chapter-18",
+      "ok": true,
+      "printed_blocks": 4,
+      "source_sha256": "f94eea97e81b93d0e8fc8aa90770104aaf87a6b057db0cb7364eefe97c8bf8c4"
+    }
+  ],
+  "printed_blocks": 50,
+  "evidence": "Detailed command logs retained by publisher.",
+  "intentional_refusals": [
+    "changed triangle rule",
+    "removed Scrum priority",
+    "tampered dependency pin"
+  ],
+  "independent_human_reader": "not_performed"
+}

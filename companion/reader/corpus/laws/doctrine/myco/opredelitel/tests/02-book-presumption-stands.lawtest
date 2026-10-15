@@ -1,0 +1,19 @@
+language "law.core" version "0.2";
+package myco.opredelitel version "0.1.0";
+namespace "urn:myco:clir:opredelitel";
+
+// Книга «Построения», глава 8 (docs/books/postroeniya/PLAN.ru.md §7.1):
+// одна сторона презумпции ст. 4/9 — экземпляр назван, ключ не пройден,
+// запрет стоит. Декларативная пара к сцене MYCO-UNKNOWN-PRESUMED-INEDIBLE
+// раннера corpus/kz/acts/myco.py.
+test "urn:query:myco-t02-book-presumption-stands" {
+    given {
+        context { decision_time @2026-08-31T12:00:00Z; knowledge_time @2026-08-31T12:00:00Z; legal_time @2026-08-31; timezone "Europe/Moscow"; }
+        assert "myco-t02-1": specimen(entity_ref("urn:case:myco:t02")) { origin case_input; }
+    }
+    evaluate truth(food_barred(entity_ref("urn:case:myco:t02")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PresumeInedible);
+}

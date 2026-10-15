@@ -1,0 +1,33 @@
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// Раздел 2 RFC 2119: MUST NOT есть «absolute prohibition of the
+// specification». ГЛАВНЫЙ ТЕСТ ПАКЕТА. В срезе 0.1 позиция воздержания
+// (цель forbearance, §130) не получает VIOLATED никогда — только ACTIVE либо
+// EXPIRED, — поэтому запрет записан обязанностью ВОЗДЕРЖАНИЯ с презумпцией,
+// которую совершение действия опровергает. Дай этот тест ACTIVE — сломана
+// презумпция, приоритет или страта; все три отказа молчаливы при зелёном
+// check и зелёном differential.
+//
+// Дело: отправитель выдал в одном сообщении две строки поля с одним именем.
+// RFC 9110 §5.3 запрещает это словом MUST NOT — заглавными, то есть
+// ключевым словом BCP 14. (Первым примером здесь стояло «тело у ответа
+// 204»; сверка с закреплённым текстом показала, что §15.3.5 не содержит
+// ключевых слов вовсе — «it cannot contain content or trailers» есть
+// обычный английский, и по действующему прочтению из него не следует
+// ничего. Пример заменён на настоящий запрет.)
+test "urn:query:bcp14-test-must-not-breached" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @2026-08-30; timezone "UTC"; }
+        assert "bcp14-t2-a": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t2-b": stated_in(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t2-c": claims_conformance(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t2-d": keyword_written(entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines"), MustNot, AllCapitals) { origin case_input; }
+        assert "bcp14-t2-e": behaviour_deviates(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110#section-5.3-duplicate-field-lines")) { origin case_input; }
+    }
+    evaluate positions();
+    expect result_kind == NORM_POSITION;
+    expect evaluation_status == COMPUTED;
+    expect normative_status == VIOLATED;
+}

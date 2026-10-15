@@ -1,0 +1,300 @@
+// §2.3.4 и таблица 4: 22 когерентные производные единицы со специальными
+// названиями, их выражение через базовые единицы; когерентность и полный
+// набор единиц SI.
+//
+// Показатели базовых единиц — целые факты из столбца «Unit expressed in
+// terms of base units», ПОЛНЫМ вектором по семи базовым (нули включены):
+// только так одно правило модуля 06 сверяет строку целиком, а не только
+// ненулевые члены. Радиан и стерадиан — размерность один (сноски b, c), их
+// векторы нулевые; люмен записан как cd (стерадиан — единица один, сноска g).
+// Беккерель в реестре не объявлен отдельно: он s⁻¹, как герц (сноска d
+// различает их по применению, не по размерности), поэтому его имя в реестре
+// — Hz.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    BaseQuantity,
+    SI8_TABLE_3,
+    SI9_S2_3_4_COHERENT,
+    SI9_S2_3_4_COMPLETE_SET,
+    SI9_S2_3_4_SPECIAL_NAMES,
+    SI9_TABLE_2,
+    SI9_TABLE_4,
+    SiUnit,
+    base_unit,
+};
+
+@source(SI9_TABLE_4, SI8_TABLE_3)
+pub relation special_unit(u: SiUnit, quantity: Text, symbol: Text) kind empirical {
+    label en official "the unit is one of the 22 coherent derived units with a special name, for the given derived quantity, with the given symbol (Table 4)";
+    label ru unofficial "единица — одна из 22 когерентных производных единиц со специальным названием, для данной производной величины, с данным символом (таблица 4)";
+}
+
+@source(SI9_TABLE_4, SI8_TABLE_3)
+pub relation base_exponent(u: SiUnit, b: SiUnit, e: Integer) kind empirical {
+    label en official "in the expression of the unit in terms of base units, the base unit appears with the given exponent (Table 4)";
+    label ru unofficial "в выражении единицы через базовые данная базовая единица входит с данным показателем (таблица 4)";
+}
+
+@source(SI9_TABLE_4, SI8_TABLE_3)
+facts Table4 {
+    label en official "Table 4: the 22 SI units with special names and symbols";
+    label ru unofficial "Таблица 4: 22 единицы SI со специальными названиями и символами";
+    assert "t4-rad": special_unit(Radian, "plane angle", "rad") { }
+    assert "t4-sr": special_unit(Steradian, "solid angle", "sr") { }
+    assert "t4-hz": special_unit(Hertz, "frequency", "Hz") { }
+    assert "t4-n": special_unit(Newton, "force", "N") { }
+    assert "t4-pa": special_unit(Pascal, "pressure, stress", "Pa") { }
+    assert "t4-j": special_unit(Joule, "energy, work, amount of heat", "J") { }
+    assert "t4-w": special_unit(Watt, "power, radiant flux", "W") { }
+    assert "t4-c": special_unit(Coulomb, "electric charge", "C") { }
+    assert "t4-v": special_unit(Volt, "electric potential difference", "V") { }
+    assert "t4-f": special_unit(Farad, "capacitance", "F") { }
+    assert "t4-ohm": special_unit(Ohm, "electric resistance", "Ω") { }
+    assert "t4-s": special_unit(Siemens, "electric conductance", "S") { }
+    assert "t4-wb": special_unit(Weber, "magnetic flux", "Wb") { }
+    assert "t4-t": special_unit(Tesla, "magnetic flux density", "T") { }
+    assert "t4-h": special_unit(Henry, "inductance", "H") { }
+    assert "t4-degc": special_unit(DegreeCelsius, "Celsius temperature", "°C") { }
+    assert "t4-lm": special_unit(Lumen, "luminous flux", "lm") { }
+    assert "t4-lx": special_unit(Lux, "illuminance", "lx") { }
+    assert "t4-bq": special_unit(Becquerel, "activity referred to a radionuclide", "Bq") { }
+    assert "t4-gy": special_unit(Gray, "absorbed dose, kerma", "Gy") { }
+    assert "t4-sv": special_unit(Sievert, "dose equivalent", "Sv") { }
+    assert "t4-kat": special_unit(Katal, "catalytic activity", "kat") { }
+}
+
+@source(SI9_TABLE_4, SI8_TABLE_3)
+facts Table4Exponents {
+    label en official "Table 4, column «unit expressed in terms of base units»: the exponent of each of the seven base units in each of the 22 units, zeros included — a complete vector per row";
+    label ru unofficial "Таблица 4, столбец «выражение через базовые единицы»: показатель каждой из семи базовых единиц в каждой из 22 единиц, нули включены — полный вектор на строку";
+    assert "t4e-rad-s": base_exponent(Radian, Second, 0) { }
+    assert "t4e-rad-m": base_exponent(Radian, Metre, 0) { }
+    assert "t4e-rad-kg": base_exponent(Radian, Kilogram, 0) { }
+    assert "t4e-rad-a": base_exponent(Radian, Ampere, 0) { }
+    assert "t4e-rad-k": base_exponent(Radian, Kelvin, 0) { }
+    assert "t4e-rad-mol": base_exponent(Radian, Mole, 0) { }
+    assert "t4e-rad-cd": base_exponent(Radian, Candela, 0) { }
+    assert "t4e-sr-s": base_exponent(Steradian, Second, 0) { }
+    assert "t4e-sr-m": base_exponent(Steradian, Metre, 0) { }
+    assert "t4e-sr-kg": base_exponent(Steradian, Kilogram, 0) { }
+    assert "t4e-sr-a": base_exponent(Steradian, Ampere, 0) { }
+    assert "t4e-sr-k": base_exponent(Steradian, Kelvin, 0) { }
+    assert "t4e-sr-mol": base_exponent(Steradian, Mole, 0) { }
+    assert "t4e-sr-cd": base_exponent(Steradian, Candela, 0) { }
+    assert "t4e-hz-s": base_exponent(Hertz, Second, -1) { }
+    assert "t4e-hz-m": base_exponent(Hertz, Metre, 0) { }
+    assert "t4e-hz-kg": base_exponent(Hertz, Kilogram, 0) { }
+    assert "t4e-hz-a": base_exponent(Hertz, Ampere, 0) { }
+    assert "t4e-hz-k": base_exponent(Hertz, Kelvin, 0) { }
+    assert "t4e-hz-mol": base_exponent(Hertz, Mole, 0) { }
+    assert "t4e-hz-cd": base_exponent(Hertz, Candela, 0) { }
+    assert "t4e-n-s": base_exponent(Newton, Second, -2) { }
+    assert "t4e-n-m": base_exponent(Newton, Metre, 1) { }
+    assert "t4e-n-kg": base_exponent(Newton, Kilogram, 1) { }
+    assert "t4e-n-a": base_exponent(Newton, Ampere, 0) { }
+    assert "t4e-n-k": base_exponent(Newton, Kelvin, 0) { }
+    assert "t4e-n-mol": base_exponent(Newton, Mole, 0) { }
+    assert "t4e-n-cd": base_exponent(Newton, Candela, 0) { }
+    assert "t4e-pa-s": base_exponent(Pascal, Second, -2) { }
+    assert "t4e-pa-m": base_exponent(Pascal, Metre, -1) { }
+    assert "t4e-pa-kg": base_exponent(Pascal, Kilogram, 1) { }
+    assert "t4e-pa-a": base_exponent(Pascal, Ampere, 0) { }
+    assert "t4e-pa-k": base_exponent(Pascal, Kelvin, 0) { }
+    assert "t4e-pa-mol": base_exponent(Pascal, Mole, 0) { }
+    assert "t4e-pa-cd": base_exponent(Pascal, Candela, 0) { }
+    assert "t4e-j-s": base_exponent(Joule, Second, -2) { }
+    assert "t4e-j-m": base_exponent(Joule, Metre, 2) { }
+    assert "t4e-j-kg": base_exponent(Joule, Kilogram, 1) { }
+    assert "t4e-j-a": base_exponent(Joule, Ampere, 0) { }
+    assert "t4e-j-k": base_exponent(Joule, Kelvin, 0) { }
+    assert "t4e-j-mol": base_exponent(Joule, Mole, 0) { }
+    assert "t4e-j-cd": base_exponent(Joule, Candela, 0) { }
+    assert "t4e-w-s": base_exponent(Watt, Second, -3) { }
+    assert "t4e-w-m": base_exponent(Watt, Metre, 2) { }
+    assert "t4e-w-kg": base_exponent(Watt, Kilogram, 1) { }
+    assert "t4e-w-a": base_exponent(Watt, Ampere, 0) { }
+    assert "t4e-w-k": base_exponent(Watt, Kelvin, 0) { }
+    assert "t4e-w-mol": base_exponent(Watt, Mole, 0) { }
+    assert "t4e-w-cd": base_exponent(Watt, Candela, 0) { }
+    assert "t4e-c-s": base_exponent(Coulomb, Second, 1) { }
+    assert "t4e-c-m": base_exponent(Coulomb, Metre, 0) { }
+    assert "t4e-c-kg": base_exponent(Coulomb, Kilogram, 0) { }
+    assert "t4e-c-a": base_exponent(Coulomb, Ampere, 1) { }
+    assert "t4e-c-k": base_exponent(Coulomb, Kelvin, 0) { }
+    assert "t4e-c-mol": base_exponent(Coulomb, Mole, 0) { }
+    assert "t4e-c-cd": base_exponent(Coulomb, Candela, 0) { }
+    assert "t4e-v-s": base_exponent(Volt, Second, -3) { }
+    assert "t4e-v-m": base_exponent(Volt, Metre, 2) { }
+    assert "t4e-v-kg": base_exponent(Volt, Kilogram, 1) { }
+    assert "t4e-v-a": base_exponent(Volt, Ampere, -1) { }
+    assert "t4e-v-k": base_exponent(Volt, Kelvin, 0) { }
+    assert "t4e-v-mol": base_exponent(Volt, Mole, 0) { }
+    assert "t4e-v-cd": base_exponent(Volt, Candela, 0) { }
+    assert "t4e-f-s": base_exponent(Farad, Second, 4) { }
+    assert "t4e-f-m": base_exponent(Farad, Metre, -2) { }
+    assert "t4e-f-kg": base_exponent(Farad, Kilogram, -1) { }
+    assert "t4e-f-a": base_exponent(Farad, Ampere, 2) { }
+    assert "t4e-f-k": base_exponent(Farad, Kelvin, 0) { }
+    assert "t4e-f-mol": base_exponent(Farad, Mole, 0) { }
+    assert "t4e-f-cd": base_exponent(Farad, Candela, 0) { }
+    assert "t4e-ohm-s": base_exponent(Ohm, Second, -3) { }
+    assert "t4e-ohm-m": base_exponent(Ohm, Metre, 2) { }
+    assert "t4e-ohm-kg": base_exponent(Ohm, Kilogram, 1) { }
+    assert "t4e-ohm-a": base_exponent(Ohm, Ampere, -2) { }
+    assert "t4e-ohm-k": base_exponent(Ohm, Kelvin, 0) { }
+    assert "t4e-ohm-mol": base_exponent(Ohm, Mole, 0) { }
+    assert "t4e-ohm-cd": base_exponent(Ohm, Candela, 0) { }
+    assert "t4e-si-s": base_exponent(Siemens, Second, 3) { }
+    assert "t4e-si-m": base_exponent(Siemens, Metre, -2) { }
+    assert "t4e-si-kg": base_exponent(Siemens, Kilogram, -1) { }
+    assert "t4e-si-a": base_exponent(Siemens, Ampere, 2) { }
+    assert "t4e-si-k": base_exponent(Siemens, Kelvin, 0) { }
+    assert "t4e-si-mol": base_exponent(Siemens, Mole, 0) { }
+    assert "t4e-si-cd": base_exponent(Siemens, Candela, 0) { }
+    assert "t4e-wb-s": base_exponent(Weber, Second, -2) { }
+    assert "t4e-wb-m": base_exponent(Weber, Metre, 2) { }
+    assert "t4e-wb-kg": base_exponent(Weber, Kilogram, 1) { }
+    assert "t4e-wb-a": base_exponent(Weber, Ampere, -1) { }
+    assert "t4e-wb-k": base_exponent(Weber, Kelvin, 0) { }
+    assert "t4e-wb-mol": base_exponent(Weber, Mole, 0) { }
+    assert "t4e-wb-cd": base_exponent(Weber, Candela, 0) { }
+    assert "t4e-t-s": base_exponent(Tesla, Second, -2) { }
+    assert "t4e-t-m": base_exponent(Tesla, Metre, 0) { }
+    assert "t4e-t-kg": base_exponent(Tesla, Kilogram, 1) { }
+    assert "t4e-t-a": base_exponent(Tesla, Ampere, -1) { }
+    assert "t4e-t-k": base_exponent(Tesla, Kelvin, 0) { }
+    assert "t4e-t-mol": base_exponent(Tesla, Mole, 0) { }
+    assert "t4e-t-cd": base_exponent(Tesla, Candela, 0) { }
+    assert "t4e-h-s": base_exponent(Henry, Second, -2) { }
+    assert "t4e-h-m": base_exponent(Henry, Metre, 2) { }
+    assert "t4e-h-kg": base_exponent(Henry, Kilogram, 1) { }
+    assert "t4e-h-a": base_exponent(Henry, Ampere, -2) { }
+    assert "t4e-h-k": base_exponent(Henry, Kelvin, 0) { }
+    assert "t4e-h-mol": base_exponent(Henry, Mole, 0) { }
+    assert "t4e-h-cd": base_exponent(Henry, Candela, 0) { }
+    assert "t4e-degc-s": base_exponent(DegreeCelsius, Second, 0) { }
+    assert "t4e-degc-m": base_exponent(DegreeCelsius, Metre, 0) { }
+    assert "t4e-degc-kg": base_exponent(DegreeCelsius, Kilogram, 0) { }
+    assert "t4e-degc-a": base_exponent(DegreeCelsius, Ampere, 0) { }
+    assert "t4e-degc-k": base_exponent(DegreeCelsius, Kelvin, 1) { }
+    assert "t4e-degc-mol": base_exponent(DegreeCelsius, Mole, 0) { }
+    assert "t4e-degc-cd": base_exponent(DegreeCelsius, Candela, 0) { }
+    assert "t4e-lm-s": base_exponent(Lumen, Second, 0) { }
+    assert "t4e-lm-m": base_exponent(Lumen, Metre, 0) { }
+    assert "t4e-lm-kg": base_exponent(Lumen, Kilogram, 0) { }
+    assert "t4e-lm-a": base_exponent(Lumen, Ampere, 0) { }
+    assert "t4e-lm-k": base_exponent(Lumen, Kelvin, 0) { }
+    assert "t4e-lm-mol": base_exponent(Lumen, Mole, 0) { }
+    assert "t4e-lm-cd": base_exponent(Lumen, Candela, 1) { }
+    assert "t4e-lx-s": base_exponent(Lux, Second, 0) { }
+    assert "t4e-lx-m": base_exponent(Lux, Metre, -2) { }
+    assert "t4e-lx-kg": base_exponent(Lux, Kilogram, 0) { }
+    assert "t4e-lx-a": base_exponent(Lux, Ampere, 0) { }
+    assert "t4e-lx-k": base_exponent(Lux, Kelvin, 0) { }
+    assert "t4e-lx-mol": base_exponent(Lux, Mole, 0) { }
+    assert "t4e-lx-cd": base_exponent(Lux, Candela, 1) { }
+    assert "t4e-bq-s": base_exponent(Becquerel, Second, -1) { }
+    assert "t4e-bq-m": base_exponent(Becquerel, Metre, 0) { }
+    assert "t4e-bq-kg": base_exponent(Becquerel, Kilogram, 0) { }
+    assert "t4e-bq-a": base_exponent(Becquerel, Ampere, 0) { }
+    assert "t4e-bq-k": base_exponent(Becquerel, Kelvin, 0) { }
+    assert "t4e-bq-mol": base_exponent(Becquerel, Mole, 0) { }
+    assert "t4e-bq-cd": base_exponent(Becquerel, Candela, 0) { }
+    assert "t4e-gy-s": base_exponent(Gray, Second, -2) { }
+    assert "t4e-gy-m": base_exponent(Gray, Metre, 2) { }
+    assert "t4e-gy-kg": base_exponent(Gray, Kilogram, 0) { }
+    assert "t4e-gy-a": base_exponent(Gray, Ampere, 0) { }
+    assert "t4e-gy-k": base_exponent(Gray, Kelvin, 0) { }
+    assert "t4e-gy-mol": base_exponent(Gray, Mole, 0) { }
+    assert "t4e-gy-cd": base_exponent(Gray, Candela, 0) { }
+    assert "t4e-sv-s": base_exponent(Sievert, Second, -2) { }
+    assert "t4e-sv-m": base_exponent(Sievert, Metre, 2) { }
+    assert "t4e-sv-kg": base_exponent(Sievert, Kilogram, 0) { }
+    assert "t4e-sv-a": base_exponent(Sievert, Ampere, 0) { }
+    assert "t4e-sv-k": base_exponent(Sievert, Kelvin, 0) { }
+    assert "t4e-sv-mol": base_exponent(Sievert, Mole, 0) { }
+    assert "t4e-sv-cd": base_exponent(Sievert, Candela, 0) { }
+    assert "t4e-kat-s": base_exponent(Katal, Second, -1) { }
+    assert "t4e-kat-m": base_exponent(Katal, Metre, 0) { }
+    assert "t4e-kat-kg": base_exponent(Katal, Kilogram, 0) { }
+    assert "t4e-kat-a": base_exponent(Katal, Ampere, 0) { }
+    assert "t4e-kat-k": base_exponent(Katal, Kelvin, 0) { }
+    assert "t4e-kat-mol": base_exponent(Katal, Mole, 1) { }
+    assert "t4e-kat-cd": base_exponent(Katal, Candela, 0) { }
+}
+
+@source(SI9_TABLE_4, SI9_TABLE_2)
+relation registry_name(u: SiUnit, name: Text) kind empirical {
+    label en official "the unit's name in the unit registry units.si — the symbol of Table 2 or Table 4, spelled as the registry spells it";
+    label ru unofficial "имя единицы в реестре единиц units.si — символ таблицы 2 или 4 в написании реестра";
+}
+
+@source(SI9_TABLE_4, SI9_TABLE_2)
+facts RegistryNames {
+    label en official "registry names of the seven base units and of the units of Table 4 that the registry declares (radian, steradian and degree Celsius have none: dimension one, and an interval scale)";
+    label ru unofficial "имена в реестре семи базовых единиц и тех единиц таблицы 4, которые реестр объявляет (у радиана, стерадиана и градуса Цельсия имени нет: размерность один и интервальная шкала)";
+    assert "rn-s": registry_name(Second, "s") { }
+    assert "rn-m": registry_name(Metre, "m") { }
+    assert "rn-kg": registry_name(Kilogram, "kg") { }
+    assert "rn-a": registry_name(Ampere, "A") { }
+    assert "rn-k": registry_name(Kelvin, "K") { }
+    assert "rn-mol": registry_name(Mole, "mol") { }
+    assert "rn-cd": registry_name(Candela, "cd") { }
+    assert "rn-hz": registry_name(Hertz, "Hz") { }
+    assert "rn-n": registry_name(Newton, "N") { }
+    assert "rn-pa": registry_name(Pascal, "Pa") { }
+    assert "rn-j": registry_name(Joule, "J") { }
+    assert "rn-w": registry_name(Watt, "W") { }
+    assert "rn-c": registry_name(Coulomb, "C_coulomb") { }
+    assert "rn-v": registry_name(Volt, "V") { }
+    assert "rn-f": registry_name(Farad, "F") { }
+    assert "rn-ohm": registry_name(Ohm, "Ohm") { }
+    assert "rn-si": registry_name(Siemens, "S") { }
+    assert "rn-wb": registry_name(Weber, "Wb") { }
+    assert "rn-t": registry_name(Tesla, "T") { }
+    assert "rn-h": registry_name(Henry, "H") { }
+    assert "rn-lm": registry_name(Lumen, "lm") { }
+    assert "rn-lx": registry_name(Lux, "lx") { }
+    assert "rn-bq": registry_name(Becquerel, "Hz") { }
+    assert "rn-gy": registry_name(Gray, "Gy") { }
+    assert "rn-sv": registry_name(Sievert, "Sv") { }
+    assert "rn-kat": registry_name(Katal, "kat") { }
+}
+
+pub relation coherent_si_unit(u: SiUnit) kind institutional {
+    label en official "§2.3.4: the unit belongs to the coherent set of SI units";
+    label ru unofficial "§2.3.4: единица входит в когерентный набор единиц SI";
+}
+
+@source(SI9_S2_3_4_COHERENT, SI9_TABLE_2)
+rule BaseUnitIsCoherent(u: SiUnit, q: BaseQuantity, s: Text) strict {
+    label en official "§2.3.4: the base units belong to the coherent set of SI units";
+    label ru unofficial "§2.3.4: базовые единицы входят в когерентный набор единиц SI";
+    when base_unit(u, q, s);
+    then coherent_si_unit(u);
+}
+
+@source(SI9_S2_3_4_SPECIAL_NAMES, SI9_TABLE_4)
+rule SpecialNamedUnitIsCoherent(u: SiUnit, qn: Text, s: Text) strict {
+    label en official "§2.3.4: the 22 units with special names are coherent derived units";
+    label ru unofficial "§2.3.4: 22 единицы со специальными названиями — когерентные производные единицы";
+    when special_unit(u, qn, s);
+    then coherent_si_unit(u);
+}
+
+pub relation si_unit(u: SiUnit) kind institutional {
+    label en official "the unit is an SI unit";
+    label ru unofficial "единица есть единица SI";
+}
+
+@source(SI9_S2_3_4_COMPLETE_SET)
+rule CoherentUnitIsSiUnit(u: SiUnit) strict {
+    label en official "§2.3.4: the complete set of SI units includes the coherent set";
+    label ru unofficial "§2.3.4: полный набор единиц SI включает когерентный набор";
+    when coherent_si_unit(u);
+    then si_unit(u);
+}

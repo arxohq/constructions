@@ -1,0 +1,384 @@
+// «Στοιχεῖα» Евклида, книга I целиком: определения, постулаты, общие понятия
+// и 48 предложений как правила и инварианты над предъявленной конечной фигурой.
+//
+// ЧТО ЭТО ЗА ПАКЕТ. Движок не доказывает Евклида и не строит циркулем и
+// линейкой — он ПРИМЕНЯЕТ формулировки к предъявленному чертежу. Постулаты и
+// общие понятия — инварианты §93.1 с замыканиями §70 (как de.hilbert.grundlagen).
+// Теоремы — strict-правила: из фактов дела выводятся равенства углов, сторон,
+// параллельность. Построения (I.1—3, 9—12, 22—23, 31, 42, 44—46) проверяют
+// ПРЕДЪЯВЛЕННУЮ конфигурацию, а не порождают новые точки.
+//
+// УГЛЫ БЕЗ ГРАДУСОВ. «ἴση» — отношение isos_gonia, а не число. Школьный слой
+// с angle_measure живёт в grc.euclid.angles; здесь равенство углов — первично.
+// Сумма «двум прямым» — отношение isos_dyo_orthais, а не 180°.
+//
+// РАЗРЕЗ МОДУЛЕЙ:
+//   00-package.law           словарь чертежа, замыкания, общие отношения
+//   01-horoi.law             23 определения — сущности и классификации
+//   02-aitemata.law          5 постулатов — инварианты §93.1
+//   03-koinai-ennoiai.law    6 общих понятий — правила равенства
+//   04-protaseis-i-01-12.law I.1—I.12
+//   05-protaseis-i-13-26.law I.13—I.26
+//   06-protaseis-i-27-32.law I.27—I.32
+//   07-protaseis-i-33-46.law I.33—I.46
+//   08-protaseis-i-47-48.law I.47—I.48 (pub для grc.eukleides.pythagoras)
+
+language "law.core" version "0.2";
+package grc.euclid.stoicheia_i version "0.1.0";
+namespace "urn:grc:euclid:clir:stoicheia-i";
+
+use self::{
+    STO_CN1,
+    STO_CN8,
+    STO_DEF1,
+    STO_DEF10,
+    STO_DEF11,
+    STO_DEF12,
+    STO_DEF13,
+    STO_DEF14,
+    STO_DEF15,
+    STO_DEF16,
+    STO_DEF18,
+    STO_DEF19,
+    STO_DEF2,
+    STO_DEF22,
+    STO_DEF23,
+    STO_DEF3,
+    STO_DEF4,
+    STO_DEF5,
+    STO_DEF7,
+    STO_DEF8,
+    STO_PROP13,
+    STO_PROP32,
+};
+
+// ---------------------------------------------------------------------------
+// Сущности § DEF 1—23 (рабочий словарь; классификации — в 01-horoi.law)
+// ---------------------------------------------------------------------------
+
+@source(STO_DEF1)
+pub entity Semeion {
+    label grc official "σημεῖον";
+    label ru unofficial "точка";
+}
+
+@source(STO_DEF2)
+entity Gramme {
+    label grc official "γραμμή";
+    label ru unofficial "линия";
+}
+
+@source(STO_DEF4)
+pub entity Eutheia {
+    label grc official "εὐθεῖα";
+    label ru unofficial "прямая";
+}
+
+@source(STO_DEF5)
+entity Epiphaneia {
+    label grc official "ἐπιφάνεια";
+    label ru unofficial "поверхность";
+}
+
+@source(STO_DEF7)
+entity Epipedon {
+    label grc official "ἐπίπεδον";
+    label ru unofficial "плоскость";
+}
+
+@source(STO_DEF8)
+pub entity Gonion {
+    label grc official "γωνία";
+    label ru unofficial "угол";
+}
+
+@source(STO_DEF13)
+entity Peras {
+    label grc official "ὅρος";
+    label ru unofficial "граница фигуры";
+}
+
+@source(STO_DEF14)
+entity Schema {
+    label grc official "σχῆμα";
+    label ru unofficial "фигура";
+}
+
+@source(STO_DEF15)
+pub entity Kyklos {
+    label grc official "κύκλος";
+    label ru unofficial "окружность";
+}
+
+@source(STO_DEF18)
+entity Hemikyklion {
+    label grc official "ἡμικύκλιον";
+    label ru unofficial "полукруг";
+}
+
+@source(STO_DEF19)
+pub entity Trigonon {
+    label grc official "τρίγωνον";
+    label ru unofficial "треугольник";
+}
+
+@source(STO_DEF19)
+entity Tetrapleuron {
+    label grc official "τετράπλευρον";
+    label ru unofficial "четырёхугольник";
+}
+
+@source(STO_DEF22)
+pub entity Parallelogrammon {
+    label grc official "παραλληλόγραμμον";
+    label ru unofficial "параллелограмм";
+}
+
+// ---------------------------------------------------------------------------
+// Чертёж: что предъявляет дело (empirical)
+// ---------------------------------------------------------------------------
+
+pub relation semeion_tes_figuras(p: Semeion) kind empirical {
+    label ru unofficial "точка входит в предъявленную конфигурацию";
+}
+
+pub relation eutheia_tes_figuras(l: Eutheia) kind empirical {
+    label ru unofficial "прямая входит в предъявленную конфигурацию";
+}
+
+relation gonion_tes_figuras(g: Gonion) kind empirical {
+    label ru unofficial "угол входит в предъявленную конфигурацию";
+}
+
+relation kyklos_tes_figuras(k: Kyklos) kind empirical {
+    label ru unofficial "окружность входит в предъявленную конфигурацию";
+}
+
+relation trigonon_tes_figuras(t: Trigonon) kind empirical {
+    label ru unofficial "треугольник входит в предъявленную конфигурацию";
+}
+
+relation parallelogrammon_tes_figuras(p: Parallelogrammon) kind empirical {
+    label ru unofficial "параллелограмм входит в предъявленную конфигурацию";
+}
+
+pub relation onoma_semeiou(p: Semeion, n: Text) kind empirical {
+    label ru unofficial "буква точки на чертеже";
+    key(p);
+}
+
+pub relation onoma_eutheias(l: Eutheia, n: Text) kind empirical {
+    label ru unofficial "буква прямой на чертеже";
+    key(l);
+}
+
+@source(STO_DEF3)
+pub relation keitai_epi(p: Semeion, l: Eutheia) kind empirical {
+    label grc official "σημεῖον ἐπὶ εὐθείας";
+    label ru unofficial "точка лежит на прямой";
+}
+
+@source(STO_DEF16)
+relation kentron_kyklou(k: Kyklos, p: Semeion) kind empirical {
+    label grc official "κέντρον τοῦ κύκλου";
+    label ru unofficial "центр окружности";
+    key(k);
+}
+
+// Длина отрезка между двумя точками (Integer, безразмерная). Градусов нет.
+relation mikos(p: Semeion, q: Semeion, v: Integer) kind empirical {
+    label grc official "μῆκος εὐθείας";
+    label ru unofficial "длина отрезка между двумя точками";
+    key(p, q);
+}
+
+@source(STO_DEF19)
+relation trigonon_apo(t: Trigonon, a: Semeion, b: Semeion, c: Semeion) kind empirical {
+    label grc official "τρίγωνον ἀπὸ τριῶν σημείων";
+    label ru unofficial "треугольник на трёх точках";
+}
+
+// ---------------------------------------------------------------------------
+// Равенство ἴσος — без градусов
+// ---------------------------------------------------------------------------
+
+@source(STO_DEF10)
+pub relation isos_gonia(a: Gonion, b: Gonion) kind institutional {
+    label grc official "ἴσαι γωνίαι";
+    label ru unofficial "углы равны";
+}
+
+@source(STO_CN1)
+pub relation isos_mikos(p: Semeion, q: Semeion, r: Semeion, s: Semeion) kind institutional {
+    label grc official "ἴσαι εὐθεῖαι";
+    label ru unofficial "отрезки равны по длине";
+}
+
+@source(STO_DEF10)
+pub relation orthos(g: Gonion) kind institutional {
+    label grc official "ὀρθὴ γωνία";
+    label ru unofficial "прямой угол";
+}
+
+@source(STO_PROP13)
+pub relation isos_dyo_orthais(g: Gonion, h: Gonion) kind institutional {
+    label grc official "δυσὶν ὀρθαῖς ἴσαι";
+    label ru unofficial "два угла вместе равны двум прямым";
+}
+
+@source(STO_PROP32)
+pub relation isos_dyo_goniais(a: Gonion, b: Gonion, c: Gonion) kind institutional {
+    label grc official "γωνία δυσὶ γωνίαις ἴση";
+    label ru unofficial "угол равен двум другим, взятым вместе";
+}
+
+@source(STO_PROP32)
+pub relation treis_isos_dyo_orthais(a: Gonion, b: Gonion, c: Gonion) kind institutional {
+    label grc official "τρεῖς γωνίαι δυσὶν ὀρθαῖς ἴσαι";
+    label ru unofficial "три угла вместе равны двум прямым";
+}
+
+@source(STO_DEF11)
+relation meizon_gonia(a: Gonion, b: Gonion) kind institutional {
+    label grc official "μείζων γωνία";
+    label ru unofficial "первый угол больше второго";
+}
+
+@source(STO_DEF12)
+relation elasson_gonia(a: Gonion, b: Gonion) kind institutional {
+    label grc official "ἐλάσσων γωνία";
+    label ru unofficial "первый угол меньше второго";
+}
+
+@source(STO_CN8)
+relation meizon_mikos(a: Semeion, b: Semeion, c: Semeion, d: Semeion) kind institutional {
+    label grc official "μείζων εὐθεῖα";
+    label ru unofficial "первый отрезок больше второго";
+}
+
+@source(STO_DEF10)
+relation kathetos(l: Eutheia, m: Eutheia) kind institutional {
+    label grc official "κάθετος";
+    label ru unofficial "прямые перпендикулярны";
+}
+
+@source(STO_DEF23)
+pub relation paralleloi(l: Eutheia, m: Eutheia) kind institutional {
+    label grc official "παράλληλοι";
+    label ru unofficial "прямые параллельны";
+}
+
+// ---------------------------------------------------------------------------
+// Области замыканий §70
+// ---------------------------------------------------------------------------
+
+relation semeiazeugos(a: Semeion, b: Semeion) kind institutional {
+    label ru unofficial "упорядоченная пара точек конфигурации";
+}
+
+rule Semeiazeugos(a: Semeion, b: Semeion) strict {
+    label ru unofficial "область пар точек: обе точки взяты из конфигурации";
+    when semeion_tes_figuras(a) and semeion_tes_figuras(b);
+    then semeiazeugos(a, b);
+}
+
+relation semeiatriada(a: Semeion, b: Semeion, c: Semeion) kind institutional {
+    label ru unofficial "упорядоченная тройка точек конфигурации";
+}
+
+rule Semeiatriada(a: Semeion, b: Semeion, c: Semeion) strict {
+    label ru unofficial "область троек точек: все три точки взяты из конфигурации";
+    when semeion_tes_figuras(a) and semeion_tes_figuras(b) and semeion_tes_figuras(c);
+    then semeiatriada(a, b, c);
+}
+
+relation eutheiazeugos(l: Eutheia, m: Eutheia) kind institutional {
+    label ru unofficial "упорядоченная пара прямых конфигурации";
+}
+
+rule Eutheiazeugos(l: Eutheia, m: Eutheia) strict {
+    label ru unofficial "область пар прямых: обе прямые взяты из конфигурации";
+    when eutheia_tes_figuras(l) and eutheia_tes_figuras(m);
+    then eutheiazeugos(l, m);
+}
+
+relation semeion_eutheia_zeugos(p: Semeion, l: Eutheia) kind institutional {
+    label ru unofficial "пара «точка и прямая» конфигурации";
+}
+
+rule SemeionEutheiaZeugos(p: Semeion, l: Eutheia) strict {
+    label ru unofficial "область инцидентности: точка и прямая взяты из конфигурации";
+    when semeion_tes_figuras(p) and eutheia_tes_figuras(l);
+    then semeion_eutheia_zeugos(p, l);
+}
+
+closure KeitaiEpiAbschluss {
+    label ru unofficial "замыкание §70: точка, не записанная на прямой, на ней не лежит";
+    predicate keitai_epi;
+    domain semeion_eutheia_zeugos;
+    snapshot "urn:grc:euclid:snapshot:keitai-epi:stoicheia-i";
+    complete_as_of @2026-09-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+// ---------------------------------------------------------------------------
+// Различие точек и прямых по буквам (как de.hilbert.grundlagen)
+// ---------------------------------------------------------------------------
+
+relation diaphora_semeion(a: Semeion, b: Semeion) kind institutional {
+    label ru unofficial "две различные точки — буквы не совпадают";
+}
+
+rule DiaphoraSemeion(a: Semeion, b: Semeion, na: Text, nb: Text) strict {
+    label ru unofficial "различие точек по несовпадающим буквам чертежа";
+    when onoma_semeiou(a, na) and onoma_semeiou(b, nb) and na != nb;
+    then diaphora_semeion(a, b);
+}
+
+closure DiaphoraSemeionAbschluss {
+    label ru unofficial "замыкание §70: точки, не признанные различными, различными не являются";
+    predicate diaphora_semeion;
+    domain semeiazeugos;
+    snapshot "urn:grc:euclid:snapshot:diaphora-semeion:stoicheia-i";
+    complete_as_of @2026-09-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+relation diaphora_eutheion(l: Eutheia, m: Eutheia) kind institutional {
+    label ru unofficial "две различные прямые — буквы не совпадают";
+}
+
+rule DiaphoraEutheion(l: Eutheia, m: Eutheia, nl: Text, nm: Text) strict {
+    label ru unofficial "различие прямых по несовпадающим буквам чертежа";
+    when onoma_eutheias(l, nl) and onoma_eutheias(m, nm) and nl != nm;
+    then diaphora_eutheion(l, m);
+}
+
+closure DiaphoraEutheionAbschluss {
+    label ru unofficial "замыкание §70: прямые, не признанные различными, различными не являются";
+    predicate diaphora_eutheion;
+    domain eutheiazeugos;
+    snapshot "urn:grc:euclid:snapshot:diaphora-eutheion:stoicheia-i";
+    complete_as_of @2026-09-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+relation euthys(a: Semeion, b: Semeion, c: Semeion) kind institutional {
+    label grc official "ἐπ' εὐθείας";
+    label ru unofficial "три точки лежат на одной прямой";
+}
+
+rule Euthys(l: Eutheia, a: Semeion, b: Semeion, c: Semeion) strict {
+    label ru unofficial "три точки коллинеарны, если лежат на одной предъявленной прямой";
+    when keitai_epi(a, l) and keitai_epi(b, l) and keitai_epi(c, l);
+    then euthys(a, b, c);
+}
+
+closure EuthysAbschluss {
+    label ru unofficial "замыкание §70: тройка без общей прямой коллинеарной не является";
+    predicate euthys;
+    domain semeiatriada;
+    snapshot "urn:grc:euclid:snapshot:euthys:stoicheia-i";
+    complete_as_of @2026-09-18T00:00:00Z;
+    derive_explicit_negative true;
+}

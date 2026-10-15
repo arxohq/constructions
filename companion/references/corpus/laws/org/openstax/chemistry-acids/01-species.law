@@ -1,0 +1,155 @@
+// Словарь частиц и их ролей по гл. 14 и §15.2 Chemistry 2e.
+//
+// ЧТО ЭТОТ ПАКЕТ УТВЕРЖДАЕТ, А ЧТО НЕТ. Здесь нет ни одного определения
+// кислоты. Кислота — термин с ТРЕМЯ прочтениями (Аррениус, Брёнстед—Лоури,
+// Льюис), и по §152 они живут прочтениями одной группы в пакете
+// `chem/acid-base`; развести их по трём пакетам значило бы объявить три
+// разных термина. Здесь лежит то, о чём три прочтения СОГЛАСНЫ: какие бывают
+// частицы, какие роли они играют в реакции, и какие из этих ролей —
+// наблюдаемые факты дела, а какие выводятся.
+//
+// ЛИСТЬЯ — ЭМПИРИЧЕСКИЕ, И ЭТО ГРАНИЦА МОДЕЛИ. «Отдаёт протон», «даёт в воде
+// катион водорода», «принимает пару электронов» — здесь ФАКТЫ ДЕЛА, а не
+// вывод из строения частицы. Система удостоверяет применение принятых
+// определений к предъявленному случаю; выводить донорность из электронной
+// структуры она не берётся и не притворяется, что берётся (правило 5
+// `docs/sciences/README.ru.md`).
+//
+// ЕДИНСТВЕННОЕ, ЧТО ЗДЕСЬ ВЫВОДИТСЯ, — АМФОТЕРНОСТЬ, и выводится она ровно
+// так, как её вводит абзац 14.1: «Species capable of either donating or
+// accepting protons are called amphiprotic». Это не прочтение кислоты, а
+// свойство частицы, общее всем трём: вода амфипротна и по Брёнстеду, и по
+// Аррениусу (она даёт и H3O+, и OH−), и по Льюису.
+
+language "law.core" version "0.2";
+package openstax.chemistry_acids version "0.1.0";
+namespace "urn:openstax:clir:chemistry-acids";
+
+pub entity Species {
+    label ru unofficial "химическая частица";
+    label en unofficial "chemical species";
+}
+
+pub entity Solution {
+    label ru unofficial "водный раствор";
+    label en unofficial "aqueous solution";
+}
+
+// --- Предмет дела --------------------------------------------------------
+//
+// ЗАЧЕМ ЭТО ОБЪЯВЛЕНИЕ. §190 требует, чтобы голова правила связывалась
+// ПОЗИТИВНЫМ established-конъюнктом: `refuted(P(s))` переменную не связывает
+// (LDC-E4101). Отрицательные головы определений (DECISION-0088) поэтому
+// нуждаются в посылке, называющей САМУ частицу, о которой идёт речь. Такая
+// посылка есть и по существу: утверждение «эта частица не кислота» имеет смысл
+// о частице, ПРЕДЪЯВЛЕННОЙ делом, и не имеет смысла о произвольной частице
+// мира. Молчание дела о частице остаётся молчанием, а не отрицанием.
+
+pub relation species_in_question(s: Species) kind empirical {
+    label ru unofficial "частица предъявлена делом как предмет вопроса";
+    label en unofficial "the species is presented by the case as the subject of the question";
+}
+
+// --- Роли в переносе протона (14.1) --------------------------------------
+
+pub relation donates_proton(s: Species) kind empirical {
+    label ru unofficial "частица отдаёт протон другой частице";
+    label en unofficial "the species donates a proton to another compound";
+}
+
+pub relation accepts_proton(s: Species) kind empirical {
+    label ru unofficial "частица принимает протон";
+    label en unofficial "the species accepts a proton";
+}
+
+pub relation conjugate_acid_of(acid: Species, base: Species) kind empirical {
+    label ru unofficial "первая частица — сопряжённая кислота второй";
+    label en unofficial "the first species is the conjugate acid of the second";
+}
+
+// --- Роли в водном растворе (14.1, исторический абзац) -------------------
+
+pub relation dissolves_in_water(s: Species) kind empirical {
+    label ru unofficial "частица растворяется в воде";
+    label en unofficial "the species dissolves in water";
+}
+
+pub relation yields_hydrogen_cation(s: Species) kind empirical {
+    label ru unofficial "при растворении в воде частица даёт катион водорода";
+    label en unofficial "on dissolving in water the species yields hydrogen cations";
+}
+
+pub relation yields_hydroxide_anion(s: Species) kind empirical {
+    label ru unofficial "при растворении в воде частица даёт гидроксид-анион";
+    label en unofficial "on dissolving in water the species yields hydroxide anions";
+}
+
+// --- Роли в переносе электронной пары (15.2) -----------------------------
+
+pub relation donates_electron_pair(s: Species) kind empirical {
+    label ru unofficial "частица отдаёт пару электронов и образует координационную связь";
+    label en unofficial "the species donates an electron pair forming a coordinate covalent bond";
+}
+
+pub relation accepts_electron_pair(s: Species) kind empirical {
+    label ru unofficial "частица принимает пару электронов и образует координационную связь";
+    label en unofficial "the species accepts an electron pair forming a coordinate covalent bond";
+}
+
+// --- Растворитель дела (14.3, эффект выравнивания) -----------------------
+
+pub relation solvent_of(sol: Solution, solvent: Species) kind empirical {
+    label ru unofficial "растворитель предъявленного раствора";
+    label en unofficial "the solvent of the presented solution";
+}
+
+pub relation dissolved_in(s: Species, sol: Solution) kind empirical {
+    label ru unofficial "частица растворена в предъявленном растворе";
+    label en unofficial "the species is dissolved in the presented solution";
+}
+
+pub relation ionizes_completely_in(s: Species, solvent: Species) kind empirical {
+    label ru unofficial "в названном растворителе ионизация частицы полна";
+    label en unofficial "the ionization of the species in the named solvent is essentially complete";
+}
+
+// --- Амфипротность: единственный вывод этого пакета ----------------------
+
+pub relation amphiprotic(s: Species) kind institutional {
+    label ru unofficial "частица амфипротна: способна и отдать, и принять протон";
+    label en unofficial "the species is amphiprotic";
+}
+
+@source(OS_14_1_AMPHIPROTIC)
+pub rule AmphiproticDonatesAndAccepts(s: Species) strict {
+    label ru unofficial "способная и отдать, и принять протон частица амфипротна (14.1)";
+    label en unofficial "a species capable of either donating or accepting protons is amphiprotic (14.1)";
+    when donates_proton(s) and accepts_proton(s);
+    then amphiprotic(s);
+}
+
+// Отрицательная голова strict-правила по DECISION-0088: изложение не молчит о
+// неамфипротной частице, оно её УТВЕРЖДАЕТ — «способна и отдать, и принять»
+// читается как требование ОБЕИХ способностей, и опровержение одной из них
+// есть опровержение амфипротности, а не отсутствие сведений.
+//
+// СВЯЗЫВАЕТ ПОЗИТИВНАЯ ПОСЫЛКА, И ОНА ЖЕ СОДЕРЖАТЕЛЬНА (§190): `refuted` сам
+// по себе переменную не связывает (LDC-E4101), а брать искусственный
+// «рассматривается по делу» здесь не нужно — вторая роль той же частицы и
+// есть та посылка, без которой утверждение было бы о частице, о которой по
+// делу не известно ничего.
+@source(OS_14_1_AMPHIPROTIC)
+pub rule NotAmphiproticWithoutDonation(s: Species) strict {
+    label ru unofficial "принимающая протон частица с опровергнутой донорностью не амфипротна (14.1)";
+    label en unofficial "a proton acceptor whose donation is refuted is not amphiprotic (14.1)";
+    when accepts_proton(s) and refuted(donates_proton(s));
+    then not amphiprotic(s);
+}
+
+@source(OS_14_1_AMPHIPROTIC)
+pub rule NotAmphiproticWithoutAcceptance(s: Species) strict {
+    label ru unofficial "отдающая протон частица с опровергнутой акцепторностью не амфипротна (14.1)";
+    label en unofficial "a proton donor whose acceptance is refuted is not amphiprotic (14.1)";
+    when donates_proton(s) and refuted(accepts_proton(s));
+    then not amphiprotic(s);
+}

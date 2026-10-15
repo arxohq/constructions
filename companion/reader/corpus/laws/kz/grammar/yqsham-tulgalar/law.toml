@@ -1,0 +1,30 @@
+# Манифест §10 — заголовки нормативны в .law и сверяются lawc.
+[package]
+name = "kz.grammar.yqsham_tulgalar"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:kz:grammar:clir:yqsham-tulgalar"
+
+[metadata]
+act = "kz-grammar-yqsham-tulgalar"
+# §§33—34 раздела о звучании слова: полная и сокращённая формы глагола идут
+# рядом, произносится ровно данная, а в стихе окончание -ды, -ді сокращается
+# до -д и звучит даже с т.
+title = "Ықшам тұлғалар №53: §§33—34 — произносится ровно та форма, что дана, а в стихе окончание -ды сокращается до -д и звучит даже с т"
+
+primarySource = "ANYQTAGYSH_SYZDYQ"
+jurisdiction = "KZ"
+instrument = "treatise"
+sourceFidelity = "pinned_unofficial_copy"
+
+# Справочник не является действующим НПА. Байты публикации скопированы без
+# изменения из kz.grammar.yrgaq; content_hash публикации совпадает.
+issuer = "Справочник Р. Сыздық издан Министерством культуры, информации и общественного согласия совместно с Институтом языкознания им. А. Байтұрсынұлы"
+legalStatus = "never_enacted"
+verifiedAgainstSource = true
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "grammar_yqsham_tulgalar"
+suites = ["tests/grammar-yqsham-tulgalar.lawtest"]
+world = ["kz.grammar.yqsham_tulgalar"]

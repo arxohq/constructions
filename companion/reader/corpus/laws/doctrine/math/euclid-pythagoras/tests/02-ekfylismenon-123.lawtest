@@ -1,0 +1,18 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// I.20 — строгость μείζονές εἰσι: вырожденная тройка 1-2-3 (1+2 == 3, а
+// не больше) треугольника НЕ составляет. Вторая сторона границы — сцена
+// EUCL-01 семейства (2-3-4 составляет).
+test "urn:query:eucl-123" {
+    given {
+        assert "eucl-t02-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 1, 2, 3) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,23 @@
+language "law.core" version "0.1";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// Раздел 1 RFC 2119: MUST есть «absolute requirement of the specification».
+// Дело — HTTP-обмен: сервер, заявивший соответствие RFC 9110, не отдал
+// заголовок Allow в ответе 405. Требование ЧУЖОГО документа приходит фактом
+// (BCP 14 придаёт силу чужим словам, не зная, о чём они), а позиция и её
+// нарушение выводятся здесь.
+test "urn:query:bcp14-test-must-breached" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @2026-08-30; timezone "UTC"; }
+        assert "bcp14-t1-a": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t1-b": stated_in(entity_ref("urn:ietf:rfc:9110#allow"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t1-c": claims_conformance(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t1-d": keyword_written(entity_ref("urn:ietf:rfc:9110#allow"), Must, AllCapitals) { origin case_input; }
+        assert "bcp14-t1-e": behaviour_deviates(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110#allow")) { origin case_input; }
+    }
+    evaluate positions();
+    expect result_kind == NORM_POSITION;
+    expect evaluation_status == COMPUTED;
+    expect normative_status == VIOLATED;
+}

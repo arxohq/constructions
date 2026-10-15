@@ -1,0 +1,135 @@
+// Αἰτήματα ε΄ — пять постулатов.
+//
+// POST1, POST3, POST4 — инварианты и правила на конечной фигуре.
+// POST2, POST5 — границы в articles.json (бесконечное продолжение);
+// на чертеже проверяется только предъявленное продолжение / встреча.
+
+use self::{
+    Eutheia,
+    Gonion,
+    Kyklos,
+    STO_POST1,
+    STO_POST2,
+    STO_POST3,
+    STO_POST4,
+    STO_POST5,
+    Semeion,
+    diaphora_semeion,
+    isos_gonia,
+    keitai_epi,
+    kentron_kyklou,
+    kyklos_tes_figuras,
+    mikos,
+    orthos,
+    semeiazeugos,
+};
+
+@source(STO_POST1)
+relation synechousa_eutheia(a: Semeion, b: Semeion) kind institutional {
+    label grc official "εὐθεῖα … ἀπὸ … ἐπὶ …";
+    label ru unofficial "через две точки проходит соединяющая прямая";
+}
+
+@source(STO_POST1)
+rule SynechousaEutheia(a: Semeion, b: Semeion, l: Eutheia) strict {
+    label ru unofficial "прямая соединяет две точки, когда обе на ней лежат";
+    when diaphora_semeion(a, b) and keitai_epi(a, l) and keitai_epi(b, l);
+    then synechousa_eutheia(a, b);
+}
+
+closure SynechousaAbschluss {
+    label ru unofficial "замыкание §70: пара точек без общей соединяющей прямой её не имеет";
+    predicate synechousa_eutheia;
+    domain semeiazeugos;
+    snapshot "urn:grc:euclid:snapshot:synechousa:stoicheia-i";
+    complete_as_of @2026-09-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(STO_POST1)
+constraint AitemaI(a: Semeion, b: Semeion) {
+    label grc official "Ἠιτήσθω ἀπὸ παντὸς σημείου ἐπὶ πᾶν σημεῖον εὐθεῖαν γραμμὴν ἀγαγεῖν";
+    label ru unofficial "POST1: две различные точки конфигурации лежат на общей прямой";
+    when diaphora_semeion(a, b);
+    require synechousa_eutheia(a, b);
+    severity error;
+    message "постулат I нарушен: две различные точки не лежат ни на одной общей прямой";
+}
+
+@source(STO_POST2)
+relation ekbole_eutheias(l: Eutheia, a: Semeion, b: Semeion) kind empirical {
+    label grc official "πεπερασμένην εὐθεῖαν … ἐκβαλεῖν";
+    label ru unofficial "предъявлено продолжение конечной прямой за точку";
+}
+
+@source(STO_POST2)
+rule EkboleEpiEutheias(l: Eutheia, a: Semeion, b: Semeion) strict {
+    label ru unofficial "POST2 на конечной фигуре: предъявленное продолжение коллинеарно";
+    when ekbole_eutheias(l, a, b) and keitai_epi(a, l) and keitai_epi(b, l);
+    then synechousa_eutheia(a, b);
+}
+
+@source(STO_POST3)
+relation graphetai_kyklos(k: Kyklos, p: Semeion, a: Semeion) kind institutional {
+    label grc official "κύκλον γράφεσθαι";
+    label ru unofficial "окружность с данным центром и радиусом";
+}
+
+@source(STO_POST3)
+rule GraphetaiKyklos(k: Kyklos, p: Semeion, a: Semeion, v: Integer) strict {
+    label ru unofficial "POST3: окружность с центром p и радиусом до a";
+    when kyklos_tes_figuras(k) and kentron_kyklou(k, p) and mikos(p, a, v);
+    then graphetai_kyklos(k, p, a);
+}
+
+// POST4 — правило, не требование уже записанного равенства: из двух прямых
+// углов выводится ἴσος. Инвариант «различными их объявлять нельзя» не нужен:
+// равенство само есть содержание постулата.
+@source(STO_POST4)
+rule AitemaIV(g: Gonion, h: Gonion) strict {
+    label grc official "πάσας τὰς ὀρθὰς γωνίας ἴσας ἀλλήλαις εἶναι";
+    label ru unofficial "POST4: все прямые углы равны друг другу";
+    when supported(orthos(g)) and supported(orthos(h));
+    then isos_gonia(g, h);
+}
+
+@source(STO_POST5)
+relation smeznye_entos(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) kind empirical {
+    label grc official "ἐντὸς καὶ ἐπὶ τὰ αὐτὰ μέρη";
+    label ru unofficial "внутренние односторонние углы при секущей";
+}
+
+@source(STO_POST5)
+relation elassous_dyo_orthon(g: Gonion) kind institutional {
+    label grc official "δύο ὀρθῶν ἐλάσσονας";
+    label ru unofficial "угол меньше двух прямых";
+}
+
+@source(STO_POST5)
+relation sympiptousin(l: Eutheia, m: Eutheia) kind institutional {
+    label grc official "συμπίπτουσιν";
+    label ru unofficial "прямые встречаются";
+}
+
+@source(STO_POST5)
+relation sympiptousin_apodedeigmenon(l: Eutheia, m: Eutheia) kind empirical {
+    label ru unofficial "на чертеже предъявлена точка встречи двух прямых";
+}
+
+// Конечная тень POST5: если внутренние односторонние меньше двух прямых и
+// встреча предъявлена — прямые встречаются. Бесконечное продолжение — граница.
+@source(STO_POST5)
+rule AitemaVEpiFiguras(
+    t: Eutheia,
+    m: Eutheia,
+    n: Eutheia,
+    g: Gonion,
+    h: Gonion,
+) strict {
+    label ru unofficial "POST5 на конечной фигуре: предъявленная встреча при внутренних меньше двух прямых";
+    when smeznye_entos(t, m, n, g, h)
+        and elassous_dyo_orthon(g)
+        and elassous_dyo_orthon(h)
+        and sympiptousin_apodedeigmenon(m, n);
+    then sympiptousin(m, n);
+}

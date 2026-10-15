@@ -1,0 +1,45 @@
+[package]
+name = "openstax.measurement"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:openstax:clir:measurement"
+
+[dependencies]
+"units.si" = "0.1.0"
+"bipm.si_brochure" = "0.1.0"
+
+[features]
+enabled = ["law.units/0.1"]
+semanticLayer = "L1"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md).
+[metadata]
+act = "openstax-measurement"
+title = "OpenStax University Physics, т. 1, гл. 1–2: измерение, единицы, размерный анализ, значащие цифры и векторы — первый слой классической физики"
+primarySource = "M58272"
+jurisdiction = "none"
+instrument = "treatise"
+sourceFidelity = "pinned_official_bytes"
+# issuer: учебник издаёт OpenStax (Rice University); авторы названы в самом
+# издании, коллектив меняется между редакциями.
+issuer = "OpenStax, Rice University — University Physics Volume 1 (osbooks-university-physics-bundle, commit d0ed34a)"
+# legalStatus: doctrine — учебник не акт государства; юрисдикции у него нет.
+legalStatus = "doctrine"
+# verifiedAgainstSource: фрагменты вырезаны генератором из закреплённых байтов
+# по идентификаторам элементов и несут собственный content_hash (§194).
+verifiedAgainstSource = true
+# ЛИЦЕНЗИЯ CC BY-NC-SA 4.0 — некоммерческое использование и share-alike;
+# решение владельца 06.09.2026 «закрепить с пометкой». Подробнее — шапка
+# sources.law.
+
+# Сценарии пакета (DECISION-0127): мир — потребитель, затем зависимости.
+[[tests]]
+family = "openstax_measurement"
+suites = [
+  "tests/01-dimensional-consistency.lawtest",
+  "tests/02-algebra-rejects-the-answer.lawtest",
+  "tests/03-quantities-and-units.lawtest",
+  "tests/04-uncertainty.lawtest",
+  "tests/05-vectors.lawtest",
+]
+world = ["openstax.measurement", "bipm.si_brochure", "units.si"]

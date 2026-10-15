@@ -1,0 +1,106 @@
+// § 5. Группа аксиом III: аксиома параллельных (евклидова). Одна аксиома
+// первого издания — формулировка Плейфэра.
+//
+// «This statement of the axiom of parallels contains two assertions.»
+// Существование («there is always a straight line passing through A which
+// does not intersect the given line a») на конечном чертеже читается как
+// I 1: соединяющая прямая обязана УЖЕ стоять среди предъявленных, а не
+// порождаться правилом (§190). Единственность («only one such line is
+// possible») Гильберт называет существенной; её и несёт единственный
+// инвариант группы. «Не пересекаются» на конечном чертеже — не квантор по
+// точкам, которых нет, а замыкание §70: среди предъявленных точек общей
+// точки нет.
+//
+// КЛЮЧ `playfair_parallele` — сторож единственности на исполнении: две
+// различные параллели через одну точку вне прямой дают KEY_CONFLICT §196,
+// а не молчаливый выбор одной из них. Инвариант говорит то же языком
+// §93.1: такими их объявлять нельзя.
+
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+use self::{
+    GDG_III,
+    Gerade,
+    Punkt,
+    geradenpaar,
+    liegt_auf,
+    meidet,
+    verschiedene_geraden,
+};
+
+@source(GDG_III)
+pub relation schneidet(l: Gerade, m: Gerade) kind institutional {
+    label en official "intersect";
+    label ru unofficial "две прямые имеют общую предъявленную точку";
+}
+
+@source(GDG_III)
+rule Schneidet(l: Gerade, m: Gerade, p: Punkt) strict {
+    label ru unofficial "прямые пересекаются, когда несут одну и ту же точку чертежа";
+    when liegt_auf(p, l) and liegt_auf(p, m);
+    then schneidet(l, m);
+}
+
+closure SchneidetAbschluss {
+    label ru unofficial "замыкание §70: пара прямых без общей предъявленной точки не пересекается";
+    predicate schneidet;
+    domain geradenpaar;
+    snapshot "urn:de:hilbert:snapshot:schneidet:1899";
+    complete_as_of @1899-06-17T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(GDG_III)
+pub relation parallele(l: Gerade, m: Gerade) kind institutional {
+    label en official "the parallel to a";
+    label ru unofficial "две различные прямые не встречаются среди точек чертежа";
+}
+
+@source(GDG_III)
+pub rule Parallele(l: Gerade, m: Gerade) strict {
+    label ru unofficial "параллель на конечном чертеже: различные прямые без общей предъявленной точки";
+    when verschiedene_geraden(l, m) and not schneidet(l, m);
+    then parallele(l, m);
+}
+
+@source(GDG_III)
+pub relation playfair_parallele(p: Punkt, a: Gerade, m: Gerade) kind institutional {
+    label en official "the parallel to a through the given point A";
+    label ru unofficial "прямая через точку вне данной, не встречающая данную на чертеже";
+    key(p, a);
+}
+
+@source(GDG_III)
+pub rule PlayfairParallele(p: Punkt, a: Gerade, m: Gerade) strict {
+    label ru unofficial "через точку вне прямой проведена параллель — среди предъявленных прямых";
+    when meidet(a, p) and liegt_auf(p, m) and verschiedene_geraden(m, a)
+        and not schneidet(m, a);
+    then playfair_parallele(p, a, m);
+}
+
+@source(GDG_III)
+pub relation parallele_durch(p: Punkt, a: Gerade) kind institutional {
+    label ru unofficial "через точку вне прямой в чертеже есть параллель";
+}
+
+@source(GDG_III)
+pub rule ParalleleDurch(p: Punkt, a: Gerade, m: Gerade) strict {
+    label ru unofficial "существование параллели — требование к предъявленному, не порождение прямой";
+    when playfair_parallele(p, a, m);
+    then parallele_durch(p, a);
+}
+
+@source(GDG_III)
+constraint AxiomIIIPlayfair(p: Punkt, a: Gerade, m: Gerade, n: Gerade) {
+    label en official "III. In a plane α there can be drawn through any point A, lying outside of a straight line a, one and only one straight line which does not intersect the line a";
+    label ru unofficial "инвариант §93.1, аксиома III (Плейфэр): через точку вне прямой проходит не более одной параллели среди предъявленных прямых";
+    when meidet(a, p)
+        and liegt_auf(p, m) and liegt_auf(p, n)
+        and verschiedene_geraden(m, n)
+        and not schneidet(m, a) and not schneidet(n, a);
+    require not verschiedene_geraden(m, n);
+    severity error;
+    message "аксиома III нарушена: через точку вне прямой в чертеже проведены две различные прямые, не встречающие данную среди предъявленных точек";
+}

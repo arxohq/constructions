@@ -1,0 +1,16 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:16cacaea42262aa7b4503e90f101812cb9735719a540a60adf9ce2e111dc9c91",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:94f079ef2cef7b9ef14d9a9c6352c783ec260a8abe62c1d6353f6d816a03646f",
+    "name": "units.si",
+    "namespace": "urn:law:units:si",
+    "sourceHash": "sha256:0d21b2ad2160bdee197ef84b28fac45edd11ac81dab52efbe631be9fc6f8e07b",
+    "version": "0.1.0"
+  },
+  "semanticLayer": "L0"
+}

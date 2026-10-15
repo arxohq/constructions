@@ -1,0 +1,1248 @@
+{
+  "$comment": "Каталог вопросов пакета (DECISION-0190, law.package-questions/0.1). Карточка — параметризованный шаблон запроса §172, а не ответ. Свидетельства — сценарии tests/, в том числе порождённые (tests/catalog): каждый выполняет посылки правила и спрашивает вывод.",
+  "format": "law.package-questions/0.1",
+  "package": "scrum.guide",
+  "tasks": [
+    {
+      "id": "sg-s1",
+      "title": "SG_S1",
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "sg-s2",
+      "title": "SG_S2",
+      "source_units": [
+        "SG_S2"
+      ]
+    },
+    {
+      "id": "sg-s3-1",
+      "title": "SG_S3_1",
+      "source_units": [
+        "SG_S3_1"
+      ]
+    },
+    {
+      "id": "sg-s3-2",
+      "title": "SG_S3_2",
+      "source_units": [
+        "SG_S3_2"
+      ]
+    },
+    {
+      "id": "sg-s3-3",
+      "title": "SG_S3_3",
+      "source_units": [
+        "SG_S3_3"
+      ]
+    },
+    {
+      "id": "sg-s5-1",
+      "title": "SG_S5_1",
+      "source_units": [
+        "SG_S5_1"
+      ]
+    },
+    {
+      "id": "sg-s5-2",
+      "title": "SG_S5_2",
+      "source_units": [
+        "SG_S5_2"
+      ]
+    },
+    {
+      "id": "sg-s5-3",
+      "title": "SG_S5_3",
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "sg-s6",
+      "title": "SG_S6",
+      "source_units": [
+        "SG_S6"
+      ]
+    },
+    {
+      "id": "sg-s6-1",
+      "title": "SG_S6_1",
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "sg-s6-2",
+      "title": "SG_S6_2",
+      "source_units": [
+        "SG_S6_2"
+      ]
+    },
+    {
+      "id": "sg-s6-2-2",
+      "title": "SG_S6_2_2",
+      "source_units": [
+        "SG_S6_2_2"
+      ]
+    },
+    {
+      "id": "sg-s6-2-3",
+      "title": "SG_S6_2_3",
+      "source_units": [
+        "SG_S6_2_3"
+      ]
+    },
+    {
+      "id": "sg-s6-3",
+      "title": "SG_S6_3",
+      "source_units": [
+        "SG_S6_3"
+      ]
+    },
+    {
+      "id": "sg-s7",
+      "title": "SG_S7",
+      "source_units": [
+        "SG_S7"
+      ]
+    },
+    {
+      "id": "sg-s7-1",
+      "title": "SG_S7_1",
+      "source_units": [
+        "SG_S7_1"
+      ]
+    },
+    {
+      "id": "sg-s7-1-1",
+      "title": "SG_S7_1_1",
+      "source_units": [
+        "SG_S7_1_1"
+      ]
+    },
+    {
+      "id": "sg-s7-2",
+      "title": "SG_S7_2",
+      "source_units": [
+        "SG_S7_2"
+      ]
+    },
+    {
+      "id": "sg-s7-2-1",
+      "title": "SG_S7_2_1",
+      "source_units": [
+        "SG_S7_2_1"
+      ]
+    },
+    {
+      "id": "sg-s7-3",
+      "title": "SG_S7_3",
+      "source_units": [
+        "SG_S7_3"
+      ]
+    },
+    {
+      "id": "sg-s7-3-1",
+      "title": "SG_S7_3_1",
+      "source_units": [
+        "SG_S7_3_1"
+      ]
+    },
+    {
+      "id": "sg-s8",
+      "title": "SG_S8",
+      "source_units": [
+        "SG_S8"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "accountable-for-fostering-environment",
+      "task": "sg-s2",
+      "question": "Установлено ли по делу: accountable_for_fostering_environment?",
+      "kind": "truth",
+      "predicate": "accountable_for_fostering_environment",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(accountable_for_fostering_environment(<p>, <t>));",
+      "tests": [
+        "CATALOG-SCRUMREQUIRESSCRUMMASTERTOFOSTERENVIRONMENT"
+      ],
+      "source_units": [
+        "SG_S2"
+      ]
+    },
+    {
+      "id": "adviser-admitted",
+      "task": "sg-s6-2",
+      "question": "Установлено ли по делу: adviser_admitted?",
+      "kind": "truth",
+      "predicate": "adviser_admitted",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "e",
+          "type": "ScrumEvent",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(adviser_admitted(<p>, <e>));",
+      "tests": [
+        "CATALOG-TEAMMAYINVITEADVISERS"
+      ],
+      "source_units": [
+        "SG_S6_2"
+      ]
+    },
+    {
+      "id": "cancellation-declared-by-product-owner",
+      "task": "sg-s6-1",
+      "question": "Установлено ли по делу: cancellation_declared_by_product_owner?",
+      "kind": "truth",
+      "predicate": "cancellation_declared_by_product_owner",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(cancellation_declared_by_product_owner(<s>));",
+      "tests": [
+        "CATALOG-CANCELLATIONDECLAREDBYPRODUCTOWNER"
+      ],
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "commitment-of",
+      "task": "sg-s7",
+      "question": "Установлено ли по делу: commitment_of?",
+      "kind": "truth",
+      "predicate": "commitment_of",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "Artifact",
+          "role": "bound"
+        },
+        {
+          "name": "c",
+          "type": "Commitment",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(commitment_of(<a>, <c>));",
+      "tests": [
+        "CATALOG-INCREMENTCOMMITSTODEFINITIONOFDONE"
+      ],
+      "source_units": [
+        "SG_S7"
+      ]
+    },
+    {
+      "id": "committed-to-creating-increment",
+      "task": "sg-s5-1",
+      "question": "Установлено ли по делу: committed_to_creating_increment?",
+      "kind": "truth",
+      "predicate": "committed_to_creating_increment",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(committed_to_creating_increment(<p>, <t>));",
+      "tests": [
+        "CATALOG-DEVELOPERSCOMMITTEDTOINCREMENT"
+      ],
+      "source_units": [
+        "SG_S5_1"
+      ]
+    },
+    {
+      "id": "daily-scrum-participant",
+      "task": "sg-s6-3",
+      "question": "Установлено ли по делу: daily_scrum_participant?",
+      "kind": "truth",
+      "predicate": "daily_scrum_participant",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "e",
+          "type": "ScrumEvent",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(daily_scrum_participant(<p>, <e>));",
+      "tests": [
+        "CATALOG-DEVELOPERSPARTICIPATEINDAILYSCRUM"
+      ],
+      "source_units": [
+        "SG_S6_3"
+      ]
+    },
+    {
+      "id": "developers-accountable-for",
+      "task": "sg-s5-1",
+      "question": "Установлено ли по делу: developers_accountable_for?",
+      "kind": "truth",
+      "predicate": "developers_accountable_for",
+      "parameters": [
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "a",
+          "type": "DeveloperAccountability",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(developers_accountable_for(<t>, <a>));",
+      "tests": [
+        "CATALOG-DEVELOPERSACCOUNTABLEFORDAILYADAPTATION"
+      ],
+      "source_units": [
+        "SG_S5_1"
+      ]
+    },
+    {
+      "id": "formal-inspection-opportunity",
+      "task": "sg-s6",
+      "question": "Установлено ли по делу: formal_inspection_opportunity?",
+      "kind": "truth",
+      "predicate": "formal_inspection_opportunity",
+      "parameters": [
+        {
+          "name": "e",
+          "type": "ScrumEvent",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(formal_inspection_opportunity(<e>));",
+      "tests": [
+        "CATALOG-EACHEVENTISANINSPECTIONOPPORTUNITY"
+      ],
+      "source_units": [
+        "SG_S6"
+      ]
+    },
+    {
+      "id": "inspection-opportunity-lost",
+      "task": "sg-s6",
+      "question": "Установлено ли по делу: inspection_opportunity_lost?",
+      "kind": "truth",
+      "predicate": "inspection_opportunity_lost",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        },
+        {
+          "name": "k",
+          "type": "EventKind",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(inspection_opportunity_lost(<s>, <k>));",
+      "tests": [
+        "CATALOG-FAILURETOOPERATELOSESOPPORTUNITY"
+      ],
+      "source_units": [
+        "SG_S6"
+      ]
+    },
+    {
+      "id": "is-scrum",
+      "task": "sg-s8",
+      "question": "Установлено ли по делу: is_scrum?",
+      "kind": "truth",
+      "predicate": "is_scrum",
+      "parameters": [
+        {
+          "name": "i",
+          "type": "ScrumImplementation",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(is_scrum(<i>));",
+      "tests": [
+        "urn:query:scrum-test-partial-implementation"
+      ],
+      "source_units": [
+        "SG_S8"
+      ]
+    },
+    {
+      "id": "may-be-delivered-before-sprint-end",
+      "task": "sg-s7-3",
+      "question": "Установлено ли по делу: may_be_delivered_before_sprint_end?",
+      "kind": "truth",
+      "predicate": "may_be_delivered_before_sprint_end",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "BacklogItem",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(may_be_delivered_before_sprint_end(<item>));",
+      "tests": [
+        "CATALOG-INCREMENTMAYBEDELIVEREDEARLY"
+      ],
+      "source_units": [
+        "SG_S7_3"
+      ]
+    },
+    {
+      "id": "next-sprint-start-due",
+      "task": "sg-s6-1",
+      "question": "Установлено ли по делу: next_sprint_start_due?",
+      "kind": "truth",
+      "predicate": "next_sprint_start_due",
+      "parameters": [
+        {
+          "name": "next",
+          "type": "Sprint",
+          "role": "bound"
+        },
+        {
+          "name": "d",
+          "type": "Date",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(next_sprint_start_due(<next>, <d>));",
+      "tests": [
+        "CATALOG-NEXTSPRINTSTARTSIMMEDIATELY"
+      ],
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "product-owner-accountable-for",
+      "task": "sg-s5-2",
+      "question": "Установлено ли по делу: product_owner_accountable_for?",
+      "kind": "truth",
+      "predicate": "product_owner_accountable_for",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "a",
+          "type": "ProductOwnerAccountability",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(product_owner_accountable_for(<p>, <t>, <a>));",
+      "tests": [
+        "CATALOG-PRODUCTOWNERACCOUNTABLEFORITEMS"
+      ],
+      "source_units": [
+        "SG_S5_2"
+      ]
+    },
+    {
+      "id": "product-owner-is-a-committee",
+      "task": "sg-s5-2",
+      "question": "Установлено ли по делу: product_owner_is_a_committee?",
+      "kind": "truth",
+      "predicate": "product_owner_is_a_committee",
+      "parameters": [
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(product_owner_is_a_committee(<t>));",
+      "tests": [
+        "urn:query:scrum-test-product-owner-committee"
+      ],
+      "source_units": [
+        "SG_S5_2"
+      ]
+    },
+    {
+      "id": "ready-for-selection",
+      "task": "sg-s7-1",
+      "question": "Установлено ли по делу: ready_for_selection?",
+      "kind": "truth",
+      "predicate": "ready_for_selection",
+      "parameters": [
+        {
+          "name": "item",
+          "type": "BacklogItem",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(ready_for_selection(<item>));",
+      "tests": [
+        "CATALOG-DOABLEITEMSAREREADY"
+      ],
+      "source_units": [
+        "SG_S7_1"
+      ]
+    },
+    {
+      "id": "remains-accountable-for-backlog",
+      "task": "sg-s5-2",
+      "question": "Установлено ли по делу: remains_accountable_for_backlog?",
+      "kind": "truth",
+      "predicate": "remains_accountable_for_backlog",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(remains_accountable_for_backlog(<p>, <t>));",
+      "tests": [
+        "CATALOG-DELEGATIONKEEPSACCOUNTABILITY"
+      ],
+      "source_units": [
+        "SG_S5_2"
+      ]
+    },
+    {
+      "id": "responsible-for-sizing",
+      "task": "sg-s7-1",
+      "question": "Установлено ли по делу: responsible_for_sizing?",
+      "kind": "truth",
+      "predicate": "responsible_for_sizing",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "item",
+          "type": "BacklogItem",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(responsible_for_sizing(<p>, <item>));",
+      "tests": [
+        "CATALOG-DEVELOPERSRESPONSIBLEFORSIZING"
+      ],
+      "source_units": [
+        "SG_S7_1"
+      ]
+    },
+    {
+      "id": "scope-negotiation-within-sprint-permitted",
+      "task": "sg-s7-2-1",
+      "question": "Установлено ли по делу: scope_negotiation_within_sprint_permitted?",
+      "kind": "truth",
+      "predicate": "scope_negotiation_within_sprint_permitted",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(scope_negotiation_within_sprint_permitted(<s>));",
+      "tests": [
+        "CATALOG-SCOPENEGOTIABLEWITHINSPRINT"
+      ],
+      "source_units": [
+        "SG_S7_2_1"
+      ]
+    },
+    {
+      "id": "scrum-master-accountable-for",
+      "task": "sg-s5-3",
+      "question": "Установлено ли по делу: scrum_master_accountable_for?",
+      "kind": "truth",
+      "predicate": "scrum_master_accountable_for",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "a",
+          "type": "ScrumMasterAccountability",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(scrum_master_accountable_for(<p>, <t>, <a>));",
+      "tests": [
+        "CATALOG-SCRUMMASTERACCOUNTABLEFOREFFECTIVENESS"
+      ],
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "scrum-master-serves-organization-by",
+      "task": "sg-s5-3",
+      "question": "Установлено ли по делу: scrum_master_serves_organization_by?",
+      "kind": "truth",
+      "predicate": "scrum_master_serves_organization_by",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "s",
+          "type": "ScrumMasterService",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(scrum_master_serves_organization_by(<p>, <t>, <s>));",
+      "tests": [
+        "CATALOG-SERVESORGANIZATIONBYEMPIRICALAPPROACH"
+      ],
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "scrum-master-serves-product-owner-by",
+      "task": "sg-s5-3",
+      "question": "Установлено ли по делу: scrum_master_serves_product_owner_by?",
+      "kind": "truth",
+      "predicate": "scrum_master_serves_product_owner_by",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "s",
+          "type": "ScrumMasterService",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(scrum_master_serves_product_owner_by(<p>, <t>, <s>));",
+      "tests": [
+        "CATALOG-SERVESPRODUCTOWNERBYCLEARITEMS"
+      ],
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "scrum-master-serves-team-by",
+      "task": "sg-s5-3",
+      "question": "Установлено ли по делу: scrum_master_serves_team_by?",
+      "kind": "truth",
+      "predicate": "scrum_master_serves_team_by",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "Person",
+          "role": "bound"
+        },
+        {
+          "name": "t",
+          "type": "Team",
+          "role": "bound"
+        },
+        {
+          "name": "s",
+          "type": "ScrumMasterService",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(scrum_master_serves_team_by(<p>, <t>, <s>));",
+      "tests": [
+        "CATALOG-SERVESTEAMBYCOACHING"
+      ],
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "sprint-backlog-complete",
+      "task": "sg-s7-2",
+      "question": "Установлено ли по делу: sprint_backlog_complete?",
+      "kind": "truth",
+      "predicate": "sprint_backlog_complete",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(sprint_backlog_complete(<s>));",
+      "tests": [
+        "CATALOG-SPRINTBACKLOGCOMPOSITION"
+      ],
+      "source_units": [
+        "SG_S7_2"
+      ]
+    },
+    {
+      "id": "sprint-goal-in-sprint-backlog",
+      "task": "sg-s7-2-1",
+      "question": "Установлено ли по делу: sprint_goal_in_sprint_backlog?",
+      "kind": "truth",
+      "predicate": "sprint_goal_in_sprint_backlog",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(sprint_goal_in_sprint_backlog(<s>));",
+      "tests": [
+        "CATALOG-SPRINTGOALADDEDTOSPRINTBACKLOG"
+      ],
+      "source_units": [
+        "SG_S7_2_1"
+      ]
+    },
+    {
+      "id": "sprint-length-conforms",
+      "task": "sg-s6-1",
+      "question": "Установлено ли по делу: sprint_length_conforms?",
+      "kind": "truth",
+      "predicate": "sprint_length_conforms",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(sprint_length_conforms(<s>));",
+      "tests": [
+        "urn:query:scrum-test-sprint-exact-month"
+      ],
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "usable-increment-created",
+      "task": "sg-s7-3",
+      "question": "Установлено ли по делу: usable_increment_created?",
+      "kind": "truth",
+      "predicate": "usable_increment_created",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(usable_increment_created(<s>));",
+      "tests": [
+        "CATALOG-USABLEINCREMENTCREATED"
+      ],
+      "source_units": [
+        "SG_S7_3"
+      ]
+    },
+    {
+      "id": "work-planning-at-developers-discretion",
+      "task": "sg-s6-2-3",
+      "question": "Установлено ли по делу: work_planning_at_developers_discretion?",
+      "kind": "truth",
+      "predicate": "work_planning_at_developers_discretion",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "Sprint",
+          "role": "bound"
+        }
+      ],
+      "template": "evaluate truth(work_planning_at_developers_discretion(<s>));",
+      "tests": [
+        "CATALOG-HOWISATDEVELOPERSDISCRETION"
+      ],
+      "source_units": [
+        "SG_S6_2_3"
+      ]
+    },
+    {
+      "id": "poziciya-adjustprocessormaterials",
+      "task": "sg-s3-3",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «AdjustProcessOrMaterials»?",
+      "kind": "positions",
+      "norms": [
+        "AdjustProcessOrMaterials"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(AdjustProcessOrMaterials, <статус>)",
+      "tests": [
+        "CATALOG-DEVIATIONREQUIRESADJUSTMENT"
+      ],
+      "source_units": [
+        "SG_S3_3"
+      ]
+    },
+    {
+      "id": "poziciya-conformtodefinitionofdone",
+      "task": "sg-s7-3-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «ConformToDefinitionOfDone»?",
+      "kind": "positions",
+      "norms": [
+        "ConformToDefinitionOfDone"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(ConformToDefinitionOfDone, <статус>)",
+      "tests": [
+        "CATALOG-DEVELOPERSREQUIREDTOCONFORM"
+      ],
+      "source_units": [
+        "SG_S7_3_1"
+      ]
+    },
+    {
+      "id": "poziciya-createincrementeverysprint",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «CreateIncrementEverySprint»?",
+      "kind": "positions",
+      "norms": [
+        "CreateIncrementEverySprint"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(CreateIncrementEverySprint, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-CREATEINCREMENTEVERYSPRINT"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "poziciya-createowndefinitionofdone",
+      "task": "sg-s7-3-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «CreateOwnDefinitionOfDone»?",
+      "kind": "positions",
+      "norms": [
+        "CreateOwnDefinitionOfDone"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(CreateOwnDefinitionOfDone, <статус>)",
+      "tests": [
+        "CATALOG-PART-CREATEDEFINITIONOFDONE"
+      ],
+      "source_units": [
+        "SG_S7_3_1"
+      ]
+    },
+    {
+      "id": "poziciya-ensureattendeesprepared",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «EnsureAttendeesPrepared»?",
+      "kind": "positions",
+      "norms": [
+        "EnsureAttendeesPrepared"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(EnsureAttendeesPrepared, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-ENSUREATTENDEESPREPARED"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "poziciya-ensureeventswithintimebox",
+      "task": "sg-s5-3",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «EnsureEventsWithinTimebox»?",
+      "kind": "positions",
+      "norms": [
+        "EnsureEventsWithinTimebox"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(EnsureEventsWithinTimebox, <статус>)",
+      "tests": [
+        "CATALOG-SCRUMMASTERENSURESTIMEBOXES"
+      ],
+      "source_units": [
+        "SG_S5_3"
+      ]
+    },
+    {
+      "id": "poziciya-finalizesprintgoal",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «FinalizeSprintGoal»?",
+      "kind": "positions",
+      "norms": [
+        "FinalizeSprintGoal"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(FinalizeSprintGoal, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-FINALIZESPRINTGOAL"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "poziciya-followorganizationalstandard",
+      "task": "sg-s7-3-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «FollowOrganizationalStandard»?",
+      "kind": "positions",
+      "norms": [
+        "FollowOrganizationalStandard"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(FollowOrganizationalStandard, <статус>)",
+      "tests": [
+        "CATALOG-FOLLOWORGANIZATIONALDEFINITIONOFDONE"
+      ],
+      "source_units": [
+        "SG_S7_3_1"
+      ]
+    },
+    {
+      "id": "poziciya-inspectartifactsandprogress",
+      "task": "sg-s3-2",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «InspectArtifactsAndProgress»?",
+      "kind": "positions",
+      "norms": [
+        "InspectArtifactsAndProgress"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(InspectArtifactsAndProgress, <статус>)",
+      "tests": [
+        "CATALOG-INSPECTIONREQUIRED"
+      ],
+      "source_units": [
+        "SG_S3_2"
+      ]
+    },
+    {
+      "id": "poziciya-keepsprintgoalsafe",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «KeepSprintGoalSafe»?",
+      "kind": "positions",
+      "norms": [
+        "KeepSprintGoalSafe"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(KeepSprintGoalSafe, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-KEEPSPRINTGOALSAFE"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "poziciya-keepworkvisible",
+      "task": "sg-s3-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «KeepWorkVisible»?",
+      "kind": "positions",
+      "norms": [
+        "KeepWorkVisible"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(KeepWorkVisible, <статус>)",
+      "tests": [
+        "CATALOG-TRANSPARENCYREQUIRED"
+      ],
+      "source_units": [
+        "SG_S3_1"
+      ]
+    },
+    {
+      "id": "poziciya-maintainquality",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «MaintainQuality»?",
+      "kind": "positions",
+      "norms": [
+        "MaintainQuality"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(MaintainQuality, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-MAINTAINQUALITY"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "poziciya-oneobjectiveatatime",
+      "task": "sg-s7-1-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «OneObjectiveAtATime»?",
+      "kind": "positions",
+      "norms": [
+        "OneObjectiveAtATime"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(OneObjectiveAtATime, <статус>)",
+      "tests": [
+        "CATALOG-FULFILLONEOBJECTIVEBEFORETHENEXT"
+      ],
+      "source_units": [
+        "SG_S7_1_1"
+      ]
+    },
+    {
+      "id": "poziciya-productownercancelssprint",
+      "task": "sg-s6-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «ProductOwnerCancelsSprint»?",
+      "kind": "positions",
+      "norms": [
+        "ProductOwnerCancelsSprint"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(ProductOwnerCancelsSprint, <статус>)",
+      "tests": [
+        "CATALOG-ONLYPRODUCTOWNERCANCELSSPRINT"
+      ],
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "poziciya-renegotiatescope",
+      "task": "sg-s6-1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «RenegotiateScope»?",
+      "kind": "positions",
+      "norms": [
+        "RenegotiateScope"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(RenegotiateScope, <статус>)",
+      "tests": [
+        "CATALOG-SCOPEMAYBERENEGOTIATED"
+      ],
+      "source_units": [
+        "SG_S6_1"
+      ]
+    },
+    {
+      "id": "poziciya-respectproductownerdecisions",
+      "task": "sg-s5-2",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «RespectProductOwnerDecisions»?",
+      "kind": "positions",
+      "norms": [
+        "RespectProductOwnerDecisions"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(RespectProductOwnerDecisions, <статус>)",
+      "tests": [
+        "CATALOG-ORGANIZATIONMUSTRESPECTPRODUCTOWNER"
+      ],
+      "source_units": [
+        "SG_S5_2"
+      ]
+    },
+    {
+      "id": "poziciya-selectbacklogitems",
+      "task": "sg-s6-2-2",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «SelectBacklogItems»?",
+      "kind": "positions",
+      "norms": [
+        "SelectBacklogItems"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(SelectBacklogItems, <статус>)",
+      "tests": [
+        "CATALOG-DEVELOPERSSELECTITEMS"
+      ],
+      "source_units": [
+        "SG_S6_2_2"
+      ]
+    },
+    {
+      "id": "poziciya-sharedefinitionofdone",
+      "task": "sg-s1",
+      "question": "Какие позиции действуют по делу и в каком статусе стоит «ShareDefinitionOfDone»?",
+      "kind": "positions",
+      "norms": [
+        "ShareDefinitionOfDone"
+      ],
+      "template": "evaluate positions(); — ожидаемая форма position(ShareDefinitionOfDone, <статус>)",
+      "tests": [
+        "CATALOG-NOPOS-SHAREDEFINITIONOFDONE"
+      ],
+      "source_units": [
+        "SG_S1"
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "granica-01",
+      "task": "sg-s1",
+      "question": "Покрывает ли пакет весь акт — значит ли отсутствие карточки, что право молчит?",
+      "reason_kind": "not_formalized",
+      "limitation": "Правила заведены у 25 закреплённых фрагментов из 28: остальные закреплены байтами публикации, но исполняемых норм не несут. Отсутствие карточки означает «в модели нормы нет», а не «право молчит».",
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "granica-02",
+      "task": "sg-s1",
+      "question": "Можно ли спросить вывод, у которого нет порождённого сценария?",
+      "reason_kind": "engine_limit",
+      "limitation": "9 выводов пакета остались без исполнимого свидетельства: их посылки содержат дизъюнкцию, текстовое значение или вызов терма, либо голова вычисляемая. Такие выводы записаны в internal и станут карточками вместе со сценариями, написанными руками.",
+      "source_units": [
+        "SG_S1"
+      ]
+    },
+    {
+      "id": "granica-03",
+      "task": "sg-s1",
+      "question": "Все ли позиции пакета подтверждены положительным сценарием?",
+      "reason_kind": "not_formalized",
+      "limitation": "6 норм пакета подтверждены только отрицательным сценарием («на этих фактах позиция не возникает»): построить мир, который их активирует, порождающий проход не смог. Положительное свидетельство — долг.",
+      "source_units": [
+        "SG_S1"
+      ]
+    }
+  ],
+  "internal": [
+    {
+      "predicate": "cannot_be_released_or_presented",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "not_part_of_increment",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "product_owner_is_one_person",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "retrospective_concluded",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "returns_to_product_backlog",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "review_precedes_retrospective",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "sprint_exceeds_one_month",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "sprint_planning_started",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "team_composition_conforms",
+      "reason": "Вывод без исполнимого свидетельства: посылки правила содержат формы, которых порождённый сценарий не строит (дизъюнкция, текстовое значение или вызов терма), либо голова вычисляемая. Карточка появится вместе со сценарием, написанным руками."
+    },
+    {
+      "predicate": "artifacts_inspected",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "conforms_to_definition_of_done",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "event_minutes",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (DailyScrumTimebox, SprintPlanningTimebox, SprintRetrospectiveTimebox…); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "events_kept_within_timebox",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "one_objective_at_a_time",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "part_of_increment",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (IncrementMayBeDeliveredEarly, UsableIncrementCreated); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "quality_maintained",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "respects_product_owner_decisions",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "scope_renegotiated",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "scope_renegotiation_valid",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "selected_for_sprint",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (SprintBacklogComposition, UsableIncrementCreated); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "sprint_cancelled",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "sprint_goal_kept_safe",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "timebox_exceeded",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (OverrunBreaksTimeboxKeeping); самостоятельным вопросом к пакету он не является."
+    },
+    {
+      "predicate": "work_visible",
+      "reason": "Промежуточное звено: предикат выводится правилом пакета и читается телами других правил (); самостоятельным вопросом к пакету он не является."
+    }
+  ]
+}

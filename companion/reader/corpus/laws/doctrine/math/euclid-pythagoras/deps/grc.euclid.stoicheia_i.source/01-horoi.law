@@ -1,0 +1,233 @@
+// Ὅροι κγ΄ — 23 определения книги I.
+//
+// Определения задают словарь чертежа: сущности объявлены в 00-package.law,
+// здесь — якорные отношения и классификации по @source(STO_DEFn).
+// Доказательств у определения нет по природе; правило применяет формулировку
+// к предъявленным точкам, сторонам и углам.
+
+use self::{
+    Gonion,
+    Kyklos,
+    Parallelogrammon,
+    STO_DEF10,
+    STO_DEF11,
+    STO_DEF12,
+    STO_DEF15,
+    STO_DEF17,
+    STO_DEF20,
+    STO_DEF21,
+    STO_DEF22,
+    STO_DEF9,
+    Semeion,
+    Trigonon,
+    elasson_gonia,
+    isos_gonia,
+    isos_mikos,
+    kentron_kyklou,
+    meizon_gonia,
+    mikos,
+    orthos,
+    parallelogrammon_tes_figuras,
+    trigonon_apo,
+};
+
+@source(STO_DEF9)
+relation euthygrammos(g: Gonion) kind empirical {
+    label grc official "εὐθύγραμμος γωνία";
+    label ru unofficial "прямолинейный угол — стороны суть прямые";
+}
+
+@source(STO_DEF10)
+pub relation smezhnye_gonia(g: Gonion, h: Gonion) kind empirical {
+    label grc official "ἐφεξῆς γωνίαι";
+    label ru unofficial "смежные углы на прямой";
+}
+
+@source(STO_DEF11)
+relation amblus(g: Gonion) kind institutional {
+    label grc official "ἀμβλεῖα γωνία";
+    label ru unofficial "тупой угол";
+}
+
+@source(STO_DEF12)
+relation oxys(g: Gonion) kind institutional {
+    label grc official "ὀξεῖα γωνία";
+    label ru unofficial "острый угол";
+}
+
+@source(STO_DEF15)
+relation epi_kentrou(k: Kyklos, p: Semeion, a: Semeion, b: Semeion) kind empirical {
+    label grc official "ἀφ' ἑνὸς σημείου … ἴσαι";
+    label ru unofficial "от центра к двум точкам окружности — равные радиусы";
+}
+
+@source(STO_DEF17)
+relation diametros(k: Kyklos, a: Semeion, b: Semeion) kind empirical {
+    label grc official "διάμετρος τοῦ κύκλου";
+    label ru unofficial "диаметр окружности — отрезок через центр";
+}
+
+@source(STO_DEF20)
+pub relation isopleuron(t: Trigonon) kind institutional {
+    label grc official "ἰσόπλευρον τρίγωνον";
+    label ru unofficial "равносторонний треугольник";
+}
+
+@source(STO_DEF20)
+pub relation isoskeles(t: Trigonon) kind institutional {
+    label grc official "ἰσοσκελὲς τρίγωνον";
+    label ru unofficial "равнобедренный треугольник";
+}
+
+@source(STO_DEF20)
+relation skalenon(t: Trigonon) kind institutional {
+    label grc official "σκαληνὸν τρίγωνον";
+    label ru unofficial "разносторонний треугольник";
+}
+
+@source(STO_DEF21)
+pub relation orthogonion(t: Trigonon) kind institutional {
+    label grc official "ὀρθογώνιον τρίγωνον";
+    label ru unofficial "прямоугольный треугольник";
+}
+
+@source(STO_DEF21)
+pub relation oxygonion(t: Trigonon) kind institutional {
+    label grc official "ὀξυγώνιον τρίγωνον";
+    label ru unofficial "остроугольный треугольник";
+}
+
+@source(STO_DEF21)
+pub relation amblygonion(t: Trigonon) kind institutional {
+    label grc official "ἀμβλυγώνιον τρίγωνον";
+    label ru unofficial "тупоугольный треугольник";
+}
+
+@source(STO_DEF21)
+relation trigonon_gonia(t: Trigonon, g: Gonion) kind empirical {
+    label ru unofficial "угол принадлежит треугольнику";
+}
+
+@source(STO_DEF22)
+relation parallelogrammon(p: Parallelogrammon) kind institutional {
+    label grc official "ἔστι παραλληλόγραμμον";
+    label ru unofficial "фигура признана параллелограммом";
+}
+
+@source(STO_DEF22)
+relation tetragonon(p: Parallelogrammon) kind institutional {
+    label grc official "τετράγωνον";
+    label ru unofficial "квадрат — равносторонний и прямоугольный параллелограмм";
+}
+
+@source(STO_DEF22)
+relation heteromekes(p: Parallelogrammon) kind institutional {
+    label grc official "ἑτερόμηκες";
+    label ru unofficial "прямоугольник — прямоугольный, не равносторонний";
+}
+
+@source(STO_DEF22)
+relation rhombos(p: Parallelogrammon) kind institutional {
+    label grc official "ῥόμβος";
+    label ru unofficial "ромб — равносторонний, не прямоугольный";
+}
+
+@source(STO_DEF22)
+relation rhomboiedes(p: Parallelogrammon) kind institutional {
+    label grc official "ῥομβοειδές";
+    label ru unofficial "ромбоид — противолежащие стороны и углы равны";
+}
+
+@source(STO_DEF22)
+relation trapezion(p: Parallelogrammon) kind institutional {
+    label grc official "τραπέζιον";
+    label ru unofficial "трапеция — прочий четырёхугольник";
+}
+
+// DEF10: смежные равны — каждый прямой. Определение прямого угла, не I.13.
+@source(STO_DEF10)
+rule OrthosEkIsonEphexes(g: Gonion, h: Gonion) strict {
+    label grc official "ὀρθὴ ἑκατέρα τῶν ἴσων γωνιῶν";
+    label ru unofficial "DEF10: смежные равные углы — каждый прямой";
+    when smezhnye_gonia(g, h) and supported(isos_gonia(g, h));
+    then orthos(g);
+}
+
+@source(STO_DEF10)
+rule OrthosEkIsonEphexesDeutera(g: Gonion, h: Gonion) strict {
+    label ru unofficial "DEF10: вторая из смежных равных — прямая";
+    when smezhnye_gonia(g, h) and supported(isos_gonia(g, h));
+    then orthos(h);
+}
+
+// Угол, равный прямому, сам прямой.
+@source(STO_DEF10)
+rule OrthosEkIsou(g: Gonion, k: Gonion) strict {
+    label ru unofficial "угол, равный прямому, сам прямой";
+    when supported(isos_gonia(g, k)) and supported(orthos(k));
+    then orthos(g);
+}
+
+@source(STO_DEF11)
+rule AmblusEkMeizonos(g: Gonion, k: Gonion) strict {
+    label grc official "Ἀμβλεῖα γωνία ἐστὶν ἡ μείζων ὀρθῆς";
+    label ru unofficial "DEF11: угол больше прямого — тупой";
+    when supported(meizon_gonia(g, k)) and supported(orthos(k));
+    then amblus(g);
+}
+
+@source(STO_DEF12)
+rule OxysEkElassonos(g: Gonion, k: Gonion) strict {
+    label grc official "Ὀξεῖα δὲ ἡ ἐλάσσων ὀρθῆς";
+    label ru unofficial "DEF12: угол меньше прямого — острый";
+    when supported(elasson_gonia(g, k)) and supported(orthos(k));
+    then oxys(g);
+}
+
+@source(STO_DEF15)
+rule IsosRadii(k: Kyklos, p: Semeion, a: Semeion, b: Semeion, v: Integer) strict {
+    label ru unofficial "DEF15: радиусы от центра к окружности равны";
+    when kentron_kyklou(k, p) and epi_kentrou(k, p, a, b)
+        and mikos(p, a, v) and mikos(p, b, v);
+    then isos_mikos(p, a, p, b);
+}
+
+@source(STO_DEF20)
+rule IsopleuronKataHoron(t: Trigonon, a: Semeion, b: Semeion, c: Semeion) strict {
+    label grc official "ἰσόπλευρον μὲν τρίγωνόν ἐστι τὸ τὰς τρεῖς ἴσας ἔχον πλευράς";
+    label ru unofficial "DEF20: три стороны равны — равносторонний";
+    when trigonon_apo(t, a, b, c)
+        and supported(isos_mikos(a, b, a, c))
+        and supported(isos_mikos(a, b, b, c));
+    then isopleuron(t);
+}
+
+@source(STO_DEF20)
+rule IsoskelesKataHoron(t: Trigonon, a: Semeion, b: Semeion, c: Semeion) strict {
+    label grc official "ἰσοσκελὲς δὲ τὸ τὰς δύο μόνας ἴσας ἔχον πλευράς";
+    label ru unofficial "DEF20: две стороны равны — равнобедренный";
+    when trigonon_apo(t, a, b, c) and supported(isos_mikos(a, b, a, c));
+    then isoskeles(t);
+}
+
+@source(STO_DEF21)
+rule OrthogonionKataHoron(t: Trigonon, g: Gonion) strict {
+    label grc official "ὀρθογώνιον μὲν τρίγωνόν ἐστι τὸ ἔχον ὀρθὴν γωνίαν";
+    label ru unofficial "DEF21: имеющий прямой угол — прямоугольный";
+    when trigonon_gonia(t, g) and supported(orthos(g));
+    then orthogonion(t);
+}
+
+@source(STO_DEF21)
+rule AmblygonionKataHoron(t: Trigonon, g: Gonion) strict {
+    label ru unofficial "DEF21: имеющий тупой угол — тупоугольный";
+    when trigonon_gonia(t, g) and supported(amblus(g));
+    then amblygonion(t);
+}
+
+@source(STO_DEF22)
+rule ParallelogrammonEkFiguras(p: Parallelogrammon) strict {
+    label ru unofficial "предъявленный параллелограмм признаётся таковым";
+    when parallelogrammon_tes_figuras(p);
+    then parallelogrammon(p);
+}

@@ -1,0 +1,51 @@
+language "law.core" version "0.2";
+package myco.opredelitel version "0.1.0";
+namespace "urn:myco:clir:opredelitel";
+
+use self::{
+    GyromitraEsculenta,
+    MYCO_ART11,
+    MYCO_ART13,
+    MYCO_ART14,
+    PaxillusInvolutus,
+    Specimen,
+    Taxon,
+    identified_as,
+    specimen,
+};
+
+relation boiled_minutes(s: Specimen, minutes: Integer) kind empirical { label ru-KZ unofficial "продолжительность одного отваривания"; }
+relation boiling_count(s: Specimen, count: Integer) kind empirical { label ru-KZ unofficial "кратность отваривания со сливом отвара"; }
+relation edible_prepared(s: Specimen) kind institutional { label ru-KZ unofficial "условно съедобный экземпляр приготовлен по правилу"; }
+relation checked_outside_slice(s: Specimen) kind empirical { label ru-KZ unofficial "экземпляр проверен, но вид вне десятивидового среза"; }
+relation beyond_restatement(s: Specimen) kind institutional { label ru-KZ unofficial "дело не разрешается настоящим изложением"; }
+
+@source(MYCO_ART11)
+rule GyromitraPrepared(s: Specimen) strict { when identified_as(s, GyromitraEsculenta) and boiling_count(s, GyromitraBoilCount + 0) and boiled_minutes(s, GyromitraBoilMinutes + 0); then edible_prepared(s); }
+@source(MYCO_ART14)
+rule OutsideSliceIsLoud(s: Specimen) strict { when checked_outside_slice(s); then beyond_restatement(s); }
+
+record IdentificationPetition { specimen_at_issue: Specimen; label ru-KZ unofficial "запрос микологу об определении нераскрытого экземпляра"; }
+external judgment relation mycologist_identifies(s: Specimen, t: Taxon) { authority Mycologist; request_schema IdentificationPetition; label ru-KZ unofficial "миколог установил вид экземпляра"; }
+@source(MYCO_ART13)
+rule MycologistBridge(s: Specimen, t: Taxon) strict { when specimen(s) and mycologist_identifies(s, t); then identified_as(s, t); }
+
+relation latency_syndrome(hours: Integer, syndrome: Integer) kind institutional { label ru-KZ unofficial "синдром по числу часов до первых симптомов: 1 раздражающий, 2 желудочно-кишечный, 3 отсроченный гепатотоксический"; }
+
+relation soviet_conditionally_edible(s: Specimen) kind institutional { label ru-KZ unofficial "советское свидетельство считает свинушку условно съедобной"; }
+relation modern_poisonous(s: Specimen) kind institutional { label ru-KZ unofficial "современное свидетельство считает свинушку ядовитой"; }
+relation finnish_gyromitra_allowed(s: Specimen) kind institutional { label ru-KZ unofficial "финское свидетельство допускает строчок после обработки"; }
+relation german_gyromitra_forbidden(s: Specimen) kind institutional { label ru-KZ unofficial "немецкое свидетельство запрещает строчок"; }
+relation divergent_readings(s: Specimen, t: Taxon) kind institutional { label ru-KZ unofficial "свидетельства о виде расходятся"; }
+@source(MYCO_ART14)
+rule SovietPaxillusWitness(s: Specimen) strict { when identified_as(s, PaxillusInvolutus); then soviet_conditionally_edible(s); }
+@source(MYCO_ART14)
+rule ModernPaxillusWitness(s: Specimen) strict { when identified_as(s, PaxillusInvolutus); then modern_poisonous(s); }
+@source(MYCO_ART14)
+rule PaxillusReadingsDiverge(s: Specimen) strict { when soviet_conditionally_edible(s) and modern_poisonous(s); then divergent_readings(s, PaxillusInvolutus); }
+@source(MYCO_ART14)
+rule FinnishGyromitraWitness(s: Specimen) strict { when identified_as(s, GyromitraEsculenta) and edible_prepared(s); then finnish_gyromitra_allowed(s); }
+@source(MYCO_ART14)
+rule GermanGyromitraWitness(s: Specimen) strict { when identified_as(s, GyromitraEsculenta); then german_gyromitra_forbidden(s); }
+@source(MYCO_ART14)
+rule GyromitraReadingsDiverge(s: Specimen) strict { when finnish_gyromitra_allowed(s) and german_gyromitra_forbidden(s); then divergent_readings(s, GyromitraEsculenta); }

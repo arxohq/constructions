@@ -1,0 +1,48 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "ietf.bcp14"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:ietf:clir:bcp14"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит. Выводимые поля
+# сверяются с source-декларациями воротами
+# verify/ci/gates/coverage/check_package_metadata.py.
+[metadata]
+act = "ietf-bcp14"
+title = "BCP 14: ключевые слова уровней требования в RFC (RFC 2119 + RFC 8174)"
+primarySource = "RFC2119"
+jurisdiction = "IETF"
+instrument = "best_current_practice"
+# sourceFidelity: `pinned_official_bytes` — закреплены БАЙТЫ издателя, а не
+# извлечение и не перевод. Случай для корпуса редчайший: канонический формат
+# RFC есть плоский US-ASCII текст, и `https://www.rfc-editor.org/rfc/rfc2119.txt`
+# отдаёт саму публикацию. Ни одного `re.sub` при получении не выполняется
+# (corpus/tools/sources/fetch/fetch_bcp14_texts.py объясняет, почему).
+sourceFidelity = "pinned_official_bytes"
+# legalStatus: BCP 14 действует. RFC 8174 (2017) его УТОЧНЯЕТ, а не отменяет —
+# заголовок «Updates: 2119», а не «Obsoletes: 2119», — и оба документа входят в
+# свод одновременно. Ни один RFC не отменён на 30.08.2026.
+legalStatus = "in_force"
+issuer = "Internet Engineering Task Force (IETF); издание — RFC Editor"
+# verifiedAgainstSource: сверено байтово с публикацией RFC Editor, и это не
+# фигура речи — sha256 закреплён В КОДЕ получателя, поэтому `--check` отказывает
+# громко, если издатель однажды отдаст под тем же URL другой файл.
+verifiedAgainstSource = true
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "ietf.bcp14#authored"
+regression = false
+suites = ["tests/01-must-breached-is-violated.lawtest", "tests/02-must-not-breached-is-violated.lawtest", "tests/03-lowercase-keyword-carries-no-force.lawtest", "tests/04-should-deviation-requires-judgment.lawtest", "tests/05-pre-8174-reading-revives-lowercase.lawtest",
+          "tests/catalog/general.lawtest"]
+world = ["ietf.bcp14"]
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "bcp14"
+suites = ["tests/bcp14.lawtest"]
+world = ["ietf.bcp14"]

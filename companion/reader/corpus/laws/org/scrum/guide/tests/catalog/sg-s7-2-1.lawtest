@@ -1,0 +1,30 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-SCOPENEGOTIABLEWITHINSPRINT" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": negotiated_with_product_owner(entity_ref("urn:law:catalog:scopenegotiablewithinsprint:v0")) { origin case_input; }
+        assert "cat-1": sprint_goal_unaffected(entity_ref("urn:law:catalog:scopenegotiablewithinsprint:v0")) { origin case_input; }
+    }
+    evaluate truth(scope_negotiation_within_sprint_permitted(entity_ref("urn:law:catalog:scopenegotiablewithinsprint:v0")));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-SPRINTGOALADDEDTOSPRINTBACKLOG" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": sprint_goal_finalized(entity_ref("urn:law:catalog:sprintgoaladdedtosprintbacklog:v0")) { origin case_input; }
+        assert "cat-1": sprint_goal_of(entity_ref("urn:law:catalog:sprintgoaladdedtosprintbacklog:v0"), entity_ref("urn:law:catalog:sprintgoaladdedtosprintbacklog:v1")) { origin case_input; }
+    }
+    evaluate truth(sprint_goal_in_sprint_backlog(entity_ref("urn:law:catalog:sprintgoaladdedtosprintbacklog:v0")));
+    expect truth_status == TRUE_ONLY;
+}

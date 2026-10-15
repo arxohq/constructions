@@ -1,0 +1,252 @@
+// §1.4 «Dimensional Analysis»: размерность величины, размерная
+// согласованность уравнения и следствие «несогласованное уравнение не может
+// быть верной формулировкой закона природы».
+//
+// ЭТО САМЫЙ ВАЖНЫЙ МОДУЛЬ ПАКЕТА. Он даёт всей остальной физике корпуса
+// ответ на вопрос «почему это не может быть ответом»: не «не выведено», а
+// названная причина.
+//
+// ДВЕ ПОЛОВИНЫ, ДВЕ ГРОМКОСТИ.
+//
+// ПЕРВАЯ — СИМВОЛЬНАЯ, и она в точности метод §1.4. Дело предъявляет
+// размерность каждого терма показателями по базовым величинам ([s] = L даёт
+// показатель 1 у Length; [v] = LT⁻¹ даёт 1 у Length и −1 у Time). Правило
+// сравнивает показатели терма с показателями опорного терма ЦЕЛЫМИ. Отсюда
+// три вывода, и все три — выводы, а не отказы:
+//   `terms_differ_in`         на какой базовой величине разошлось;
+//   `dimensionally_consistent` при нуле расхождений (замыкание `count` §59);
+//   `not dimensionally_consistent` при хотя бы одном — FALSE_ONLY.
+// Именно потому, что расхождение ВЫВОДИТСЯ, у него есть `why_not` и
+// доказательство: система называет базовую величину, на которой формула
+// сломалась, а не молчит.
+//
+// ВТОРАЯ — ЗНАЧИМАЯ, алгебра §49.1 (DECISION-0154). Дело предъявляет числа с
+// единицами и заявленный ответ; правило считает произведение величин и
+// сверяет с заявленным. Чужая единица здесь — отказ АЛГЕБРЫ с названной
+// причиной (§49.1: разные размерности и разные масштабы одной размерности
+// различаются именем отказа), и до вывода дело не доходит.
+//
+// ПОЧЕМУ НУЖНЫ ОБЕ. Символьная не видит масштаба: 6 km и 6 m имеют одну
+// размерность L и по §1.4 согласованы, а ответом друг для друга не являются.
+// Значимая не работает без чисел: вопрос «может ли V = πd² быть формулой
+// объёма» задан о ФОРМЕ, и чисел в нём нет вовсе. Учебник пользуется обеими
+// (§1.4 проверяет форму, §1.3 — значения), и пакет не сводит одну к другой.
+//
+// ЧЕГО ЗДЕСЬ НЕТ. Второе правило §1.4 — «аргументы трансцендентных функций
+// обязаны быть безразмерны» — выражено `argument_of_transcendental` и той же
+// проверкой на нулевую размерность; самих sin, log и exp в языке нет (§58),
+// и проверяется предъявленный аргумент, а не вычисляется функция.
+
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+use self::{
+    Equation,
+    Term,
+    UP_M58272_CONSISTENCY_RULES,
+    UP_M58272_DIMENSION,
+    UP_M58272_DIMENSIONLESS,
+    UP_M58272_INCONSISTENT_CANNOT_BE_LAW,
+};
+
+// --- Что дело предъявляет об уравнении --------------------------------------
+
+@source(UP_M58272_CONSISTENCY_RULES)
+relation equation_presented(e: Equation) kind empirical {
+    label en official "the case presents an equation between physical quantities for a dimensional check";
+    label ru unofficial "дело предъявляет равенство физических величин для проверки на размерность";
+}
+
+@source(UP_M58272_CONSISTENCY_RULES)
+relation term_of(e: Equation, t: Term) kind empirical {
+    label en official "the term appears in the presented equation";
+    label ru unofficial "терм входит в предъявленное уравнение";
+}
+
+// Опорный терм — тот, с которым сравниваются остальные. §1.4 говорит «every
+// term must have the same dimensions», то есть отношение равенства по всем
+// парам; проверять по всем парам и проверять каждый против одного —
+// одно и то же, а второе называет в доказательстве, ЧЕМУ терм не равен.
+@source(UP_M58272_CONSISTENCY_RULES)
+relation reference_term(e: Equation, t: Term) kind empirical {
+    label en official "the term against which the other terms of the equation are compared — typically the left-hand side";
+    label ru unofficial "терм, с которым сравниваются остальные термы уравнения, — обычно левая часть";
+}
+
+// Показатель базовой величины в размерности терма. §1.4: «the dimension of
+// any physical quantity expresses its dependence on the base quantities as a
+// product of powers of symbols representing the base quantities».
+// НУЛЕВЫЕ ПОКАЗАТЕЛИ ПРЕДЪЯВЛЯЮТСЯ НАРАВНЕ С ПРОЧИМИ: «нет строки» и
+// «показатель 0» здесь одно и то же только тогда, когда обе стороны молчат,
+// а сравнение ведётся по предъявленным строкам обеих сторон.
+@source(UP_M58272_DIMENSION)
+relation dimension_exponent(t: Term, q: bipm.si_brochure::BaseQuantity, exponent: Integer) kind empirical {
+    label en official "§1.4: in the dimension of the term, the base quantity appears with the given exponent";
+    label ru unofficial "§1.4: в размерности терма данная базовая величина входит с данным показателем";
+}
+
+// --- Первая половина: символьная проверка §1.4 -------------------------------
+
+pub relation terms_differ_in(e: Equation, t: Term, q: bipm.si_brochure::BaseQuantity) kind institutional {
+    label en official "§1.4: the term and the reference term of the equation differ in the exponent of this base quantity";
+    label ru unofficial "§1.4: терм и опорный терм уравнения расходятся в показателе этой базовой величины";
+}
+
+@source(UP_M58272_CONSISTENCY_RULES)
+rule TermDiffersFromReference(
+    e: Equation,
+    t: Term,
+    r: Term,
+    q: bipm.si_brochure::BaseQuantity,
+    et: Integer,
+    er: Integer,
+) strict {
+    label en official "§1.4: a term whose exponent of a base quantity differs from the reference term's differs in that base quantity";
+    label ru unofficial "§1.4: терм, показатель базовой величины у которого отличается от опорного, расходится по этой базовой величине";
+    when term_of(e, t)
+        and reference_term(e, r)
+        and dimension_exponent(t, q, et)
+        and dimension_exponent(r, q, er)
+        and et != er;
+    then terms_differ_in(e, t, q);
+}
+
+pub relation dimensionally_consistent(e: Equation) kind institutional {
+    label en official "§1.4: every term in the equation has the same dimensions — the equation is dimensionally consistent";
+    label ru unofficial "§1.4: все термы уравнения имеют одну размерность — уравнение размерно согласовано";
+}
+
+// Замыкание §59 по ВЫВЕДЕННОМУ расхождению: ноль расхождений на всём
+// предъявленном составе термов и есть «every term has the same dimensions».
+//
+// ОБА ПРАВИЛА §1.4, А НЕ ОДНО. Источник говорит «the equation must obey the
+// following rules» и перечисляет ДВА: одинаковая размерность у термов и
+// безразмерность аргументов трансцендентных функций. Первая редакция этого
+// правила читала только первое, и уравнение v = sin(at²) с размерным
+// аргументом получало BOTH — «согласовано» вакуумно (расхождений термов
+// нет) и «не согласовано» по второму правилу одновременно. Конфликт §62 был
+// не дефектом опоры, а верным доносом на неполную посылку: пропущено было
+// именно второе условие источника. Сцена 01g его сторожит.
+@source(UP_M58272_CONSISTENCY_RULES)
+rule EquationConsistentWhenNoTermDiffers(e: Equation) strict {
+    label en official "§1.4: an equation obeys both rules — no term differs from the reference term in any base quantity, and no transcendental argument carries a dimension";
+    label ru unofficial "§1.4: уравнение соблюдает оба правила — ни один терм не расходится с опорным ни по одной базовой величине, и ни один аргумент трансцендентной функции не размерен";
+    when equation_presented(e)
+        and (count distinct t: Term for q: bipm.si_brochure::BaseQuantity where terms_differ_in(e, t, q)) == 0
+        and (count distinct t: Term for q: bipm.si_brochure::BaseQuantity, k: Integer where argument_of_transcendental(e, t)
+                        and dimension_exponent(t, q, k)
+                        and k != 0) == 0;
+    then dimensionally_consistent(e);
+}
+
+// ОТРИЦАТЕЛЬНАЯ ГОЛОВА strict-правила (DECISION-0088): одно расхождение
+// ОПРОВЕРГАЕТ согласованность, а не оставляет её невыведенной. Ответ на
+// «согласовано ли уравнение» становится FALSE_ONLY, и `why_not` называет
+// расхождение поимённо.
+@source(UP_M58272_CONSISTENCY_RULES)
+rule EquationInconsistentWhenTermDiffers(
+    e: Equation,
+    t: Term,
+    q: bipm.si_brochure::BaseQuantity,
+) strict {
+    label en official "§1.4: it does not make sense to add or subtract quantities of differing dimension — one differing term refutes consistency";
+    label ru unofficial "§1.4: складывать и вычитать величины разной размерности бессмысленно — один расходящийся терм опровергает согласованность";
+    when equation_presented(e) and terms_differ_in(e, t, q);
+    then not dimensionally_consistent(e);
+}
+
+// Следствие §1.4 дословно: «If either of these rules is violated, an equation
+// is not dimensionally consistent and cannot possibly be a correct statement
+// of physical law». Здесь `refuted` читает ОПРОВЕРГНУТУЮ согласованность —
+// не «не выведена», а именно опровергнута правилом выше.
+pub relation possibly_a_statement_of_physical_law(e: Equation) kind institutional {
+    label en official "§1.4: the equation could possibly be a correct statement of physical law";
+    label ru unofficial "§1.4: уравнение может быть верной формулировкой закона природы";
+}
+
+@source(UP_M58272_INCONSISTENT_CANNOT_BE_LAW)
+rule InconsistentCannotBeLaw(e: Equation) strict {
+    label en official "§1.4: an equation that is not dimensionally consistent cannot possibly be a correct statement of physical law";
+    label ru unofficial "§1.4: размерно несогласованное уравнение не может быть верной формулировкой закона природы";
+    when equation_presented(e) and refuted(dimensionally_consistent(e));
+    then not possibly_a_statement_of_physical_law(e);
+}
+
+@source(UP_M58272_INCONSISTENT_CANNOT_BE_LAW)
+rule ConsistentMayBeLaw(e: Equation) strict {
+    label en official "§1.4: a dimensionally consistent equation passes the dimensional check and may be a statement of physical law";
+    label ru unofficial "§1.4: размерно согласованное уравнение проходит проверку на размерность и может быть формулировкой закона природы";
+    when dimensionally_consistent(e);
+    then possibly_a_statement_of_physical_law(e);
+}
+
+// Второе правило §1.4: аргумент трансцендентной функции обязан быть
+// безразмерным. Сам аргумент предъявляется термом, безразмерность — нулевые
+// показатели по всем предъявленным базовым величинам.
+@source(UP_M58272_CONSISTENCY_RULES)
+relation argument_of_transcendental(e: Equation, t: Term) kind empirical {
+    label en official "the term appears in the equation as the argument of a trigonometric, logarithmic or exponential function";
+    label ru unofficial "терм входит в уравнение аргументом тригонометрической, логарифмической или показательной функции";
+}
+
+pub relation dimensionless(t: Term) kind institutional {
+    label en official "§1.4: the term is dimensionless — every base quantity enters its dimension with exponent zero";
+    label ru unofficial "§1.4: терм безразмерен — всякая базовая величина входит в его размерность с нулевым показателем";
+}
+
+@source(UP_M58272_DIMENSIONLESS)
+rule TermWithoutNonzeroExponentIsDimensionless(e: Equation, t: Term) strict {
+    label en official "§1.4: a term in which no base quantity has a nonzero exponent is dimensionless";
+    label ru unofficial "§1.4: терм, ни одна базовая величина которого не входит с ненулевым показателем, безразмерен";
+    when term_of(e, t)
+        and (count distinct q: bipm.si_brochure::BaseQuantity for k: Integer where dimension_exponent(t, q, k) and k != 0) == 0;
+    then dimensionless(t);
+}
+
+@source(UP_M58272_CONSISTENCY_RULES)
+rule TranscendentalArgumentMustBeDimensionless(
+    e: Equation,
+    t: Term,
+    q: bipm.si_brochure::BaseQuantity,
+    k: Integer,
+) strict {
+    label en official "§1.4: an equation whose transcendental argument carries a dimension is not dimensionally consistent";
+    label ru unofficial "§1.4: уравнение, аргумент трансцендентной функции которого размерен, размерно не согласовано";
+    when argument_of_transcendental(e, t)
+        and dimension_exponent(t, q, k)
+        and k != 0;
+    then not dimensionally_consistent(e);
+}
+
+// --- Вторая половина: проверка ЗНАЧЕНИЯ алгеброй §49.1 -----------------------
+
+// Дело предъявляет два множителя и заявленный ответ — «путь равен скорости на
+// время», «работа равна силе на путь». Правило считает произведение и
+// сверяет. Если заявленный ответ записан в чужой единице, отказывает АЛГЕБРА,
+// и причина названа ею: разные размерности и разные масштабы одной
+// размерности §49.1 различает именем отказа.
+@source(UP_M58272_CONSISTENCY_RULES)
+relation claimed_product(e: Equation, first: Quantity, second: Quantity, claimed: Quantity) kind empirical {
+    label en official "the case presents two factors and the answer claimed for their product";
+    label ru unofficial "дело предъявляет два множителя и заявленный ответ для их произведения";
+}
+
+relation claimed_product_holds(e: Equation) kind institutional {
+    label en official "the claimed answer equals the product of the presented factors, unit and value alike";
+    label ru unofficial "заявленный ответ равен произведению предъявленных множителей и по единице, и по значению";
+}
+
+@source(UP_M58272_CONSISTENCY_RULES)
+rule ClaimedProductMatches(
+    e: Equation,
+    first: Quantity,
+    second: Quantity,
+    claimed: Quantity,
+) strict {
+    label en official "the product of the two presented magnitudes equals the claimed answer";
+    label ru unofficial "произведение двух предъявленных величин равно заявленному ответу";
+    when claimed_product(e, first, second, claimed)
+        and magnitude(first) * magnitude(second) == magnitude(claimed);
+    then claimed_product_holds(e);
+}

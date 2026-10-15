@@ -1,0 +1,19 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Отрицательный ответ ЗАКРЫВАЕТ ВОПРОС, но отрицания не даёт: открытый мир
+// §3 — строгое положительное правило ложности не выводит. Различие с делом
+// 01 видно только по второй оси §170: там REQUIRES_JUDGMENT, здесь COMPUTED
+// при том же NEITHER. Для притчи это существенно: даже прямой отказ не
+// делает «войти ему нельзя» выводимым предложением.
+test "urn:query:vor-dem-gesetz-doorkeeper-refuses" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg03-1": not tuerhueter_gewaehrt_einlass(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin adjudicated; }
+    }
+    evaluate truth(einlass_gestattet(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}

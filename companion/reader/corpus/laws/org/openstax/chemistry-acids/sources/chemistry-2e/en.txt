@@ -1,0 +1,1482 @@
+14.1
+
+Brønsted-Lowry Acids and Bases
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Identify acids, bases, and conjugate acid-base pairs according to the Brønsted-Lowry definition
+
+Write equations for acid and base ionization reactions
+
+Use the ion-product constant for water to calculate hydronium and hydroxide ion concentrations
+
+Describe the acid-base behavior of amphiprotic substances
+
+The acid-base reaction class has been studied for quite some time. In 1680, Robert Boyle reported traits of acid solutions that included their ability to dissolve many substances, to change the colors of certain natural dyes, and to lose these traits after coming in contact with alkali (base) solutions. In the eighteenth century, it was recognized that acids have a sour taste, react with limestone to liberate a gaseous substance (now known to be CO2), and interact with alkalis to form neutral substances. In 1815, Humphry Davy contributed greatly to the development of the modern acid-base concept by demonstrating that hydrogen is the essential constituent of acids. Around that same time, Joseph Louis Gay-Lussac concluded that acids are substances that can neutralize bases and that these two classes of substances can be defined only in terms of each other. The significance of hydrogen was reemphasized in 1884 when Svante Arrhenius defined an acid as a compound that dissolves in water to yield hydrogen cations (now recognized to be hydronium ions) and a base as a compound that dissolves in water to yield hydroxide anions.
+
+Johannes Brønsted and Thomas Lowry proposed a more general description in 1923 in which acids and bases were defined in terms of the transfer of hydrogen ions, H+. (Note that these hydrogen ions are often referred to simply as protons, since that subatomic particle is the only component of cations derived from the most abundant hydrogen isotope, 1H.) A compound that donates a proton to another compound is called a Brønsted-Lowry acid, and a compound that accepts a proton is called a Brønsted-Lowry base. An acid-base reaction is, thus, the transfer of a proton from a donor (acid) to an acceptor (base).
+
+The concept of conjugate pairs is useful in describing Brønsted-Lowry acid-base reactions (and other reversible reactions, as well). When an acid donates H+, the species that remains is called the conjugate base of the acid because it reacts as a proton acceptor in the reverse reaction. Likewise, when a base accepts H+, it is converted to its conjugate acid. The reaction between water and ammonia illustrates this idea. In the forward direction, water acts as an acid by donating a proton to ammonia and subsequently becoming a hydroxide ion, OH−, the conjugate base of water. The ammonia acts as a base in accepting this proton, becoming an ammonium ion, NH4+, the conjugate acid of ammonia. In the reverse direction, a hydroxide ion acts as a base in accepting a proton from ammonium ion, which acts as an acid.
+
+The reaction between a Brønsted-Lowry acid and water is called acid ionization. For example, when hydrogen fluoride dissolves in water and ionizes, protons are transferred from hydrogen fluoride molecules to water molecules, yielding hydronium ions and fluoride ions:
+
+Base ionization of a species occurs when it accepts protons from water molecules. In the example below, pyridine molecules, C5NH5, undergo base ionization when dissolved in water, yielding hydroxide and pyridinium ions:
+
+The preceding ionization reactions suggest that water may function as both a base (as in its reaction with hydrogen fluoride) and an acid (as in its reaction with ammonia). Species capable of either donating or accepting protons are called amphiprotic, or more generally, amphoteric, a term that may be used for acids and bases per definitions other than the Brønsted-Lowry one. The equations below show the two possible acid-base reactions for two amphiprotic species, bicarbonate ion and water:
+
+HCO3–(aq)+H2O(l)⇌CO32–(aq)+H3O+(aq)
+
+HCO3–(aq)+H2O(l)⇌H2CO3(aq)+OH–(aq)
+
+The first equation represents the reaction of bicarbonate as an acid with water as a base, whereas the second represents reaction of bicarbonate as a base with water as an acid. When bicarbonate is added to water, both these equilibria are established simultaneously and the composition of the resulting solution may be determined through appropriate equilibrium calculations, as described later in this chapter.
+
+In the liquid state, molecules of an amphiprotic substance can react with one another as illustrated for water in the equations below:
+
+The process in which like molecules react to yield ions is called autoionization. Liquid water undergoes autoionization to a very slight extent; at 25 °C, approximately two out of every billion water molecules are ionized. The extent of the water autoionization process is reflected in the value of its equilibrium constant, the ion-product constant for water, Kw:
+
+H2O(l)+H2O(l)⇌H3O+(aq)+OH−(aq)Kw=[H3O+][OH−]
+
+The slight ionization of pure water is reflected in the small value of the equilibrium constant; at 25 °C, Kw has a value of 1.0 × 10−14. The process is endothermic, and so the extent of ionization and the resulting concentrations of hydronium ion and hydroxide ion increase with temperature. For example, at 100 °C, the value for Kw is about 5.6 × 10−13, roughly 50 times larger than the value at 25 °C.
+
+Example
+14.1
+
+Ion Concentrations in Pure Water
+
+What are the hydronium ion concentration and the hydroxide ion concentration in pure water at 25 °C?
+
+Solution
+
+The autoionization of water yields the same number of hydronium and hydroxide ions. Therefore, in pure water, [H3O+] = [OH−] = x. At 25 °C:
+
+Kw=[H3O+][OH−]=(x)(x)=x2=1.0×10−14
+
+So:
+
+x=[H3O+]=[OH−]=1.0×10−14=1.0×10−7M
+
+The hydronium ion concentration and the hydroxide ion concentration are the same, 1.0 × 10−7 M.
+
+Check Your Learning
+
+The ion product of water at 80 °C is 2.4 × 10−13. What are the concentrations of hydronium and hydroxide ions in pure water at 80 °C?
+
+Answer:
+
+[H3O+] = [OH−] = 4.9 × 10−7 M
+
+Example
+14.2
+
+The Inverse Relation between [H3O+] and [OH−]
+
+A solution of an acid in water has a hydronium ion concentration of 2.0 × 10−6 M. What is the concentration of hydroxide ion at 25 °C?
+
+Solution
+
+Use the value of the ion-product constant for water at 25 °C
+
+2H2O(l)⇌H3O+(aq)+OH−(aq)Kw=[H3O+][OH−]=1.0×10−14
+
+to calculate the missing equilibrium concentration.
+
+Rearrangement of the Kw expression shows that [OH−] is inversely proportional to [H3O+]:
+
+[OH−]=Kw[H3O+]=1.0×10−142.0×10−6=5.0×10−9
+
+Compared with pure water, a solution of acid exhibits a higher concentration of hydronium ions (due to ionization of the acid) and a proportionally lower concentration of hydroxide ions. This may be explained via Le Châtelier’s principle as a left shift in the water autoionization equilibrium resulting from the stress of increased hydronium ion concentration.
+
+Substituting the ion concentrations into the Kw expression confirms this calculation, resulting in the expected value:
+
+Kw=[H3O+][OH−]=(2.0×10−6)(5.0×10−9)=1.0×10−14
+
+Check Your Learning
+
+What is the hydronium ion concentration in an aqueous solution with a hydroxide ion concentration of 0.001 M at 25 °C?
+
+Answer:
+
+[H3O+] = 1 × 10−11 M
+
+Example
+14.3
+
+Representing the Acid-Base Behavior of an Amphoteric Substance
+
+Write separate equations representing the reaction of HSO3−
+
+(a) as an acid with OH−
+
+(b) as a base with HI
+
+Solution
+
+(a) HSO3−(aq)+OH−(aq)⇌SO32−(aq)+H2O(l)
+
+(b) HSO3−(aq)+HI(aq)⇌H2SO3(aq)+I−(aq)
+
+Check Your Learning
+
+Write separate equations representing the reaction of H2PO4−
+
+(a) as a base with HBr
+
+(b) as an acid with OH−
+
+Answer:
+
+(a) H2PO4−(aq)+HBr(aq)⇌H3PO4(aq)+Br−(aq); (b) H2PO4−(aq)+OH−(aq)⇌HPO42−(aq)+H2O(l)
+
+14.2
+
+pH and pOH
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Explain the characterization of aqueous solutions as acidic, basic, or neutral
+
+Express hydronium and hydroxide ion concentrations on the pH and pOH scales
+
+Perform calculations relating pH and pOH
+
+As discussed earlier, hydronium and hydroxide ions are present both in pure water and in all aqueous solutions, and their concentrations are inversely proportional as determined by the ion product of water (Kw). The concentrations of these ions in a solution are often critical determinants of the solution’s properties and the chemical behaviors of its other solutes, and specific vocabulary has been developed to describe these concentrations in relative terms. A solution is neutral if it contains equal concentrations of hydronium and hydroxide ions; acidic if it contains a greater concentration of hydronium ions than hydroxide ions; and basic if it contains a lesser concentration of hydronium ions than hydroxide ions.
+
+A common means of expressing quantities that may span many orders of magnitude is to use a logarithmic scale. One such scale that is very popular for chemical concentrations and equilibrium constants is based on the p-function, defined as shown where “X” is the quantity of interest and “log” is the base-10 logarithm:
+
+pX=−log X
+
+The pH of a solution is therefore defined as shown here, where [H3O+] is the molar concentration of hydronium ion in the solution:
+
+pH=−log[H3O+]
+
+Rearranging this equation to isolate the hydronium ion molarity yields the equivalent expression:
+
+[H3O+]=10−pH
+
+Likewise, the hydroxide ion molarity may be expressed as a p-function, or pOH:
+
+pOH=−log[OH−]
+
+or
+
+[OH−]=10−pOH
+
+Finally, the relation between these two ion concentration expressed as p-functions is easily derived from the Kw expression:
+
+Kw=[H3O+][OH−]
+
+−logKw=−log([H3O+][OH−])=−log[H3O+]+−log[OH−]
+
+pKw=pH+pOH
+
+At 25 °C, the value of Kw is 1.0 × 10−14, and so:
+
+14.00=pH+pOH
+
+As was shown in Example 14.1, the hydronium ion molarity in pure water (or any neutral solution) is 1.0 × 10−7 M at 25 °C. The pH and pOH of a neutral solution at this temperature are therefore:
+
+pH=−log[H3O+]=−log(1.0×10−7)=7.00
+
+pOH=−log[OH−]=−log(1.0×10−7)=7.00
+
+And so, at this temperature, acidic solutions are those with hydronium ion molarities greater than 1.0 × 10−7 M and hydroxide ion molarities less than 1.0 × 10−7 M (corresponding to pH values less than 7.00 and pOH values greater than 7.00). Basic solutions are those with hydronium ion molarities less than 1.0 × 10−7 M and hydroxide ion molarities greater than 1.0 × 10−7 M (corresponding to pH values greater than 7.00 and pOH values less than 7.00).
+
+Since the autoionization constant Kw is temperature dependent, these correlations between pH values and the acidic/neutral/basic adjectives will be different at temperatures other than 25 °C. For example, the “Check Your Learning” exercise accompanying Example 14.1 showed the hydronium molarity of pure water at 80 °C is 4.9 × 10−7 M, which corresponds to pH and pOH values of:
+
+pH=−log[H3O+]=−log(4.9×10−7)=6.31
+
+pOH=−log[OH−]=−log(4.9×10−7)=6.31
+
+At this temperature, then, neutral solutions exhibit pH = pOH = 6.31, acidic solutions exhibit pH less than 6.31 and pOH greater than 6.31, whereas basic solutions exhibit pH greater than 6.31 and pOH less than 6.31. This distinction can be important when studying certain processes that occur at other temperatures, such as enzyme reactions in warm-blooded organisms at a temperature around 36–40 °C. Unless otherwise noted, references to pH values are presumed to be those at 25 °C (Table 14.1).
+
+Summary of Relations for Acidic, Basic and Neutral Solutions
+
+Classification
+Relative Ion Concentrations
+pH at 25 °C
+
+acidic
+[H3O+] > [OH−]
+pH < 7
+
+neutral
+[H3O+] = [OH−]
+pH = 7
+
+basic
+[H3O+] < [OH−]
+pH > 7
+
+Table
+14.1
+
+Figure 14.2 shows the relationships between [H3O+], [OH−], pH, and pOH for solutions classified as acidic, basic, and neutral.
+
+Figure
+14.2
+
+The pH and pOH scales represent concentrations of H3O+ and OH−, respectively. The pH and pOH values of some common substances at 25 °C are shown in this chart.
+
+Example
+14.4
+
+Calculation of pH from [H3O+]
+
+What is the pH of stomach acid, a solution of HCl with a hydronium ion concentration of 1.2 × 10−3 M?
+
+Solution
+
+pH=−log[H3O+]
+
+=−log(1.2×10−3)
+
+=−(−2.92)=2.92
+
+(The use of logarithms is explained in Appendix B. When taking the log of a value, keep as many decimal places in the result as there are significant figures in the value.)
+
+Check Your Learning
+
+Water exposed to air contains carbonic acid, H2CO3, due to the reaction between carbon dioxide and water:
+
+CO2(aq)+H2O(l)⇌H2CO3(aq)
+
+Air-saturated water has a hydronium ion concentration caused by the dissolved CO2 of 2.0 × 10−6 M, about 20-times larger than that of pure water. Calculate the pH of the solution at 25 °C.
+
+Answer:
+
+5.70
+
+Example
+14.5
+
+Calculation of Hydronium Ion Concentration from pH
+
+Calculate the hydronium ion concentration of blood, the pH of which is 7.3.
+
+Solution
+
+pH=−log[H3O+]=7.3
+
+log[H3O+]=−7.3
+
+[H3O+]=10−7.3or[H3O+]=antilog of −7.3
+
+[H3O+]=5×10−8M
+
+(On a calculator take the antilog, or the “inverse” log, of −7.3, or calculate 10−7.3.)
+
+Check Your Learning
+
+Calculate the hydronium ion concentration of a solution with a pH of −1.07.
+
+Answer:
+
+12 M
+
+How Sciences Interconnect
+
+Environmental Science
+
+Normal rainwater has a pH between 5 and 6 due to the presence of dissolved CO2 which forms carbonic acid:
+
+H2O(l)+CO2(g)⟶H2CO3(aq)
+
+H2CO3(aq)⇌H+(aq)+HCO3−(aq)
+
+Acid rain is rainwater that has a pH of less than 5, due to a variety of nonmetal oxides, including CO2, SO2, SO3, NO, and NO2 being dissolved in the water and reacting with it to form not only carbonic acid, but sulfuric acid and nitric acid. The formation and subsequent ionization of sulfuric acid are shown here:
+
+H2O(l)+SO3(g)⟶H2SO4(aq)
+
+H2SO4(aq)⟶H+(aq)+HSO4−(aq)
+
+Carbon dioxide is naturally present in the atmosphere because most organisms produce it as a waste product of metabolism. Carbon dioxide is also formed when fires release carbon stored in vegetation or fossil fuels. Sulfur trioxide in the atmosphere is naturally produced by volcanic activity, but it also originates from burning fossil fuels, which have traces of sulfur, and from the process of “roasting” ores of metal sulfides in metal-refining processes. Oxides of nitrogen are formed in internal combustion engines where the high temperatures make it possible for the nitrogen and oxygen in air to chemically combine.
+
+Acid rain is a particular problem in industrial areas where the products of combustion and smelting are released into the air without being stripped of sulfur and nitrogen oxides. In North America and Europe until the 1980s, it was responsible for the destruction of forests and freshwater lakes, when the acidity of the rain actually killed trees, damaged soil, and made lakes uninhabitable for all but the most acid-tolerant species. Acid rain also corrodes statuary and building facades that are made of marble and limestone (Figure 14.3). Regulations limiting the amount of sulfur and nitrogen oxides that can be released into the atmosphere by industry and automobiles have reduced the severity of acid damage to both natural and manmade environments in North America and Europe. It is now a growing problem in industrial areas of China and India.
+
+For further information on acid rain, visit this website hosted by the US Environmental Protection Agency.
+
+Figure
+14.3
+
+(a) Acid rain makes trees more susceptible to drought and insect infestation, and depletes nutrients in the soil. (b) It also is corrodes statues that are carved from marble or limestone. (credit a: modification of work by Chris M Morris; credit b: modification of work by “Eden, Janine and Jim”/Flickr)
+
+Example
+14.6
+
+Calculation of pOH
+
+What are the pOH and the pH of a 0.0125-M solution of potassium hydroxide, KOH?
+
+Solution
+
+Potassium hydroxide is a highly soluble ionic compound and completely dissociates when dissolved in dilute solution, yielding [OH−] = 0.0125 M:
+
+pOH=−log[OH−]=−log0.0125
+
+=−(−1.903)=1.903
+
+The pH can be found from the pOH:
+
+pH+pOH=14.00
+
+pH=14.00−pOH=14.00−1.903=12.10
+
+Check Your Learning
+
+The hydronium ion concentration of vinegar is approximately 4 × 10−3 M. What are the corresponding values of pOH and pH?
+
+Answer:
+
+pOH = 11.6, pH = 2.4
+
+The acidity of a solution is typically assessed experimentally by measurement of its pH. The pOH of a solution is not usually measured, as it is easily calculated from an experimentally determined pH value. The pH of a solution can be directly measured using a pH meter (Figure 14.4).
+
+Figure
+14.4
+
+(a) A research-grade pH meter used in a laboratory can have a resolution of 0.001 pH units, an accuracy of ± 0.002 pH units, and may cost in excess of $1000. (b) A portable pH meter has lower resolution (0.01 pH units), lower accuracy (± 0.2 pH units), and a far lower price tag. (credit b: modification of work by Jacopo Werther)
+
+The pH of a solution may also be visually estimated using colored indicators (Figure 14.5). The acid-base equilibria that enable use of these indicator dyes for pH measurements are described in a later section of this chapter.
+
+Figure
+14.5
+
+(a) A solution containing a dye mixture, called universal indicator, takes on different colors depending upon its pH. (b) Convenient test strips, called pH paper, contain embedded indicator dyes that yield pH-dependent color changes on contact with aqueous solutions.(credit: modification of work by Sahar Atwa)
+
+14.3
+
+Relative Strengths of Acids and Bases
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Assess the relative strengths of acids and bases according to their ionization constants
+
+Rationalize trends in acid–base strength in relation to molecular structure
+
+Carry out equilibrium calculations for weak acid–base systems
+
+Acid and Base Ionization Constants
+
+The relative strength of an acid or base is the extent to which it ionizes when dissolved in water. If the ionization reaction is essentially complete, the acid or base is termed strong; if relatively little ionization occurs, the acid or base is weak. As will be evident throughout the remainder of this chapter, there are many more weak acids and bases than strong ones. The most common strong acids and bases are listed in Figure 14.6.
+
+Figure
+14.6
+
+Some of the common strong acids and bases are listed here.
+
+The relative strengths of acids may be quantified by measuring their equilibrium constants in aqueous solutions. In solutions of the same concentration, stronger acids ionize to a greater extent, and so yield higher concentrations of hydronium ions than do weaker acids. The equilibrium constant for an acid is called the acid-ionization constant, Ka. For the reaction of an acid HA:
+
+HA(aq)+H2O(l)⇌H3O+(aq)+A−(aq),
+
+the acid ionization constant is written
+
+Ka=[H3O+][A−][HA]
+
+where the concentrations are those at equilibrium. Although water is a reactant in the reaction, it is the solvent as well, so we do not include [H2O] in the equation. The larger the Ka of an acid, the larger the concentration of H3O+ and A− relative to the concentration of the nonionized acid, HA, in an equilibrium mixture, and the stronger the acid. An acid is classified as “strong” when it undergoes complete ionization, in which case the concentration of HA is zero and the acid ionization constant is immeasurably large (Ka ≈ ∞). Acids that are partially ionized are called “weak,” and their acid ionization constants may be experimentally measured. A table of ionization constants for weak acids is provided in Appendix H.
+
+To illustrate this idea, three acid ionization equations and Ka values are shown below. The ionization constants increase from first to last of the listed equations, indicating the relative acid strength increases in the order CH3CO2H < HNO2 < HSO4−:
+
+CH3CO2H(aq)+H2O(l)⇌H3O+(aq)+CH3CO2−(aq)Ka=1.8×10−5
+
+HNO2(aq)+H2O(l)⇌H3O+(aq)+NO2−(aq)Ka=4.6×10−4
+
+HSO4−(aq)+H2O(aq)⇌H3O+(aq)+SO42−(aq)Ka=1.2×10−2
+
+Another measure of the strength of an acid is its percent ionization. The percent ionization of a weak acid is defined in terms of the composition of an equilibrium mixture:
+
+% ionization=[H3O+]eq[HA]0×100
+
+where the numerator is equivalent to the concentration of the acid's conjugate base (per stoichiometry, [A−] = [H3O+]). Unlike the Ka value, the percent ionization of a weak acid varies with the initial concentration of acid, typically decreasing as concentration increases. Equilibrium calculations of the sort described later in this chapter can be used to confirm this behavior.
+
+Example
+14.7
+
+Calculation of Percent Ionization from pH
+
+Calculate the percent ionization of a 0.125-M solution of nitrous acid (a weak acid), with a pH of 2.09.
+
+Solution
+
+The percent ionization for an acid is:
+
+[H3O+]eq[HNO2]0×100
+
+Converting the provided pH to hydronium ion molarity yields
+
+[H3O+]=10−2.09=0.0081M
+
+Substituting this value and the provided initial acid concentration into the percent ionization equation gives
+
+8.1×10−30.125×100=6.5%
+
+(Recall the provided pH value of 2.09 is logarithmic, and so it contains just two significant digits, limiting the certainty of the computed percent ionization.)
+
+Check Your Learning
+
+Calculate the percent ionization of a 0.10-M solution of acetic acid with a pH of 2.89.
+
+Answer:
+
+1.3% ionized
+
+Link to Learning
+
+View the simulation of strong and weak acids and bases at the molecular level.
+
+Just as for acids, the relative strength of a base is reflected in the magnitude of its base-ionization constant (Kb) in aqueous solutions. In solutions of the same concentration, stronger bases ionize to a greater extent, and so yield higher hydroxide ion concentrations than do weaker bases. A stronger base has a larger ionization constant than does a weaker base. For the reaction of a base, B:
+
+B(aq)+H2O(l)⇌HB+(aq)+OH−(aq),
+
+the ionization constant is written as
+
+Kb=[HB+][OH−][B]
+
+Inspection of the data for three weak bases presented below shows the base strength increases in the order NO2−<CH2CO2−<NH3.
+
+NO2−(aq)+H2O(l)⇌HNO2(aq)+OH−(aq)Kb=2.17×10−11CH3CO2−(aq)+H2O(l)⇌CH3CO2H(aq)+OH−(aq)Kb=5.6×10−10NH3(aq)+H2O(l)⇌NH4+(aq)+OH−(aq)Kb=1.8×10−5
+
+A table of ionization constants for weak bases appears in Appendix I. As for acids, the relative strength of a base is also reflected in its percent ionization, computed as
+
+%ionization=[OH−]eq/[B]0×100%
+
+but will vary depending on the base ionization constant and the initial concentration of the solution.
+
+Relative Strengths of Conjugate Acid-Base Pairs
+
+Brønsted-Lowry acid-base chemistry is the transfer of protons; thus, logic suggests a relation between the relative strengths of conjugate acid-base pairs. The strength of an acid or base is quantified in its ionization constant, Ka or Kb, which represents the extent of the acid or base ionization reaction. For the conjugate acid-base pair HA / A−, ionization equilibrium equations and ionization constant expressions are
+
+HA(aq)+H2O(l)⇌H3O+(aq)+A−(aq)Ka=[H3O+][A−][HA]
+
+A−(aq)+H2O(l)⇌OH−(aq)+HA(aq)Kb=[HA][OH–][A−]
+
+Adding these two chemical equations yields the equation for the autoionization for water:
+
+HA(aq)+H2O(l)+A−(aq)+H2O(l)⇌H3O+(aq)+A−(aq)+OH−(aq)+HA(aq)
+
+2H2O(l)⇌H3O+(aq)+OH−(aq)
+
+As discussed in another chapter on equilibrium, the equilibrium constant for a summed reaction is equal to the mathematical product of the equilibrium constants for the added reactions, and so
+
+Ka×Kb=[H3O+][A−][HA]×[HA][OH−][A−]=[H3O+][OH−]=Kw
+
+This equation states the relation between ionization constants for any conjugate acid-base pair, namely, their mathematical product is equal to the ion product of water, Kw. By rearranging this equation, a reciprocal relation between the strengths of a conjugate acid-base pair becomes evident:
+
+Ka=Kw/KborKb=Kw/Ka
+
+The inverse proportional relation between Ka and Kb means the stronger the acid or base, the weaker its conjugate partner. Figure 14.7 illustrates this relation for several conjugate acid-base pairs.
+
+Figure
+14.7
+
+Relative strengths of several conjugate acid-base pairs are shown.
+
+Figure
+14.8
+
+This figure shows strengths of conjugate acid-base pairs relative to the strength of water as the reference substance.
+
+The listing of conjugate acid–base pairs shown in Figure 14.8 is arranged to show the relative strength of each species as compared with water, whose entries are highlighted in each of the table’s columns. In the acid column, those species listed below water are weaker acids than water. These species do not undergo acid ionization in water; they are not Brønsted-Lowry acids. All the species listed above water are stronger acids, transferring protons to water to some extent when dissolved in an aqueous solution to generate hydronium ions. Species above water but below hydronium ion are weak acids, undergoing partial acid ionization, wheres those above hydronium ion are strong acids that are completely ionized in aqueous solution.
+
+If all these strong acids are completely ionized in water, why does the column indicate they vary in strength, with nitric acid being the weakest and perchloric acid the strongest? Notice that the sole acid species present in an aqueous solution of any strong acid is H3O+(aq), meaning that hydronium ion is the strongest acid that may exist in water; any stronger acid will react completely with water to generate hydronium ions. This limit on the acid strength of solutes in a solution is called a leveling effect. To measure the differences in acid strength for “strong” acids, the acids must be dissolved in a solvent that is less basic than water. In such solvents, the acids will be “weak,” and so any differences in the extent of their ionization can be determined. For example, the binary hydrogen halides HCl, HBr, and HI are strong acids in water but weak acids in ethanol (strength increasing HCl < HBr < HI).
+
+The right column of Figure 14.8 lists a number of substances in order of increasing base strength from top to bottom. Following the same logic as for the left column, species listed above water are weaker bases and so they don’t undergo base ionization when dissolved in water. Species listed between water and its conjugate base, hydroxide ion, are weak bases that partially ionize. Species listed below hydroxide ion are strong bases that completely ionize in water to yield hydroxide ions (i.e., they are leveled to hydroxide). A comparison of the acid and base columns in this table supports the reciprocal relation between the strengths of conjugate acid-base pairs. For example, the conjugate bases of the strong acids (top of table) are all of negligible strength. A strong acid exhibits an immeasurably large Ka, and so its conjugate base will exhibit a Kb that is essentially zero:
+
+strongacid:Ka≈∞conjugatebase:Kb=Kw/Ka=Kw/∞≈0
+
+A similar approach can be used to support the observation that conjugate acids of strong bases (Kb ≈ ∞) are of negligible strength (Ka ≈ 0).
+
+Example
+14.8
+
+Calculating Ionization Constants for Conjugate Acid-Base Pairs
+
+Use the Kb for the nitrite ion, NO2−, to calculate the Ka for its conjugate acid.
+
+Solution
+Kb for NO2− is given in this section as 2.17 × 10−11. The conjugate acid of NO2− is HNO2; Ka for HNO2 can be calculated using the relationship:
+Ka×Kb=1.0×10−14=Kw
+
+Solving for Ka yields
+
+Ka=KwKb=1.0×10−142.17×10−11=4.6×10−4
+
+This answer can be verified by finding the Ka for HNO2 in Appendix H.
+
+Check Your Learning
+Determine the relative acid strengths of NH4+ and HCN by comparing their ionization constants. The ionization constant of HCN is given in Appendix H as 4.9 × 10−10. The ionization constant of NH4+ is not listed, but the ionization constant of its conjugate base, NH3, is listed as 1.8 × 10−5.
+
+Answer:
+
+NH4+ is the slightly stronger acid (Ka for NH4+ = 5.6 × 10−10).
+
+Acid-Base Equilibrium Calculations
+
+The chapter on chemical equilibria introduced several types of equilibrium calculations and the various mathematical strategies that are helpful in performing them. These strategies are generally useful for equilibrium systems regardless of chemical reaction class, and so they may be effectively applied to acid-base equilibrium problems. This section presents several example exercises involving equilibrium calculations for acid-base systems.
+
+Example
+14.9
+
+Determination of Ka from Equilibrium Concentrations
+
+Acetic acid is the principal ingredient in vinegar (Figure 14.9) that provides its sour taste. At equilibrium, a solution contains [CH3CO2H] = 0.0787 M and [H3O+]=[CH3CO2−]=0.00118M. What is the value of Ka for acetic acid?
+
+Figure
+14.9
+
+Vinegar contains acetic acid, a weak acid. (credit: modification of work by “HomeSpot HQ”/Flickr)
+
+Solution
+
+The relevant equilibrium equation and its equilibrium constant expression are shown below. Substitution of the provided equilibrium concentrations permits a straightforward calculation of the Ka for acetic acid.
+
+CH3CO2H(aq)+H2O(l)⇌H3O+(aq)+CH3CO2−(aq)
+
+Ka=[H3O+][CH3CO2−][CH3CO2H]=(0.00118)(0.00118)0.0787=1.77×10−5
+
+Check Your Learning
+
+The HSO4− ion, weak acid used in some household cleansers:
+
+HSO4−(aq)+H2O(l)⇌H3O+(aq)+SO42−(aq)
+
+What is the acid ionization constant for this weak acid if an equilibrium mixture has the following composition: [H3O+] = 0.027 M; [HSO4−]=0.29M; and [SO42−]=0.13M?
+
+Answer:
+
+Ka for HSO4− = 1.2 × 10−2
+
+Example
+14.10
+
+Determination of Kb from Equilibrium Concentrations
+
+Caffeine, C8H10N4O2 is a weak base. What is the value of Kb for caffeine if a solution at equilibrium has [C8H10N4O2] = 0.050 M, [C8H10N4O2H+] = 5.0 × 10−3 M, and [OH−] = 2.5 × 10−3 M?
+
+Solution
+
+The relevant equilibrium equation and its equilibrium constant expression are shown below. Substitution of the provided equilibrium concentrations permits a straightforward calculation of the Kb for caffeine.
+
+C8H10N4O2(aq)+H2O(l)⇌C8H10N4O2H+(aq)+OH−(aq)
+
+Kb=[C8H10N4O2H+][OH−][C8H10N4O2]=(5.0×10−3)(2.5×10−3)0.050=2.5×10−4
+
+Check Your Learning
+
+What is the equilibrium constant for the ionization of the HPO42− ion, a weak base
+
+HPO42−(aq)+H2O(l)⇌H2PO4−(aq)+OH−(aq)
+
+if the composition of an equilibrium mixture is as follows: [OH−] = 1.3 × 10−6 M; [H2PO4−]=0.042M; and [HPO42−]=0.341M?
+
+Answer:
+
+Kb for HPO42−=1.6×10−7
+
+Example
+14.11
+
+Determination of Ka or Kb from pH
+
+The pH of a 0.0516-M solution of nitrous acid, HNO2, is 2.34. What is its Ka?
+
+HNO2(aq)+H2O(l)⇌H3O+(aq)+NO2−(aq)
+
+Solution
+
+The nitrous acid concentration provided is a formal concentration, one that does not account for any chemical equilibria that may be established in solution. Such concentrations are treated as “initial” values for equilibrium calculations using the ICE table approach. Notice the initial value of hydronium ion is listed as approximately zero because a small concentration of H3O+ is present (1 × 10−7 M) due to the autoprotolysis of water. In many cases, such as all the ones presented in this chapter, this concentration is much less than that generated by ionization of the acid (or base) in question and may be neglected.
+
+The pH provided is a logarithmic measure of the hydronium ion concentration resulting from the acid ionization of the nitrous acid, and so it represents an “equilibrium” value for the ICE table:
+
+[H3O+]=10−2.34=0.0046M
+
+The ICE table for this system is then
+
+Finally, calculate the value of the equilibrium constant using the data in the table:
+
+Ka=[H3O+][NO2−][HNO2]=(0.0046)(0.0046)(0.0470)=4.6×10−4
+
+Check Your Learning.
+
+The pH of a solution of household ammonia, a 0.950-M solution of NH3, is 11.612. What is Kb for NH3.
+
+Answer:
+
+Kb = 1.8 × 10−5
+
+Example
+14.12
+
+Calculating Equilibrium Concentrations in a Weak Acid Solution
+
+Formic acid, HCO2H, is one irritant that causes the body’s reaction to some ant bites and stings (Figure 14.10).
+
+Figure
+14.10
+
+The pain of some ant bites and stings is caused by formic acid. (credit: John Tann)
+
+What is the concentration of hydronium ion and the pH of a 0.534-M solution of formic acid?
+
+HCO2H(aq)+H2O(l)⇌H3O+(aq)+HCO2−(aq)Ka=1.8×10−4
+
+Solution
+
+The ICE table for this system is
+
+Substituting the equilibrium concentration terms into the Ka expression gives
+
+Ka=1.8×10−4=[H3O+][HCO2−][HCO2H]
+
+=(x)(x)0.534−x=1.8×10−4
+
+The relatively large initial concentration and small equilibrium constant permits the simplifying assumption that x will be much lesser than 0.534, and so the equation becomes
+
+Ka=1.8×10−4=x20.534
+
+Solving the equation for x yields
+
+x2=0.534×(1.8×10−4)=9.6×10−5
+
+x=9.6×10−5
+
+=9.8×10−3M
+
+To check the assumption that x is small compared to 0.534, its relative magnitude can be estimated:
+
+x0.534=9.8×10−30.534=1.8×10−2(1.8%of 0.534)
+
+Because x is less than 5% of the initial concentration, the assumption is valid.
+
+As defined in the ICE table, x is equal to the equilibrium concentration of hydronium ion:
+
+x=[H3O+]=0.0098M
+
+Finally, the pH is calculated to be
+
+pH=−log[H3O+]=−log(0.0098)=2.01
+
+Check Your Learning
+
+Only a small fraction of a weak acid ionizes in aqueous solution. What is the percent ionization of a 0.100-M solution of acetic acid, CH3CO2H?
+
+CH3CO2H(aq)+H2O(l)⇌H3O+(aq)+CH3CO2−(aq)Ka=1.8×10−5
+
+Answer:
+
+percent ionization = 1.3%
+
+Example
+14.13
+
+Calculating Equilibrium Concentrations in a Weak Base Solution
+
+Find the concentration of hydroxide ion, the pOH, and the pH of a 0.25-M solution of trimethylamine, a weak base:
+
+(CH3)3N(aq)+H2O(l)⇌(CH3)3NH+(aq)+OH−(aq)Kb=6.3×10−5
+
+Solution
+
+The ICE table for this system is
+
+Substituting the equilibrium concentration terms into the Kb expression gives
+
+Kb=[(CH3)3NH+][OH−][(CH3)3N]=(x)(x)0.25−x=6.3×10−5
+
+Assuming x << 0.25 and solving for x yields
+
+x=4.0×10−3M
+
+This value is less than 5% of the initial concentration (0.25), so the assumption is justified.
+
+As defined in the ICE table, x is equal to the equilibrium concentration of hydroxide ion:
+
+[OH−]=~0+x=x=4.0×10−3M
+
+=4.0×10−3M
+
+The pOH is calculated to be
+
+pOH=−log(4.0×10−3)=2.40
+
+Using the relation introduced in the previous section of this chapter:
+
+pH+pOH=pKw=14.00
+
+permits the computation of pH:
+
+pH=14.00−pOH=14.00−2.40=11.60
+
+Check Your Learning
+Calculate the hydroxide ion concentration and the percent ionization of a 0.0325-M solution of ammonia, a weak base with a Kb of 1.76 × 10−5.
+
+Answer:
+
+7.56 × 10−4 M, 2.33%
+
+In some cases, the strength of the weak acid or base and its formal (initial) concentration result in an appreciable ionization. Though the ICE strategy remains effective for these systems, the algebra is a bit more involved because the simplifying assumption that x is negligible cannot be made. Calculations of this sort are demonstrated in Example 14.14 below.
+
+Example
+14.14
+
+Calculating Equilibrium Concentrations without Simplifying Assumptions
+
+Sodium bisulfate, NaHSO4, is used in some household cleansers as a source of the HSO4− ion, a weak acid. What is the pH of a 0.50-M solution of HSO4−?
+
+HSO4−(aq)+H2O(l)⇌H3O+(aq)+SO42−(aq)Ka=1.2×10−2
+
+Solution
+
+The ICE table for this system is
+
+Substituting the equilibrium concentration terms into the Ka expression gives
+
+Ka=1.2×10−2=[H3O+][SO42−][HSO4−]=(x)(x)0.50−x
+
+If the assumption that x << 0.5 is made, simplifying and solving the above equation yields
+
+x=0.077M
+
+This value of x is clearly not significantly less than 0.50 M; rather, it is approximately 15% of the initial concentration:
+
+When we check the assumption, we calculate:
+
+x[HSO4−]i
+
+x0.50=7.7×10−20.50=0.15(15%)
+
+Because the simplifying assumption is not valid for this system, the equilibrium constant expression is solved as follows:
+
+Ka=1.2×10−2=(x)(x)0.50−x
+
+Rearranging this equation yields
+
+6.0×10−3−1.2×10−2x=x2
+
+Writing the equation in quadratic form gives
+
+x2+1.2×10−2x−6.0×10−3=0
+
+Solving for the two roots of this quadratic equation results in a negative value that may be discarded as physically irrelevant and a positive value equal to x. As defined in the ICE table, x is equal to the hydronium concentration.
+
+x=[H3O+]=0.072MpH=−log[H3O+]=−log(0.072)=1.14
+
+Check Your Learning
+
+Calculate the pH in a 0.010-M solution of caffeine, a weak base:
+
+C8H10N4O2(aq)+H2O(l)⇌C8H10N4O2H+(aq)+OH−(aq)Kb=2.5×10−4
+
+Answer:
+
+pH 11.16
+
+Effect of Molecular Structure on Acid-Base Strength
+
+Binary Acids and Bases
+
+In the absence of any leveling effect, the acid strength of binary compounds of hydrogen with nonmetals (A) increases as the H-A bond strength decreases down a group in the periodic table. For group 17, the order of increasing acidity is HF < HCl < HBr < HI. Likewise, for group 16, the order of increasing acid strength is H2O < H2S < H2Se < H2Te.
+
+Across a row in the periodic table, the acid strength of binary hydrogen compounds increases with increasing electronegativity of the nonmetal atom because the polarity of the H-A bond increases. Thus, the order of increasing acidity (for removal of one proton) across the second row is CH4 < NH3 < H2O < HF; across the third row, it is SiH4 < PH3 < H2S < HCl (see Figure 14.11).
+
+Figure
+14.11
+
+The figure shows trends in the strengths of binary acids and bases.
+
+Ternary Acids and Bases
+
+Ternary compounds composed of hydrogen, oxygen, and some third element (“E”) may be structured as depicted in the image below. In these compounds, the central E atom is bonded to one or more O atoms, and at least one of the O atoms is also bonded to an H atom, corresponding to the general molecular formula OmE(OH)n. These compounds may be acidic, basic, or amphoteric depending on the properties of the central E atom. Examples of such compounds include sulfuric acid, O2S(OH)2, sulfurous acid, OS(OH)2, nitric acid, O2NOH, perchloric acid, O3ClOH, aluminum hydroxide, Al(OH)3, calcium hydroxide, Ca(OH)2, and potassium hydroxide, KOH:
+
+If the central atom, E, has a low electronegativity, its attraction for electrons is low. Little tendency exists for the central atom to form a strong covalent bond with the oxygen atom, and bond a between the element and oxygen is more readily broken than bond b between oxygen and hydrogen. Hence bond a is ionic, hydroxide ions are released to the solution, and the material behaves as a base—this is the case with Ca(OH)2 and KOH. Lower electronegativity is characteristic of the more metallic elements; hence, the metallic elements form ionic hydroxides that are by definition basic compounds.
+
+If, on the other hand, the atom E has a relatively high electronegativity, it strongly attracts the electrons it shares with the oxygen atom, making bond a relatively strongly covalent. The oxygen-hydrogen bond, bond b, is thereby weakened because electrons are displaced toward E. Bond b is polar and readily releases hydrogen ions to the solution, so the material behaves as an acid. High electronegativities are characteristic of the more nonmetallic elements. Thus, nonmetallic elements form covalent compounds containing acidic −OH groups that are called oxyacids.
+
+Increasing the oxidation number of the central atom E also increases the acidity of an oxyacid because this increases the attraction of E for the electrons it shares with oxygen and thereby weakens the O-H bond. Sulfuric acid, H2SO4, or O2S(OH)2 (with a sulfur oxidation number of +6), is more acidic than sulfurous acid, H2SO3, or OS(OH)2 (with a sulfur oxidation number of +4). Likewise nitric acid, HNO3, or O2NOH (N oxidation number = +5), is more acidic than nitrous acid, HNO2, or ONOH (N oxidation number = +3). In each of these pairs, the oxidation number of the central atom is larger for the stronger acid (Figure 14.12).
+
+Figure
+14.12
+
+As the oxidation number of the central atom E increases, the acidity also increases.
+
+Hydroxy compounds of elements with intermediate electronegativities and relatively high oxidation numbers (for example, elements near the diagonal line separating the metals from the nonmetals in the periodic table) are usually amphoteric. This means that the hydroxy compounds act as acids when they react with strong bases and as bases when they react with strong acids. The amphoterism of aluminum hydroxide, which commonly exists as the hydrate Al(H2O)3(OH)3, is reflected in its solubility in both strong acids and strong bases. In strong bases, the relatively insoluble hydrated aluminum hydroxide, Al(H2O)3(OH)3, is converted into the soluble ion, [Al(H2O)2(OH)4]−, by reaction with hydroxide ion:
+
+Al(H2O)3(OH)3(aq)+OH−(aq)⇌H2O(l)+[Al(H2O)2(OH)4]−(aq)
+
+In this reaction, a proton is transferred from one of the aluminum-bound H2O molecules to a hydroxide ion in solution. The Al(H2O)3(OH)3 compound thus acts as an acid under these conditions. On the other hand, when dissolved in strong acids, it is converted to the soluble ion [Al(H2O)6]3+ by reaction with hydronium ion:
+
+3H3O+(aq)+Al(H2O)3(OH)3(aq)⇌Al(H2O)63+(aq)+3H2O(l)
+
+In this case, protons are transferred from hydronium ions in solution to Al(H2O)3(OH)3, and the compound functions as a base.
+
+14.4
+
+Hydrolysis of Salts
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Predict whether a salt solution will be acidic, basic, or neutral
+
+Calculate the concentrations of the various species in a salt solution
+
+Describe the acid ionization of hydrated metal ions
+
+Salts with Acidic Ions
+
+Salts are ionic compounds composed of cations and anions, either of which may be capable of undergoing an acid or base ionization reaction with water. Aqueous salt solutions, therefore, may be acidic, basic, or neutral, depending on the relative acid-base strengths of the salt's constituent ions. For example, dissolving ammonium chloride in water results in its dissociation, as described by the equation
+
+NH4Cl(s)⇌NH4+(aq)+Cl−(aq)
+
+The ammonium ion is the conjugate acid of the base ammonia, NH3; its acid ionization (or acid hydrolysis) reaction is represented by
+
+NH4+(aq)+H2O(l)⇌H3O+(aq)+NH3(aq)Ka=Kw/Kb
+
+Since ammonia is a weak base, Kb is measurable and Ka > 0 (ammonium ion is a weak acid).
+
+The chloride ion is the conjugate base of hydrochloric acid, and so its base ionization (or base hydrolysis) reaction is represented by
+
+Cl−(aq)+H2O(l)⇌HCl(aq)+OH−(aq)Kb=Kw/Ka
+
+Since HCl is a strong acid, Ka is immeasurably large and Kb ≈ 0 (chloride ions don’t undergo appreciable hydrolysis).
+
+Thus, dissolving ammonium chloride in water yields a solution of weak acid cations (NH4+) and inert anions (Cl−), resulting in an acidic solution.
+
+Example
+14.15
+
+Calculating the pH of an Acidic Salt Solution
+Aniline is an amine that is used to manufacture dyes. It is isolated as anilinium chloride, [C6H5NH3]Cl, a salt prepared by the reaction of the weak base aniline and hydrochloric acid. What is the pH of a 0.233 M solution of anilinium chloride
+C6H5NH3+(aq)+H2O(l)⇌H3O+(aq)+C6H5NH2(aq)
+
+Solution
+The Ka for anilinium ion is derived from the Kb for its conjugate base, aniline (see Appendix I):
+
+Ka=KwKb=1.0×10−144.3×10−10=2.3×10−5
+
+Using the provided information, an ICE table for this system is prepared:
+
+Substituting these equilibrium concentration terms into the Ka expression gives
+
+Ka=[C6H5NH2][H3O+]/[C6H5NH3+]2.3×10−5=(x)(x)/0.233−x)
+
+Assuming x << 0.233, the equation is simplified and solved for x:
+
+2.3×10−5=x2/0.233x=0.0023M
+
+The ICE table defines x as the hydronium ion molarity, and so the pH is computed as
+
+pH=−log[H3O+]=−log(0.0023)=2.64
+
+Check Your Learning
+What is the hydronium ion concentration in a 0.100-M solution of ammonium nitrate, NH4NO3, a salt composed of the ions NH4+ and NO3−. Which is the stronger acid C6H5NH3+ or NH4+?
+
+Answer:
+
+[H3O+] = 7.5 × 10−6 M; C6H5NH3+ is the stronger acid.
+
+Salts with Basic Ions
+
+As another example, consider dissolving sodium acetate in water:
+
+NaCH3CO2(s)⇋Na+(aq)+CH3CO2−(aq)
+
+The sodium ion does not undergo appreciable acid or base ionization and has no effect on the solution pH. This may seem obvious from the ion's formula, which indicates no hydrogen or oxygen atoms, but some dissolved metal ions function as weak acids, as addressed later in this section.
+
+The acetate ion, CH3CO2−, is the conjugate base of acetic acid, CH3CO2H, and so its base ionization (or base hydrolysis) reaction is represented by
+
+CH3CO2−(aq)+H2O(l)⇌CH3CO2H(aq)+OH−(aq)Kb=Kw/Ka
+
+Because acetic acid is a weak acid, its Ka is measurable and Kb > 0 (acetate ion is a weak base).
+
+Dissolving sodium acetate in water yields a solution of inert cations (Na+) and weak base anions (CH3CO2−),
+resulting in a basic solution.
+
+Example
+14.16
+
+Equilibrium in a Solution of a Salt of a Weak Acid and a Strong Base
+
+Determine the acetic acid concentration in a solution with [CH3CO2−]=0.050M and [OH−] = 2.5 × 10−6 M at equilibrium. The reaction is:
+
+CH3CO2−(aq)+H2O(l)⇌CH3CO2H(aq)+OH−(aq)
+
+Solution
+The provided equilibrium concentrations and a value for the equilibrium constant will permit calculation of the missing equilibrium concentration. The process in question is the base ionization of acetate ion, for which
+
+Kb(forCH3CO2−)=KwKa(forCH3CO2H)=1.0×10−141.8×10−5=5.6×10−10
+
+Substituting the available values into the Kb expression gives
+
+Kb=[CH3CO2H][OH−][CH3CO2−]=5.6×10−10
+
+=[CH3CO2H](2.5×10−6)(0.050)=5.6×10−10
+
+Solving the above equation for the acetic acid molarity yields [CH3CO2H] = 1.1 × 10−5 M.
+
+Check Your Learning
+What is the pH of a 0.083-M solution of NaCN?
+
+Answer:
+
+11.11
+
+Salts with Acidic and Basic Ions
+
+Some salts are composed of both acidic and basic ions, and so the pH of their solutions will depend on the relative strengths of these two species. Likewise, some salts contain a single ion that is amphiprotic, and so the relative strengths of this ion’s acid and base character will determine its effect on solution pH. For both types of salts, a comparison of the Ka and Kb values allows prediction of the solution’s acid-base status, as illustrated in the following example exercise.
+
+Example
+14.17
+
+Determining the Acidic or Basic Nature of Salts
+
+Determine whether aqueous solutions of the following salts are acidic, basic, or neutral:
+
+(a) KBr
+
+(b) NaHCO3
+
+(c) Na2HPO4
+
+(d) NH4F
+
+Solution
+Consider each of the ions separately in terms of its effect on the pH of the solution, as shown here:
+
+(a) The K+ cation is inert and will not affect pH. The bromide ion is the conjugate base of a strong acid, and so it is of negligible base strength (no appreciable base ionization). The solution is neutral.
+
+(b) The Na+ cation is inert and will not affect the pH of the solution; while the HCO3− anion is amphiprotic. The Ka of HCO3− is 4.7 × 10−11,and its Kb is 1.0×10−144.3×10−7=2.3×10−8.
+
+Since Kb >> Ka, the solution is basic.
+
+(c) The Na+ cation is inert and will not affect the pH of the solution, while the HPO42− anion is amphiprotic. The Ka of HPO42− is 4.2 × 10−13,
+
+and its Kb is 1.0×10−146.2×10−8=1.6×10−7. Because Kb >> Ka, the solution is basic.
+
+(d) The NH4+ ion is acidic (see above discussion) and the F− ion is basic (conjugate base of the weak acid HF). Comparing the two ionization constants: Ka of NH4+ is 5.6 × 10−10 and the Kb of F− is 1.6 × 10−11, so the solution is acidic, since Ka > Kb.
+
+Check Your Learning
+Determine whether aqueous solutions of the following salts are acidic, basic, or neutral:
+
+(a) K2CO3
+
+(b) CaCl2
+
+(c) KH2PO4
+
+(d) (NH4)2CO3
+
+Answer:
+
+(a) basic; (b) neutral; (c) acidic; (d) basic
+
+The Ionization of Hydrated Metal Ions
+
+Unlike the group 1 and 2 metal ions of the preceding examples (Na+, Ca2+, etc.), some metal ions function as acids in aqueous solutions. These ions are not just loosely solvated by water molecules when dissolved, instead they are covalently bonded to a fixed number of water molecules to yield a complex ion (see chapter on coordination chemistry). As an example, the dissolution of aluminum nitrate in water is typically represented as
+
+Al(NO3)3(s)⇌Al3+(aq)+3NO3−(aq)
+
+However, the aluminum(III) ion actually reacts with six water molecules to form a stable complex ion, and so the more explicit representation of the dissolution process is
+
+Al(NO3)3(s)+6H2O(l)⇌Al(H2O)63+(aq)+3NO3−(aq)
+
+As shown in Figure 14.13, the Al(H2O)63+
+ions involve bonds between a central Al atom and the O atoms of the six water molecules. Consequently, the bonded water molecules' O–H bonds are more polar than in nonbonded water molecules, making the bonded molecules more prone to donation of a hydrogen ion:
+
+Al(H2O)63+(aq)+H2O(l)⇌H3O+(aq)+Al(H2O)5(OH)2+(aq)Ka=1.4×10−5
+
+The conjugate base produced by this process contains five other bonded water molecules capable of acting as acids, and so the sequential or step-wise transfer of protons is possible as depicted in few equations below:
+
+Al(H2O)63+(aq)+H2O(l)⇌H3O+(aq)+Al(H2O)5(OH)2+(aq)
+
+Al(H2O)5(OH)2+(aq)+H2O(l)⇌H3O+(aq)+Al(H2O)4(OH)2+(aq)
+
+Al(H2O)4(OH)2+(aq)+H2O(l)⇌H3O+(aq)+Al(H2O)3(OH)3(aq)
+
+This is an example of a polyprotic acid, the topic of discussion in a later section of this chapter.
+
+Figure
+14.13
+
+When an aluminum ion reacts with water, the hydrated aluminum ion becomes a weak acid.
+
+Aside from the alkali metals (group 1) and some alkaline earth metals (group 2), most other metal ions will undergo acid ionization to some extent when dissolved in water. The acid strength of these complex ions typically increases with increasing charge and decreasing size of the metal ions. The first-step acid ionization equations for a few other acidic metal ions are shown below:
+
+Fe(H2O)63+(aq)+H2O(l)⇌H3O+(aq)+Fe(H2O)5(OH)2+(aq)pKa=2.74
+
+Cu(H2O)62+(aq)+H2O(l)⇌H3O+(aq)+Cu(H2O)5(OH)+(aq)pKa=~6.3
+
+Zn(H2O)42+(aq)+H2O(l)⇌H3O+(aq)+Zn(H2O)3(OH)+(aq)pKa=9.6
+
+Example
+14.18
+
+Hydrolysis of [Al(H2O)6]3+
+
+Calculate the pH of a 0.10-M solution of aluminum chloride, which dissolves completely to give the hydrated aluminum ion [Al(H2O)6]3+ in solution.
+
+Solution
+
+The equation for the reaction and Ka are:
+
+Al(H2O)63+(aq)+H2O(l)⇌H3O+(aq)+Al(H2O)5(OH)2+(aq)Ka=1.4×10−5
+
+An ICE table with the provided information is
+
+Substituting the expressions for the equilibrium concentrations into the equation for the ionization constant yields:
+
+Ka=[H3O+][Al(H2O)5(OH)2+][Al(H2O)63+]
+
+=(x)(x)0.10−x=1.4×10−5
+
+Assuming x << 0.10 and solving the simplified equation gives:
+
+x=1.2×10−3M
+
+The ICE table defined x as equal to the hydronium ion concentration, and so the pH is calculated to be
+
+[H3O+]=0+x=1.2×10−3M
+
+pH=−log[H3O+]=2.92(an acidic solution)
+
+Check Your Learning
+What is [Al(H2O)5(OH)2+] in a 0.15-M solution of Al(NO3)3 that contains enough of the strong acid HNO3 to bring [H3O+] to 0.10 M?
+
+Answer:
+
+2.1 × 10−5 M
+
+14.5
+
+Polyprotic Acids
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Extend previously introduced equilibrium concepts to acids and bases that may donate or accept more than one proton
+
+Acids are classified by the number of protons per molecule that they can give up in a reaction. Acids such as HCl, HNO3, and HCN that contain one ionizable hydrogen atom in each molecule are called monoprotic acids. Their reactions with water are:
+
+HCl(aq)+H2O(l)⟶H3O+(aq)+Cl−(aq)HNO3(aq)+H2O(l)⟶H3O+(aq)+NO3−(aq)HCN(aq)+H2O(l)⇌H3O+(aq)+CN−(aq)
+
+Even though it contains four hydrogen atoms, acetic acid, CH3CO2H, is also monoprotic because only the hydrogen atom from the carboxyl group (COOH) reacts with bases:
+
+Similarly, monoprotic bases are bases that will accept a single proton.
+
+Diprotic acids contain two ionizable hydrogen atoms per molecule; ionization of such acids occurs in two steps. The first ionization always takes place to a greater extent than the second ionization. For example, sulfuric acid, a strong acid, ionizes as follows:
+
+First ionization:H2SO4(aq)+H2O(l)⇌H3O+(aq)+HSO4−(aq)Ka1=more than102; complete dissociationSecond ionization:HSO4−(aq)+H2O(l)⇌H3O+(aq)+SO42−(aq)Ka2=1.2×10−2
+
+This stepwise ionization process occurs for all polyprotic acids. Carbonic acid, H2CO3, is an example of a weak diprotic acid. The first ionization of carbonic acid yields hydronium ions and bicarbonate ions in small amounts.
+
+First ionization:H2CO3(aq)+H2O(l)⇌H3O+(aq)+HCO3−(aq)KH2CO3=[H3O+][HCO3−][H2CO3]=4.3×10−7
+
+The bicarbonate ion can also act as an acid. It ionizes and forms hydronium ions and carbonate ions in even smaller quantities.
+
+Second ionization:HCO3−(aq)+H2O(l)⇌H3O+(aq)+CO32−(aq)KHCO3−=[H3O+][CO32−][HCO3−]=4.7×10−11
+
+KH2CO3 is larger than KHCO3− by a factor of 104, so H2CO3 is the dominant producer of hydronium ion in the solution. This means that little of the HCO3− formed by the ionization of H2CO3 ionizes to give hydronium ions (and carbonate ions), and the concentrations of H3O+ and HCO3− are practically equal in a pure aqueous solution of H2CO3.
+
+If the first ionization constant of a weak diprotic acid is larger than the second by a factor of at least 20, it is appropriate to treat the first ionization separately and calculate concentrations resulting from it before calculating concentrations of species resulting from subsequent ionization. This approach is demonstrated in the following example exercise.
+
+Example
+14.19
+
+Ionization of a Diprotic Acid
+
+“Carbonated water” contains a palatable amount of dissolved carbon dioxide. The solution is acidic because CO2 reacts with water to form carbonic acid, H2CO3. What are [H3O+], [HCO3−], and [CO32−] in a saturated solution of CO2 with an initial [H2CO3] = 0.033 M?
+
+H2CO3(aq)+H2O(l)⇌H3O+(aq)+HCO3−(aq)Ka1=4.3×10−7
+
+HCO3−(aq)+H2O(l)⇌H3O+(aq)+CO32−(aq)Ka2=4.7×10−11
+
+Solution
+
+As indicated by the ionization constants, H2CO3 is a much stronger acid than HCO3−, so the stepwise ionization reactions may be treated separately.
+
+The first ionization reaction is
+
+H2CO3(aq)+H2O(l)⇌H3O+(aq)+HCO3−(aq)Ka1=4.3×10−7
+
+Using provided information, an ICE table for this first step is prepared:
+
+Substituting the equilibrium concentrations into the equilibrium equation gives
+
+KH2CO3=[H3O+][HCO3−][H2CO3]=(x)(x)0.033−x=4.3×10−7
+
+Assuming x << 0.033 and solving the simplified equation yields
+
+x=1.2×10−4
+
+The ICE table defined x as equal to the bicarbonate ion molarity and the hydronium ion molarity:
+
+[H3O+]=[HCO3−]=1.2×10−4M
+
+Using the bicarbonate ion concentration computed above, the second ionization is subjected to a similar equilibrium calculation:
+
+HCO3−(aq)+H2O(l)⇌H3O+(aq)+CO32−(aq)
+
+KHCO3−=[H3O+][CO32−][HCO3−]=(1.2×10−4)[CO32−]1.2×10−4
+
+[CO32−]=(4.7×10−11)(1.2×10−4)1.2×10−4=4.7×10−11M
+
+To summarize: at equilibrium [H2CO3] = 0.033 M; [H3O+] = 1.2 × 10−4; [HCO3−]=1.2×10−4M; [CO32−]=4.7×10−11M.
+
+Check Your Learning
+
+The concentration of H2S in a saturated aqueous solution at room temperature is approximately 0.1 M. Calculate [H3O+], [HS−], and [S2−] in the solution:
+
+H2S(aq)+H2O(l)⇌H3O+(aq)+HS−(aq)Ka1=8.9×10−8
+
+HS−(aq)+H2O(l)⇌H3O+(aq)+S2−(aq)Ka2=1.0×10−19
+
+Answer:
+
+[H2S] = 0.1 M; [H3O+] = [HS−] = 0.000094 M; [S2−] = 1 × 10−19 M
+
+A triprotic acid is an acid that has three ionizable H atoms. Phosphoric acid is one example:
+
+First ionization:H3PO4(aq)+H2O(l)⇌H3O+(aq)+H2PO4−(aq)Ka1=7.5×10−3Second ionization:H2PO4−(aq)+H2O(l)⇌H3O+(aq)+HPO42−(aq)Ka2=6.2×10−8Third ionization:HPO42−(aq)+H2O(l)⇌H3O+(aq)+PO43−(aq)Ka3=4.2×10−13
+
+As for the diprotic acid examples, each successive ionization reaction is less extensive than the former, reflected in decreasing values for the stepwise acid ionization constants. This is a general characteristic of polyprotic acids and successive ionization constants often differ by a factor of about 105 to 106.
+
+This set of three dissociation reactions may appear to make calculations of equilibrium concentrations in a solution of H3PO4 complicated. However, because the successive ionization constants differ by a factor of 105 to 106, large differences exist in the small changes in concentration accompanying the ionization reactions. This allows the use of math-simplifying assumptions and processes, as demonstrated in the examples above.
+
+Polyprotic bases are capable of accepting more than one hydrogen ion. The carbonate ion is an example of a diprotic base, because it can accept two protons, as shown below. Similar to the case for polyprotic acids, note the ionization constants decrease with ionization step. Likewise, equilibrium calculations involving polyprotic bases follow the same approaches as those for polyprotic acids.
+
+H2O(l)+CO32−(aq)⇌HCO3−(aq)+OH−(aq)Kb1=2.1×10−4H2O(l)+HCO3−(aq)⇌H2CO3(aq)+OH−(aq)Kb2=2.3×10−8
+
+14.6
+
+Buffers
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Describe the composition and function of acid–base buffers
+
+Calculate the pH of a buffer before and after the addition of added acid or base
+
+A solution containing appreciable amounts of a weak conjugate acid-base pair is called a buffer solution, or a buffer. Buffer solutions resist a change in pH when small amounts of a strong acid or a strong base are added (Figure 14.14). A solution of acetic acid and sodium acetate (CH3COOH + CH3COONa) is an example of a buffer that consists of a weak acid and its salt. An example of a buffer that consists of a weak base and its salt is a solution of ammonia and ammonium chloride (NH3(aq) + NH4Cl(aq)).
+
+Figure
+14.14
+
+(a) The unbuffered solution on the left and the buffered solution on the right have the same pH (pH 8); they are basic, showing the yellow color of the indicator methyl orange at this pH. (b) After the addition of 1 mL of a 0.01-M HCl solution, the buffered solution has not detectably changed its pH but the unbuffered solution has become acidic, as indicated by the change in color of the methyl orange, which turns red at a pH of about 4. (credit: modification of work by Mark Ott)
+
+How Buffers Work
+
+To illustrate the function of a buffer solution, consider a mixture of roughly equal amounts of acetic acid and sodium acetate. The presence of a weak conjugate acid-base pair in the solution imparts the ability to neutralize modest amounts of added strong acid or base. For example, strong base added to this solution will neutralize hydronium ion, causing the acetic acid ionization equilibrium to shift to the right and generate additional amounts of the weak conjugate base (acetate ion):
+
+CH3CO2H(aq)+H2O(l)⇌H3O+(aq)+CH3CO2−(aq)
+
+Likewise, strong acid added to this buffer solution will shift the above ionization equilibrium left, producing additional amounts of the weak conjugate acid (acetic acid). Figure 14.15 provides a graphical illustration of the changes in conjugate-partner concentration that occur in this buffer solution when strong acid and base are added. The buffering action of the solution is essentially a result of the added strong acid and base being converted to the weak acid and base that make up the buffer's conjugate pair. The weaker acid and base undergo only slight ionization, as compared with the complete ionization of the strong acid and base, and the solution pH, therefore, changes much less drastically than it would in an unbuffered solution.
+
+Figure
+14.15
+
+Buffering action in a mixture of acetic acid and acetate salt.
+
+Example
+14.20
+
+pH Changes in Buffered and Unbuffered Solutions
+
+Acetate buffers are used in biochemical studies of enzymes and other chemical components of cells to prevent pH changes that might affect the biochemical activity of these compounds.
+
+(a) Calculate the pH of an acetate buffer that is a mixture with 0.10 M acetic acid and 0.10 M sodium acetate.
+
+(b) Calculate the pH after 1.0 mL of 0.10 NaOH is added to 100 mL of this buffer.
+
+(c) For comparison, calculate the pH after 1.0 mL of 0.10 M NaOH is added to 100 mL of a solution of an unbuffered solution with a pH of 4.74.
+
+Solution
+
+(a) Following the ICE approach to this equilibrium calculation yields the following:
+
+Substituting the equilibrium concentration terms into the Ka expression, assuming x << 0.10, and solving the simplified equation for x yields
+
+x=1.8×10−5M
+
+[H3O+]=0+x=1.8×10−5M
+
+pH=−log[H3O+]=−log(1.8×10−5)
+
+=4.74
+
+(b) Calculate the pH after 1.0 mL of 0.10 M NaOH is added to 100 mL of this buffer.
+
+Adding strong base will neutralize some of the acetic acid, yielding the conjugate base acetate ion. Compute the new concentrations of these two buffer components, then repeat the equilibrium calculation of part (a) using these new concentrations.
+
+0.0010L×(0.10mol NaOH1L)=1.0×10−4mol NaOH
+
+The initial molar amount of acetic acid is
+
+0.100L×(0.100molCH3CO2H1L)=1.00×10−2molCH3CO2H
+
+The amount of acetic acid remaining after some is neutralized by the added base is
+
+(1.0×10−2)−(0.01×10−2)=0.99×10−2molCH3CO2H
+
+The newly formed acetate ion, along with the initially present acetate, gives a final acetate concentration of
+
+(1.0×10−2)+(0.01×10−2)=1.01×10−2molNaCH3CO2
+
+Compute molar concentrations for the two buffer components:
+
+[CH3CO2H]=9.9×10−3mol0.101L=0.098M
+
+[NaCH3CO2]=1.01×10−2mol0.101L=0.100M
+
+Using these concentrations, the pH of the solution may be computed as in part (a) above, yielding pH = 4.75 (only slightly different from that prior to adding the strong base).
+
+(c) For comparison, calculate the pH after 1.0 mL of 0.10 M NaOH is added to 100 mL of a solution of an unbuffered solution with a pH of 4.74.
+
+The amount of hydronium ion initially present in the solution is
+
+[H3O+]=10−4.74=1.8×10−5M
+
+molH3O+=(0.100L)(1.8×10−5M)=1.8×10−6molH3O+
+
+The amount of hydroxide ion added to the solution is
+
+molOH−=(0.0010L)(0.10M)=1.0×10−4molOH−
+
+The added hydroxide will neutralize hydronium ion via the reaction
+
+H3O+(aq)+OH−(aq)⇋2H2O(l)
+
+The 1:1 stoichiometry of this reaction shows that an excess of hydroxide has been added (greater molar amount than the initially present hydronium ion).
+
+The amount of hydroxide ion remaining is
+
+1.0×10−4mol−1.8×10−6mol=9.8×10−5molOH−
+
+corresponding to a hydroxide molarity of
+
+9.8×10−5molOH−/0.101L=9.7×10−4M
+
+The pH of the solution is then calculated to be
+
+pH=14.00−pOH=14.00−−log(9.7×10−4)=10.99
+
+In this unbuffered solution, addition of the base results in a significant rise in pH (from 4.74 to 10.99) compared with the very slight increase observed for the buffer solution in part (b) (from 4.74 to 4.75).
+
+Check Your Learning
+
+Show that adding 1.0 mL of 0.10 M HCl changes the pH of 100 mL of a 1.8 × 10−5 M HCl solution from 4.74 to 3.00.
+
+Answer:
+
+Initial pH of 1.8 × 10−5 M HCl; pH = −log[H3O+] = −log[1.8 × 10−5] = 4.74
+
+Moles of H3O+ in 100 mL 1.8 × 10−5 M HCl; 1.8 × 10−5 moles/L × 0.100 L = 1.8 × 10−6
+
+Moles of H3O+ added by addition of 1.0 mL of 0.10 M HCl: 0.10 moles/L × 0.0010 L = 1.0 × 10−4 moles; final pH after addition of 1.0 mL of 0.10 M HCl:
+
+pH=−log[H3O+]=−log(total molesH3O+total volume)=−log(1.0×10−4mol+1.8×10−6mol101mL(1L1000mL))=3.00
+
+Buffer Capacity
+
+Buffer solutions do not have an unlimited capacity to keep the pH relatively constant (Figure 14.16). Instead, the ability of a buffer solution to resist changes in pH relies on the presence of appreciable amounts of its conjugate weak acid-base pair. When enough strong acid or base is added to substantially lower the concentration of either member of the buffer pair, the buffering action within the solution is compromised.
+
+Figure
+14.16
+
+The indicator color (methyl orange) shows that a small amount of acid added to a buffered solution of pH 8 (beaker on the left) has little affect on the buffered system (middle beaker). However, a large amount of acid exhausts the buffering capacity of the solution and the pH changes dramatically (beaker on the right). (credit: modification of work by Mark Ott)
+
+The buffer capacity is the amount of acid or base that can be added to a given volume of a buffer solution before the pH changes significantly, usually by one unit. Buffer capacity depends on the amounts of the weak acid and its conjugate base that are in a buffer mixture. For example, 1 L of a solution that is 1.0 M in acetic acid and 1.0 M in sodium acetate has a greater buffer capacity than 1 L of a solution that is 0.10 M in acetic acid and 0.10 M in sodium acetate even though both solutions have the same pH. The first solution has more buffer capacity because it contains more acetic acid and acetate ion.
+
+Selection of Suitable Buffer Mixtures
+
+There are two useful rules of thumb for selecting buffer mixtures:
+
+A good buffer mixture should have about equal concentrations of both of its components. A buffer solution has generally lost its usefulness when one component of the buffer pair is less than about 10% of the other. Figure 14.17 shows how pH changes for an acetic acid-acetate ion buffer as base is added. The initial pH is 4.74. A change of 1 pH unit occurs when the acetic acid concentration is reduced to 11% of the acetate ion concentration.
+
+Figure
+14.17
+
+Change in pH as an increasing amount of a 0.10-M NaOH solution is added to 100 mL of a buffer solution in which, initially, [CH3CO2H] = 0.10 M and [CH3CO2−]=0.10M. Note the greatly diminished buffering action occurring after the buffer capacity has been reached, resulting in drastic rises in pH on adding more strong base.
+
+Weak acids and their salts are better as buffers for pHs less than 7; weak bases and their salts are better as buffers for pHs greater than 7.
+
+Blood is an important example of a buffered solution, with the principal acid and ion responsible for the buffering action being carbonic acid, H2CO3, and the bicarbonate ion, HCO3−. When a hydronium ion is introduced to the blood stream, it is removed primarily by the reaction:
+
+H3O+(aq)+HCO3−(aq)⟶H2CO3(aq)+H2O(l)
+
+An added hydroxide ion is removed by the reaction:
+
+OH−(aq)+H2CO3(aq)⟶HCO3−(aq)+H2O(l)
+
+The added strong acid or base is thus effectively converted to the much weaker acid or base of the buffer pair (H3O+ is converted to H2CO3 and OH- is converted to HCO3-). The pH of human blood thus remains very near the value determined by the buffer pairs pKa, in this case, 7.35. Normal variations in blood pH are usually less than 0.1, and pH changes of 0.4 or greater are likely to be fatal.
+
+The Henderson-Hasselbalch Equation
+
+The ionization-constant expression for a solution of a weak acid can be written as:
+
+Ka=[H3O+][A−][HA]
+
+Rearranging to solve for [H3O+] yields:
+
+[H3O+]=Ka×[HA][A−]
+
+Taking the negative logarithm of both sides of this equation gives
+
+−log[H3O+]=−logKa− log[HA][A−],
+
+which can be written as
+
+pH=pKa+log[A−][HA]
+
+where pKa is the negative of the logarithm of the ionization constant of the weak acid (pKa = −log Ka). This equation relates the pH, the ionization constant of a weak acid, and the concentrations of the weak conjugate acid-base pair in a buffered solution. Scientists often use this expression, called the Henderson-Hasselbalch equation, to calculate the pH of buffer solutions. It is important to note that the “x is small” assumption must be valid to use this equation.
+
+Portrait of a Chemist
+
+Lawrence Joseph Henderson and Karl Albert Hasselbalch
+
+Lawrence Joseph Henderson (1878–1942) was an American physician, biochemist and physiologist, to name only a few of his many pursuits. He obtained a medical degree from Harvard and then spent 2 years studying in Strasbourg, then a part of Germany, before returning to take a lecturer position at Harvard. He eventually became a professor at Harvard and worked there his entire life. He discovered that the acid-base balance in human blood is regulated by a buffer system formed by the dissolved carbon dioxide in blood. He wrote an equation in 1908 to describe the carbonic acid-carbonate buffer system in blood. Henderson was broadly knowledgeable; in addition to his important research on the physiology of blood, he also wrote on the adaptations of organisms and their fit with their environments, on sociology and on university education. He also founded the Fatigue Laboratory, at the Harvard Business School, which examined human physiology with specific focus on work in industry, exercise, and nutrition.
+
+Karl Albert Hasselbalch (1874–1962), a Danish physician and chemist, shared authorship in a paper with Christian Bohr in 1904 that described the Bohr effect, which showed that the ability of hemoglobin in the blood to bind with oxygen was inversely related to the acidity of the blood and the concentration of carbon dioxide. The pH scale was introduced in 1909 by another Dane, Sørensen, and in 1912, Hasselbalch published measurements of the pH of blood. In 1916, Hasselbalch expressed Henderson’s equation in logarithmic terms, consistent with the logarithmic scale of pH, and thus the Henderson-Hasselbalch equation was born.
+
+How Sciences Interconnect
+
+Medicine: The Buffer System in Blood
+
+The normal pH of human blood is about 7.4. The carbonate buffer system in the blood uses the following equilibrium reaction:
+
+CO2(g)+2H2O(l)⇌H2CO3(aq)⇌HCO3−(aq)+H3O+(aq)
+
+The concentration of carbonic acid, H2CO3 is approximately 0.0012 M, and the concentration of the hydrogen carbonate ion, HCO3−, is around 0.024 M. Using the Henderson-Hasselbalch equation and the pKa of carbonic acid at body temperature, we can calculate the pH of blood:
+
+pH=pKa+log[base][acid]=6.4+log0.0240.0012=7.7
+
+The fact that the H2CO3 concentration is significantly lower than that of the HCO3− ion may seem unusual, but this imbalance is due to the fact that most of the by-products of our metabolism that enter our bloodstream are acidic. Therefore, there must be a larger proportion of base than acid, so that the capacity of the buffer will not be exceeded.
+
+Lactic acid is produced in our muscles when we exercise. As the lactic acid enters the bloodstream, it is neutralized by the HCO3− ion, producing H2CO3. An enzyme then accelerates the breakdown of the excess carbonic acid to carbon dioxide and water, which can be eliminated by breathing. In fact, in addition to the regulating effects of the carbonate buffering system on the pH of blood, the body uses breathing to regulate blood pH. If the pH of the blood decreases too far, an increase in breathing removes CO2 from the blood through the lungs driving the equilibrium reaction such that [H3O+] is lowered. If the blood is too alkaline, a lower breath rate increases CO2 concentration in the blood, driving the equilibrium reaction the other way, increasing [H+] and restoring an appropriate pH.
+
+Link to Learning
+
+View information on the buffer system encountered in natural waters.
+
+15.2
+
+Lewis Acids and Bases
+
+Learning Objectives
+
+By the end of this section, you will be able to:
+
+Explain the Lewis model of acid-base chemistry
+
+Write equations for the formation of adducts and complex ions
+
+Perform equilibrium calculations involving formation constants
+
+In 1923, G. N. Lewis proposed a generalized definition of acid-base behavior in which acids and bases are identified by their ability to accept or to donate a pair of electrons and form a coordinate covalent bond.
+
+A coordinate covalent bond (or dative bond) occurs when one of the atoms in the bond provides both bonding electrons. For example, a coordinate covalent bond occurs when a water molecule combines with a hydrogen ion to form a hydronium ion. A coordinate covalent bond also results when an ammonia molecule combines with a hydrogen ion to form an ammonium ion. Both of these equations are shown here.
+
+Reactions involving the formation of coordinate covalent bonds are classified as Lewis acid-base chemistry. The species donating the electron pair that compose the bond is a Lewis base, the species accepting the electron pair is a Lewis acid, and the product of the reaction is a Lewis acid-base adduct. As the two examples above illustrate, Brønsted-Lowry acid-base reactions represent a subcategory of Lewis acid reactions, specifically, those in which the acid species is H+. A few examples involving other Lewis acids and bases are described below.
+
+The boron atom in boron trifluoride, BF3, has only six electrons in its valence shell. Being short of the preferred octet, BF3 is a very good Lewis acid and reacts with many Lewis bases; a fluoride ion is the Lewis base in this reaction, donating one of its lone pairs:
+
+In the following reaction, each of two ammonia molecules, Lewis bases, donates a pair of electrons to a silver ion, the Lewis acid:
+
+Nonmetal oxides act as Lewis acids and react with oxide ions, Lewis bases, to form oxyanions:
+
+Many Lewis acid-base reactions are displacement reactions in which one Lewis base displaces another Lewis base from an acid-base adduct, or in which one Lewis acid displaces another Lewis acid:
+
+Another type of Lewis acid-base chemistry involves the formation of a complex ion (or a coordination complex) comprising a central atom, typically a transition metal cation, surrounded by ions or molecules called ligands. These ligands can be neutral molecules like H2O or NH3, or ions such as CN– or OH–. Often, the ligands act as Lewis bases, donating a pair of electrons to the central atom. These types of Lewis acid-base reactions are examples of a broad subdiscipline called coordination chemistry—the topic of another chapter in this text.
+
+The equilibrium constant for the reaction of a metal ion with one or more ligands to form a coordination complex is called a formation constant (Kf) (sometimes called a stability constant). For example, the complex ion Cu(CN)2−
+
+is produced by the reaction
+
+Cu+(aq)+2CN−(aq)⇌Cu(CN)2−(aq)
+
+The formation constant for this reaction is
+
+Kf=[Cu(CN)2−][Cu+][CN−]2
+
+Alternatively, the reverse reaction (decomposition of the complex ion) can be considered, in which case the equilibrium constant is a dissociation constant (Kd). Per the relation between equilibrium constants for reciprocal reactions described, the dissociation constant is the mathematical inverse of the formation constant, Kd = Kf–1. A tabulation of formation constants is provided in Appendix K.
+
+As an example of dissolution by complex ion formation, let us consider what happens when we add aqueous ammonia to a mixture of silver chloride and water. Silver chloride dissolves slightly in water, giving a small concentration of Ag+ ([Ag+] = 1.3 × 10–5 M):
+
+AgCl(s)⇌Ag+(aq)+Cl−(aq)
+
+However, if NH3 is present in the water, the complex ion, Ag(NH3)2+, can form according to the equation:
+
+Ag+(aq)+2NH3(aq)⇌Ag(NH3)2+(aq)
+
+with
+
+Kf=[Ag(NH3)2+][Ag+][NH3]2=1.7×107
+
+The large size of this formation constant indicates that most of the free silver ions produced by the dissolution of AgCl combine with NH
+3
+to form
+Ag(NH3)2+.
+As a consequence, the concentration of silver ions, [Ag
++
+], is reduced, and the reaction quotient for the dissolution of silver chloride, [Ag
++
+][Cl
+–
+], falls below the solubility product of AgCl:
+
+Q=[Ag+][Cl−]<Ksp
+
+More silver chloride then dissolves. If the concentration of ammonia is great enough, all of the silver chloride dissolves.
+
+Example
+15.14
+
+Dissociation of a Complex Ion
+
+Calculate the concentration of the silver ion in a solution that initially is 0.10 M with respect to Ag(NH3)2+.
+
+Solution
+
+Applying the standard ICE approach to this reaction yields the following:
+
+Substituting these equilibrium concentration terms into the Kf expression gives
+
+Kf=[Ag(NH3)2+][Ag+][NH3]2
+
+1.7×107=0.10−x(x)(2x)2
+
+The very large equilibrium constant means the amount of the complex ion that will dissociate, x, will be very small. Assuming x << 0.1 permits simplifying the above equation:
+
+1.7×107=0.10(x)(2x)2
+
+x3=0.104(1.7×107)=1.5×10−9
+
+x=1.5×10−93=1.1×10−3
+
+Because only 1.1% of the Ag(NH3)2+ dissociates into Ag+ and NH3, the assumption that x is small is justified.
+
+Using this value of x and the relations in the above ICE table allows calculation of all species’ equilibrium concentrations:
+
+[Ag+]=0+x=1.1×10−3M
+
+[NH3]=0+2x=2.2×10−3M
+
+[Ag(NH3)2+]=0.10−x=0.10−0.0011=0.099
+
+The concentration of free silver ion in the solution is 0.0011 M.
+
+Check Your Learning
+
+Calculate the silver ion concentration, [Ag+], of a solution prepared by dissolving 1.00 g of AgNO3 and 10.0 g of KCN in sufficient water to make 1.00 L of solution. (Hint: Because Kf is very large, the silver/cyanide complex ion (see Appendix K), assume the reaction goes to completion and then calculate the [Ag+] produced by dissociation of the complex.)
+
+Answer:
+
+2.9 × 10–22 M

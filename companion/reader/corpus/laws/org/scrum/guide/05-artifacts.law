@@ -1,0 +1,394 @@
+// Разделы 7…7-3-1: артефакты, их обязательства и Definition of Done.
+//
+// ═══ ОБЯЗАТЕЛЬСТВО АРТЕФАКТА — ЗАКРЫТОЕ СООТВЕТСТВИЕ ══════════════════════
+//
+// Раздел 7 сопоставляет трём артефактам три обязательства: Product Backlog →
+// Product Goal, Sprint Backlog → Sprint Goal, Increment → Definition of Done.
+// Три правила с одной головой, по одному на пару.
+//
+// ═══ DEFINITION OF DONE — ЗАМЫКАНИЕ §70 ═══════════════════════════════════
+//
+// «Work cannot be considered part of an Increment unless it meets the
+// Definition of Done» и «If a Product Backlog item does not meet the
+// Definition of Done, it cannot be released or even presented at the Sprint
+// Review. Instead, it returns to the Product Backlog». Отрицание
+// `not meets_definition_of_done` в строгом теле требует замкнутого домена:
+// closure над эмпирическим `meets_definition_of_done` с доменом
+// `checked_item` — элемент, о котором дело молчит, Done НЕ считается
+// (derive_explicit_negative). Вне домена — NEITHER, а не «не Done».
+//
+// ═══ ОРГАНИЗАЦИОННЫЙ СТАНДАРТ DOD — ДВЕ ОБЯЗАННОСТИ ПО ОБЕ СТОРОНЫ ═══════
+//
+// Есть стандарт организации → команда обязана следовать ему как минимуму;
+// нет → обязана создать свой. Второе тоже читает отрицание, и у него своё
+// замыкание над `organizational_dod_exists` с доменом `checked_organization`.
+//
+// ═══ ОДНА ЦЕЛЬ ЗА РАЗ ═════════════════════════════════════════════════════
+//
+// «They must fulfill (or abandon) one objective before taking on the next»:
+// поддерживаемое условие «одна цель за раз» презюмируется, опровергается
+// счётом преследуемых целей больше одной (агрегат по эмпирическому
+// `pursues_product_goal`, барьер §111 не задет).
+
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+use self::{
+    BacklogItem,
+    Goal,
+    Organization,
+    Person,
+    Product,
+    SG_S7,
+    SG_S7_1,
+    SG_S7_1_1,
+    SG_S7_2,
+    SG_S7_2_1,
+    SG_S7_3,
+    SG_S7_3_1,
+    Sprint,
+    Team,
+    developer_of,
+    organization_of,
+    scrum_team,
+    selected_for_sprint,
+    sprint_goal_finalized,
+    usable_increment_created,
+    works_on_product,
+};
+
+// ═══ Раздел 7. Scrum Artifacts ═══════════════════════════════════════════
+
+entity Artifact { label en official "Scrum artifact: Product Backlog, Sprint Backlog or Increment"; }
+
+pub enum ArtifactKind {
+    label en official "the three Scrum artifacts";
+    ProductBacklog,
+    SprintBacklog,
+    Increment
+}
+
+pub enum Commitment {
+    label en official "the commitment each artifact contains";
+    ProductGoal,
+    SprintGoal,
+    DefinitionOfDone
+}
+
+relation artifact_kind(a: Artifact, k: ArtifactKind) kind empirical {
+    label en official "the artifact is of the named kind";
+}
+relation commitment_of(a: Artifact, c: Commitment) kind institutional {
+    label en official "the artifact contains the named commitment";
+}
+
+@source(SG_S7)
+rule ProductBacklogCommitsToProductGoal(a: Artifact) strict {
+    label en official "Each artifact contains a commitment: for the Product Backlog it is the Product Goal";
+    when artifact_kind(a, ProductBacklog);
+    then commitment_of(a, ProductGoal);
+}
+
+@source(SG_S7)
+rule SprintBacklogCommitsToSprintGoal(a: Artifact) strict {
+    label en official "Each artifact contains a commitment: for the Sprint Backlog it is the Sprint Goal";
+    when artifact_kind(a, SprintBacklog);
+    then commitment_of(a, SprintGoal);
+}
+
+@source(SG_S7)
+rule IncrementCommitsToDefinitionOfDone(a: Artifact) strict {
+    label en official "Each artifact contains a commitment: for the Increment it is the Definition of Done";
+    when artifact_kind(a, Increment);
+    then commitment_of(a, DefinitionOfDone);
+}
+
+// ═══ Раздел 7-1. Product Backlog ═════════════════════════════════════════
+
+relation product_backlog_item_of(item: BacklogItem, t: Team) kind empirical {
+    label en official "the item is in the Product Backlog of the Scrum Team";
+}
+relation doable_within_one_sprint(item: BacklogItem) kind empirical {
+    label en official "the Product Backlog item can be Done by the Scrum Team within one Sprint";
+}
+relation ready_for_selection(item: BacklogItem) kind institutional {
+    label en official "the Product Backlog item is deemed ready for selection in a Sprint Planning event";
+}
+relation responsible_for_sizing(p: Person, item: BacklogItem) kind institutional {
+    label en official "the Developer is responsible for the sizing of the Product Backlog item";
+}
+
+@source(SG_S7_1)
+rule DoableItemsAreReady(item: BacklogItem) strict {
+    label en official "Product Backlog items that can be Done by the Scrum Team within one Sprint are deemed ready for selection in a Sprint Planning event";
+    when doable_within_one_sprint(item);
+    then ready_for_selection(item);
+}
+
+@source(SG_S7_1)
+rule DevelopersResponsibleForSizing(p: Person, t: Team, item: BacklogItem) strict {
+    label en official "The Developers who will be doing the work are responsible for the sizing";
+    when developer_of(p, t) and product_backlog_item_of(item, t);
+    then responsible_for_sizing(p, item);
+}
+
+// ═══ Раздел 7-1-1. Commitment: Product Goal ══════════════════════════════
+
+relation pursues_product_goal(t: Team, g: Goal) kind empirical {
+    label en official "the Scrum Team has taken on the Product Goal and has neither fulfilled nor abandoned it";
+}
+relation one_objective_at_a_time(t: Team) kind institutional {
+    label en official "the Scrum Team pursues one Product Goal at a time";
+}
+
+@source(SG_S7_1_1)
+rule OneObjectivePresumed(t: Team) defeasible {
+    label en official "a Scrum Team is presumed to pursue one objective at a time until the contrary is established";
+    when scrum_team(t);
+    then one_objective_at_a_time(t);
+}
+
+@source(SG_S7_1_1)
+rule SeveralObjectivesBreakTheRule(t: Team) defeasible {
+    label en official "a Scrum Team pursuing more than one Product Goal does not pursue one objective at a time";
+    when scrum_team(t)
+        and (count distinct g: Goal where pursues_product_goal(t, g)) > 1;
+    then not one_objective_at_a_time(t);
+}
+
+@source(SG_S7_1_1)
+priority SeveralObjectivesBeatPresumption {
+    label en official "an established plurality of objectives prevails over the presumption of one objective at a time";
+    prefer SeveralObjectivesBreakTheRule over OneObjectivePresumed;
+    reason explicit_exception;
+}
+
+@source(SG_S7_1_1)
+rule FulfillOneObjectiveBeforeTheNext(t: Team) strict {
+    label en official "The Product Goal is the long-term objective for the Scrum Team. They must fulfill (or abandon) one objective before taking on the next";
+    when scrum_team(t);
+    then duty OneObjectiveAtATime {
+        bearer t;
+        maintain one_objective_at_a_time(t) during [@2020-11-18, infinity);
+    };
+}
+
+// ═══ Раздел 7-2. Sprint Backlog ══════════════════════════════════════════
+
+relation sprint_goal_of(s: Sprint, g: Goal) kind empirical {
+    label en official "the goal is the Sprint Goal of the Sprint";
+}
+relation delivery_plan_exists(s: Sprint) kind empirical {
+    label en official "an actionable plan for delivering the Increment exists for the Sprint";
+}
+relation sprint_backlog_complete(s: Sprint) kind institutional {
+    label en official "the Sprint Backlog is composed of the Sprint Goal (why), the selected Product Backlog items (what) and an actionable plan (how)";
+}
+
+@source(SG_S7_2)
+rule SprintBacklogComposition(s: Sprint, g: Goal, item: BacklogItem) strict {
+    label en official "The Sprint Backlog is composed of the Sprint Goal (why), the set of Product Backlog items selected for the Sprint (what), as well as an actionable plan for delivering the Increment (how)";
+    when sprint_goal_of(s, g) and selected_for_sprint(item, s) and delivery_plan_exists(s);
+    then sprint_backlog_complete(s);
+}
+
+// ═══ Раздел 7-2-1. Commitment: Sprint Goal ═══════════════════════════════
+
+relation negotiated_with_product_owner(s: Sprint) kind empirical {
+    label en official "the scope of the Sprint Backlog has been negotiated with the Product Owner";
+}
+relation sprint_goal_unaffected(s: Sprint) kind empirical {
+    label en official "the negotiated scope leaves the Sprint Goal unaffected";
+}
+relation scope_negotiation_within_sprint_permitted(s: Sprint) kind institutional {
+    label en official "the scope of the Sprint Backlog may be negotiated within the Sprint without affecting the Sprint Goal";
+}
+relation sprint_goal_in_sprint_backlog(s: Sprint) kind institutional {
+    label en official "the Sprint Goal, created during Sprint Planning, is part of the Sprint Backlog";
+}
+
+@source(SG_S7_2_1)
+rule SprintGoalAddedToSprintBacklog(s: Sprint, g: Goal) strict {
+    label en official "The Sprint Goal is created during the Sprint Planning event and then added to the Sprint Backlog";
+    when sprint_goal_of(s, g) and sprint_goal_finalized(s);
+    then sprint_goal_in_sprint_backlog(s);
+}
+
+@source(SG_S7_2_1)
+rule ScopeNegotiableWithinSprint(s: Sprint) strict {
+    label en official "If the work turns out to be different than they expected, they collaborate with the Product Owner to negotiate the scope of the Sprint Backlog within the Sprint without affecting the Sprint Goal";
+    when negotiated_with_product_owner(s) and sprint_goal_unaffected(s);
+    then scope_negotiation_within_sprint_permitted(s);
+}
+
+// ═══ Раздел 7-3. Increment ═══════════════════════════════════════════════
+
+relation checked_item(item: BacklogItem) kind empirical {
+    label en official "the item is in the closed domain of items whose Definition of Done status is recorded";
+}
+relation meets_definition_of_done(item: BacklogItem) kind empirical {
+    label en official "the work on the item meets the Definition of Done";
+}
+relation part_of_increment(item: BacklogItem) kind institutional {
+    label en official "the work on the item is part of an Increment";
+}
+relation not_part_of_increment(item: BacklogItem) kind institutional {
+    label en official "the work on the item cannot be considered part of an Increment";
+}
+relation may_be_delivered_before_sprint_end(item: BacklogItem) kind institutional {
+    label en official "the Increment containing the item may be delivered to stakeholders prior to the end of the Sprint";
+}
+
+closure DefinitionOfDoneClosure {
+    label en official "an item not recorded as meeting the Definition of Done does not meet it";
+    predicate meets_definition_of_done;
+    domain checked_item;
+    snapshot "urn:scrum:snapshot:definition-of-done:2020-11-18";
+    complete_as_of @2020-11-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(SG_S7_3)
+rule DoneWorkIsPartOfIncrement(item: BacklogItem) strict {
+    label en official "Work cannot be considered part of an Increment unless it meets the Definition of Done";
+    when meets_definition_of_done(item);
+    then part_of_increment(item);
+}
+
+@source(SG_S7_3)
+rule UndoneWorkIsNotPartOfIncrement(item: BacklogItem) strict {
+    label en official "work that does not meet the Definition of Done cannot be considered part of an Increment";
+    when checked_item(item) and not meets_definition_of_done(item);
+    then not_part_of_increment(item);
+}
+
+@source(SG_S7_3)
+rule IncrementMayBeDeliveredEarly(item: BacklogItem) strict {
+    label en official "An Increment may be delivered to stakeholders prior to the end of the Sprint. The Sprint Review should never be considered a gate to releasing value";
+    when part_of_increment(item);
+    then may_be_delivered_before_sprint_end(item);
+}
+
+@source(SG_S7_3)
+rule UsableIncrementCreated(s: Sprint, item: BacklogItem) strict {
+    label en official "an Increment is born the moment a Product Backlog item selected for the Sprint meets the Definition of Done";
+    when selected_for_sprint(item, s) and part_of_increment(item);
+    then usable_increment_created(s);
+}
+
+// ═══ Раздел 7-3-1. Commitment: Definition of Done ════════════════════════
+
+relation checked_organization(org: Organization) kind empirical {
+    label en official "the organization is in the closed domain of organizations whose Definition of Done standards are recorded";
+}
+relation organizational_dod_exists(org: Organization) kind empirical {
+    label en official "a Definition of Done for an increment is part of the standards of the organization";
+}
+relation definition_of_done_adopted(t: Team) kind empirical {
+    label en official "the Scrum Team follows the organizational Definition of Done as a minimum";
+}
+relation definition_of_done_created(t: Team) kind empirical {
+    label en official "the Scrum Team has created a Definition of Done appropriate for the product";
+}
+relation shared_definition_of_done(prod: Product) kind empirical {
+    label en official "the Scrum Teams working on the product have mutually defined and comply with the same Definition of Done";
+}
+relation delivers_work_not_meeting_dod(p: Person) kind empirical {
+    label en official "the Developer delivers work that does not meet the Definition of Done";
+}
+relation returns_to_product_backlog(item: BacklogItem) kind institutional {
+    label en official "the item returns to the Product Backlog for future consideration";
+}
+relation cannot_be_released_or_presented(item: BacklogItem) kind institutional {
+    label en official "the item cannot be released or even presented at the Sprint Review";
+}
+relation conforms_to_definition_of_done(p: Person) kind institutional {
+    label en official "the Developer conforms to the Definition of Done";
+}
+
+closure OrganizationalStandardClosure {
+    label en official "an organization not recorded as having a Definition of Done standard has none";
+    predicate organizational_dod_exists;
+    domain checked_organization;
+    snapshot "urn:scrum:snapshot:organizational-dod:2020-11-18";
+    complete_as_of @2020-11-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(SG_S7_3_1)
+rule UndoneItemCannotBeReleased(item: BacklogItem) strict {
+    label en official "If a Product Backlog item does not meet the Definition of Done, it cannot be released or even presented at the Sprint Review";
+    when checked_item(item) and not meets_definition_of_done(item);
+    then cannot_be_released_or_presented(item);
+}
+
+@source(SG_S7_3_1)
+rule UndoneItemReturnsToBacklog(item: BacklogItem) strict {
+    label en official "Instead, it returns to the Product Backlog for future consideration";
+    when checked_item(item) and not meets_definition_of_done(item);
+    then returns_to_product_backlog(item);
+}
+
+@source(SG_S7_3_1)
+rule FollowOrganizationalDefinitionOfDone(t: Team, org: Organization) strict {
+    label en official "If the Definition of Done for an increment is part of the standards of the organization, all Scrum Teams must follow it as a minimum";
+    when scrum_team(t) and organization_of(t, org) and organizational_dod_exists(org);
+    then duty FollowOrganizationalStandard {
+        bearer t;
+        achieve definition_of_done_adopted(t) during [@2020-11-18, infinity);
+    };
+}
+
+@source(SG_S7_3_1)
+rule CreateDefinitionOfDone(t: Team, org: Organization) strict {
+    label en official "If it is not an organizational standard, the Scrum Team must create a Definition of Done appropriate for the product";
+    when scrum_team(t) and organization_of(t, org)
+        and checked_organization(org) and not organizational_dod_exists(org);
+    then duty CreateOwnDefinitionOfDone {
+        bearer t;
+        achieve definition_of_done_created(t) during [@2020-11-18, infinity);
+    };
+}
+
+@source(SG_S7_3_1)
+rule MultipleTeamsShareDefinitionOfDone(t: Team, prod: Product) strict {
+    label en official "If there are multiple Scrum Teams working together on a product, they must mutually define and comply with the same Definition of Done";
+    when scrum_team(t) and works_on_product(t, prod)
+        and (count distinct u: Team where works_on_product(u, prod)) > 1;
+    then duty ShareDefinitionOfDone {
+        bearer t;
+        achieve shared_definition_of_done(prod) during [@2020-11-18, infinity);
+    };
+}
+
+@source(SG_S7_3_1)
+rule ConformancePresumed(p: Person, t: Team) defeasible {
+    label en official "a Developer is presumed to conform to the Definition of Done until the contrary is established";
+    when developer_of(p, t);
+    then conforms_to_definition_of_done(p);
+}
+
+@source(SG_S7_3_1)
+rule UndoneDeliveryBreaksConformance(p: Person, t: Team) defeasible {
+    label en official "a Developer delivering work that does not meet the Definition of Done does not conform to it";
+    when developer_of(p, t) and delivers_work_not_meeting_dod(p);
+    then not conforms_to_definition_of_done(p);
+}
+
+@source(SG_S7_3_1)
+priority UndoneDeliveryBeatsPresumptionOfConformance {
+    label en official "an established delivery of undone work prevails over the presumption of conformance";
+    prefer UndoneDeliveryBreaksConformance over ConformancePresumed;
+    reason explicit_exception;
+}
+
+@source(SG_S7_3_1)
+rule DevelopersRequiredToConform(p: Person, t: Team) strict {
+    label en official "The Developers are required to conform to the Definition of Done";
+    when developer_of(p, t);
+    then duty ConformToDefinitionOfDone {
+        bearer p;
+        maintain conforms_to_definition_of_done(p) during [@2020-11-18, infinity);
+    };
+}

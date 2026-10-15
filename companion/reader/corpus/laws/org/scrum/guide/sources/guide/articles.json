@@ -1,0 +1,57 @@
+{
+  "$comment": "Учёт полноты §33.1 по единице деления ЭТОГО документа — ИМЕНОВАННОМУ РАЗДЕЛУ. Номера у раздела нет ни одного: Руководство делится заголовками-фразами («The Sprint», «Commitment: Definition of Done»). Конвенция named_section в автоопределение не входит и включается только этим объявлением. НОМЕР УЧЁТА СОСТАВНОЙ И ВЫВЕДЕН ИЗ РАЗМЕТКИ ИЗДАТЕЛЯ (уровни h2/h3/h4 страницы scrumguides.org), а не назначен нами: «6-2-1» читается «шестая глава, второй раздел, первый подраздел» — Scrum Events → Sprint Planning → Topic One. Локатор фрагмента — section/6-2-1. Оглавление сайта, повторяющее каждый заголовок, в закреплённые байты НЕ входит — извлекается одна основная колонка (fetch_scrum_guide_text.py), иначе каждая единица находилась бы дважды.",
+  "document": "sources/guide/en.txt",
+  "scope": "whole",
+  "unit": "named_section",
+  "headings": {
+    "1": "Purpose of the Scrum Guide",
+    "2": "Scrum Definition",
+    "3": "Scrum Theory",
+    "3-1": "Transparency",
+    "3-2": "Inspection",
+    "3-3": "Adaptation",
+    "4": "Scrum Values",
+    "5": "Scrum Team",
+    "5-1": "Developers",
+    "5-2": "Product Owner",
+    "5-3": "Scrum Master",
+    "6": "Scrum Events",
+    "6-1": "The Sprint",
+    "6-2": "Sprint Planning",
+    "6-2-1": "Topic One: Why is this Sprint valuable?",
+    "6-2-2": "Topic Two: What can be Done this Sprint?",
+    "6-2-3": "Topic Three: How will the chosen work get done?",
+    "6-3": "Daily Scrum",
+    "6-4": "Sprint Review",
+    "6-5": "Sprint Retrospective",
+    "7": "Scrum Artifacts",
+    "7-1": "Product Backlog",
+    "7-1-1": "Commitment: Product Goal",
+    "7-2": "Sprint Backlog",
+    "7-2-1": "Commitment: Sprint Goal",
+    "7-3": "Increment",
+    "7-3-1": "Commitment: Definition of Done",
+    "8": "End Note"
+  },
+  "boundaries": [
+    "The 2020 Scrum GuideTM",
+    "Acknowledgements",
+    "People",
+    "Scrum Guide History"
+  ],
+  "boundaries_note": "Строки, которые единицами НЕ являются, но обрывают срез соседа. «The 2020 Scrum GuideTM» — титул страницы (h1) с примечанием издателя о переносе из PDF; «Acknowledgements» — заголовок-контейнер без собственного текста (за ним сразу «People»); «People» и «Scrum Guide History» — благодарности и история, за которыми следует лицензионная оговорка CC BY-SA. Ни одна из четырёх не предписывает и не классифицирует; в знаменатель они не входят, как титульный блок и благодарности конституции Claude.",
+  "declared": {
+    "1": {
+      "reason": "BOUNDARY: предисловие авторов — история Руководства, слово «developers» как упрощение, оговорка, что тактики применения описаны в другом месте. Ни носителя, ни условия, ни статуса: рамка публикации, а не норма.",
+      "despite": "Маркер «If » — фраза «If you get value from Scrum, consider yourself included» — есть приглашение читателю, а не условие с правовым следствием: «consider yourself included» ничьего статуса не меняет и никем не проверяется."
+    },
+    "3": {
+      "reason": "BOUNDARY: общая часть главы о теории — эмпиризм, бережливое мышление, итеративность. Единственное структурное утверждение («four formal events … within a containing event, the Sprint») формализовано там, где оно становится нормой: разделами 6 и 6-1 (события внутри спринта, спринт как контейнер). Здесь оно названо, а предписано ниже."
+    },
+    "4": {
+      "reason": "BOUNDARY: пять ценностей — commitment, focus, openness, respect, courage. Текст говорит «should reinforce these values», и это диспозиция, а не условие → статус: ни одно наблюдаемое дело не даёт ответа «ценность нарушена» без суждения, которого Руководство никакому органу не поручает. Формализовать здесь значило бы сочинить критерий.",
+      "despite": "Маркер «When» — фраза «When these values are embodied by the Scrum Team and the people they work with, the empirical Scrum pillars … come to life building trust» — есть описание следствия, а не условие с правовым статусом: «come to life» и «building trust» ничьей позиции не создают и никем не проверяются; условия столпов формализованы своими разделами 3-1…3-3."
+    }
+  },
+  "note": "Знаменатель — двадцать восемь именованных разделов. Формализованы: определение (2), три столпа эмпиризма (3-1…3-3), команда и три ответственности (5…5-3), события со спринтом-контейнером, таймбоксами и полномочием отмены (6…6-5), артефакты с обязательствами и Definition of Done (7…7-3-1), заключение о неделимости Scrum (8). Три объявленные границы — предисловие, общая часть теории и ценности — названы с причинами в declared."
+}

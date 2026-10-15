@@ -1,0 +1,55 @@
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+// ДВА ЗАМЫКАНИЯ ПОДРЯД. «Три точки не на одной прямой» выводится из
+// НЕГАТИВА коллинеарности, а тот — из негатива инцидентности: два замыкания
+// §70 в цепи, и оба обязаны сработать до строгого правила `Dreieck`. Это
+// посылка аксиом I 3, I 4, I 7 и II 5; если она молча становится NEITHER,
+// четыре инварианта разом теряют все подстановки и отвечают UNDETERMINED.
+test "urn:query:hilb-test-03" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "hilb-t03-1": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:A")) { origin case_input; }
+        assert "hilb-t03-2": punktname(entity_ref("urn:de:hilbert:case:point:A"), "A") { origin case_input; }
+        assert "hilb-t03-3": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:B")) { origin case_input; }
+        assert "hilb-t03-4": punktname(entity_ref("urn:de:hilbert:case:point:B"), "B") { origin case_input; }
+        assert "hilb-t03-5": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:C")) { origin case_input; }
+        assert "hilb-t03-6": punktname(entity_ref("urn:de:hilbert:case:point:C"), "C") { origin case_input; }
+        assert "hilb-t03-7": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t03-8": geradenname(entity_ref("urn:de:hilbert:case:line:ab"), "ab") { origin case_input; }
+        assert "hilb-t03-9": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t03-10": geradenname(entity_ref("urn:de:hilbert:case:line:bc"), "bc") { origin case_input; }
+        assert "hilb-t03-11": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+        assert "hilb-t03-12": geradenname(entity_ref("urn:de:hilbert:case:line:ac"), "ac") { origin case_input; }
+        assert "hilb-t03-13": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t03-14": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t03-15": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t03-16": liegt_auf(entity_ref("urn:de:hilbert:case:point:C"), entity_ref("urn:de:hilbert:case:line:bc")) { origin case_input; }
+        assert "hilb-t03-17": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+        assert "hilb-t03-18": liegt_auf(entity_ref("urn:de:hilbert:case:point:C"), entity_ref("urn:de:hilbert:case:line:ac")) { origin case_input; }
+    }
+    evaluate truth(dreieck(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:point:C")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    // ПОЧЕМУ ДОКУМЕНТ `NON_EXECUTABLE`, А НЕ `COMPUTED`. Оба замыкания
+    // сработали, и `dreieck(A, B, C)` вышел `TRUE_ONLY`; статус документа
+    // говорит о ДРУГОМ — о том, что предъявленный чертёж моделью аксиом I—II не
+    // является. Errata 0.2-05 (§175) запрещает `COMPUTED` рядом с issue
+    // строгости `error`, а `CONSTRAINT_VIOLATED` §93.1 несёт строгость,
+    // объявленную у инварианта, — здесь `error`. Нарушены `AxiomI3` (тройка не
+    // коллинеарна и не принадлежит ни одной плоскости — плоскостей в чертеже нет
+    // вовсе), `AxiomII2Innen` и `AxiomII2Fortsetzung` (граница 1 разбора: II 2
+    // нарушена на КАЖДОЙ конечной конфигурации). Ожидание стережёт границу
+    // ПАДЕНИЕМ: снимут блокирующий исход у `CONSTRAINT_VIOLATED` — тест упадёт,
+    // а не промолчит; `issues_within` держит второе — иных диагностик выше
+    // `info` в документе нет.
+    expect evaluation_status == NON_EXECUTABLE;
+    expect issue(CONSTRAINT_VIOLATED);
+    expect issues_within(info, CONSTRAINT_VIOLATED);
+}

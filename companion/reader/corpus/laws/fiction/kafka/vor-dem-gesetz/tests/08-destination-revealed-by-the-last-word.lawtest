@@ -1,0 +1,16 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// «denn dieser Eingang war nur für dich bestimmt» — и только теперь.
+test "urn:query:vor-dem-gesetz-destination-revealed" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg08-1": letzte_frage_gestellt(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg08-2": letzte_auskunft_erteilt(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+    }
+    evaluate truth(eingang_nur_fuer(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

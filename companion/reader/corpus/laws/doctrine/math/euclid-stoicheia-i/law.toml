@@ -1,0 +1,44 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+#
+# ПОЛНЫЙ СЛОВАРЬ КНИГИ I «Στοιχεῖα»: 23 определения, 5 постулатов, 6 общих
+# понятий и 48 предложений. Доказательства остаются в закреплённых байтах;
+# пакет проверяет предъявленный чертёж и выводит следствия из формулировок.
+# Углы выражены равенством ἴσος, без градусов (школьный слой — grc.euclid.angles).
+
+[package]
+name = "grc.euclid.stoicheia_i"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:grc:euclid:clir:stoicheia-i"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит.
+[metadata]
+act = "grc-euclid-stoicheia-i"
+title = "«Στοιχεῖα» Евклида, книга I целиком: определения, постулаты, общие понятия и 48 предложений как правила и инварианты над предъявленной конечной фигурой"
+primarySource = "STOICHEIA_I"
+
+jurisdiction = "none"
+instrument = "treatise"
+sourceFidelity = "pinned_unofficial_copy"
+
+# issuer: у сочинения III в. до н. э. нет издателя в смысле закона. Названа
+# традиция и закреплённая копия — греческая Викитека, сверка с Гейбергом.
+issuer = "евклидова геометрическая традиция (Στοιχεῖα); закреплённая копия — греческая Викитека (oldid=161088), сверка с изданием Гейберга (Perseus)"
+# legalStatus: doctrine — текст говорит, что из чего следует, и никого ни к
+# чему не обязывает.
+legalStatus = "doctrine"
+# verifiedAgainstSource: официального текста нет; фрагменты вырезаются из
+# закреплённых байтов генератором и сверяются с публикацией §194.
+verifiedAgainstSource = false
+
+[[tests]]
+family = "grc.euclid.stoicheia_i#authored"
+regression = false
+suites = [
+    "tests/01-isopleuron-synestatai.lawtest",
+    "tests/02-smezhnye-isos-dyo-orthai.lawtest",
+    "tests/03-paralleloi-ek-enallaxon.lawtest",
+]
+world = ["grc.euclid.stoicheia_i"]

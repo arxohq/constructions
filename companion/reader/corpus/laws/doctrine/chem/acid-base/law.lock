@@ -1,0 +1,36 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "chem.acid_base",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "openstax.chemistry_acids"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:2774c7593c359cc8f8be8d41caa9358744021dba7f54049d08b84b745b5e1824",
+      "features": [
+        "core-executable"
+      ],
+      "name": "openstax.chemistry_acids",
+      "namespace": "urn:openstax:clir:chemistry-acids",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/openstax.chemistry_acids/0.1.0",
+      "sourceHash": "sha256:d4acdfb3b112eeba9d27f27c1239fc5f93e30a3cfe886d3c964e95bde3391dba",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:c0f592580ce14b6e661782abf2b4fb1b2c647f69c7445b948cbf6d224a58caf9",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:d68465b85b9984b988ba2825acd3385b12d359edec778f593d1d23b82d0696a2",
+    "name": "chem.acid_base",
+    "namespace": "urn:chem:clir:acid-base",
+    "sourceHash": "sha256:808683d504cd90ef394de4ffaa792903e0f0293128836baa3bdf47f002c8b421",
+    "version": "0.1.0"
+  }
+}

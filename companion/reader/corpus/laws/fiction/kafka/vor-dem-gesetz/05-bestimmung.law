@@ -1,0 +1,81 @@
+// Развязка: вход был предназначен ему одному — и закрывается.
+//
+// ФАКТ, ОТКРЫВАЕМЫЙ ТОЛЬКО В КОНЦЕ, И ЭТО ЕГО ГЛАВНОЕ СВОЙСТВО. «dieser
+// Eingang war nur für dich bestimmt» сказано в последней реплике, после
+// последнего вопроса, когда проситель уже при конце. До этой реплики
+// предназначенность НЕВЫВОДИМА — и не потому, что мы её спрятали, а потому,
+// что до неё её нечем вывести: ни из открытых врат, ни из запрета, ни из
+// многолетнего ожидания она не следует. Пакет держит это исполнимо, а не
+// комментарием: дело без `letzte_auskunft_erteilt` отвечает NEITHER, то же
+// дело с ним — TRUE_ONLY (сценарии VG-11 и VG-12, тесты 07 и 08).
+//
+// ПОЧЕМУ ОДИН ФАКТ, А НЕ ДВА. Предназначенность и закрытие сказаны ОДНОЙ
+// репликой, на одном дыхании, одним лицом и в один момент: «Hier konnte
+// niemand sonst Einlaß erhalten, denn dieser Eingang war nur für dich
+// bestimmt. Ich gehe jetzt und schließe ihn.» Разделить их на два факта дела
+// значило бы допустить положение, которого притча не знает: реплика
+// произнесена наполовину. Поэтому факт один — «последний ответ дан», — а
+// выводов из него ДВА, и каждый со своим якорем в источнике.
+//
+// ЗАКРЫТИЕ ОБЪЯВЛЕНО, А НЕ ОПИСАНО. «Ich gehe jetzt und schließe ihn» —
+// будущее время; притча обрывается на этих словах и совершения не
+// повествует. Поэтому голова зовётся `schliessung_erklaert`, а не
+// «врата закрыты»: пакет утверждает ровно то, что засвидетельствовано, —
+// объявление, сделанное тем, кто вправе его сделать.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    Eingang,
+    Person,
+    TO_BESTIMMUNG,
+    TO_SCHLIESSUNG,
+    eingang_zum_gesetz,
+    mann_vom_lande,
+};
+
+// --- Последний вопрос и последний ответ ------------------------------------------
+
+relation letzte_frage_gestellt(m: Person) kind empirical {
+    label de official "er stellt die Frage, die er bisher an den Türhüter noch nicht gestellt hat: wieso in den vielen Jahren niemand außer ihm Einlaß verlangt hat";
+    label ru official "он задаёт вопрос, которого прежде привратнику не задавал: почему за все годы никто, кроме него, не просил о впуске";
+}
+
+relation letzte_auskunft_erteilt(m: Person) kind empirical {
+    label de official "der Türhüter brüllt ihm die letzte Auskunft zu: dieser Eingang war nur für ihn bestimmt, und er werde ihn jetzt schließen";
+    label ru official "привратник кричит ему последний ответ: этот вход был предназначен только ему, и сейчас он его закроет";
+}
+
+// --- Предназначенность входа -------------------------------------------------------
+
+relation eingang_nur_fuer(m: Person) kind institutional {
+    label de official "dieser Eingang war nur für ihn bestimmt: kein anderer konnte hier Einlaß erhalten";
+    label ru official "этот вход был предназначен только ему: никто другой не мог получить здесь впуска";
+}
+
+@source(TO_BESTIMMUNG)
+rule EingangWarNurFuerIhn(m: Person) strict {
+    label de official "Hier konnte niemand sonst Einlaß erhalten, denn dieser Eingang war nur für dich bestimmt — erst mit der letzten Auskunft des Türhüters wird das bekannt";
+    label ru official "Никто другой не мог получить здесь впуска, ибо этот вход был предназначен только тебе, — и узнаётся это лишь с последним ответом привратника";
+    when mann_vom_lande(m) and letzte_frage_gestellt(m)
+        and letzte_auskunft_erteilt(m);
+    then eingang_nur_fuer(m);
+}
+
+// --- Объявление о закрытии ----------------------------------------------------------
+
+relation schliessung_erklaert(e: Eingang) kind institutional {
+    label de official "der Türhüter erklärt, er gehe jetzt und schließe diesen Eingang";
+    label ru official "привратник объявляет, что сейчас пойдёт и закроет этот вход";
+}
+
+@source(TO_SCHLIESSUNG)
+rule SchliessungErklaert(m: Person, e: Eingang) strict {
+    label de official "Ich gehe jetzt und schließe ihn — die Schließung ist erklärt, ihre Vollziehung erzählt der Text nicht mehr";
+    label ru official "Сейчас пойду и закрою его — закрытие объявлено, а совершения его текст уже не повествует";
+    when mann_vom_lande(m) and eingang_zum_gesetz(e)
+        and letzte_auskunft_erteilt(m);
+    then schliessung_erklaert(e);
+}

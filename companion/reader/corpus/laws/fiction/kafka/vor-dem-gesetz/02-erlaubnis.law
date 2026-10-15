@@ -1,0 +1,148 @@
+// Разрешение на вход: «войти возможно, но не сейчас» — и решает это привратник.
+//
+// ЗДЕСЬ СТОИТ ГЛАВНЫЙ ОТВЕТ ПАКЕТА, И ОН НЕ «НЕТ». Вопрос «может ли он
+// войти» отдаёт `REQUIRES_JUDGMENT` — «это решает привратник». Три причины,
+// по которым такой ответ ТОЧНЕЕ любого другого:
+//
+//   * «нет» противоречило бы тексту дословно. На прямой вопрос, войдёт ли он
+//     позже, привратник отвечает «Es ist möglich» — возможно. Отказ дан
+//     только на ТЕПЕРЬ: «jetzt aber nicht», «noch nicht»;
+//   * «да» текст не даёт ни разу: разрешения проситель не получает никогда,
+//     сколько бы лет ни ждал;
+//   * молчание (`NEITHER`) сказало бы «об этом ничего не известно», а
+//     известно многое: известен ОРГАН, известен предмет его решения и
+//     известно, что решение не принято. Именно это и есть `REQUIRES_JUDGMENT`
+//     с типизированным `JudgmentRequest` — не отсутствие ответа, а ответ о
+//     том, кому вопрос адресован.
+//
+// ОРГАН НАЗВАН ТЕКСТОМ, А НЕ ВЫБРАН НАМИ. `authority Tuerhueter` — тот, кто
+// «den Eintritt nicht gewähren könne», кто «ihn noch nicht einlassen könne» и
+// кто в конце единолично решает судьбу входа. Никакой другой инстанции притча
+// не называет: ни суда, ни того, кто стоит за Законом.
+//
+// ПОЧЕМУ МЕЖДУ СУЖДЕНИЕМ И АВТОМАТОМ СТОИТ МОСТ. Канал §47.3 не проходит ни
+// через голову-норму, ни через поражаемое правило — и то и другое даёт
+// `COMPUTED` с пустым `judgmentRequests`, то есть обычное молчание. Поэтому
+// суждение читает СТРОГОЕ правило с литеральной головой, и единственная
+// переменная моста стоит в его голове: несвязанный аргумент обрывает канал
+// так же молча (приём us.sdny.leonard_v_pepsico).
+//
+// ОТНОШЕНИЕ УНАРНО, И ЭТО НЕ УПРОЩЕНИЕ. Врата в притче одни («dieser
+// Eingang»), Закон один, и второго предмета решения не существует; вводить
+// его вторым аргументом значило бы завести переменную, которую нечем связать,
+// — а свободная переменная в теле перехода рвёт канал ровно так же, как
+// свободная в голове моста.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    DerTuerhueter,
+    Mann,
+    Person,
+    TO_JETZT_NICHT,
+    TO_NOCH_NICHT,
+    TO_SPAETER_MOEGLICH,
+    VDG_ENTSCHLUSS,
+    VDG_ERWARTUNG,
+    VDG_VERGISST,
+    eintritt_erbeten,
+};
+
+// --- Канал суждения §47.3 -------------------------------------------------------
+
+@source(TO_JETZT_NICHT, TO_SPAETER_MOEGLICH)
+external judgment relation tuerhueter_gewaehrt_einlass(m: Person) {
+    authority Tuerhueter;
+    label de official "der Türhüter gewährt diesem Mann den Einlaß";
+    label ru official "привратник даёт этому просителю впуск";
+}
+
+relation einlass_gestattet(m: Person) kind institutional {
+    label de official "der Einlaß ist ihm gestattet";
+    label ru official "впуск ему разрешён";
+}
+
+@source(TO_JETZT_NICHT)
+rule EinlassGestattet(m: Person) strict {
+    label de official "Ob der Mann eintreten darf, entscheidet der Türhüter: er allein kann den Eintritt gewähren oder versagen";
+    label ru official "Войти ли просителю — решает привратник: только он даёт вход и только он его не даёт";
+    when eintritt_erbeten(m) and tuerhueter_gewaehrt_einlass(m);
+    then einlass_gestattet(m);
+}
+
+// --- Что привратник сказал о времени --------------------------------------------
+//
+// ДВА УТВЕРЖДЕНИЯ ПРИТЧИ, КОТОРЫЕ ОБЯЗАНЫ СТОЯТЬ РЯДОМ И ПОРОЗНЬ. Отказ дан
+// на теперь; возможность впредь подтверждена. Свести их в одно — «нельзя» —
+// значило бы вычеркнуть «Es ist möglich»; свести в другое — «можно» —
+// вычеркнуть «jetzt aber nicht». Ни одно из них не выводит разрешения: они
+// СВИДЕТЕЛЬСТВУЮТ о состоянии решения, а не принимают его.
+
+relation einlass_jetzt_versagt(h: Person, m: Person) kind institutional {
+    label de official "der Türhüter versagt den Eintritt für jetzt: «jetzt aber nicht», «noch nicht»";
+    label ru official "привратник отказывает во входе на теперь: «сейчас — нет», «ещё не»";
+}
+
+@source(TO_JETZT_NICHT, TO_NOCH_NICHT)
+assert einlass_jetzt_versagt(DerTuerhueter, Mann) { evidence VDG_1915_TEXT; }
+
+relation einlass_spaeter_moeglich(m: Person) kind institutional {
+    label de official "später einzutreten ist möglich — vom Türhüter selbst gesagt: «Es ist möglich»";
+    label ru official "войти впредь возможно — сказано самим привратником: «Es ist möglich»";
+}
+
+@source(TO_SPAETER_MOEGLICH)
+assert einlass_spaeter_moeglich(Mann) { evidence VDG_1915_TEXT; }
+
+// --- Решение просителя ----------------------------------------------------------
+//
+// ФАКТ, А НЕ НОРМА, и потому он ничего не выводит. Проситель выбрал ждать
+// разрешения — то есть выбрал путь через суждение привратника и отказался от
+// второго пути, который был назван ему в той же беседе. Выбор записан, потому
+// что без него журнал притчи нечем объяснить: все дальнейшие годы суть
+// исполнение ЭТОГО решения.
+
+relation warten_gewaehlt(m: Person) kind empirical {
+    label de official "er entschließt sich zu warten, bis er die Erlaubnis zum Eintritt bekommt";
+    label ru official "он решает ждать, пока не получит разрешения на вход";
+}
+
+@source(VDG_ENTSCHLUSS)
+assert warten_gewaehlt(Mann) { evidence VDG_1915_TEXT; }
+
+// --- Ожидание просителя, которое нормой не является ------------------------------
+//
+// «das Gesetz soll doch jedem und immer zugänglich sein, denkt er» — ЭТО ТО,
+// ЧТО ОН ДУМАЕТ. Притча не устанавливает такого правила, не приписывает его
+// Закону и нигде его не подтверждает; более того, последняя реплика
+// привратника прямо ему противоречит («Hier konnte niemand sonst Einlaß
+// erhalten»). Записать это ожидание нормой значило бы принять сторону
+// просителя в споре, которого текст не решает. Оно записано ФАКТОМ о его
+// голове — и ровно поэтому из него ничего не следует.
+
+relation zugang_fuer_jeden_erwartet(m: Person) kind empirical {
+    label de official "er erwartet, das Gesetz solle jedem und immer zugänglich sein — sein Gedanke, keine Norm des Textes";
+    label ru official "он ожидает, что Закон должен быть доступен каждому и всегда, — его мысль, а не норма текста";
+}
+
+@source(VDG_ERWARTUNG)
+assert zugang_fuer_jeden_erwartet(Mann) { evidence VDG_1915_TEXT; }
+
+// ВТОРАЯ ОШИБКА ПРОСИТЕЛЯ, парная первой и столь же инертная. «Er vergißt die
+// andern Türhüter und dieser erste scheint ihm das einzige Hindernis für den
+// Eintritt in das Gesetz» — он забывает остальных привратников, о которых был
+// предупреждён, и принимает нижнего за единственное препятствие. Из этого
+// тоже не следует ничего: пакет знает, что ошибка была, и не выводит из неё
+// ни права, ни обязанности. Записана она затем, что без неё третье прочтение
+// экзегезы (обманут сам привратник) читалось бы как единственная ошибка в
+// притче, — а их две, и вторая принадлежит просителю.
+
+relation erster_fuer_einziges_hindernis_gehalten(m: Person) kind empirical {
+    label de official "er vergißt die andern Türhüter, und dieser erste scheint ihm das einzige Hindernis für den Eintritt in das Gesetz";
+    label ru official "он забывает остальных привратников, и этот первый кажется ему единственным препятствием для входа в Закон";
+}
+
+@source(VDG_VERGISST)
+assert erster_fuer_einziges_hindernis_gehalten(Mann) { evidence VDG_1915_TEXT; }

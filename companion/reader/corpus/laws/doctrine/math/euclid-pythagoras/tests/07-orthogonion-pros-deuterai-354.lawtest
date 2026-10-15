@@ -1,0 +1,27 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// Третья позиция прямого угла — против ВТОРОЙ стороны записи
+// (a*a + c*c == b*b: 9 + 16 == 25). Стороны подобраны z3 под гард
+// правила OrthogonionProsDeuterai; воспроизводится тем же вызовом с
+// `--rule OrthogonionProsDeuterai`. Вместе с 01 и 06 закрывает все три
+// правила I.48 машинными свидетелями: конвенции порядка сторон нет, и
+// решатель, не зная её, вышел на все три перестановки одной тройки.
+test "urn:query:eucl-smt-354" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "eucl-t07-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 3, 5, 4) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::orthogonion(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

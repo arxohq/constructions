@@ -1,0 +1,12 @@
+{
+  "book": "Constructions. The Craft of Formalization",
+  "edition": "2026.10",
+  "book_publication_date": "2026-10-14",
+  "repository_release": "v2026.10.1",
+  "source_url": "https://books.arxo.io/files/constructions-2026.10-en-companion.zip",
+  "archive_sha256": "86840c038670aee6a9dd5c513458a859b21adf7a9e0f0ef964409a53ad6f0964",
+  "archive_root": "constructions-2026.10-companion",
+  "repository_directory": "companion",
+  "companion_manifest_sha256": "e9e81abd45fa02d3c2a5b4af2a1dc72399b7203343a94c52aa952ee3d630ec88",
+  "scope": "Exact curated reader companion; no engine implementation or private editorial archive."
+}

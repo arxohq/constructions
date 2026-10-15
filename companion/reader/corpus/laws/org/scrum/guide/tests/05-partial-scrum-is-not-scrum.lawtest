@@ -1,0 +1,17 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Раздел 8: «While implementing only parts of Scrum is possible, the result
+// is not Scrum». Пропуск одного элемента даёт FALSE_ONLY, а не молчание.
+test "urn:query:scrum-test-partial-implementation" {
+    given {
+        context { decision_time @2026-09-15T12:00:00Z; knowledge_time @2026-09-15T12:00:00Z; legal_time @2026-09-15; timezone "UTC"; }
+        assert "sg-t5-a": implementation(entity_ref("urn:scrum:impl:i")) { origin case_input; }
+        assert "sg-t5-b": omits_element(entity_ref("urn:scrum:impl:i"), SprintRetrospectiveEvent) { origin case_input; }
+    }
+    evaluate truth(is_scrum(entity_ref("urn:scrum:impl:i")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

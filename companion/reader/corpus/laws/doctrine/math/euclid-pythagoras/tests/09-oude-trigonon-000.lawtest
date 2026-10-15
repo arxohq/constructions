@@ -1,0 +1,22 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// Полное вырождение: все три стороны нулевые. Свидетель подобран z3 под
+// гард `a + b <= c` (правило OudeTrigononPleuraiAB) и одновременно
+// удовлетворяет двум другим правилам той же нормы — 0+0 <= 0 при любой
+// паре. Рукописная батарея держала вырождение только на 1-2-3 (сумма
+// строго меньше третьей) и на 0-3-3 (нулевая сторона при выполненной
+// пифагоровой арифметике); нулевой треугольник целиком в неё не попадал,
+// и его принёс решатель, а не автор.
+test "urn:query:eucl-smt-000" {
+    given {
+        assert "eucl-t09-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 0, 0, 0) {
+            origin case_input;
+        }
+    }
+    evaluate truth(grc.euclid.stoicheia_i::oude_trigonon(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

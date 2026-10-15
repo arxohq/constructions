@@ -1,0 +1,25 @@
+language "law.core" version "0.2";
+package grc.euclid.stoicheia_i version "0.1.0";
+namespace "urn:grc:euclid:clir:stoicheia-i";
+
+// I.13: смежные ABG и GBD; ABG равен прямому ref — GBD тоже равен ref.
+test "urn:query:sto-i-13-smezhnye" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "sto-13-1": gonion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ABG")) { origin case_input; }
+        assert "sto-13-2": gonion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:GBD")) { origin case_input; }
+        assert "sto-13-3": gonion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ref")) { origin case_input; }
+        assert "sto-13-4": smezhnye_gonia(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ABG"), entity_ref("urn:grc:euclid:stoicheia-i:case:angle:GBD")) { origin case_input; }
+        assert "sto-13-5": isos_gonia(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ABG"), entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ref")) { origin case_input; }
+        assert "sto-13-6": orthos(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ref")) { origin case_input; }
+    }
+    evaluate truth(isos_gonia(entity_ref("urn:grc:euclid:stoicheia-i:case:angle:GBD"), entity_ref("urn:grc:euclid:stoicheia-i:case:angle:ref")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

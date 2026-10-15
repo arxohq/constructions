@@ -1,0 +1,29 @@
+{
+  "$comment": "Пилот DECISION-0070: английский слой отображения притчи. Язык источника (de) и рабочий перевод (ru) живут inline в .law; этот файл в CLIR не вкомпилируется и читается только презентационным слоем (verbalize --labels, MCP, мост рабочего стола). Ключи — локальные имена узлов; сверку с CLIR держит check_i18n_overlays.",
+  "formatVersion": "law.i18n/0.1",
+  "package": "de.kafka.vor_dem_gesetz",
+  "language": "en",
+  "labels": {
+    "Person": [{"status": "translation", "text": "person"}],
+    "Eingang": [{"status": "translation", "text": "entrance"}],
+    "tuerhueter": [{"status": "translation", "text": "is a doorkeeper"}],
+    "mann_vom_lande": [{"status": "translation", "text": "is a man from the country"}],
+    "eingang_zum_gesetz": [{"status": "translation", "text": "is the entrance to the Law"}],
+    "einlass_gestattet": [{"status": "translation", "text": "admittance is granted"}],
+    "verbot_verletzt": [{"status": "translation", "text": "the prohibition is violated"}],
+    "tor_offen": [{"status": "translation", "text": "the gate stands open"}],
+    "getaeuscht": [{"status": "translation", "text": "has been deceived"}],
+    "weg_frei": [{"status": "translation", "text": "the way is clear"}],
+    "ohne_erlaubnis_eingetreten": [{"status": "translation", "text": "entered without permission"}],
+    "schliessung_erklaert": [{"status": "translation", "text": "the closing of the gate is declared"}],
+    "OhneErlaubnisEintreten": [{"status": "translation", "text": "to enter without permission"}],
+    "EintrittOhneErlaubnisVerboten": [{"status": "translation", "text": "entry without permission is prohibited"}],
+    "EinlassGestattet": [{"status": "translation", "text": "admittance is granted by the doorkeeper"}],
+    "VerbotVerletzt": [{"status": "translation", "text": "unauthorised entry violates the prohibition"}],
+    "PflichtWarIhnEinzulassen": [{"status": "translation", "text": "the duty was to admit him"}],
+    "TuerhueterHatDenMannGetaeuscht": [{"status": "translation", "text": "the doorkeeper has deceived the man"}],
+    "EingangWarNurFuerIhn": [{"status": "translation", "text": "the entrance was meant only for him"}],
+    "SchliessungErklaert": [{"status": "translation", "text": "the closing is declared"}],
+    "WegIstFrei": [{"status": "translation", "text": "the way is clear at an open gate"}]
+  }
+}

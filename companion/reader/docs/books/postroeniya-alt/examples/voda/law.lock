@@ -1,0 +1,36 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "kniga.voda",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "openstax.chemistry_acids"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:2774c7593c359cc8f8be8d41caa9358744021dba7f54049d08b84b745b5e1824",
+      "features": [
+        "core-executable"
+      ],
+      "name": "openstax.chemistry_acids",
+      "namespace": "urn:openstax:clir:chemistry-acids",
+      "registryId": "law-dsl-dev",
+      "resolverUri": "registry://law-dsl-dev/openstax.chemistry_acids/0.1.0",
+      "sourceHash": "sha256:d4acdfb3b112eeba9d27f27c1239fc5f93e30a3cfe886d3c964e95bde3391dba",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:1c19cb6f8377fa430a3b651e89980ba38a6e0497e006f4d6c0be6fc987e58e46",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:03c10f7f9e99583bd958764bc1e8159021b3ad4413fc1dda0b106317cc780ce6",
+    "name": "kniga.voda",
+    "namespace": "urn:kniga:clir:voda",
+    "sourceHash": "sha256:500d1c28da500c9080c87c62684e5778e098d89a15552d41ea4bf6eafb60b5bb",
+    "version": "0.1.0"
+  }
+}

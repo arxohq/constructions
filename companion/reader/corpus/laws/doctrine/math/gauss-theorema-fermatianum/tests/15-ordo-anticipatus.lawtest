@@ -1,0 +1,31 @@
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+// Сторож артикула 48: единица встретилась РАНЬШЕ объявленного порядка
+// (2^3 mod 7 = 1, а порядком объявлено 6) — заявление абсурдно.
+// След вычислен возведением в степень по модулю и ПРОВЕРЯЕТСЯ движком
+// звено за звеном (артикул 46); воспроизводится строкой
+//   python3 -c "n,a=7,2;[print(e,pow(a,e,n)) for e in [1, 2, 3, 6]]"
+
+test "urn:query:15-ordo-anticipatus" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "flt-propositum": propositum(entity_ref("urn:case:flt:probatio"), 7, 2) { origin case_input; }
+        assert "flt-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 6) { origin case_input; }
+        assert "flt-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) { origin case_input; }
+        assert "flt-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) { origin case_input; }
+        assert "flt-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 3, 1) { origin case_input; }
+        assert "flt-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 6, 1) { origin case_input; }
+        assert "flt-ordo": ordo(entity_ref("urn:case:flt:probatio"), 6) { origin case_input; }
+    }
+    evaluate truth(ordo_absurdus(entity_ref("urn:case:flt:probatio")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

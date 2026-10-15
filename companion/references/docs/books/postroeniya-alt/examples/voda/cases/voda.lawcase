@@ -1,0 +1,22 @@
+language "law.core" version "0.2";
+package kniga.voda version "0.1.0";
+namespace "urn:kniga:clir:voda";
+
+import openstax.chemistry_acids version "0.1.0";
+
+case Voda {
+    context {
+        legal_time @2026-09-08;
+        knowledge_time @2026-09-08T12:00:00Z;
+        decision_time @2026-09-08T12:00:00Z;
+        timezone "UTC";
+    }
+    assert openstax.chemistry_acids::donates_proton(entity_ref("urn:case:kniga:h2o")) {
+        id "voda-1";
+        origin case_input;
+    }
+    assert openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:kniga:h2o")) {
+        id "voda-2";
+        origin case_input;
+    }
+}

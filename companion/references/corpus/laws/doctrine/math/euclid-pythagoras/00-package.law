@@ -1,0 +1,46 @@
+// Теорема Пифагора: целочисленное прочтение I.20, I.47, I.48 книги I
+// (`grc.euclid.stoicheia_i`) и трихотомия II.12—II.13.
+//
+// Книга I владеет сущностью Trigonon, сторонами pleurai_trigonou,
+// существованием trigonon_synistatai и родами orthogonion / oxygonion /
+// amblygonion / ouk_orthogonion. Этот пакет не дублирует I.20/I.47/I.48:
+// дело подаёт длины на импортированный треугольник. Здесь остаются
+// обратные к II.12/II.13 (арифметика знака) и сторож заявленного прямого
+// угла (ἐναντίωσις) — целочисленное прочтение, как
+// arxo.integer_divisibility над arxo.divisibility.
+
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+import grc.euclid.stoicheia_i version "0.1.0";
+
+// Заявление дела: угол между ПЕРВЫМИ ДВУМЯ сторонами записи (против
+// третьей) — прямой. Эмпирика: так сказало дело, а не вывел движок.
+@source(INTEGER_READING)
+relation dedilotai_orthe_gonia(t: grc.euclid.stoicheia_i::Trigonon) kind empirical {
+    label grc unofficial "ὀρθὴ ἡ γωνία ἡ ὑπὸ τῶν δύο πρώτων πλευρῶν περιεχομένη";
+    label ru unofficial "дело заявляет прямым угол между первыми двумя сторонами записи (против третьей)";
+}
+
+// Громкое противоречие входа: дело заявило прямой угол, а квадраты сторон
+// заявлению противоречат (I.47 в роли сторожа заявленного).
+@source(INTEGER_READING)
+relation enantiosis_gonias_kai_pleuron(t: grc.euclid.stoicheia_i::Trigonon) kind derived {
+    label grc unofficial "ἐναντίωσις τῆς γωνίας καὶ τῶν πλευρῶν";
+    label ru unofficial "противоречие входа: заявленный прямой угол не согласуется с квадратами сторон (I.47)";
+}
+
+@source(INTEGER_READING)
+rule EnantiosisZitoumenisGonias(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "сторож I.47: заявленный прямой угол между первыми двумя сторонами не сходится с квадратом третьей";
+    when dedilotai_orthe_gonia(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b != c * c);
+    then enantiosis_gonias_kai_pleuron(t);
+}

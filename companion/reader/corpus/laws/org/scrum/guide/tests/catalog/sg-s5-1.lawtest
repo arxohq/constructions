@@ -1,0 +1,28 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-DEVELOPERSACCOUNTABLEFORDAILYADAPTATION" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": scrum_team(entity_ref("urn:law:catalog:developersaccountablefordailyadaptation:v0")) { origin case_input; }
+    }
+    evaluate truth(developers_accountable_for(entity_ref("urn:law:catalog:developersaccountablefordailyadaptation:v0"), AdaptingPlanDaily));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-DEVELOPERSCOMMITTEDTOINCREMENT" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": developer_of(entity_ref("urn:law:catalog:developerscommittedtoincrement:v0"), entity_ref("urn:law:catalog:developerscommittedtoincrement:v1")) { origin case_input; }
+    }
+    evaluate truth(committed_to_creating_increment(entity_ref("urn:law:catalog:developerscommittedtoincrement:v0"), entity_ref("urn:law:catalog:developerscommittedtoincrement:v1")));
+    expect truth_status == TRUE_ONLY;
+}

@@ -1,0 +1,386 @@
+[
+  {
+    "contentHash": "sha256:2774c7593c359cc8f8be8d41caa9358744021dba7f54049d08b84b745b5e1824",
+    "exportEntityTypes": [
+      "Solution",
+      "Species"
+    ],
+    "exportKinds": {
+      "AmphiproticDonatesAndAccepts": "rule",
+      "NotAmphiproticWithoutAcceptance": "rule",
+      "NotAmphiproticWithoutDonation": "rule",
+      "OS_14_1_AMPHIPROTIC": "fragment",
+      "OS_14_1_ARRHENIUS": "fragment",
+      "OS_14_1_AUTOIONIZATION": "fragment",
+      "OS_14_1_BRONSTED": "fragment",
+      "OS_14_1_CONJUGATE": "fragment",
+      "OS_14_1_IONIZATION": "fragment",
+      "OS_14_2_NEUTRAL_BOUNDARY": "fragment",
+      "OS_14_2_PKW": "fragment",
+      "OS_14_3_BINARY": "fragment",
+      "OS_14_3_KA": "fragment",
+      "OS_14_3_KA_EXAMPLES": "fragment",
+      "OS_14_3_LEVELING": "fragment",
+      "OS_14_3_STRENGTH": "fragment",
+      "OS_14_4_ACIDIC_SALT": "fragment",
+      "OS_14_4_AMMONIUM": "fragment",
+      "OS_14_4_BASIC_SALT": "fragment",
+      "OS_14_4_MIXED_SALT": "fragment",
+      "OS_14_5_DIPROTIC": "fragment",
+      "OS_14_5_PROTICITY": "fragment",
+      "OS_14_6_BUFFER": "fragment",
+      "OS_15_2_ADDUCT": "fragment",
+      "OS_15_2_BF3": "fragment",
+      "OS_15_2_LEWIS": "fragment",
+      "Solution": "type_decl",
+      "Species": "type_decl",
+      "accepts_electron_pair": "symbol_decl",
+      "accepts_proton": "symbol_decl",
+      "amphiprotic": "symbol_decl",
+      "conjugate_acid_of": "symbol_decl",
+      "dissolved_in": "symbol_decl",
+      "dissolves_in_water": "symbol_decl",
+      "donates_electron_pair": "symbol_decl",
+      "donates_proton": "symbol_decl",
+      "ionizes_completely_in": "symbol_decl",
+      "solvent_of": "symbol_decl",
+      "species_in_question": "symbol_decl",
+      "yields_hydrogen_cation": "symbol_decl",
+      "yields_hydroxide_anion": "symbol_decl"
+    },
+    "exportRelationLabels": {
+      "accepts_electron_pair": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species accepts an electron pair forming a coordinate covalent bond"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица принимает пару электронов и образует координационную связь"
+        }
+      ],
+      "accepts_proton": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species accepts a proton"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица принимает протон"
+        }
+      ],
+      "amphiprotic": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species is amphiprotic"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица амфипротна: способна и отдать, и принять протон"
+        }
+      ],
+      "conjugate_acid_of": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the first species is the conjugate acid of the second"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "первая частица — сопряжённая кислота второй"
+        }
+      ],
+      "dissolved_in": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species is dissolved in the presented solution"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица растворена в предъявленном растворе"
+        }
+      ],
+      "dissolves_in_water": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species dissolves in water"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица растворяется в воде"
+        }
+      ],
+      "donates_electron_pair": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species donates an electron pair forming a coordinate covalent bond"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица отдаёт пару электронов и образует координационную связь"
+        }
+      ],
+      "donates_proton": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species donates a proton to another compound"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица отдаёт протон другой частице"
+        }
+      ],
+      "ionizes_completely_in": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the ionization of the species in the named solvent is essentially complete"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "в названном растворителе ионизация частицы полна"
+        }
+      ],
+      "solvent_of": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the solvent of the presented solution"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "растворитель предъявленного раствора"
+        }
+      ],
+      "species_in_question": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "the species is presented by the case as the subject of the question"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "частица предъявлена делом как предмет вопроса"
+        }
+      ],
+      "yields_hydrogen_cation": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "on dissolving in water the species yields hydrogen cations"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "при растворении в воде частица даёт катион водорода"
+        }
+      ],
+      "yields_hydroxide_anion": [
+        {
+          "language": "en",
+          "status": "unofficial",
+          "text": "on dissolving in water the species yields hydroxide anions"
+        },
+        {
+          "language": "ru",
+          "status": "unofficial",
+          "text": "при растворении в воде частица даёт гидроксид-анион"
+        }
+      ]
+    },
+    "exportRelationParameterNames": {
+      "accepts_electron_pair": [
+        "s"
+      ],
+      "accepts_proton": [
+        "s"
+      ],
+      "amphiprotic": [
+        "s"
+      ],
+      "conjugate_acid_of": [
+        "acid",
+        "base"
+      ],
+      "dissolved_in": [
+        "s",
+        "sol"
+      ],
+      "dissolves_in_water": [
+        "s"
+      ],
+      "donates_electron_pair": [
+        "s"
+      ],
+      "donates_proton": [
+        "s"
+      ],
+      "ionizes_completely_in": [
+        "s",
+        "solvent"
+      ],
+      "solvent_of": [
+        "sol",
+        "solvent"
+      ],
+      "species_in_question": [
+        "s"
+      ],
+      "yields_hydrogen_cation": [
+        "s"
+      ],
+      "yields_hydroxide_anion": [
+        "s"
+      ]
+    },
+    "exportRelationParameters": {
+      "accepts_electron_pair": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "accepts_proton": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "amphiprotic": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "conjugate_acid_of": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        },
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "dissolved_in": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        },
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Solution"
+        }
+      ],
+      "dissolves_in_water": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "donates_electron_pair": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "donates_proton": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "ionizes_completely_in": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        },
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "solvent_of": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Solution"
+        },
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "species_in_question": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "yields_hydrogen_cation": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ],
+      "yields_hydroxide_anion": [
+        {
+          "name": "urn:openstax:clir:chemistry-acids#Species"
+        }
+      ]
+    },
+    "exports": [
+      "AmphiproticDonatesAndAccepts",
+      "NotAmphiproticWithoutAcceptance",
+      "NotAmphiproticWithoutDonation",
+      "OS_14_1_AMPHIPROTIC",
+      "OS_14_1_ARRHENIUS",
+      "OS_14_1_AUTOIONIZATION",
+      "OS_14_1_BRONSTED",
+      "OS_14_1_CONJUGATE",
+      "OS_14_1_IONIZATION",
+      "OS_14_2_NEUTRAL_BOUNDARY",
+      "OS_14_2_PKW",
+      "OS_14_3_BINARY",
+      "OS_14_3_KA",
+      "OS_14_3_KA_EXAMPLES",
+      "OS_14_3_LEVELING",
+      "OS_14_3_STRENGTH",
+      "OS_14_4_ACIDIC_SALT",
+      "OS_14_4_AMMONIUM",
+      "OS_14_4_BASIC_SALT",
+      "OS_14_4_MIXED_SALT",
+      "OS_14_5_DIPROTIC",
+      "OS_14_5_PROTICITY",
+      "OS_14_6_BUFFER",
+      "OS_15_2_ADDUCT",
+      "OS_15_2_BF3",
+      "OS_15_2_LEWIS",
+      "Solution",
+      "Species",
+      "accepts_electron_pair",
+      "accepts_proton",
+      "amphiprotic",
+      "conjugate_acid_of",
+      "dissolved_in",
+      "dissolves_in_water",
+      "donates_electron_pair",
+      "donates_proton",
+      "ionizes_completely_in",
+      "solvent_of",
+      "species_in_question",
+      "yields_hydrogen_cation",
+      "yields_hydroxide_anion"
+    ],
+    "features": [
+      "core-executable"
+    ],
+    "package": {
+      "name": "openstax.chemistry_acids",
+      "namespace": "urn:openstax:clir:chemistry-acids",
+      "semanticHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "version": "0.1.0"
+    }
+  }
+]

@@ -1,0 +1,135 @@
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+// МОСТ К БРОШЮРЕ В ДЕЛЕ. Учебник §1.2 говорит «kilogram: SI unit for mass»;
+// что килограмм — базовая единица ИМЕННО массы, знает таблица 2 брошюры, и
+// вывод здесь получается подстановкой её факта, а не переписыванием его в
+// этот пакет.
+test "urn:query:meas-t03a-kilogram-is-the-base-unit-of-mass" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03a-v": measured_value(entity_ref("urn:case:meas:m1"), 5 kg) { origin case_input; }
+        assert "t03a-q": measures_base_quantity(entity_ref("urn:case:meas:m1"), bipm.si_brochure::Mass) { origin case_input; }
+        assert "t03a-u": reported_in_unit(entity_ref("urn:case:meas:m1"), bipm.si_brochure::Kilogram) { origin case_input; }
+    }
+
+    evaluate truth(reported_in_base_unit(entity_ref("urn:case:meas:m1")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ReportedInBaseUnitOfItsQuantity);
+}
+
+// ОБРАТНАЯ СТОРОНА ТОЙ ЖЕ ГРАНИЦЫ. Грамм измеряет ту же массу, но базовой
+// единицей SI не является: таблица 2 называет килограмм. Вывод не получается,
+// и это не «нет фактов» — факт о грамме в брошюре есть, он просто другой.
+test "urn:query:meas-t03b-gram-is-not-the-base-unit" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03b-v": measured_value(entity_ref("urn:case:meas:m2"), 5000 g) { origin case_input; }
+        assert "t03b-q": measures_base_quantity(entity_ref("urn:case:meas:m2"), bipm.si_brochure::Mass) { origin case_input; }
+        assert "t03b-u": reported_in_unit(entity_ref("urn:case:meas:m2"), bipm.si_brochure::Gram) { origin case_input; }
+    }
+
+    evaluate truth(reported_in_base_unit(entity_ref("urn:case:meas:m2")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Почему грамм не прошёл — вопросом к системе, а не догадкой читателя.
+test "urn:query:meas-t03c-why-not-gram" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03c-v": measured_value(entity_ref("urn:case:meas:m2"), 5000 g) { origin case_input; }
+        assert "t03c-q": measures_base_quantity(entity_ref("urn:case:meas:m2"), bipm.si_brochure::Mass) { origin case_input; }
+        assert "t03c-u": reported_in_unit(entity_ref("urn:case:meas:m2"), bipm.si_brochure::Gram) { origin case_input; }
+    }
+
+    evaluate why_not(reported_in_base_unit(entity_ref("urn:case:meas:m2")));
+
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// §1.2 «derived units: units that can be calculated using algebraic
+// combinations of the fundamental units». Ньютон стоит в таблице 4 брошюры
+// со специальным названием — значит, производная.
+test "urn:query:meas-t03d-newton-is-a-derived-unit" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03d-v": measured_value(entity_ref("urn:case:meas:m3"), 12 N) { origin case_input; }
+        assert "t03d-u": reported_in_unit(entity_ref("urn:case:meas:m3"), bipm.si_brochure::Newton) { origin case_input; }
+    }
+
+    evaluate truth(reported_in_derived_unit(entity_ref("urn:case:meas:m3")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ReportedInSpecialNamedUnit);
+}
+
+// §1.3: пересчёт — умножение на явный коэффициент. 80 км есть 80000 м, и
+// масштаб приводит `unit_convert`, а не умолчание.
+test "urn:query:meas-t03e-convert-kilometres-to-metres" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03e-v": measured_value(entity_ref("urn:case:meas:m4"), 80 km) { origin case_input; }
+        assert "t03e-ask": asked_in_unit(entity_ref("urn:case:meas:m4"), "m") { origin case_input; }
+    }
+
+    evaluate truth(converted_value(entity_ref("urn:case:meas:m4"), 80000 m));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ConvertToAskedUnit);
+}
+
+// §1.2: единица SI есть единица SI — вывод берётся из брошюры, где он
+// получен из §2.3.4 «полный набор единиц SI включает когерентный набор».
+test "urn:query:meas-t03f-reported-in-si" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t03f-v": measured_value(entity_ref("urn:case:meas:m5"), 3 s) { origin case_input; }
+        assert "t03f-u": reported_in_unit(entity_ref("urn:case:meas:m5"), bipm.si_brochure::Second) { origin case_input; }
+    }
+
+    evaluate truth(expressed_in_si(entity_ref("urn:case:meas:m5")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ReportedUnitIsSiUnit);
+}

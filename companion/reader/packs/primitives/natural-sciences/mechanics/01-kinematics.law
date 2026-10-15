@@ -1,0 +1,61 @@
+// Равноускоренное движение по предъявленным величинам.
+//
+// ЕДИНИЦЫ ВХОДА ПРИВОДЯТСЯ ЯВНО. Правило называет ОДНУ единицу ответа, и
+// `quantity_of` сверяет её с вычисленным мультимножителем (§259.1); поэтому
+// входы проходят через `unit_convert`. Дело вправе подать километры и часы —
+// перевод будет виден в доказательстве, а не случится молча.
+
+language "law.core" version "0.2";
+package calc.mechanics version "0.1.0";
+namespace "urn:law:calc:mechanics";
+
+use self::{
+    Calculation,
+};
+
+pub relation given_initial_velocity(c: Calculation, v0: Quantity) kind empirical {
+    label en official "the initial velocity given for the calculation";
+    label ru unofficial "начальная скорость, данная для расчёта";
+}
+
+pub relation given_acceleration(c: Calculation, a: Quantity) kind empirical {
+    label en official "the constant acceleration given for the calculation";
+    label ru unofficial "постоянное ускорение, данное для расчёта";
+}
+
+pub relation given_elapsed_time(c: Calculation, t: Quantity) kind empirical {
+    label en official "the elapsed time given for the calculation";
+    label ru unofficial "истёкшее время, данное для расчёта";
+}
+
+pub relation final_velocity(c: Calculation, v: Quantity) kind institutional {
+    label en official "v = v₀ + at — the final velocity under constant acceleration";
+    label ru unofficial "v = v₀ + at — конечная скорость при постоянном ускорении";
+}
+
+rule FinalVelocity(c: Calculation, v0: Quantity, a: Quantity, t: Quantity) strict {
+    label en official "v = v₀ + at";
+    label ru unofficial "v = v₀ + at";
+    when given_initial_velocity(c, v0)
+        and given_acceleration(c, a)
+        and given_elapsed_time(c, t);
+    then final_velocity(c, quantity_of(unit_convert(magnitude(v0), "m_per_s")
+        + unit_convert(magnitude(a), "m_per_s2") * unit_convert(magnitude(t), "s"), "m_per_s"));
+}
+
+pub relation displacement(c: Calculation, x: Quantity) kind institutional {
+    label en official "x = v₀t + ½at² — the displacement under constant acceleration";
+    label ru unofficial "x = v₀t + ½at² — перемещение при постоянном ускорении";
+}
+
+rule Displacement(c: Calculation, v0: Quantity, a: Quantity, t: Quantity) strict {
+    label en official "x = v₀t + ½at²";
+    label ru unofficial "x = v₀t + ½at²";
+    when given_initial_velocity(c, v0)
+        and given_acceleration(c, a)
+        and given_elapsed_time(c, t);
+    then displacement(c, quantity_of(
+        unit_convert(magnitude(v0), "m_per_s") * unit_convert(magnitude(t), "s")
+        + (1 / 2) * unit_convert(magnitude(a), "m_per_s2")
+          * unit_convert(magnitude(t), "s") * unit_convert(magnitude(t), "s"), "m"));
+}

@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:c055cbf0957fd070c57544efd83b365bad4bf37f783362d36f84172be8a775aa",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:0be402f972547f9503fdf08478bd8f900c39cc1f119d9208aea61aeb6c97d399",
+    "name": "de.hilbert.grundlagen",
+    "namespace": "urn:de:hilbert:clir:grundlagen",
+    "sourceHash": "sha256:8e2c251aa7240229564f0e2e689d5666f06281574b8fd6118da32861edc25204",
+    "version": "0.1.0"
+  }
+}

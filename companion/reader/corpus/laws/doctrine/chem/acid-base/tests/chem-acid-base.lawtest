@@ -1,0 +1,389 @@
+language "law.core" version "0.2";
+package chem.acid_base version "0.1.0";
+namespace "urn:chem:clir:acid-base";
+
+// Сцены пакета: один вопрос «кислота ли эта частица» — три ответа по трём
+// прочтениям §152, и четвёртый ответ на тот же вопрос без выбранного
+// прочтения (§156). Пары стоят по обе стороны каждой границы: HCl кислота по
+// Брёнстеду и НЕ кислота по Льюису; BF3 кислота по Льюису и НЕ кислота по
+// Брёнстеду; аммиак не кислота ни по Аррениусу, ни по Брёнстеду, но основание
+// и по Брёнстеду, и по Льюису; вода — и кислота, и основание в одном
+// прочтении.
+//
+// FALSE_ONLY здесь получается ЯВНЫМ отрицанием дела (`assert not …`), а не
+// молчанием: `refuted` в отрицательных головах (DECISION-0088) читает
+// установленную ложь, и дело, которое о свойстве не говорит, оставляет ответ
+// NEITHER — что и показано сценой why_not.
+
+// --- HCl: кислота по Аррениусу и по Брёнстеду, не кислота по Льюису ------
+
+test "urn:query:chem-acid-base-01-hcl-arrhenius" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation ArrheniusReading;
+        }
+        assert "ab01-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab01-1": openstax.chemistry_acids::dissolves_in_water(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab01-2": openstax.chemistry_acids::yields_hydrogen_cation(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:hcl")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ArrheniusAcidYieldsHydrogenCation);
+    expect interpretations(ArrheniusReading);
+}
+
+test "urn:query:chem-acid-base-02-hcl-bronsted" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab02-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab02-1": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:hcl")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BronstedAcidDonatesProton);
+    expect interpretations(BronstedReading);
+}
+
+// Граница: та же частица, то же дело — и ПРОТИВОПОЛОЖНЫЙ ответ, потому что
+// вопрос задан по другому определению. §15.2 называет кислотой Льюиса
+// акцептор пары; HCl её не принимает, и дело это утверждает прямо.
+test "urn:query:chem-acid-base-03-hcl-lewis-refuted" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation LewisReading;
+        }
+        assert "ab03-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab03-1": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab03-2": not openstax.chemistry_acids::accepts_electron_pair(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:hcl")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotLewisAcidWithoutAcceptance);
+    expect interpretations(LewisReading);
+}
+
+// --- Аммиак: не кислота по Аррениусу, основание по Брёнстеду и по Льюису --
+
+test "urn:query:chem-acid-base-04-ammonia-arrhenius-not-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation ArrheniusReading;
+        }
+        assert "ab04-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab04-1": openstax.chemistry_acids::dissolves_in_water(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab04-2": not openstax.chemistry_acids::yields_hydrogen_cation(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab04-3": not openstax.chemistry_acids::yields_hydroxide_anion(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotArrheniusAcidWithoutHydrogenCation);
+    expect interpretations(ArrheniusReading);
+}
+
+// Аммиак не основание и по Аррениусу: гидроксид-анионов в воде он не даёт —
+// их даёт продукт его реакции с водой. Пара к сцене 06, где по Льюису он
+// основание.
+test "urn:query:chem-acid-base-05-ammonia-arrhenius-not-base" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation ArrheniusReading;
+        }
+        assert "ab05-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab05-1": openstax.chemistry_acids::dissolves_in_water(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab05-2": not openstax.chemistry_acids::yields_hydroxide_anion(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(is_base(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotArrheniusBaseWithoutHydroxide);
+    expect interpretations(ArrheniusReading);
+}
+
+test "urn:query:chem-acid-base-06-ammonia-bronsted-base" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab06-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab06-1": openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab06-2": not openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(is_base(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BronstedBaseAcceptsProton);
+    expect interpretations(BronstedReading);
+}
+
+// Тот же аммиак и то же дело: кислотой по Брёнстеду он НЕ является, и это
+// утверждение, а не молчание.
+test "urn:query:chem-acid-base-07-ammonia-bronsted-not-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab07-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab07-1": openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab07-2": not openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotBronstedAcidWithoutDonation);
+    expect interpretations(BronstedReading);
+}
+
+// Мост §15.2 по ОСНОВАНИЯМ: дело не говорит об электронной паре ни слова,
+// основание Льюиса выводится из акцепторности протона.
+test "urn:query:chem-acid-base-08-ammonia-lewis-base-via-bridge" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation LewisReading;
+        }
+        assert "ab08-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "ab08-1": openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(is_base(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BronstedBaseIsLewisBase);
+    expect interpretations(LewisReading);
+}
+
+// --- BF3: кислота Льюиса и не кислота Брёнстеда --------------------------
+
+test "urn:query:chem-acid-base-09-bf3-lewis-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation LewisReading;
+        }
+        assert "ab09-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+        assert "ab09-1": openstax.chemistry_acids::accepts_electron_pair(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:bf3")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LewisAcidAcceptsElectronPair);
+    expect interpretations(LewisReading);
+}
+
+test "urn:query:chem-acid-base-10-bf3-bronsted-not-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab10-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+        assert "ab10-1": openstax.chemistry_acids::accepts_electron_pair(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+        assert "ab10-2": not openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:bf3")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotBronstedAcidWithoutDonation);
+    expect interpretations(BronstedReading);
+}
+
+// Дело молчит о том, что BF3 делает в воде, — и определение Аррениуса молчит
+// в ответ. why_not называет незакрытую посылку; это НЕ то же самое, что
+// сцена 04, где дело отрицает выделение катионов прямо.
+test "urn:query:chem-acid-base-11-bf3-arrhenius-why-not" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation ArrheniusReading;
+        }
+        assert "ab11-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+        assert "ab11-1": openstax.chemistry_acids::accepts_electron_pair(entity_ref("urn:case:chem:bf3")) { origin case_input; }
+    }
+    evaluate why_not(is_acid(entity_ref("urn:case:chem:bf3")));
+    expect truth_status == NEITHER;
+    expect blocked_by("ArrheniusReading/AcidIsArrheniusAcid");
+    expect interpretations(ArrheniusReading);
+}
+
+// --- Вода: и кислота, и основание в одном прочтении ----------------------
+
+test "urn:query:chem-acid-base-12-water-bronsted-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab12-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "ab12-1": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "ab12-2": openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BronstedAcidDonatesProton);
+    expect interpretations(BronstedReading);
+}
+
+test "urn:query:chem-acid-base-13-water-bronsted-base" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab13-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "ab13-1": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "ab13-2": openstax.chemistry_acids::accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(is_base(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(BronstedBaseAcceptsProton);
+    expect interpretations(BronstedReading);
+}
+
+// --- Мост §14.1: кислота Аррениуса есть кислота Брёнстеда ----------------
+//
+// Дело даёт ТОЛЬКО факты Аррениуса — растворимость и катион водорода; о
+// переносе протона оно не говорит ни слова. Кислотность по Брёнстеду выводится
+// леммой-мостом, и это ровно то, что учебник называет «more general».
+
+test "urn:query:chem-acid-base-14-arrhenius-acid-is-bronsted-acid" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab14-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:hno3")) { origin case_input; }
+        assert "ab14-1": openstax.chemistry_acids::dissolves_in_water(entity_ref("urn:case:chem:hno3")) { origin case_input; }
+        assert "ab14-2": openstax.chemistry_acids::yields_hydrogen_cation(entity_ref("urn:case:chem:hno3")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:hno3")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ArrheniusAcidIsBronstedAcid);
+    expect interpretations(BronstedReading);
+}
+
+// --- Гидроксид натрия: основание Аррениуса ------------------------------
+
+test "urn:query:chem-acid-base-15-naoh-arrhenius-base" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation ArrheniusReading;
+        }
+        assert "ab15-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:naoh")) { origin case_input; }
+        assert "ab15-1": openstax.chemistry_acids::dissolves_in_water(entity_ref("urn:case:chem:naoh")) { origin case_input; }
+        assert "ab15-2": openstax.chemistry_acids::yields_hydroxide_anion(entity_ref("urn:case:chem:naoh")) { origin case_input; }
+    }
+    evaluate truth(is_base(entity_ref("urn:case:chem:naoh")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ArrheniusBaseYieldsHydroxide);
+    expect interpretations(ArrheniusReading);
+}
+
+// --- Вопрос без выбранного прочтения: §156 ------------------------------
+//
+// Те же факты, что в сцене 02, и тот же вопрос — но контекст не называет
+// прочтения. Группа `exactly_one` §155 отказывается смешивать ответы трёх
+// определений, и дело получает INTERPRETATION_REQUIRED вместо тихого
+// NEITHER, неотличимого от «сведений не хватает».
+
+test "urn:query:chem-acid-base-16-no-reading-selected" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "ab16-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "ab16-1": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:hcl")));
+    expect evaluation_status == INTERPRETATION_REQUIRED;
+}
+
+// --- Книга «Построения», глава 14: спор внутри одного прочтения ----------
+//
+// Под прочтением Брёнстеда дело и утверждает, и опровергает донорность
+// одной частицы. Кислотность не получает BOTH: положительной посылке
+// правила нужна установленная донорность, а спор её не даёт (та же
+// граница, что в сцене 22 словаря OpenStax). Прочтение спор дела в ответ
+// не превращает.
+test "urn:query:chem-acid-base-17-book-dispute-inside-reading" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+            interpretation BronstedReading;
+        }
+        assert "ab17-q": openstax.chemistry_acids::species_in_question(entity_ref("urn:case:chem:x")) { origin case_input; }
+        assert "ab17-yes": openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:x")) { origin case_input; }
+        assert "ab17-no": not openstax.chemistry_acids::donates_proton(entity_ref("urn:case:chem:x")) { origin case_input; }
+    }
+    evaluate truth(is_acid(entity_ref("urn:case:chem:x")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+    expect interpretations(BronstedReading);
+}

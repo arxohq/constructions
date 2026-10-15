@@ -1,0 +1,21 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Просьбы, дары и блохи вместе — и тот же ответ, что в деле 01: решает
+// привратник. Число попыток на него не влияет, и это утверждение притчи, а
+// не наша аксиома.
+test "urn:query:vor-dem-gesetz-attempts-do-not-move-the-answer" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg10-1": schemel_angenommen(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg10-2": bitte_vorgebracht(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg10-3": gabe_angeboten(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg10-4": gabe_angenommen(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#DerTuerhueter"), entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+        assert "vg10-5": floehe_gebeten(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+    }
+    evaluate truth(einlass_gestattet(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == REQUIRES_JUDGMENT;
+}

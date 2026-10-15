@@ -1,0 +1,14 @@
+{
+  "$comment": "Учёт §33.1 среза kz.grammar.yqsham_tulgalar (реестровый №53). Scope — §§33—34 раздела «Сөз сазын келтіру қағидалары»: полная и сокращённая формы глагола, и сокращение окончания -ды, -ді в стихе. Вариантность звучания вообще принадлежит kz.grammar.dybystyq_varianttar (§§30—32), опускание узких ы, і в стихе — kz.grammar.aralas_buyn (§14).",
+  "editions": [
+    {
+      "document": "anyqtagysh-soz-sazy-kk.txt",
+      "scope": [
+        "33",
+        "34"
+      ],
+      "unit": "kk_paragraph_sign",
+      "declared": {}
+    }
+  ]
+}

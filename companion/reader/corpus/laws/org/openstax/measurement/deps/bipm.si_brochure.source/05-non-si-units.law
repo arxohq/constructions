@@ -1,0 +1,64 @@
+// §4 и таблица 8: внесистемные единицы, допускаемые к применению с SI, и их
+// значения в единицах SI (текстом таблицы).
+//
+// Правило `NonSiUnitAccepted` — мост «строка таблицы → классификация» и потому
+// «посылка в один конец» для аудита: это не стаб, а сама норма §4 — перечень
+// закрыт таблицей, содержательного условия у допуска нет.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    NonSiUnit,
+    SI9_S4_INTRO,
+    SI9_TABLE_8,
+};
+
+@source(SI9_TABLE_8)
+pub relation non_si_unit(u: NonSiUnit, symbol: Text, value_in_si: Text) kind empirical {
+    label en official "the non-SI unit has the given symbol and value in SI units (Table 8)";
+    label ru unofficial "внесистемная единица имеет данный символ и значение в единицах SI (таблица 8)";
+}
+
+@source(SI9_TABLE_8)
+facts Table8 {
+    label en official "Table 8: non-SI units accepted for use with the SI";
+    label ru unofficial "Таблица 8: внесистемные единицы, допускаемые к применению с SI";
+    assert "t8-min": non_si_unit(Minute, "min", "1 min = 60 s") { }
+    assert "t8-h": non_si_unit(Hour, "h", "1 h = 60 min = 3600 s") { }
+    assert "t8-d": non_si_unit(Day, "d", "1 d = 24 h = 86 400 s") { }
+    assert "t8-deg": non_si_unit(Degree, "°", "1° = (π/180) rad") { }
+    assert "t8-arcmin": non_si_unit(Arcminute, "′", "1′ = (1/60)° = (π/10 800) rad") { }
+    assert "t8-arcsec": non_si_unit(Arcsecond, "″", "1″ = (1/60)′ = (π/648 000) rad") { }
+    assert "t8-a": non_si_unit(Are, "a", "1 a = 1 dam2 = 102 m2") { }
+    assert "t8-ha": non_si_unit(Hectare, "ha", "1 ha = 1 hm2 = 104 m2") { }
+    assert "t8-b": non_si_unit(Barn, "b", "1 b = 100 fm2 = 10−28 m2") { }
+    assert "t8-l": non_si_unit(Litre, "l, L", "1 l = 1 L = 1 dm3 = 10−3 m3") { }
+    assert "t8-t": non_si_unit(Tonne, "t", "1 t = 1 Mg = 103 kg") { }
+    assert "t8-ang": non_si_unit(Angstrom, "Å", "1 Å = 0.1 nm = 10−10 m") { }
+    assert "t8-gal": non_si_unit(Gal, "Gal", "1 Gal = 1 cm/s2 = 10−2 m/s2") { }
+    assert "t8-bar": non_si_unit(Bar, "bar", "1 bar = 0.1 MPa = 105 Pa") { }
+    assert "t8-da": non_si_unit(Dalton, "Da", "1 Da = 1.660 539 068 92(52) × 10−27 kg") { }
+    assert "t8-au": non_si_unit(AstronomicalUnit, "au", "1 au = 149 597 870 700 m") { }
+    assert "t8-nm": non_si_unit(NauticalMile, "", "1 nautical mile = 1852 m") { }
+    assert "t8-kn": non_si_unit(Knot, "", "1 nautical mile per hour = (1852/3600) m/s") { }
+    assert "t8-ev": non_si_unit(Electronvolt, "eV", "1 eV = 1.602 176 634 × 10−19 J") { }
+    assert "t8-np": non_si_unit(Neper, "Np", "") { }
+    assert "t8-bel": non_si_unit(Bel, "B", "") { }
+    assert "t8-db": non_si_unit(Decibel, "dB", "") { }
+    assert "t8-var": non_si_unit(Var, "var", "1 var = 1 V A = 1 W") { }
+}
+
+relation accepted_for_use_with_si(u: NonSiUnit) kind institutional {
+    label en official "§4: the non-SI unit is accepted for use with the SI";
+    label ru unofficial "§4: внесистемная единица допускается к применению с SI";
+}
+
+@source(SI9_S4_INTRO, SI9_TABLE_8)
+rule NonSiUnitAccepted(u: NonSiUnit, s: Text, v: Text) strict {
+    label en official "§4: the units of Table 8 are non-SI units whose use with the SI is accepted, their values recalled in SI units";
+    label ru unofficial "§4: единицы таблицы 8 — внесистемные единицы, допускаемые к применению с SI, с напоминанием их значений в единицах SI";
+    when non_si_unit(u, s, v);
+    then accepted_for_use_with_si(u);
+}

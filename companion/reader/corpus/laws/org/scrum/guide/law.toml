@@ -1,0 +1,79 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "scrum.guide"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:scrum:clir:guide"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит. Выводимые поля
+# (jurisdiction ← jurisdiction источника, instrument ← kind, sourceFidelity ←
+# materialization_status) сверяются с source-декларациями воротами
+# verify/ci/gates/coverage/check_package_metadata.py.
+#
+# Секция заведена обязательно, а не для полноты: без неё `law_ask` печатает
+# над ответом глобальную константу «Республика Казахстан», и регламент
+# фреймворка разработки приезжал бы в витрину под казахстанской юрисдикцией.
+[metadata]
+act = "scrum-guide"
+title = "The 2020 Scrum Guide (Швабер, Сазерленд): состав Scrum-команды и три ответственности, спринт как контейнер с таймбоксами событий и полномочием владельца продукта отменить его, артефакты с обязательствами и Definition of Done, неделимость Scrum"
+primarySource = "SCRUM_GUIDE"
+
+# Выводимые. Совпадение с sources.law держат ворота, а не эти строки.
+jurisdiction = "none"
+# instrument: `standard`, а не `guidance`. Руководство называет себя
+# «the definition of Scrum» и «the rules of the game» и объявляет фреймворк
+# неизменяемым (End Note: «immutable»); это спецификация с закрытым составом
+# элементов, а не рекомендация. Сосед по форме — W3C CSS Cascade и ISO 7064,
+# оба `standard`.
+instrument = "standard"
+sourceFidelity = "pinned_unofficial_copy"
+
+# НЕВЫВОДИМОЕ — три поля, которые не сверяет никто, и потому у каждого
+# записана причина выбора.
+issuer = "Ken Schwaber и Jeff Sutherland (scrumguides.org); издатели — Scrum.org и Scrum Inc."
+
+# legalStatus: `in_force`, а не `doctrine`. Соблазн взять `doctrine` (как у
+# Локка) отвергнут: трактат Локка ничего не предлагает к принятию, а
+# Руководство есть ДЕЙСТВУЮЩАЯ редакция стандарта, которую авторы ведут
+# редакциями (2010, 2011, 2013, 2016, 2017, 2020) и каждая следующая
+# заменяет предыдущую — то есть у него есть ось редакций и понятие силы.
+# Сила организационная, не государственная: как у BCP 14 и Laws of Chess,
+# оба `in_force`.
+legalStatus = "in_force"
+
+# verifiedAgainstSource: страница издана самими авторами Руководства и
+# объявлена ими тождественной PDF ноября 2020 года; закреплённые байты
+# сверены с ней sha256, зашитым в код получателя. Что сверка проделана с
+# ИЗВЛЕЧЕНИЕМ, а не с байтами PDF, говорит sourceFidelity, а не это поле.
+verifiedAgainstSource = true
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "scrum.guide#authored"
+regression = false
+suites = ["tests/01-product-owner-is-not-a-committee.lawtest", "tests/02-sprint-of-exactly-one-month-conforms.lawtest", "tests/03-daily-scrum-of-sixteen-minutes-exceeds-timebox.lawtest", "tests/04-developer-cannot-cancel-the-sprint.lawtest", "tests/05-partial-scrum-is-not-scrum.lawtest", "tests/06-organization-overriding-product-owner-violates.lawtest", "tests/07-book-work-presumed-visible.lawtest", "tests/08-book-hidden-work-prevails-by-priority.lawtest",
+          "tests/catalog/general.lawtest",
+          "tests/catalog/sg-s2.lawtest",
+          "tests/catalog/sg-s3-1.lawtest",
+          "tests/catalog/sg-s3-2.lawtest",
+          "tests/catalog/sg-s3-3.lawtest",
+          "tests/catalog/sg-s5-1.lawtest",
+          "tests/catalog/sg-s5-2.lawtest",
+          "tests/catalog/sg-s5-3.lawtest",
+          "tests/catalog/sg-s6.lawtest",
+          "tests/catalog/sg-s6-1.lawtest",
+          "tests/catalog/sg-s6-2.lawtest",
+          "tests/catalog/sg-s6-2-2.lawtest",
+          "tests/catalog/sg-s6-2-3.lawtest",
+          "tests/catalog/sg-s6-3.lawtest",
+          "tests/catalog/sg-s7.lawtest",
+          "tests/catalog/sg-s7-1.lawtest",
+          "tests/catalog/sg-s7-1-1.lawtest",
+          "tests/catalog/sg-s7-2.lawtest",
+          "tests/catalog/sg-s7-2-1.lawtest",
+          "tests/catalog/sg-s7-3.lawtest",
+          "tests/catalog/sg-s7-3-1.lawtest"]
+world = ["scrum.guide"]

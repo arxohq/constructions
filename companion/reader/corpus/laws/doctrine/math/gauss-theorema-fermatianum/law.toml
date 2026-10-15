@@ -1,0 +1,52 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "la.gauss.theorema_fermatianum"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:la:gauss:clir:theorema-fermatianum"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит. Выводимые поля
+# сверяются с source-декларациями воротами check_package_metadata.py.
+[metadata]
+act = "la-gauss-theorema-fermatianum"
+title = "Малая теорема Ферма: Disquisitiones arithmeticae Гаусса, артикулы 45—50 «De residuis potestatum»"
+primarySource = "DISQUISITIONES"
+
+# Выводимые. Совпадение с sources.law держат ворота, а не эти строки.
+jurisdiction = "none"
+instrument = "treatise"
+sourceFidelity = "pinned_unofficial_copy"
+
+# Невыводимые — не сверяет никто, поэтому у каждого записана причина.
+#
+# issuer: у трактата нет издателя в том смысле, в каком он есть у закона.
+# Автор здесь, в отличие от «Начал», известен поимённо и назван на титуле
+# издания, поэтому лицо, а не традиция: текст 1801 года написан одним
+# человеком, и вопрос об авторстве текстологическим не является.
+issuer = "Carolus Fridericus Gauss"
+# legalStatus: doctrine — сочинение никем не введено в действие и не
+# отменено; оно нормативно так, как нормативна математика: силой вывода.
+legalStatus = "doctrine"
+# verifiedAgainstSource: сверка выполнена fetch-скриптом с МАШИННЫМ текстовым
+# слоем того же скана (djvu на Викискладе) — восемнадцать опорных фраз по
+# шести артикулам, 31.08.2026. Это сверка вычитки с распознаванием, а не двух
+# изданий: независимых наборов того же издания не нашлось, и каждый отказ
+# назван в шапке sources.law. Статуса материализации она не поднимает
+# (unofficial навсегда).
+verifiedAgainstSource = true
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "la.gauss.theorema_fermatianum#authored"
+regression = false
+suites = ["tests/01-probatio-7-basis-2.lawtest", "tests/02-primus-7-praesumitur.lawtest", "tests/03-pseudoprimus-341-basis-2.lawtest", "tests/04-probatio-341-basis-3-cadit.lawtest", "tests/05-primus-341-divisore-victus.lawtest", "tests/06-carmichael-561-basis-2.lawtest", "tests/07-carmichael-561-basis-7.lawtest", "tests/08-primus-561-divisore-victus.lawtest", "tests/09-divisor-non-metiens-nihil-agit.lawtest", "tests/10-vestigium-falsum-in-gradu.lawtest", "tests/11-vestigium-falsum-in-duplicatione.lawtest", "tests/12-vestigium-ruptum.lawtest", "tests/13-compendium-3-ad-1000-mod-13.lawtest", "tests/14-probatio-per-ordinem.lawtest", "tests/15-ordo-anticipatus.lawtest"]
+world = ["la.gauss.theorema_fermatianum"]
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "fermat"
+suites = ["tests/fermat.lawtest"]
+world = ["la.gauss.theorema_fermatianum"]

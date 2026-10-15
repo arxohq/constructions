@@ -1,0 +1,71 @@
+// КПД и предел Карно как БЕЗРАЗМЕРНЫЕ числа.
+//
+// ОБА ВЫХОДЯТ ЧИСЛАМИ, И ПОТОМУ СРАВНИМЫ. КПД есть отношение двух энергий,
+// предел Карно — единица минус отношение двух температур; деление величин
+// тождественной единицы даёт безразмерное (E-0068). Сравнить КПД с
+// температурой было бы нельзя, и это здесь не ограничение, а защита.
+//
+// ЕДИНИЦА В ПРЕДЕЛЕ КАРНО ЗАПИСАНА ДРОБЬЮ 1/1: `scalar_of` возвращает
+// `Rational`, а таблица §58 не смешивает виды чисел — `Integer − Rational`
+// не назван.
+
+language "law.core" version "0.2";
+package calc.mechanics version "0.1.0";
+namespace "urn:law:calc:mechanics";
+
+use self::{
+    Calculation,
+};
+
+pub relation given_work_and_heat(c: Calculation, w: Quantity, q: Quantity) kind empirical {
+    label en official "the work performed and the heat absorbed, both as energies";
+    label ru unofficial "совершённая работа и поглощённая теплота — обе как энергии";
+}
+
+pub relation given_reservoir_temperatures(c: Calculation, cold: Quantity, hot: Quantity) kind empirical {
+    label en official "the temperatures of the cold and the hot reservoir";
+    label ru unofficial "температуры холодного и горячего резервуаров";
+}
+
+pub relation efficiency(c: Calculation, value: Rational) kind institutional {
+    label en official "the efficiency — work divided by absorbed heat; dimensionless";
+    label ru unofficial "КПД — работа, делённая на поглощённую теплоту; безразмерен";
+}
+
+rule Efficiency(c: Calculation, w: Quantity, q: Quantity) strict {
+    label en official "efficiency is the ratio of work to absorbed heat — the units cancel";
+    label ru unofficial "КПД есть отношение работы к поглощённой теплоте — единицы сокращаются";
+    when given_work_and_heat(c, w, q);
+    then efficiency(c, scalar_of(magnitude(w) / magnitude(q)));
+}
+
+pub relation carnot_limit(c: Calculation, value: Rational) kind institutional {
+    label en official "the Carnot limit 1 − T_c/T_h — the greatest efficiency possible between these reservoirs";
+    label ru unofficial "предел Карно 1 − T_c/T_h — наибольший возможный КПД между этими резервуарами";
+}
+
+rule CarnotLimit(c: Calculation, cold: Quantity, hot: Quantity) strict {
+    label en official "the Carnot limit is one minus the ratio of the cold to the hot reservoir temperature";
+    label ru unofficial "предел Карно есть единица минус отношение температуры холодного резервуара к горячему";
+    when given_reservoir_temperatures(c, cold, hot);
+    then carnot_limit(c, (1 / 1) - scalar_of(magnitude(cold) / magnitude(hot)));
+}
+
+pub relation efficiency_exceeds_carnot_limit(c: Calculation) kind institutional {
+    label en official "the given efficiency exceeds the Carnot limit — no such engine is possible";
+    label ru unofficial "данный КПД превосходит предел Карно — такая машина невозможна";
+}
+
+rule EfficiencyAboveLimit(c: Calculation, e: Rational, l: Rational) strict {
+    label en official "an efficiency greater than the Carnot limit is impossible";
+    label ru unofficial "КПД, больший предела Карно, невозможен";
+    when efficiency(c, e) and carnot_limit(c, l) and e > l;
+    then efficiency_exceeds_carnot_limit(c);
+}
+
+rule EfficiencyWithinLimit(c: Calculation, e: Rational, l: Rational) strict {
+    label en official "an efficiency not exceeding the Carnot limit does not exceed it";
+    label ru unofficial "КПД, не превосходящий предела Карно, его не превосходит";
+    when efficiency(c, e) and carnot_limit(c, l) and e <= l;
+    then not efficiency_exceeds_carnot_limit(c);
+}

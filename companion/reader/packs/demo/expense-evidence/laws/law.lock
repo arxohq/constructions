@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:386c7e60128d0a082d5af1eafe6de5ef50c36c639f21ca14ebefdbf144db5072",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:3f574fb9c50a17070fefcfa5997a8186ce237c84bf7c02ac071df2fdb0a70a2f",
+    "name": "demo.expense_evidence",
+    "namespace": "urn:demo:expense-evidence",
+    "sourceHash": "sha256:585b27cc8f2da6e7835c8b502a2de813b1b49eb12cc18c10f4c28f86ab9590c3",
+    "version": "0.1.0"
+  }
+}

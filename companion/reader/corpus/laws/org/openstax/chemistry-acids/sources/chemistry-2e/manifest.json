@@ -1,0 +1,49 @@
+{
+  "base": "https://openstax.org/books/chemistry-2e/pages/",
+  "book": "OpenStax Chemistry 2e",
+  "license": "CC BY-NC-SA 4.0",
+  "sections": {
+    "14.1": {
+      "sha256": "d41d6222438a4e748ec7b5aab7b5f155c1d49dda526e1de8f0de99bdae385b40",
+      "slug": "14-1-bronsted-lowry-acids-and-bases",
+      "title": "Brønsted-Lowry Acids and Bases",
+      "uuid": "2417915b-962d-4273-8f79-a8744124a6a5"
+    },
+    "14.2": {
+      "sha256": "5ceb2be6f27fac35673acf9c3a5f561d23ef4e8cc53f01c58dd2ab8e622b5e75",
+      "slug": "14-2-ph-and-poh",
+      "title": "pH and pOH",
+      "uuid": "9b866cac-4fb8-4db9-a92c-2cb4cabeefd0"
+    },
+    "14.3": {
+      "sha256": "49002aa595f3a19db6a5a9c85d23a3f7ea2923ef4c28e63d4152f6605a223bfc",
+      "slug": "14-3-relative-strengths-of-acids-and-bases",
+      "title": "Relative Strengths of Acids and Bases",
+      "uuid": "5405aa2f-8793-467b-ae1d-1795f1142207"
+    },
+    "14.4": {
+      "sha256": "cbcecb4cf2ce666027829cdde59956a11a9e08ab1a14e1f981cdba57bb0b69c8",
+      "slug": "14-4-hydrolysis-of-salts",
+      "title": "Hydrolysis of Salts",
+      "uuid": "df527820-3877-419d-97a3-62386ce24df9"
+    },
+    "14.5": {
+      "sha256": "a7d2ff10ddfecb876febc90c08181768459e83db1c4cbb5c8ed39bb7044ff653",
+      "slug": "14-5-polyprotic-acids",
+      "title": "Polyprotic Acids",
+      "uuid": "6ef9fbf2-7ff5-430d-9847-cbcc21045286"
+    },
+    "14.6": {
+      "sha256": "696f29680a6d00188d1b97aa3bd08f5757904633d3756814f538c19bd9052508",
+      "slug": "14-6-buffers",
+      "title": "Buffers",
+      "uuid": "2e4b2717-6fb3-4f91-a019-0a99b8b01921"
+    },
+    "15.2": {
+      "sha256": "a94035995d316a6a8ff47650e3d71203bb41e4675983d84bdabc7197f20aebf4",
+      "slug": "15-2-lewis-acids-and-bases",
+      "title": "Lewis Acids and Bases",
+      "uuid": "7ef9f54c-741b-4311-bbde-d1024521b771"
+    }
+  }
+}

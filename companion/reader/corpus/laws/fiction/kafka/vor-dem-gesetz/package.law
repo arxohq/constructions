@@ -1,0 +1,139 @@
+// Словарь пакета: два типа и то, что читают несколько модулей — участники
+// притчи, врата и просьба о входе, с которой всё начинается.
+// Правило раскладки PACKAGE-LAYOUT: здесь только нужное ≥2 модулям.
+//
+// ЧТО ЭТОТ ПАКЕТ ОБЯЗАН ВЫЧИСЛИТЬ, А НЕ ОБЪЯВИТЬ. Вопрос притчи один: был ли
+// вход достижим хоть при каком-нибудь ходе просителя. Соблазн записать ответ
+// прямо — аксиомой «вход невозможен» — велик и ложен вдвойне. Во-первых, он
+// противоречил бы закреплённому тексту дословно: привратник на прямой вопрос
+// «войду ли я позже» отвечает «Es ist möglich» — возможно. Во-вторых, он
+// подменил бы вывод разметкой: машина повторила бы то, что автор пакета в неё
+// вписал, и о самой притче не сказала бы ничего.
+//
+// Поэтому здесь нет ни одной нормы о невозможности входа. Есть ровно то, что
+// текст утверждает: врата открыты; запрет объявлен; впустить или не впустить
+// решает привратник; дары приняты без притязания; вход был предназначен
+// одному. Ответ о достижимости считает движок — процессным слоем О-5 по
+// автомату §160 и каналом суждения §47.3 по вопросу о разрешении.
+//
+// ДВА ПУТИ ЗА ВРАТА, И ОНИ РАЗНОЙ ПРИРОДЫ — это и есть главный результат
+// пакета, полученный вычислением, а не записью:
+//
+//   * `EingelassenWerden` — быть впущенным. Гард читает суждение привратника,
+//     и потому вопрос «может ли он войти» честно отдаёт `REQUIRES_JUDGMENT`:
+//     машина говорит «это решает привратник», что и есть точный ответ притчи;
+//   * `SofortHineingehen` / `SpaeterHineingehen` — войти вопреки запрету.
+//     Гард читает ПРОСТОЙ ФАКТ, потому что препятствие названо нормативным, а
+//     не физическим: «Da das Tor zum Gesetz offen steht wie immer und der
+//     Türhüter beiseite tritt», и сам привратник предлагает попробовать.
+//
+// Проситель выбрал первый путь («entschließt er sich doch lieber zu warten,
+// bis er die Erlaubnis zum Eintritt bekommt») и не ступил на второй ни разу.
+// Автомат этого не знает заранее и обнаруживает сам.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    TO_TOR_OFFEN,
+    TO_TUERHUETER_STEHT,
+    VDG_ANKUNFT,
+};
+
+// --- Типы ---------------------------------------------------------------------
+//
+// Тип один на обоих участников — приём «участника» из ru.afanasyev.koschei и
+// de.grimm.geisslein. Притча не различает их грамматически: «ein Mann vom
+// Lande» и «ein Türhüter» суть лица, и кто из них кто, говорит ФАКТ, а не тип.
+// Различие несут нормы: один просит, другой решает.
+
+entity Person {
+    label de official "Beteiligter: der Mann vom Lande, der Türhüter";
+    label ru official "участник: проситель из деревни, привратник";
+}
+
+entity Eingang {
+    label de official "Eingang zum Gesetz: das Tor, vor dem der Mann sitzt";
+    label ru official "вход в Закон: врата, перед которыми сидит проситель";
+}
+
+// --- Роли: факты притчи, а не иерархия типов -----------------------------------
+
+relation mann_vom_lande(p: Person) kind empirical {
+    label de official "der Mann vom Lande: der um Eintritt bittet";
+    label ru official "проситель из деревни: тот, кто просит о входе";
+}
+
+relation tuerhueter(p: Person) kind empirical {
+    label de official "der Türhüter: der über den Einlaß entscheidet";
+    label ru official "привратник: тот, кто решает о впуске";
+}
+
+relation eingang_zum_gesetz(e: Eingang) kind empirical {
+    label de official "dies ist der Eingang zum Gesetz";
+    label ru official "это и есть вход в Закон";
+}
+
+// --- Просьба, с которой всё начинается -----------------------------------------
+//
+// ЧИТАЮТ ОБА КОНЦА: канал суждения §47.3 берёт её посылкой (решать не о чем,
+// пока никто не просил), процессный слой — начальным положением дела.
+
+relation eintritt_erbeten(p: Person) kind empirical {
+    label de official "er hat um Eintritt in das Gesetz gebeten";
+    label ru official "он просил о входе в Закон";
+}
+
+// --- Участники и врата ---------------------------------------------------------
+//
+// Инициализатор выписан явно и совпадает с именем объявления — голое имя без
+// инициализатора даёт `const_ref`, который не сворачивается с `entity_ref` дела,
+// и запрос молча не находит подстановку.
+//
+// ИМЁН У НИХ НЕТ, И ЭТО СВОЙСТВО ТЕКСТА. Кафка не называет ни просителя, ни
+// привратника: есть «ein Mann vom Lande» и «ein Türhüter», то есть роль вместо
+// имени. Константы носят те же роли.
+
+const Mann: Person = entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann") {
+    label de official "der Mann vom Lande";
+    label ru official "проситель из деревни";
+}
+
+const DerTuerhueter: Person = entity_ref("urn:de:kafka:clir:vor-dem-gesetz#DerTuerhueter") {
+    label de official "der unterste Türhüter vor dem Gesetz";
+    label ru official "нижний привратник перед Законом";
+}
+
+const Tor: Eingang = entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Tor") {
+    label de official "das Tor zum Gesetz, das offen steht wie immer";
+    label ru official "врата Закона, что стоят открытыми, как всегда";
+}
+
+// УЧРЕДИТЕЛЬНОЕ — НА ПОРЯДОК, ЛИЧНОЕ — НА СВИДЕТЕЛЯ, и разрез этот не
+// косметический. Что привратник стоит перед Законом и что врата — это врата
+// Закона, сказано настоящим временем и о самих вратах: «Vor dem Gesetz steht
+// ein Türhüter», «das Tor zum Gesetz … wie immer». Такие факты суть свойства
+// ПОРЯДКА, и якорь у них — фрагменты `TO_*`. Что пришёл именно этот человек и
+// что он попросил — свидетельство о ЛИЦЕ, и якорь у него на притче.
+//
+// РАЗРЕЗ ИМЕЕТ ИЗМЕРИМОЕ ПОСЛЕДСТВИЕ, ради которого он и проведён.
+// `process-run` проецирует ВСЕГДА, а редакция без единого события lifecycle
+// не применима ни на одной дате (`applicability.edition_state` начинает с
+// `not_yet`); редакции же у притчи-свидетеля события быть не может — рассказ
+// не вступает в силу. Значит всё, повешенное на притчу, из процессного
+// прогона исчезает — и, в отличие от правил, БЕЗ ЕДИНОГО СЛОВА в отчёте:
+// находка `NORMS_NOT_IN_PROJECTION` считает правила, а не факты. Личные
+// факты процессный прогон получает делом журнала, как им и положено.
+
+@source(TO_TUERHUETER_STEHT)
+assert tuerhueter(DerTuerhueter) { evidence VDG_1915_TEXT; }
+
+@source(TO_TOR_OFFEN)
+assert eingang_zum_gesetz(Tor) { evidence VDG_1915_TEXT; }
+
+@source(VDG_ANKUNFT)
+assert mann_vom_lande(Mann) { evidence VDG_1915_TEXT; }
+
+@source(VDG_ANKUNFT)
+assert eintritt_erbeten(Mann) { evidence VDG_1915_TEXT; }

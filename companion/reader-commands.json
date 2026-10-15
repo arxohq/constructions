@@ -1,0 +1,252 @@
+[
+  {
+    "chapter": "prologue",
+    "block": 1,
+    "shell": "node --version\nnpm --version\nnpm install -g @arxo/cli@0.2.4\nlaw version --json"
+  },
+  {
+    "chapter": "prologue",
+    "block": 2,
+    "shell": "npx --yes --package @arxo/cli@0.2.4 law version --json"
+  },
+  {
+    "chapter": "chapter-01",
+    "block": 1,
+    "shell": "law test corpus/laws/org/openstax/chemistry-acids"
+  },
+  {
+    "chapter": "chapter-01",
+    "block": 2,
+    "shell": "law engine test \\\n  corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json"
+  },
+  {
+    "chapter": "chapter-02",
+    "block": 1,
+    "shell": "law engine test \\\n  corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json"
+  },
+  {
+    "chapter": "chapter-02",
+    "block": 2,
+    "shell": "chapter2_explain=$(mktemp -d)\npython3 reader_tools/prepare_question.py water.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json --out \"$chapter2_explain\"\nlaw engine explain \"$chapter2_explain\""
+  },
+  {
+    "chapter": "chapter-03",
+    "block": 1,
+    "shell": "law engine test \\\n  corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json"
+  },
+  {
+    "chapter": "chapter-03",
+    "block": 2,
+    "shell": "chapter3_explain=$(mktemp -d)\npython3 reader_tools/prepare_question.py water-both.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json --out \"$chapter3_explain\"\nlaw engine explain \"$chapter3_explain\""
+  },
+  {
+    "chapter": "chapter-04",
+    "block": 1,
+    "shell": "law engine test \\\n  corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json"
+  },
+  {
+    "chapter": "chapter-04",
+    "block": 2,
+    "shell": "chapter4_why_not=$(mktemp -d)\npython3 reader_tools/prepare_question.py water-why.lawtest \\\n  --program corpus/clir/openstax-chemistry-acids.lawir.json --imports \\\n  contexts/openstax-chemistry-acids.json --out \"$chapter4_why_not\"\nlaw engine why-not \"$chapter4_why_not\""
+  },
+  {
+    "chapter": "chapter-05",
+    "block": 1,
+    "shell": "law engine test \\\n  corpus/laws/doctrine/math/euclid-pythagoras/tests/10-trigonon-estin-111.lawtest \\\n  --program corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json"
+  },
+  {
+    "chapter": "chapter-05",
+    "block": 2,
+    "shell": "chapter5_explain=$(mktemp -d)\npython3 reader_tools/prepare_question.py corpus/laws/doctrine/math/euclid-pythagoras/tests/01-aigyptiako-345.lawtest \\\n  --program corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json --out \"$chapter5_explain\"\nlaw engine explain \"$chapter5_explain\""
+  },
+  {
+    "chapter": "chapter-05",
+    "block": 3,
+    "shell": "law engine test corpus/laws/doctrine/math/euclid-pythagoras/tests/pythagoras.lawtest \\\n  --program corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json"
+  },
+  {
+    "chapter": "chapter-05",
+    "block": 4,
+    "shell": "chapter5_why_not=$(mktemp -d)\npython3 reader_tools/prepare_question.py corpus/laws/doctrine/math/euclid-pythagoras/tests/05-pyle-033.lawtest \\\n  --program corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json --out \"$chapter5_why_not\"\nlaw engine why-not \"$chapter5_why_not\""
+  },
+  {
+    "chapter": "chapter-06",
+    "block": 1,
+    "shell": "chapter6_graph=$(mktemp -d)\npython3 reader_tools/prepare_question.py corpus/laws/doctrine/math/euclid-pythagoras/tests/01-aigyptiako-345.lawtest \\\n  --program corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json --out \"$chapter6_graph\"\nlaw engine graph \"$chapter6_graph\" --json"
+  },
+  {
+    "chapter": "chapter-06",
+    "block": 2,
+    "shell": "chapter6_work=$(mktemp -d)\ncp -R corpus/laws/doctrine/math/euclid-pythagoras \"$chapter6_work/euclid-pythagoras\"\ncp corpus/laws/doctrine/math/euclid-pythagoras/tests/12-amblygonion-234.lawtest \\\n  \"$chapter6_work/case234.lawtest\""
+  },
+  {
+    "chapter": "chapter-06",
+    "block": 3,
+    "shell": "law engine test \"$chapter6_work/case234.lawtest\" --program \\\n  corpus/clir/grc-euclid-pythagoras.lawir.json --imports \\\n  contexts/grc-euclid-pythagoras.json"
+  },
+  {
+    "chapter": "chapter-06",
+    "block": 4,
+    "shell": "mkdir -p \"$chapter6_work/clir\"\ncp clir/grc-euclid-stoicheia-i.lawir.json \"$chapter6_work/clir/\"\nlaw engine lower \"$chapter6_work/euclid-pythagoras\" \\\n  --imports contexts/grc-euclid-pythagoras.json \\\n  > \"$chapter6_work/clir/grc-euclid-pythagoras.lawir.json\"\nlaw engine lock \"$chapter6_work/euclid-pythagoras\" --clir \"$chapter6_work/clir\" \\\n  --write\nlaw pack --project \"$chapter6_work/euclid-pythagoras\" \\\n  --out \"$chapter6_work/modified-release\" --json\ncp \"$chapter6_work/modified-release/world.lawir.json\" \\\n  \"$chapter6_work/modified.lawir.json\"\nlaw engine test \"$chapter6_work/case234.lawtest\" --program \\\n  \"$chapter6_work/modified.lawir.json\" --imports contexts/grc-euclid-pythagoras.json"
+  },
+  {
+    "chapter": "chapter-06",
+    "block": 5,
+    "shell": "chapter6_graph=$(mktemp -d)\npython3 reader_tools/prepare_question.py \"$chapter6_work/case234.lawtest\" \\\n  --program \"$chapter6_work/modified.lawir.json\" --imports \\\n  contexts/grc-euclid-pythagoras.json --out \"$chapter6_graph\"\nlaw engine graph \"$chapter6_graph\" --json"
+  },
+  {
+    "chapter": "chapter-07",
+    "block": 1,
+    "shell": "chapter7_explain=$(mktemp -d)\npython3 reader_tools/prepare_question.py corpus/laws/doctrine/math/hilbert-grundlagen/tests/01-gerade-meidet-punkt.lawtest \\\n  --program corpus/clir/de-hilbert-grundlagen.lawir.json --imports \\\n  contexts/de-hilbert-grundlagen.json --out \"$chapter7_explain\"\nlaw engine explain \"$chapter7_explain\""
+  },
+  {
+    "chapter": "chapter-07",
+    "block": 2,
+    "shell": "law engine test \\\n  corpus/laws/doctrine/math/hilbert-grundlagen/tests/01-gerade-meidet-punkt.lawtest \\\n  --program corpus/clir/de-hilbert-grundlagen.lawir.json --imports \\\n  contexts/de-hilbert-grundlagen.json"
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 1,
+    "shell": "law engine test \\\n  corpus/laws/doctrine/myco/opredelitel/tests/02-book-presumption-stands.lawtest \\\n  --program corpus/clir/myco-opredelitel.lawir.json --imports \\\n  contexts/myco-opredelitel.json"
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 2,
+    "shell": "law engine test \\\n  corpus/laws/doctrine/myco/opredelitel/tests/03-book-verdict-lifts-bar.lawtest \\\n  --program corpus/clir/myco-opredelitel.lawir.json --imports \\\n  contexts/myco-opredelitel.json"
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 3,
+    "shell": "chapter8_why_not=$(mktemp -d)\npython3 reader_tools/prepare_question.py bar.lawtest \\\n  --program corpus/clir/myco-opredelitel.lawir.json --imports \\\n  contexts/myco-opredelitel.json --out \"$chapter8_why_not\"\nlaw engine why-not \"$chapter8_why_not\""
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 4,
+    "shell": "law engine test \\\n  corpus/laws/org/scrum/guide/tests/08-book-hidden-work-prevails-by-priority.lawtest \\\n  --program corpus/clir/scrum-guide.lawir.json --imports contexts/scrum-guide.json"
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 5,
+    "shell": "chapter8_why_not=$(mktemp -d)\npython3 reader_tools/prepare_question.py corpus/laws/org/scrum/guide/tests/08-book-hidden-work-prevails-by-priority.lawtest \\\n  --program corpus/clir/scrum-guide.lawir.json --imports contexts/scrum-guide.json \\\n  --out \"$chapter8_why_not\"\nlaw engine why-not \"$chapter8_why_not\""
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 6,
+    "shell": "chapter8_work=$(mktemp -d)\ncp -R corpus/laws/org/scrum/guide \"$chapter8_work/guide\""
+  },
+  {
+    "chapter": "chapter-08",
+    "block": 7,
+    "shell": "law engine lower \"$chapter8_work/guide\" > \"$chapter8_work/without-priority.lawir.json\"\nlaw engine test \\\n  corpus/laws/org/scrum/guide/tests/08-book-hidden-work-prevails-by-priority.lawtest \\\n  --program \"$chapter8_work/without-priority.lawir.json\" --imports \\\n  contexts/scrum-guide.json"
+  },
+  {
+    "chapter": "chapter-09",
+    "block": 1,
+    "shell": "law engine test corpus/laws/fiction/kafka/vor-dem-gesetz/tests/vor-dem-gesetz.lawtest \\\n  --program corpus/clir/de-vor-dem-gesetz.lawir.json --imports \\\n  contexts/de-vor-dem-gesetz.json"
+  },
+  {
+    "chapter": "chapter-09",
+    "block": 2,
+    "shell": "law engine explain \\\n  corpus/laws/fiction/kafka/vor-dem-gesetz/tests/01-entry-requires-the-doorkeepers-judgment.lawtest \\\n  \\\n  --program corpus/clir/de-vor-dem-gesetz.lawir.json"
+  },
+  {
+    "chapter": "chapter-10",
+    "block": 1,
+    "shell": "law engine test corpus/laws/org/ietf/bcp14/tests/01-must-breached-is-violated.lawtest \\\n  --program corpus/clir/ietf-bcp14.lawir.json --imports contexts/ietf-bcp14.json"
+  },
+  {
+    "chapter": "chapter-11",
+    "block": 1,
+    "shell": "python3 packs/demo/expense-evidence/run_demo.py"
+  },
+  {
+    "chapter": "chapter-11",
+    "block": 2,
+    "shell": "law engine test packs/demo/expense-evidence/tests/reimbursement.lawtest --program \\\n  packs/demo/expense-evidence/clir/expense-evidence.lawir.json --imports \\\n  contexts/expense-evidence.json"
+  },
+  {
+    "chapter": "chapter-12",
+    "block": 1,
+    "shell": "python3 - <<'PYTHON'\nfrom hashlib import sha256\nfrom pathlib import Path\nsource = Path(\"corpus/laws/org/ietf/bcp14/sources/rfc2119/en.txt\")\nprint(sha256(source.read_bytes()).hexdigest())\nPYTHON"
+  },
+  {
+    "chapter": "chapter-12",
+    "block": 2,
+    "shell": "python3 corpus/tools/sources/sync/sync_bcp14_fragments.py --check"
+  },
+  {
+    "chapter": "chapter-12",
+    "block": 3,
+    "shell": "law engine test \\\n  corpus/laws/org/ietf/bcp14/tests/03-lowercase-keyword-carries-no-force.lawtest \\\n  --program corpus/clir/ietf-bcp14.lawir.json --imports contexts/ietf-bcp14.json"
+  },
+  {
+    "chapter": "chapter-13",
+    "block": 1,
+    "shell": "mkdir si-study\ncp -R corpus/laws/org/bipm/si-brochure/. si-study"
+  },
+  {
+    "chapter": "chapter-13",
+    "block": 2,
+    "shell": "law test si-study --file tests/01-kilogram-redefinition.lawtest"
+  },
+  {
+    "chapter": "chapter-14",
+    "block": 1,
+    "shell": "mkdir acid-study\ncp -R corpus/laws/doctrine/chem/acid-base/. acid-study"
+  },
+  {
+    "chapter": "chapter-14",
+    "block": 2,
+    "shell": "law test acid-study"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 1,
+    "shell": "mkdir mechanics-study\ncp -R packs/primitives/natural-sciences/mechanics/. mechanics-study"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 2,
+    "shell": "law install --project mechanics-study --offline"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 3,
+    "shell": "law test mechanics-study"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 4,
+    "shell": "cp -R mechanics-study mechanics-bad-pin"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 5,
+    "shell": "law install --project mechanics-bad-pin --offline"
+  },
+  {
+    "chapter": "chapter-16",
+    "block": 6,
+    "shell": "cp mechanics-study/law.lock mechanics-bad-pin/law.lock\nlaw install --project mechanics-bad-pin --offline\nlaw test mechanics-bad-pin"
+  },
+  {
+    "chapter": "chapter-18",
+    "block": 1,
+    "shell": "mkdir water-study\ncp -R docs/books/postroeniya-alt/examples/voda/. water-study\nlaw install --project water-study --offline"
+  },
+  {
+    "chapter": "chapter-18",
+    "block": 2,
+    "shell": "law ask water-study --case Voda \\\n  --query 'evaluate truth(\n    openstax.chemistry_acids::amphiprotic(\n      entity_ref(\"urn:case:kniga:h2o\")\n    )\n  );' \\\n  --query-id amphi --out water-answer"
+  },
+  {
+    "chapter": "chapter-18",
+    "block": 3,
+    "shell": "cp -R water-study water-recipient\nlaw install --project water-recipient --offline\nlaw ask water-recipient --case Voda \\\n  --query 'evaluate truth(\n    openstax.chemistry_acids::amphiprotic(\n      entity_ref(\"urn:case:kniga:h2o\")\n    )\n  );' \\\n  --query-id amphi --out recipient-answer\ncmp water-answer/result.json \\\n  recipient-answer/result.json"
+  },
+  {
+    "chapter": "chapter-18",
+    "block": 4,
+    "shell": "law eval water-answer\nlaw inspect water-answer/result.json summary"
+  }
+]

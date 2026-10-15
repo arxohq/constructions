@@ -1,0 +1,359 @@
+// Source-модель: закреплённые байты семи разделов OpenStax Chemistry 2e
+// (14.1–14.6 и 15.2) и фрагменты, на которых стоят прочтения кислоты §152.
+//
+// ФАЙЛ ПОРОЖДАЕТСЯ. Правится только генератором —
+// `corpus/tools/sources/sync/sync_openstax_acid_base_fragments.py`; сверка без
+// записи — его же ключом `--check`. Тексты вырезаются из
+// `sources/chemistry-2e/*.txt`, поэтому разойтись с публикацией они не могут.
+//
+// ЛИЦЕНЗИЯ ОГРАНИЧИТЕЛЬНАЯ, И ЭТО НАЗВАНО ЗДЕСЬ. Chemistry 2e — CC BY-NC-SA
+// 4.0: некоммерческое использование и share-alike, не CC BY. Замер 06.09.2026
+// (`docs/sciences/README.ru.md` п. 4); решение закрепить такие байты с явной
+// пометкой принял владелец 06.09.2026. Та же строка стоит в `[metadata]`
+// манифеста и в шапке фетчера.
+//
+// ПРОВЕНАНС. Байты получены воспроизводимым извлечением из HTML страниц
+// разделов на `openstax.org/books/chemistry-2e/pages/` — сервер отдаёт текст
+// раздела в контейнере `<div data-type="page" … data-book-content="true">` с
+// устойчивым `id="page_<uuid>"`. Алгоритм извлечения целиком записан в шапке
+// `corpus/tools/sources/fetch/fetch_openstax_acid_base_text.py`; два прогона на
+// одних входных байтах дают идентичный результат (`--check`). Хэш ВСЕЙ
+// страницы в закрепление не идёт: живой сайт пересобирается, и хэш страницы
+// нестабилен по построению — пиннится хэш извлечённого текста раздела.
+//
+// ЧТО ОСТАЁТСЯ АРТЕФАКТОМ ИЗВЛЕЧЕНИЯ. Формулы приходят разметкой MathML, а не
+// символами: индексы и надстрочные знаки различить нечем, и `NH4+` в тексте
+// неотличим от `NH₄⁺`. §13 запрещает править содержимое официальных text
+// blocks, поэтому байты закрепляются как есть.
+//
+// УЧЕБНИК — ВТОРИЧНЫЙ ИСТОЧНИК, И ЭТО НЕСУЩЕЕ. Он ИЗЛАГАЕТ определения
+// Аррениуса, Брёнстеда—Лоури и Льюиса; байтами их публикаций 1884/1887 и 1923
+// годов он не является. Три первоисточника объявлены ниже отдельными `source`
+// с `materialization_status UNAVAILABLE` у редакций: 06.09.2026 их байты из
+// окружения сборки недостижимы (archive.org не отвечает вовсе, HathiTrust
+// отдаёт 403, De Gruyter — бот-заслон 202, Wiley платный). Прочтения §152
+// пакета `chem/acid-base` поэтому стоят на фрагментах УЧЕБНИКА, и цепочка
+// объяснения говорит это прямо, а не выдаёт изложение за цитату.
+//
+// `materialization_status` учебника — PINNED_UNOFFICIAL_COPY: закреплено
+// извлечение из HTML, а не байты официального PDF-издания.
+// `retrieved_at` — константа, а не момент сборки (DECISION-0005 п. 6).
+
+language "law.core" version "0.2";
+package openstax.chemistry_acids version "0.1.0";
+namespace "urn:openstax:clir:chemistry-acids";
+
+source OPENSTAX_CHEMISTRY_2E {
+    // `treatise` — учебник, не акт и не резолюция. Юрисдикция `none`: у
+    // естественнонаучного изложения правопорядка нет (та же форма, что у
+    // `chem.rules`).
+    kind treatise;
+    jurisdiction "none";
+    number "OpenStax Chemistry 2e (2019), chapters 14 and 15";
+    label en official "Chemistry 2e";
+}
+
+edition OS_CHEM2E_EN of OPENSTAX_CHEMISTRY_2E {
+    label en official "OpenStax Chemistry 2e, English edition (CC BY-NC-SA 4.0)";
+    language en;
+    officiality official;
+    adopted @2019-02-14;
+    in_force [@2019-02-14, infinity);
+    materialization_status PINNED_UNOFFICIAL_COPY;
+}
+
+// --- Первоисточники: объявлены, байты недостижимы ------------------------
+//
+// Каждый объявлен своим `source`, потому что это РАЗНЫЕ публикации разных
+// авторов, а не редакции одного документа. У редакций `materialization_status
+// UNAVAILABLE` и ни одного фрагмента: фрагмент без байтов был бы пересказом
+// под видом цитаты. Когда байты станут достижимы, каждый первоисточник
+// получает свой пакет по правилу 1 каталога наук («пакет — один закреплённый
+// документ»), а прочтения переезжают на его фрагменты — межпакетная ссылка
+// §152 для этого уже выразима (DECISION-0152).
+
+source ARRHENIUS_1887 {
+    kind treatise;
+    jurisdiction "none";
+    number "Z. phys. Chem. 1 (1887) 631";
+    label de official "Über die Dissociation der in Wasser gelösten Stoffe";
+}
+
+edition ARRHENIUS_1887_DE of ARRHENIUS_1887 {
+    label de official "Оригинальная немецкая публикация 1887 года";
+    language de;
+    officiality official;
+    adopted @1887-01-01;
+    materialization_status UNAVAILABLE;
+}
+
+source BRONSTED_LOWRY_1923 {
+    kind treatise;
+    jurisdiction "none";
+    number "Recl. Trav. Chim. Pays-Bas 42 (1923) 718; Chem. Ind. 42 (1923) 43";
+    label de official "Einige Bemerkungen über den Begriff der Säuren und Basen";
+}
+
+edition BRONSTED_LOWRY_1923_DE of BRONSTED_LOWRY_1923 {
+    label de official "Оригинальная публикация Брёнстеда 1923 года";
+    language de;
+    officiality official;
+    adopted @1923-01-01;
+    materialization_status UNAVAILABLE;
+}
+
+source LEWIS_1923 {
+    kind treatise;
+    jurisdiction "none";
+    number "ACS Monograph 14 (1923)";
+    label en official "Valence and the Structure of Atoms and Molecules";
+}
+
+edition LEWIS_1923_EN of LEWIS_1923 {
+    label en official "Оригинальная монография Льюиса 1923 года";
+    language en;
+    officiality official;
+    adopted @1923-01-01;
+    materialization_status UNAVAILABLE;
+}
+
+// --- Публикация: семь разделов одним закрепляемым файлом --------------
+//
+// §194 сверяет фрагмент с байтами ОДНОЙ публикации редакции, поэтому
+// разделы склеены в один файл в порядке книги. Собственные адреса
+// разделов (slug страницы, uuid раздела, отдельный хэш) не теряются:
+// они лежат рядом в `sources/chemistry-2e/manifest.json`, а локатор
+// каждого фрагмента начинается с номера своего раздела.
+
+// Разделы и их uuid: 14.1 2417915b-962d-4273-8f79-a8744124a6a5, 14.2 9b866cac-4fb8-4db9-a92c-2cb4cabeefd0, 14.3 5405aa2f-8793-467b-ae1d-1795f1142207, 14.4 df527820-3877-419d-97a3-62386ce24df9, 14.5 6ef9fbf2-7ff5-430d-9847-cbcc21045286, 14.6 2e4b2717-6fb3-4f91-a019-0a99b8b01921, 15.2 7ef9f54c-741b-4311-bbde-d1024521b771
+publication OS_CHEM2E_TEXT of OS_CHEM2E_EN {
+    media_type "text/plain; charset=utf-8";
+    uri "https://openstax.org/books/chemistry-2e/pages/";
+    retrieved_at @2026-09-06T00:00:00Z;
+    content_hash "sha256:9cd690ddec85843d14d55896b354718158ebe80bb58ea4f9a9da9fc315ab6177";
+    local_path "sources/chemistry-2e/en.txt";
+}
+
+// --- Фрагменты -------------------------------------------------------
+//
+// Все `pub` (§24): на них стоят прочтения соседних пакетов через
+// `of openstax.chemistry_acids::…` и `@source(…)` (DECISION-0152).
+
+// 14.1: исторический абзац — определение Аррениуса (кислота даёт в воде катионы водорода, основание — гидроксид-анионы)
+pub fragment OS_14_1_ARRHENIUS in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/history";
+    text en official """The acid-base reaction class has been studied for quite some time. In 1680, Robert Boyle reported traits of acid solutions that included their ability to dissolve many substances, to change the colors of certain natural dyes, and to lose these traits after coming in contact with alkali (base) solutions. In the eighteenth century, it was recognized that acids have a sour taste, react with limestone to liberate a gaseous substance (now known to be CO2), and interact with alkalis to form neutral substances. In 1815, Humphry Davy contributed greatly to the development of the modern acid-base concept by demonstrating that hydrogen is the essential constituent of acids. Around that same time, Joseph Louis Gay-Lussac concluded that acids are substances that can neutralize bases and that these two classes of substances can be defined only in terms of each other. The significance of hydrogen was reemphasized in 1884 when Svante Arrhenius defined an acid as a compound that dissolves in water to yield hydrogen cations (now recognized to be hydronium ions) and a base as a compound that dissolves in water to yield hydroxide anions.""";
+    content_hash "sha256:6ca53208160e3936a629cdf1430f0d71eb53ec89761f87172495a9b7fc054d94";
+}
+
+// 14.1: определение Брёнстеда—Лоури — донор и акцептор протона
+pub fragment OS_14_1_BRONSTED in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/bronsted-lowry";
+    text en official """Johannes Brønsted and Thomas Lowry proposed a more general description in 1923 in which acids and bases were defined in terms of the transfer of hydrogen ions, H+. (Note that these hydrogen ions are often referred to simply as protons, since that subatomic particle is the only component of cations derived from the most abundant hydrogen isotope, 1H.) A compound that donates a proton to another compound is called a Brønsted-Lowry acid, and a compound that accepts a proton is called a Brønsted-Lowry base. An acid-base reaction is, thus, the transfer of a proton from a donor (acid) to an acceptor (base).""";
+    content_hash "sha256:922be55553d1d157da30cf5b66895457b48bcd0632df702a1f2605d9d487e23f";
+}
+
+// 14.1: сопряжённые пары; вода и аммиак как пример
+pub fragment OS_14_1_CONJUGATE in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/conjugate-pairs";
+    text en official """The concept of conjugate pairs is useful in describing Brønsted-Lowry acid-base reactions (and other reversible reactions, as well). When an acid donates H+, the species that remains is called the conjugate base of the acid because it reacts as a proton acceptor in the reverse reaction. Likewise, when a base accepts H+, it is converted to its conjugate acid. The reaction between water and ammonia illustrates this idea. In the forward direction, water acts as an acid by donating a proton to ammonia and subsequently becoming a hydroxide ion, OH−, the conjugate base of water. The ammonia acts as a base in accepting this proton, becoming an ammonium ion, NH4+, the conjugate acid of ammonia. In the reverse direction, a hydroxide ion acts as a base in accepting a proton from ammonium ion, which acts as an acid.""";
+    content_hash "sha256:844db56ee19a75002ad1721e93b34023bfea48902c37c1a5ad4ced16adec81a7";
+}
+
+// 14.1: кислотная и основная ионизация в воде
+pub fragment OS_14_1_IONIZATION in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/ionization";
+    text en official """The reaction between a Brønsted-Lowry acid and water is called acid ionization. For example, when hydrogen fluoride dissolves in water and ionizes, protons are transferred from hydrogen fluoride molecules to water molecules, yielding hydronium ions and fluoride ions:
+
+Base ionization of a species occurs when it accepts protons from water molecules. In the example below, pyridine molecules, C5NH5, undergo base ionization when dissolved in water, yielding hydroxide and pyridinium ions:""";
+    content_hash "sha256:0aeda026afc9f0ca2c67a40ea011aa3f8020ac6dd97c48088629b35114de9bb5";
+}
+
+// 14.1: амфипротность — вода и гидрокарбонат отдают И принимают протон
+pub fragment OS_14_1_AMPHIPROTIC in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/amphiprotic";
+    text en official """The preceding ionization reactions suggest that water may function as both a base (as in its reaction with hydrogen fluoride) and an acid (as in its reaction with ammonia). Species capable of either donating or accepting protons are called amphiprotic, or more generally, amphoteric, a term that may be used for acids and bases per definitions other than the Brønsted-Lowry one. The equations below show the two possible acid-base reactions for two amphiprotic species, bicarbonate ion and water:""";
+    content_hash "sha256:77004e767fcb3523e8584aa91ce9dbdaa81c0e6cb2d781bf7935a2b56da0f47a";
+}
+
+// 14.1: автоионизация воды и ионное произведение Kw
+pub fragment OS_14_1_AUTOIONIZATION in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.1/autoionization";
+    text en official """The process in which like molecules react to yield ions is called autoionization. Liquid water undergoes autoionization to a very slight extent; at 25 °C, approximately two out of every billion water molecules are ionized. The extent of the water autoionization process is reflected in the value of its equilibrium constant, the ion-product constant for water, Kw:
+
+H2O(l)+H2O(l)⇌H3O+(aq)+OH−(aq)Kw=[H3O+][OH−]
+
+The slight ionization of pure water is reflected in the small value of the equilibrium constant; at 25 °C, Kw has a value of 1.0 × 10−14. The process is endothermic, and so the extent of ionization and the resulting concentrations of hydronium ion and hydroxide ion increase with temperature. For example, at 100 °C, the value for Kw is about 5.6 × 10−13, roughly 50 times larger than the value at 25 °C.""";
+    content_hash "sha256:b8b24bbfa29d35b581ced9fc56d6f3a4d7f84075db162e99ad1dc3139bf23c83";
+}
+
+// 14.2: pKw = pH + pOH = 14,00 при 25 °C; у нейтрального раствора pH = 7,00
+pub fragment OS_14_2_PKW in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.2/pkw";
+    text en official """At 25 °C, the value of Kw is 1.0 × 10−14, and so:
+
+14.00=pH+pOH
+
+As was shown in Example 14.1, the hydronium ion molarity in pure water (or any neutral solution) is 1.0 × 10−7 M at 25 °C. The pH and pOH of a neutral solution at this temperature are therefore:
+
+pH=−log[H3O+]=−log(1.0×10−7)=7.00
+
+pOH=−log[OH−]=−log(1.0×10−7)=7.00""";
+    content_hash "sha256:e5929424fcec432caf58e472a4a478fe9423c64f83c41dc3f181c38d5187d418";
+}
+
+// 14.2: граница кислого и щелочного по pH = 7 стоит ТОЛЬКО при 25 °C — Kw зависит от температуры
+pub fragment OS_14_2_NEUTRAL_BOUNDARY in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.2/neutral-boundary";
+    text en official """And so, at this temperature, acidic solutions are those with hydronium ion molarities greater than 1.0 × 10−7 M and hydroxide ion molarities less than 1.0 × 10−7 M (corresponding to pH values less than 7.00 and pOH values greater than 7.00). Basic solutions are those with hydronium ion molarities less than 1.0 × 10−7 M and hydroxide ion molarities greater than 1.0 × 10−7 M (corresponding to pH values greater than 7.00 and pOH values less than 7.00).
+
+Since the autoionization constant Kw is temperature dependent, these correlations between pH values and the acidic/neutral/basic adjectives will be different at temperatures other than 25 °C. For example, the “Check Your Learning” exercise accompanying Example 14.1 showed the hydronium molarity of pure water at 80 °C is 4.9 × 10−7 M, which corresponds to pH and pOH values of:""";
+    content_hash "sha256:9b68a68435e7254cb743f5a489e86a556375454ef6eb8790f1423adca8171f06";
+}
+
+// 14.3: сильная и слабая кислота — полнота ионизации в воде
+pub fragment OS_14_3_STRENGTH in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.3/relative-strength";
+    text en official """The relative strength of an acid or base is the extent to which it ionizes when dissolved in water. If the ionization reaction is essentially complete, the acid or base is termed strong; if relatively little ionization occurs, the acid or base is weak. As will be evident throughout the remainder of this chapter, there are many more weak acids and bases than strong ones. The most common strong acids and bases are listed in Figure 14.6.""";
+    content_hash "sha256:8a13e418e0a1f1f5415efbbb277dceeca46622a64e26e4e8da5ee5ecabfb2bb2";
+}
+
+// 14.3: константа кислотной ионизации Ka и её смысл
+pub fragment OS_14_3_KA in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.3/ionization-constant";
+    text en official """The relative strengths of acids may be quantified by measuring their equilibrium constants in aqueous solutions. In solutions of the same concentration, stronger acids ionize to a greater extent, and so yield higher concentrations of hydronium ions than do weaker acids. The equilibrium constant for an acid is called the acid-ionization constant, Ka. For the reaction of an acid HA:
+
+HA(aq)+H2O(l)⇌H3O+(aq)+A−(aq),
+
+the acid ionization constant is written
+
+Ka=[H3O+][A−][HA]
+
+where the concentrations are those at equilibrium. Although water is a reactant in the reaction, it is the solvent as well, so we do not include [H2O] in the equation. The larger the Ka of an acid, the larger the concentration of H3O+ and A− relative to the concentration of the nonionized acid, HA, in an equilibrium mixture, and the stronger the acid. An acid is classified as “strong” when it undergoes complete ionization, in which case the concentration of HA is zero and the acid ionization constant is immeasurably large (Ka ≈ ∞). Acids that are partially ionized are called “weak,” and their acid ionization constants may be experimentally measured. A table of ionization constants for weak acids is provided in Appendix H.""";
+    content_hash "sha256:610b5bc73b43dbed7252fb02f20862bca70674333752615d9ff42beb1491a396";
+}
+
+// 14.3: три Ka в порядке возрастания силы — уксусная, азотистая, гидросульфат
+pub fragment OS_14_3_KA_EXAMPLES in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.3/ka-examples";
+    text en official """To illustrate this idea, three acid ionization equations and Ka values are shown below. The ionization constants increase from first to last of the listed equations, indicating the relative acid strength increases in the order CH3CO2H < HNO2 < HSO4−:
+
+CH3CO2H(aq)+H2O(l)⇌H3O+(aq)+CH3CO2−(aq)Ka=1.8×10−5
+
+HNO2(aq)+H2O(l)⇌H3O+(aq)+NO2−(aq)Ka=4.6×10−4
+
+HSO4−(aq)+H2O(aq)⇌H3O+(aq)+SO42−(aq)Ka=1.2×10−2""";
+    content_hash "sha256:6ddc9ab3d058c891e7a650334ebf72353fcb0333c4055b0c020bb55359913705";
+}
+
+// 14.3: эффект выравнивания — в воде сильнее H3O+ ничего нет; HCl, HBr, HI слабы в этаноле
+pub fragment OS_14_3_LEVELING in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.3/leveling-effect";
+    text en official """If all these strong acids are completely ionized in water, why does the column indicate they vary in strength, with nitric acid being the weakest and perchloric acid the strongest? Notice that the sole acid species present in an aqueous solution of any strong acid is H3O+(aq), meaning that hydronium ion is the strongest acid that may exist in water; any stronger acid will react completely with water to generate hydronium ions. This limit on the acid strength of solutes in a solution is called a leveling effect. To measure the differences in acid strength for “strong” acids, the acids must be dissolved in a solvent that is less basic than water. In such solvents, the acids will be “weak,” and so any differences in the extent of their ionization can be determined. For example, the binary hydrogen halides HCl, HBr, and HI are strong acids in water but weak acids in ethanol (strength increasing HCl < HBr < HI).""";
+    content_hash "sha256:4bb1e42d27b73d2e2844cac0e8bda9e91dbd22904cb53f7c3aca975f7211d4ef";
+}
+
+// 14.3: порядок силы бинарных гидридов по группе
+pub fragment OS_14_3_BINARY in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.3/binary-hydrides";
+    text en official """In the absence of any leveling effect, the acid strength of binary compounds of hydrogen with nonmetals (A) increases as the H-A bond strength decreases down a group in the periodic table. For group 17, the order of increasing acidity is HF < HCl < HBr < HI. Likewise, for group 16, the order of increasing acid strength is H2O < H2S < H2Se < H2Te.""";
+    content_hash "sha256:814fddfb4be60ef540fb66d51b4c853c852daa4891519d0af23a39778c552961";
+}
+
+// 14.4: соли с кислотными ионами — общая формула
+pub fragment OS_14_4_ACIDIC_SALT in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.4/salts-with-acidic-ions";
+    text en official """Salts with Acidic Ions
+
+Salts are ionic compounds composed of cations and anions, either of which may be capable of undergoing an acid or base ionization reaction with water. Aqueous salt solutions, therefore, may be acidic, basic, or neutral, depending on the relative acid-base strengths of the salt's constituent ions. For example, dissolving ammonium chloride in water results in its dissociation, as described by the equation""";
+    content_hash "sha256:ef1bbe725bb8ebf6344ce63df42c956bb0c33ab5cbefabea5adaa4fa7cda136c";
+}
+
+// 14.4: соль сильной кислоты и слабого основания даёт кислую среду
+pub fragment OS_14_4_AMMONIUM in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.4/ammonium-chloride";
+    text en official """Thus, dissolving ammonium chloride in water yields a solution of weak acid cations (NH4+) and inert anions (Cl−), resulting in an acidic solution.""";
+    content_hash "sha256:d15e10cb410608e1c5d6d2877e4628e28e8a10b344808cf249b52aa7466d391b";
+}
+
+// 14.4: соль слабой кислоты и сильного основания даёт щелочную среду
+pub fragment OS_14_4_BASIC_SALT in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.4/sodium-acetate";
+    text en official """Dissolving sodium acetate in water yields a solution of inert cations (Na+) and weak base anions (CH3CO2−),
+resulting in a basic solution.""";
+    content_hash "sha256:3e707c11b15dff24f08df6bd27ff3b1711e3dd00fd4c6a1edf866abec9043498";
+}
+
+// 14.4: соль с обоими родами ионов — среда решается сравнением сил
+pub fragment OS_14_4_MIXED_SALT in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.4/salts-with-both";
+    text en official """Salts with Acidic and Basic Ions
+
+Some salts are composed of both acidic and basic ions, and so the pH of their solutions will depend on the relative strengths of these two species. Likewise, some salts contain a single ion that is amphiprotic, and so the relative strengths of this ion’s acid and base character will determine its effect on solution pH. For both types of salts, a comparison of the Ka and Kb values allows prediction of the solution’s acid-base status, as illustrated in the following example exercise.""";
+    content_hash "sha256:414e658845003e41b016e644c7dd9af7c59ba183fc7adc3cc0cb04010dba4f73";
+}
+
+// 14.5: одноосновные кислоты — один ионизируемый водород
+pub fragment OS_14_5_PROTICITY in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.5/monoprotic";
+    text en official """Acids are classified by the number of protons per molecule that they can give up in a reaction. Acids such as HCl, HNO3, and HCN that contain one ionizable hydrogen atom in each molecule are called monoprotic acids. Their reactions with water are:""";
+    content_hash "sha256:86b73390eef696892af36c8208e3b1bb29993448c105e2da0f714fd7bdc3108b";
+}
+
+// 14.5: двухосновные кислоты — две ступени, первая полнее второй
+pub fragment OS_14_5_DIPROTIC in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.5/diprotic";
+    text en official """Diprotic acids contain two ionizable hydrogen atoms per molecule; ionization of such acids occurs in two steps. The first ionization always takes place to a greater extent than the second ionization. For example, sulfuric acid, a strong acid, ionizes as follows:""";
+    content_hash "sha256:521e149c67ab979441ae9372d79accf7374a9cbbc296ace48319d12584dca3a0";
+}
+
+// 14.6: буфер — заметные количества слабой сопряжённой пары
+pub fragment OS_14_6_BUFFER in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "14.6/buffer";
+    text en official """A solution containing appreciable amounts of a weak conjugate acid-base pair is called a buffer solution, or a buffer. Buffer solutions resist a change in pH when small amounts of a strong acid or a strong base are added (Figure 14.14). A solution of acetic acid and sodium acetate (CH3COOH + CH3COONa) is an example of a buffer that consists of a weak acid and its salt. An example of a buffer that consists of a weak base and its salt is a solution of ammonia and ammonium chloride (NH3(aq) + NH4Cl(aq)).""";
+    content_hash "sha256:b4ced2b1dc4c500af7de6e7b3141fc5ddf8cf23a529e21aadef4e48ff3150c89";
+}
+
+// 15.2: определение Льюиса — принять или отдать пару электронов
+pub fragment OS_15_2_LEWIS in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "15.2/definition";
+    text en official """In 1923, G. N. Lewis proposed a generalized definition of acid-base behavior in which acids and bases are identified by their ability to accept or to donate a pair of electrons and form a coordinate covalent bond.""";
+    content_hash "sha256:b4f8a6039b78709ad1b88ce4e6096f961b3402bf02b9a5eafc560ba6e3c816e2";
+}
+
+// 15.2: донор пары — основание Льюиса, акцептор — кислота Льюиса; реакции Брёнстеда — подкласс
+pub fragment OS_15_2_ADDUCT in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "15.2/adduct";
+    text en official """Reactions involving the formation of coordinate covalent bonds are classified as Lewis acid-base chemistry. The species donating the electron pair that compose the bond is a Lewis base, the species accepting the electron pair is a Lewis acid, and the product of the reaction is a Lewis acid-base adduct. As the two examples above illustrate, Brønsted-Lowry acid-base reactions represent a subcategory of Lewis acid reactions, specifically, those in which the acid species is H+. A few examples involving other Lewis acids and bases are described below.""";
+    content_hash "sha256:38d4c0568cc0b3f816971c9c647f7e539cf8d7317b3d9259d39c130e336d5009";
+}
+
+// 15.2: BF3 — очень хорошая кислота Льюиса, фторид-ион — основание
+pub fragment OS_15_2_BF3 in OS_CHEM2E_EN {
+    kind paragraph;
+    locator "15.2/boron-trifluoride";
+    text en official """The boron atom in boron trifluoride, BF3, has only six electrons in its valence shell. Being short of the preferred octet, BF3 is a very good Lewis acid and reacts with many Lewis bases; a fluoride ion is the Lewis base in this reaction, donating one of its lone pairs:""";
+    content_hash "sha256:0414b37f7c3aee83f0efda7abc8e6c422a75af41f31611f739de815a4ded1824";
+}

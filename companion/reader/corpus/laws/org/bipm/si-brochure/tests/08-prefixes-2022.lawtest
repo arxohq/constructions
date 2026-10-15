@@ -1,0 +1,44 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// 2023: ronna — префикс SI по резолюции 3 27-й ГКМВ (2022).
+test "urn:query:si-t08a-ronna-2023" {
+    given {
+        context { decision_time @2023-01-01T12:00:00Z; knowledge_time @2023-01-01T12:00:00Z; legal_time @2023-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_prefix(Ronna));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PrefixAdded2022);
+}
+
+// 2020: ronna ещё не префикс.
+test "urn:query:si-t08b-ronna-2020" {
+    given {
+        context { decision_time @2020-01-01T12:00:00Z; knowledge_time @2020-01-01T12:00:00Z; legal_time @2020-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_prefix(Ronna));
+    expect truth_status == NEITHER;
+}
+
+// 2023: роннаграмм — кратная единица SI.
+test "urn:query:si-t08c-ronnagram-2023" {
+    given {
+        context { decision_time @2023-01-01T12:00:00Z; knowledge_time @2023-01-01T12:00:00Z; legal_time @2023-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefixed_si_unit(Ronna, Gram));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// 2010: йотта — префикс 8-го издания.
+test "urn:query:si-t08d-yotta-2010" {
+    given {
+        context { decision_time @2010-01-01T12:00:00Z; knowledge_time @2010-01-01T12:00:00Z; legal_time @2010-01-01; timezone "UTC"; }
+    }
+    evaluate truth(si_prefix(Yotta));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LongStandingPrefix);
+}

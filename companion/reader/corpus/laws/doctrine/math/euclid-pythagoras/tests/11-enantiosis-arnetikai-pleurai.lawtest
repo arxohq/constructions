@@ -1,0 +1,31 @@
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+// ГРАНИЦА, НАЙДЕННАЯ РЕШАТЕЛЕМ, А НЕ АВТОРОМ, И ОСТАВЛЕННАЯ СОЗНАТЕЛЬНО.
+// Сторож заявленного угла (EnantiosisZitoumenisGonias) НЕ читает
+// trigonon_estin посылкой — в отличие от признака I.48, — и z3, которому
+// про треугольники ничего не сказано, немедленно этим воспользовался:
+// свидетелем стали стороны 5, -1, -5, где 25 + 1 != 25. Отрицательная
+// длина треугольника не составляет и составить не может.
+//
+// Это не дефект нормы, а её область: сторож говорит о ПРОТИВОРЕЧИИ ВХОДА
+// («дело заявило прямой угол, а записанные числа заявлению противоречат»),
+// и противоречие входа не становится меньшим противоречием оттого, что
+// числа не образуют фигуры. Гейт существования здесь был бы вреден: он
+// заставил бы молчать ровно о тех делах, которые невозможны дважды.
+// Тест закрепляет границу как факт, а не прячет её.
+test "urn:query:eucl-smt-enantiosis-negative" {
+    given {
+        assert "eucl-t11-1": grc.euclid.stoicheia_i::pleurai_trigonou(entity_ref("urn:case:eucl:trigonon"), 5, -1, -5) {
+            origin case_input;
+        }
+        assert "eucl-t11-2": dedilotai_orthe_gonia(entity_ref("urn:case:eucl:trigonon")) {
+            origin case_input;
+        }
+    }
+    evaluate truth(enantiosis_gonias_kai_pleuron(entity_ref("urn:case:eucl:trigonon")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

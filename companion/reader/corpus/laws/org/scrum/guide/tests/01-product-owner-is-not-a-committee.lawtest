@@ -1,0 +1,19 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Раздел 5-2: «The Product Owner is one person, not a committee». Два
+// владельца продукта — комитет; состав считается агрегатом §59 по
+// эмпирическому отношению, а не приходит фактом «команда собрана верно».
+test "urn:query:scrum-test-product-owner-committee" {
+    given {
+        context { decision_time @2026-09-15T12:00:00Z; knowledge_time @2026-09-15T12:00:00Z; legal_time @2026-09-15; timezone "UTC"; }
+        assert "sg-t1-a": scrum_team(entity_ref("urn:scrum:team:t")) { origin case_input; }
+        assert "sg-t1-b": product_owner_of(entity_ref("urn:scrum:person:po-1"), entity_ref("urn:scrum:team:t")) { origin case_input; }
+        assert "sg-t1-c": product_owner_of(entity_ref("urn:scrum:person:po-2"), entity_ref("urn:scrum:team:t")) { origin case_input; }
+    }
+    evaluate truth(product_owner_is_a_committee(entity_ref("urn:scrum:team:t")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

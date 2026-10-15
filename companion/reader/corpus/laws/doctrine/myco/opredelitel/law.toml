@@ -1,0 +1,24 @@
+[package]
+name = "myco.opredelitel"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:myco:clir:opredelitel"
+
+[metadata]
+act = "myco-opredelitel"
+title = "Определитель грибов — система вывода с презумпцией несъедобности"
+primarySource = "MYCO_RESTATEMENT"
+jurisdiction = "none"
+instrument = "doctrine"
+sourceFidelity = "authored_exposition"
+legalStatus = "doctrine"
+issuer = "авторское изложение для корпуса"
+verifiedAgainstSource = false
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "myco.opredelitel#authored"
+regression = false
+suites = ["tests/01-no-spore-print-is-neither.lawtest", "tests/02-book-presumption-stands.lawtest", "tests/03-book-verdict-lifts-bar.lawtest"]
+world = ["myco.opredelitel"]

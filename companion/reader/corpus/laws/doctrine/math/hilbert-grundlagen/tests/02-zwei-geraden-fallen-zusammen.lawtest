@@ -1,0 +1,49 @@
+language "law.core" version "0.2";
+package de.hilbert.grundlagen version "0.1.0";
+namespace "urn:de:hilbert:clir:grundlagen";
+
+// ТРЕТИЙ ВОПРОС ПАКЕТА: следует ли из фактов дела, что две прямые
+// совпадают. Дело объявляет две прямые ab и cd, и обе несут одни и те же две
+// различные точки A и B. Голова строгого правила аксиомы I 2 отвечает прямо;
+// инвариант при нём говорит второе — различными их объявлять нельзя.
+test "urn:query:hilb-test-02" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "hilb-t02-1": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:A")) { origin case_input; }
+        assert "hilb-t02-2": punktname(entity_ref("urn:de:hilbert:case:point:A"), "A") { origin case_input; }
+        assert "hilb-t02-3": punkt_der_figur(entity_ref("urn:de:hilbert:case:point:B")) { origin case_input; }
+        assert "hilb-t02-4": punktname(entity_ref("urn:de:hilbert:case:point:B"), "B") { origin case_input; }
+        assert "hilb-t02-5": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t02-6": geradenname(entity_ref("urn:de:hilbert:case:line:ab"), "ab") { origin case_input; }
+        assert "hilb-t02-7": gerade_der_figur(entity_ref("urn:de:hilbert:case:line:cd")) { origin case_input; }
+        assert "hilb-t02-8": geradenname(entity_ref("urn:de:hilbert:case:line:cd"), "cd") { origin case_input; }
+        assert "hilb-t02-9": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t02-10": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:ab")) { origin case_input; }
+        assert "hilb-t02-11": liegt_auf(entity_ref("urn:de:hilbert:case:point:A"), entity_ref("urn:de:hilbert:case:line:cd")) { origin case_input; }
+        assert "hilb-t02-12": liegt_auf(entity_ref("urn:de:hilbert:case:point:B"), entity_ref("urn:de:hilbert:case:line:cd")) { origin case_input; }
+    }
+    evaluate truth(geraden_fallen_zusammen(entity_ref("urn:de:hilbert:case:line:ab"), entity_ref("urn:de:hilbert:case:line:cd")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    // ПОЧЕМУ ДОКУМЕНТ `NON_EXECUTABLE`, А НЕ `COMPUTED`. Голова строгого правила
+    // ответила `TRUE_ONLY` — прямые совпали; статус документа говорит о ДРУГОМ —
+    // о том, что чертёж, объявивший их различными, моделью аксиом I—II не
+    // является. Errata 0.2-05 (§175) запрещает `COMPUTED` рядом с issue строгости
+    // `error`, а `CONSTRAINT_VIOLATED` §93.1 несёт строгость, объявленную у
+    // инварианта, — здесь `error`. Нарушено ровно то, что этот сценарий и
+    // предъявляет: `AxiomI2Eindeutig` (две прямые названы разными буквами и
+    // несут одну и ту же пару различных точек) плюс `AxiomII2Innen` и
+    // `AxiomII2Fortsetzung` (граница 1 разбора: II 2 нарушена на КАЖДОЙ конечной
+    // конфигурации). Ожидание стережёт границу ПАДЕНИЕМ: снимут блокирующий
+    // исход у `CONSTRAINT_VIOLATED` — тест упадёт, а не промолчит;
+    // `issues_within` держит второе — иных диагностик выше `info` в документе
+    // нет.
+    expect evaluation_status == NON_EXECUTABLE;
+    expect issue(CONSTRAINT_VIOLATED);
+    expect issues_within(info, CONSTRAINT_VIOLATED);
+}

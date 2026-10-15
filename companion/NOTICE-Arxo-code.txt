@@ -1,0 +1,6 @@
+Arxo Law — reference implementation of Arxo Law Core 0.1
+Copyright 2026 Arxo (https://arxo.io)
+
+Code is licensed under the Apache License, Version 2.0 (see LICENSE).
+Bundled specification text is licensed under the Creative Commons
+Attribution 4.0 International License.

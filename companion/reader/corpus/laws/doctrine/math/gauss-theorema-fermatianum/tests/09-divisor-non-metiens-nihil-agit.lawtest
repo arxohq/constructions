@@ -1,0 +1,39 @@
+language "law.core" version "0.2";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+// Делитель ПРОВЕРЯЕТСЯ, а не принимается: 561 на 4 не делится, и
+// презумпция простоты остаётся стоять.
+// След вычислен возведением в степень по модулю и ПРОВЕРЯЕТСЯ движком
+// звено за звеном (артикул 46); воспроизводится строкой
+//   python3 -c "n,a=561,2;[print(e,pow(a,e,n)) for e in [1, 2, 4, 8, 16, 17, 34, 35, 70, 140, 280, 560]]"
+
+test "urn:query:09-divisor-non-metiens-nihil-agit" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "flt-propositum": propositum(entity_ref("urn:case:flt:probatio"), 561, 2) { origin case_input; }
+        assert "flt-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 560) { origin case_input; }
+        assert "flt-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) { origin case_input; }
+        assert "flt-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) { origin case_input; }
+        assert "flt-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) { origin case_input; }
+        assert "flt-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 8, 256) { origin case_input; }
+        assert "flt-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 16, 460) { origin case_input; }
+        assert "flt-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 17, 359) { origin case_input; }
+        assert "flt-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 34, 412) { origin case_input; }
+        assert "flt-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 35, 263) { origin case_input; }
+        assert "flt-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 70, 166) { origin case_input; }
+        assert "flt-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 140, 67) { origin case_input; }
+        assert "flt-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 280, 1) { origin case_input; }
+        assert "flt-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 560, 1) { origin case_input; }
+        assert "flt-divisor": divisor_allatus(entity_ref("urn:case:flt:probatio"), 4) { origin case_input; }
+    }
+    evaluate truth(primus(561));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

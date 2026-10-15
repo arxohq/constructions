@@ -1,0 +1,33 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "chem.acid_base"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:chem:clir:acid-base"
+
+[dependencies]
+"openstax.chemistry_acids" = "0.1.0"
+
+[metadata]
+act = "chem-acid-base"
+# ВЫВОДИМЫХ ПОЛЕЙ ЗДЕСЬ НЕТ, И ЭТО НЕ ПРОПУСК. `primarySource`,
+# `jurisdiction`, `instrument` и `sourceFidelity` выводятся из СОБСТВЕННЫХ
+# source-деклараций пакета (`check_package_metadata.py`), а у этого пакета их
+# нет ни одной: он стоит на закреплённых фрагментах соседа
+# `openstax/chemistry-acids` через межпакетное `of` §152 (DECISION-0152).
+# Приписать себе чужое закрепление значило бы объявить провенанс, которого у
+# пакета нет, и ворота отвергают такую пару прямо. `issuer` и
+# `verifiedAgainstSource` сняты по той же причине: издателя и сверки байтов у
+# пакета без байтов не бывает.
+#
+# Лицензия учебника, на фрагментах которого стоит пакет, — CC BY-NC-SA 4.0;
+# поля лицензии в `package-manifest.schema` нет (замер 06.09.2026), и строка
+# живёт в шапке `sources.law` соседа и в docs/sciences/natural/CHEMISTRY.ru.md.
+title = "Кислота и основание: три определения одного термина прочтениями §152 — Аррениус, Брёнстед—Лоури, Льюис"
+legalStatus = "doctrine"
+
+[[tests]]
+family = "chem_acid_base"
+suites = ["tests/chem-acid-base.lawtest"]
+world = ["chem.acid_base", "openstax.chemistry_acids"]

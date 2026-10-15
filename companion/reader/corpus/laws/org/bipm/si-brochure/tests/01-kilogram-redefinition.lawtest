@@ -1,0 +1,43 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// 19.05.2019: килограмм — масса международного прототипа (8-е изд., §2.1.1.2).
+test "urn:query:si-t01a-kilogram-prototype-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_reference(Kilogram, InternationalPrototypeKilogram));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KilogramByInternationalPrototype);
+}
+
+// 19.05.2019: определение через h ещё не в силе.
+test "urn:query:si-t01b-kilogram-planck-before" {
+    given {
+        context { decision_time @2019-05-19T12:00:00Z; knowledge_time @2019-05-19T12:00:00Z; legal_time @2019-05-19; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Kilogram, PlanckConstant));
+    expect truth_status == NEITHER;
+}
+
+// 20.05.2019: килограмм определён постоянной Планка (§2.3.1, резолюция 1 26-й ГКМВ).
+test "urn:query:si-t01c-kilogram-planck-after" {
+    given {
+        context { decision_time @2019-05-20T12:00:00Z; knowledge_time @2019-05-20T12:00:00Z; legal_time @2019-05-20; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_constant(Kilogram, PlanckConstant));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KilogramByPlanckConstant);
+}
+
+// 20.05.2019: прототип больше не определяет килограмм.
+test "urn:query:si-t01d-kilogram-prototype-after" {
+    given {
+        context { decision_time @2019-05-20T12:00:00Z; knowledge_time @2019-05-20T12:00:00Z; legal_time @2019-05-20; timezone "UTC"; }
+    }
+    evaluate truth(defined_by_reference(Kilogram, InternationalPrototypeKilogram));
+    expect truth_status == NEITHER;
+}

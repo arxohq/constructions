@@ -1,0 +1,174 @@
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+// §1.6, пример «A Bag of Apples»: средний вес 5,1 lb, погрешность 0,3 lb.
+// Пакет считает то же самое в килограммах, потому что фунта в реестре
+// единиц §49.2 нет, а заводить его ради одного примера значило бы завести
+// единицу «под задачу». Числа примера сохранены: 5,1 и 0,3.
+//
+// ОТНОСИТЕЛЬНАЯ ПОГРЕШНОСТЬ БЕЗРАЗМЕРНА, И ЕДИНИЦУ СОКРАЩАЕТ ОПЕРАЦИЯ.
+// 0,3 / 5,1 = 1/17; умноженное на 100, это 100/17 — точная дробь, а не
+// «примерно 6 %». Учебник округляет до 6 %, движок хранит точное значение:
+// округление §50 требует НАЗВАННОЙ политики, и подставлять её за источник
+// пакет не вправе.
+test "urn:query:meas-t04a-percent-uncertainty-is-dimensionless" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04a-v": measured_value(entity_ref("urn:case:meas:apples"), 5.1 kg) { origin case_input; }
+        assert "t04a-d": stated_uncertainty(entity_ref("urn:case:meas:apples"), 0.3 kg) { origin case_input; }
+    }
+
+    evaluate truth(percent_uncertainty(entity_ref("urn:case:meas:apples"), 100/17));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PercentUncertaintyFromRatio);
+}
+
+// §1.6: расхождение есть разность измеренного и принятого. Пример с бумагой:
+// лучшая оценка 11,1, принятое значение 11,0, расхождение 0,1.
+test "urn:query:meas-t04b-discrepancy-from-accepted" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04b-v": measured_value(entity_ref("urn:case:meas:paper"), 11.1 cm) { origin case_input; }
+        assert "t04b-a": accepted_reference_value(entity_ref("urn:case:meas:paper"), 11.0 cm) { origin case_input; }
+    }
+
+    evaluate truth(discrepancy(entity_ref("urn:case:meas:paper"), 0.1 cm));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(DiscrepancyFromAccepted);
+}
+
+// ПОЛОЖИТЕЛЬНАЯ СТОРОНА ГРАНИЦЫ ДОПУСКА: расхождение 0,1 при допуске 0,15 —
+// измерение правильное.
+test "urn:query:meas-t04c-accurate-within-tolerance" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04c-v": measured_value(entity_ref("urn:case:meas:paper"), 11.1 cm) { origin case_input; }
+        assert "t04c-a": accepted_reference_value(entity_ref("urn:case:meas:paper"), 11.0 cm) { origin case_input; }
+        assert "t04c-t": tolerance(entity_ref("urn:case:meas:paper"), 0.15 cm) { origin case_input; }
+    }
+
+    evaluate truth(accurate(entity_ref("urn:case:meas:paper")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AccurateWhenDiscrepancyWithinTolerance);
+}
+
+// ОТРИЦАТЕЛЬНАЯ СТОРОНА ТОЙ ЖЕ ГРАНИЦЫ: тот же допуск, расхождение 0,4.
+// Правильность ОПРОВЕРГНУТА — FALSE_ONLY, а не «не выведено».
+test "urn:query:meas-t04d-not-accurate-beyond-tolerance" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04d-v": measured_value(entity_ref("urn:case:meas:offset"), 11.4 cm) { origin case_input; }
+        assert "t04d-a": accepted_reference_value(entity_ref("urn:case:meas:offset"), 11.0 cm) { origin case_input; }
+        assert "t04d-t": tolerance(entity_ref("urn:case:meas:offset"), 0.15 cm) { origin case_input; }
+    }
+
+    evaluate truth(accurate(entity_ref("urn:case:meas:offset")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAccurateWhenDiscrepancyExceedsTolerance);
+}
+
+// §1.6 РАЗВОДИТ ТОЧНОСТЬ И ПРАВИЛЬНОСТЬ, и разводка проверяема: тот же
+// сдвинутый прибор даёт согласованные отсчёты (погрешность 0,05 при допуске
+// 0,15 — точен) и при этом промахивается мимо принятого значения на 0,4
+// (правильность опровергнута). Точное и неправильное измерение существует —
+// это утверждение учебника, и здесь оно ВЫВЕДЕНО, а не пересказано.
+test "urn:query:meas-t04e-precise-but-not-accurate" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04e-v": measured_value(entity_ref("urn:case:meas:offset"), 11.4 cm) { origin case_input; }
+        assert "t04e-a": accepted_reference_value(entity_ref("urn:case:meas:offset"), 11.0 cm) { origin case_input; }
+        assert "t04e-d": stated_uncertainty(entity_ref("urn:case:meas:offset"), 0.05 cm) { origin case_input; }
+        assert "t04e-t": tolerance(entity_ref("urn:case:meas:offset"), 0.15 cm) { origin case_input; }
+    }
+
+    evaluate truth(precise_but_not_accurate(entity_ref("urn:case:meas:offset")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PrecisionDoesNotImplyAccuracy);
+}
+
+// §1.6: «the final answer can contain only as many significant figures as the
+// least precise value». Три значащие цифры на входе против четырёх — ответу
+// положено три.
+test "urn:query:meas-t04f-least-precise-limits-figures" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04f-c": computed_from(entity_ref("urn:case:meas:area"),
+                             entity_ref("urn:case:meas:len"),
+                             entity_ref("urn:case:meas:wid")) { origin case_input; }
+        assert "t04f-a": significant_figures(entity_ref("urn:case:meas:len"), 4) { origin case_input; }
+        assert "t04f-b": significant_figures(entity_ref("urn:case:meas:wid"), 3) { origin case_input; }
+    }
+
+    evaluate truth(significant_figures_allowed(entity_ref("urn:case:meas:area"), 3));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LeastPreciseFactorLimitsFigures);
+}
+
+// Обратная сторона: ответ записан четырьмя цифрами, а положено три — точность
+// результата преувеличена.
+test "urn:query:meas-t04g-figures-overstated" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t04g-c": computed_from(entity_ref("urn:case:meas:area"),
+                             entity_ref("urn:case:meas:len"),
+                             entity_ref("urn:case:meas:wid")) { origin case_input; }
+        assert "t04g-a": significant_figures(entity_ref("urn:case:meas:len"), 4) { origin case_input; }
+        assert "t04g-b": significant_figures(entity_ref("urn:case:meas:wid"), 3) { origin case_input; }
+        assert "t04g-r": significant_figures(entity_ref("urn:case:meas:area"), 4) { origin case_input; }
+    }
+
+    evaluate truth(figures_overstated(entity_ref("urn:case:meas:area")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ReportedFiguresExceedAllowed);
+}

@@ -1,0 +1,26 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// Таблица 4, сноска (f): интервал температур в °C и K — одно число; реестр держит алиас.
+test "urn:query:si-t13a-celsius-interval" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(DegreeCelsius));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(DegreeCelsiusIntervalVerified);
+}
+
+// §2.3.1: T = 373.15 K даёт t = 100 °C по формуле t/°C = T/K − 273.15.
+test "urn:query:si-t13b-celsius-of-kelvin" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+        assert "si-t13-1": thermodynamic_temperature(entity_ref("urn:case:si:boiling"), 373.15) { origin case_input; }
+    }
+    evaluate truth(celsius_temperature(entity_ref("urn:case:si:boiling"), 100.00));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(CelsiusFromKelvin);
+}

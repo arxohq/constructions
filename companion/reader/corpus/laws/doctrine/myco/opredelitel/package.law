@@ -1,0 +1,26 @@
+language "law.core" version "0.2";
+package myco.opredelitel version "0.1.0";
+namespace "urn:myco:clir:opredelitel";
+
+entity Specimen { label ru-KZ unofficial "экземпляр гриба в деле"; }
+entity Taxon { label ru-KZ unofficial "вид гриба в ограниченном срезе"; }
+entity Authority { label ru-KZ unofficial "орган, разрешающий вопрос определения"; }
+
+enum Hymenophore { Gills, Ridges, Folds, Pits }
+enum Presence { Present, Absent }
+enum GillColor { White, Pink, Orange, Pale, Brown, Ochre, NotApplicable }
+enum PrintColor { WhitePrint, DarkBrown, PaleYellow, RustBrown, BrownPrint, Cream }
+enum FleshChange { Unchanged, Pinking, Browning }
+enum EdibilityClass { Edible, Conditional, Poisonous, Deadly }
+
+const AmanitaPhalloides: Taxon = entity_ref("urn:myco:clir:opredelitel#AmanitaPhalloides");
+const AgaricusCampestris: Taxon = entity_ref("urn:myco:clir:opredelitel#AgaricusCampestris");
+const RussulaVirescens: Taxon = entity_ref("urn:myco:clir:opredelitel#RussulaVirescens");
+const CantharellusCibarius: Taxon = entity_ref("urn:myco:clir:opredelitel#CantharellusCibarius");
+const HygrophoropsisAurantiaca: Taxon = entity_ref("urn:myco:clir:opredelitel#HygrophoropsisAurantiaca");
+const ArmillariaMellea: Taxon = entity_ref("urn:myco:clir:opredelitel#ArmillariaMellea");
+const GalerinaMarginata: Taxon = entity_ref("urn:myco:clir:opredelitel#GalerinaMarginata");
+const PaxillusInvolutus: Taxon = entity_ref("urn:myco:clir:opredelitel#PaxillusInvolutus");
+const GyromitraEsculenta: Taxon = entity_ref("urn:myco:clir:opredelitel#GyromitraEsculenta");
+const MorchellaEsculenta: Taxon = entity_ref("urn:myco:clir:opredelitel#MorchellaEsculenta");
+const Mycologist: Authority = entity_ref("urn:myco:clir:opredelitel#Mycologist");

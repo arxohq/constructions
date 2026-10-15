@@ -1,0 +1,43 @@
+language "law.core" version "0.2";
+package grc.euclid.stoicheia_i version "0.1.0";
+namespace "urn:grc:euclid:clir:stoicheia-i";
+
+// I.1: на отрезке AB построен равносторонний ABC со сторонами длины 5.
+test "urn:query:sto-i-01-isopleuron" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "sto-01-1": semeion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A")) { origin case_input; }
+        assert "sto-01-2": onoma_semeiou(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), "A") { origin case_input; }
+        assert "sto-01-3": semeion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:point:B")) { origin case_input; }
+        assert "sto-01-4": onoma_semeiou(entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), "B") { origin case_input; }
+        assert "sto-01-5": semeion_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:point:C")) { origin case_input; }
+        assert "sto-01-6": onoma_semeiou(entity_ref("urn:grc:euclid:stoicheia-i:case:point:C"), "C") { origin case_input; }
+        assert "sto-01-l1": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB")) { origin case_input; }
+        assert "sto-01-l2": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:BC")) { origin case_input; }
+        assert "sto-01-l3": eutheia_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:line:CA")) { origin case_input; }
+        assert "sto-01-n1": onoma_eutheias(entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB"), "AB") { origin case_input; }
+        assert "sto-01-n2": onoma_eutheias(entity_ref("urn:grc:euclid:stoicheia-i:case:line:BC"), "BC") { origin case_input; }
+        assert "sto-01-n3": onoma_eutheias(entity_ref("urn:grc:euclid:stoicheia-i:case:line:CA"), "CA") { origin case_input; }
+        assert "sto-01-i1": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB")) { origin case_input; }
+        assert "sto-01-i2": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:AB")) { origin case_input; }
+        assert "sto-01-i3": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:BC")) { origin case_input; }
+        assert "sto-01-i4": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:C"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:BC")) { origin case_input; }
+        assert "sto-01-i5": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:C"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:CA")) { origin case_input; }
+        assert "sto-01-i6": keitai_epi(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), entity_ref("urn:grc:euclid:stoicheia-i:case:line:CA")) { origin case_input; }
+        assert "sto-01-7": trigonon_tes_figuras(entity_ref("urn:grc:euclid:stoicheia-i:case:tri:abc")) { origin case_input; }
+        assert "sto-01-8": trigonon_apo(entity_ref("urn:grc:euclid:stoicheia-i:case:tri:abc"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:C")) { origin case_input; }
+        assert "sto-01-9": kataskeue_isopleurou(entity_ref("urn:grc:euclid:stoicheia-i:case:tri:abc")) { origin case_input; }
+        assert "sto-01-10": mikos(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), 5) { origin case_input; }
+        assert "sto-01-11": mikos(entity_ref("urn:grc:euclid:stoicheia-i:case:point:A"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:C"), 5) { origin case_input; }
+        assert "sto-01-12": mikos(entity_ref("urn:grc:euclid:stoicheia-i:case:point:B"), entity_ref("urn:grc:euclid:stoicheia-i:case:point:C"), 5) { origin case_input; }
+    }
+    evaluate truth(isopleuron(entity_ref("urn:grc:euclid:stoicheia-i:case:tri:abc")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

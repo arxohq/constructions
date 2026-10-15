@@ -1,0 +1,104 @@
+language "law.core" version "0.2";
+package kz.grammar.yqsham_tulgalar version "0.1.0";
+namespace "urn:kz:grammar:clir:yqsham-tulgalar";
+
+// Сценарии перенесены из прежнего Python-раннера семейства `grammar_yqsham_tulgalar`.
+// Заголовки — прежние ID сценариев (scenario-manifest); ожидания
+// выведены из ПРЕЖНИХ проверок, а не из ответов движка.
+
+test "KZ-YQS-01-PROHIBITION-WORKS-BOTH-WAYS" {
+    given {
+
+        assert "assert-a0": yqsham_turinde_berilgen(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kep")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(berilgen_turinde_aitylady(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kep")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(YqshamBerilgenTurinde);
+
+    evaluate truth(yqshamdy_tolyq_etip_aituga_bolmaidy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kep")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(YqshamdyTolyqAituBolmaidy);
+
+    evaluate truth(tolyqty_qysqartyp_aituga_bolmaidy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kep")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "KZ-YQS-01-PROHIBITION-WORKS-BOTH-WAYS/2" {
+    given {
+
+        assert "assert-a0": tolyq_turinde_berilgen(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kelip")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(berilgen_turinde_aitylady(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kelip")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(TolyqBerilgenTurinde);
+
+    evaluate truth(tolyqty_qysqartyp_aituga_bolmaidy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kelip")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(TolyqtyQysqartuBolmaidy);
+
+    evaluate truth(yqshamdy_tolyq_etip_aituga_bolmaidy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Kelip")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "KZ-YQS-02-VERSE-PERMITS-IT-DOES-NOT-REQUIRE" {
+    given {
+
+        assert "assert-a0": auyspaly_shaq_ushinshi_zhaq_zhalgauy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(zhalang_d_turinde_qoldanyluy_mumkin(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == NEITHER;
+    expect issues_within(info);
+}
+
+test "KZ-YQS-02-VERSE-PERMITS-IT-DOES-NOT-REQUIRE/2" {
+    given {
+        context {
+            decision_time @2026-08-26T12:00:00+05:00;
+            knowledge_time @2026-08-26T12:00:00+05:00;
+            legal_time @2024-10-01;
+            timezone "Asia/Qyzylorda";
+        }
+
+        assert "assert-a0": auyspaly_shaq_ushinshi_zhaq_zhalgauy(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")) {
+            origin case_input;
+        }
+
+        assert "assert-a1": olengde_olshem_uiqas_talap_etedi(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")) {
+            origin case_input;
+        }
+    }
+
+    evaluate truth(zhalang_d_turinde_qoldanyluy_mumkin(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(OlengdeZhalangD);
+
+    evaluate truth(t_dybysymen_de_aitylady(entity_ref("urn:kz:grammar:clir:yqsham-tulgalar#Tildeset")));
+    expect evaluation_status == COMPUTED;
+    expect truth_status == TRUE_ONLY;
+    expect issues_within(info);
+    expect any_applied(OlengdeTDybysymenDe);
+}

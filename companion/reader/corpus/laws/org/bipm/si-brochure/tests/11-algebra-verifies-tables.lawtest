@@ -1,0 +1,364 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Newton совпали.
+test "urn:query:si-t11-table4-newton" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Newton));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Joule совпали.
+test "urn:query:si-t11-table4-joule" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Joule));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Watt совпали.
+test "urn:query:si-t11-table4-watt" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Watt));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Coulomb совпали.
+test "urn:query:si-t11-table4-coulomb" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Coulomb));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Volt совпали.
+test "urn:query:si-t11-table4-volt" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Volt));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Ohm совпали.
+test "urn:query:si-t11-table4-ohm" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Ohm));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Hertz совпали.
+test "urn:query:si-t11-table4-hertz" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Hertz));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Pascal совпали.
+test "urn:query:si-t11-table4-pascal" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Pascal));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Weber совпали.
+test "urn:query:si-t11-table4-weber" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Weber));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Tesla совпали.
+test "urn:query:si-t11-table4-tesla" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Tesla));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Henry совпали.
+test "urn:query:si-t11-table4-henry" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Henry));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Farad совпали.
+test "urn:query:si-t11-table4-farad" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Farad));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Siemens совпали.
+test "urn:query:si-t11-table4-siemens" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Siemens));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Gray совпали.
+test "urn:query:si-t11-table4-gray" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Gray));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Sievert совпали.
+test "urn:query:si-t11-table4-sievert" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Sievert));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Katal совпали.
+test "urn:query:si-t11-table4-katal" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Katal));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Lumen совпали.
+test "urn:query:si-t11-table4-lumen" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Lumen));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Lux совпали.
+test "urn:query:si-t11-table4-lux" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Lux));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Таблица 4 против реестра одним правилом (E-0139): все семь показателей строки Becquerel совпали.
+test "urn:query:si-t11-table4-becquerel" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Becquerel));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TableRowVerifiedByRegistry);
+}
+
+// Радиан — размерность один (сноска b): имени в реестре нет, строка остаётся фактом без сверки.
+test "urn:query:si-t11-table4-radian-unverified" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(base_expression_verified(Radian));
+    expect truth_status == NEITHER;
+}
+
+// Таблица 7 против реестра: Kilo на Metre.
+test "urn:query:si-t11-table7-kilo-metre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Kilo, Metre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(KilometreScaleVerified);
+}
+
+// Таблица 7 против реестра: Deci на Metre.
+test "urn:query:si-t11-table7-deci-metre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Deci, Metre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(DecimetreScaleVerified);
+}
+
+// Таблица 7 против реестра: Centi на Metre.
+test "urn:query:si-t11-table7-centi-metre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Centi, Metre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(CentimetreScaleVerified);
+}
+
+// Таблица 7 против реестра: Milli на Metre.
+test "urn:query:si-t11-table7-milli-metre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Milli, Metre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MillimetreScaleVerified);
+}
+
+// Таблица 7 против реестра: Milli на Gram.
+test "urn:query:si-t11-table7-milli-gram" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Milli, Gram));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MilligramScaleVerified);
+}
+
+// Таблица 7 против реестра: Milli на Mole.
+test "urn:query:si-t11-table7-milli-mole" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefix_scale_verified(Milli, Mole));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MillimoleScaleVerified);
+}
+
+// Таблица 8 против реестра: Minute.
+test "urn:query:si-t11-table8-minute" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Minute));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MinuteValueVerified);
+}
+
+// Таблица 8 против реестра: Hour.
+test "urn:query:si-t11-table8-hour" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Hour));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(HourValueVerified);
+}
+
+// Таблица 8 против реестра: Tonne.
+test "urn:query:si-t11-table8-tonne" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Tonne));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(TonneValueVerified);
+}
+
+// Таблица 8 против реестра: Litre.
+test "urn:query:si-t11-table8-litre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Litre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(LitreValueVerified);
+}
+
+// Таблица 8 против реестра: Day.
+test "urn:query:si-t11-table8-day" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Day));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(DayValueVerified);
+}
+
+// Таблица 8 против реестра: Hectare.
+test "urn:query:si-t11-table8-hectare" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(Hectare));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(HectareValueVerified);
+}
+
+// Таблица 8 против реестра: AstronomicalUnit.
+test "urn:query:si-t11-table8-astronomicalunit" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(non_si_value_verified(AstronomicalUnit));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AstronomicalUnitValueVerified);
+}

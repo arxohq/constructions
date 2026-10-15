@@ -1,0 +1,239 @@
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+// §2.3: «two vectors are equal if and only if all their corresponding
+// components are equal». Положительная сторона границы — совпали обе
+// компоненты.
+test "urn:query:meas-t05a-equal-vectors" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05a-cmp": vectors_compared(entity_ref("urn:case:meas:vec:a"), entity_ref("urn:case:meas:vec:b")) { origin case_input; }
+        assert "t05a-ax": scalar_component(entity_ref("urn:case:meas:vec:a"), "x", 3 m) { origin case_input; }
+        assert "t05a-ay": scalar_component(entity_ref("urn:case:meas:vec:a"), "y", 4 m) { origin case_input; }
+        assert "t05a-bx": scalar_component(entity_ref("urn:case:meas:vec:b"), "x", 3 m) { origin case_input; }
+        assert "t05a-by": scalar_component(entity_ref("urn:case:meas:vec:b"), "y", 4 m) { origin case_input; }
+    }
+
+    evaluate truth(equal_vectors(entity_ref("urn:case:meas:vec:a"), entity_ref("urn:case:meas:vec:b")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(VectorsEqualWhenNoComponentDiffers);
+}
+
+// ОБРАТНАЯ СТОРОНА: «if and only if ALL» — одна разошедшаяся компонента
+// опровергает равенство. FALSE_ONLY, а не «не выведено».
+test "urn:query:meas-t05b-unequal-vectors" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05b-cmp": vectors_compared(entity_ref("urn:case:meas:vec:a"), entity_ref("urn:case:meas:vec:c")) { origin case_input; }
+        assert "t05b-ax": scalar_component(entity_ref("urn:case:meas:vec:a"), "x", 3 m) { origin case_input; }
+        assert "t05b-ay": scalar_component(entity_ref("urn:case:meas:vec:a"), "y", 4 m) { origin case_input; }
+        assert "t05b-cx": scalar_component(entity_ref("urn:case:meas:vec:c"), "x", 3 m) { origin case_input; }
+        assert "t05b-cy": scalar_component(entity_ref("urn:case:meas:vec:c"), "y", 5 m) { origin case_input; }
+    }
+
+    evaluate truth(equal_vectors(entity_ref("urn:case:meas:vec:a"), entity_ref("urn:case:meas:vec:c")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(VectorsUnequalWhenAComponentDiffers);
+}
+
+// Расхождение НАЗВАНО по оси: система отвечает «различны по y», а не просто
+// «не равны».
+test "urn:query:meas-t05c-which-axis-differs" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05c-ay": scalar_component(entity_ref("urn:case:meas:vec:a"), "y", 4 m) { origin case_input; }
+        assert "t05c-cy": scalar_component(entity_ref("urn:case:meas:vec:c"), "y", 5 m) { origin case_input; }
+    }
+
+    evaluate truth(components_differ_on(entity_ref("urn:case:meas:vec:a"), entity_ref("urn:case:meas:vec:c"), "y"));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ComponentsDifferOnAxis);
+}
+
+// §2.3: нулевой вектор — все компоненты нулевые.
+test "urn:query:meas-t05d-null-vector" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05d-p": vector_presented(entity_ref("urn:case:meas:vec:zero")) { origin case_input; }
+        assert "t05d-x": scalar_component(entity_ref("urn:case:meas:vec:zero"), "x", 0 m) { origin case_input; }
+        assert "t05d-y": scalar_component(entity_ref("urn:case:meas:vec:zero"), "y", 0 m) { origin case_input; }
+    }
+
+    evaluate truth(null_vector(entity_ref("urn:case:meas:vec:zero")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AllComponentsZeroIsNullVector);
+}
+
+// §2.1: ортогональные векторы — направления различаются ровно на 90°.
+test "urn:query:meas-t05e-orthogonal-vectors" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05e-e": direction_angle_degrees(entity_ref("urn:case:meas:vec:east"), 0.0) { origin case_input; }
+        assert "t05e-n": direction_angle_degrees(entity_ref("urn:case:meas:vec:north"), 90.0) { origin case_input; }
+    }
+
+    evaluate truth(orthogonal_vectors(entity_ref("urn:case:meas:vec:east"), entity_ref("urn:case:meas:vec:north")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NinetyDegreesApartIsOrthogonal);
+}
+
+// ОБРАТНАЯ СТОРОНА ТОЙ ЖЕ ГРАНИЦЫ: одинаковый угол направления —
+// параллельны, а значит НЕ ортогональны. Отрицательная голова даёт
+// FALSE_ONLY.
+test "urn:query:meas-t05f-parallel-is-not-orthogonal" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05f-e": direction_angle_degrees(entity_ref("urn:case:meas:vec:east"), 0.0) { origin case_input; }
+        assert "t05f-e2": direction_angle_degrees(entity_ref("urn:case:meas:vec:east2"), 0.0) { origin case_input; }
+    }
+
+    evaluate truth(orthogonal_vectors(entity_ref("urn:case:meas:vec:east"), entity_ref("urn:case:meas:vec:east2")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ParallelIsNotOrthogonal);
+}
+
+// §2.1: антипараллельные — 180° врозь.
+test "urn:query:meas-t05g-antiparallel-vectors" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05g-e": direction_angle_degrees(entity_ref("urn:case:meas:vec:east"), 0.0) { origin case_input; }
+        assert "t05g-w": direction_angle_degrees(entity_ref("urn:case:meas:vec:west"), 180.0) { origin case_input; }
+    }
+
+    evaluate truth(antiparallel_vectors(entity_ref("urn:case:meas:vec:east"), entity_ref("urn:case:meas:vec:west")));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(HundredEightyDegreesApartIsAntiparallel);
+}
+
+// §2.1: скаляр не есть вектор — направления у него не «не установлено», его
+// нет. FALSE_ONLY.
+test "urn:query:meas-t05h-scalar-is-not-a-vector" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05h-s": specified_by_single_number(entity_ref("urn:case:meas:temp")) { origin case_input; }
+    }
+
+    evaluate truth(vector_quantity(entity_ref("urn:case:meas:temp")));
+
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(ScalarIsNotAVector);
+}
+
+// §2.2, ДЛИНА ВЕКТОРА (E-0152): компоненты 1 м и 2 м — |A| = √5 = 2,2360… →
+// 2,236 м. Корень сертифицированными границами.
+test "urn:query:meas-t05i-magnitude-from-components" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05i-x": scalar_component(entity_ref("urn:case:meas:vec:r"), "x", 1 m) { origin case_input; }
+        assert "t05i-y": scalar_component(entity_ref("urn:case:meas:vec:r"), "y", 2 m) { origin case_input; }
+    }
+
+    evaluate truth(vector_magnitude(entity_ref("urn:case:meas:vec:r"), 2.236 m));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(MagnitudeFromComponents);
+}
+
+// §2.2, КОМПОНЕНТА X ПО УГЛУ: |A| = 10 м, θ = 35° — 10·cos 35° = 8,1915… → 8,192 м.
+// Градусы переведены в радианы отрезком π/180, косинус — от отрезка.
+test "urn:query:meas-t05j-x-component-from-direction" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05j-r": vector_length(entity_ref("urn:case:meas:vec:p"), 10 m) { origin case_input; }
+        assert "t05j-th": direction_angle_degrees(entity_ref("urn:case:meas:vec:p"), 35.0) { origin case_input; }
+    }
+
+    evaluate truth(component_from_direction(entity_ref("urn:case:meas:vec:p"), "x", 8.192 m));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(XComponentFromDirection);
+}
+
+// §2.2, КОМПОНЕНТА Y ПО УГЛУ: 10·sin 35° = 5,7357… → 5,736 м.
+test "urn:query:meas-t05k-y-component-from-direction" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "t05k-r": vector_length(entity_ref("urn:case:meas:vec:p"), 10 m) { origin case_input; }
+        assert "t05k-th": direction_angle_degrees(entity_ref("urn:case:meas:vec:p"), 35.0) { origin case_input; }
+    }
+
+    evaluate truth(component_from_direction(entity_ref("urn:case:meas:vec:p"), "y", 5.736 m));
+
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(YComponentFromDirection);
+}

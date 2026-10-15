@@ -1,0 +1,39 @@
+// Целочисленное прочтение контрапозиции I.47. Имена правил сохранены:
+// `check_smt_invariant.py` канарейкой снимает гард именно у
+// `OukOrthogonionKataPythagoran` в этом пакете.
+
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+use self::{
+    INTEGER_READING,
+};
+
+@source(INTEGER_READING)
+rule OukOrthogonionKataPythagoran(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label grc official "Ἐν τοῖς ὀρθογωνίοις τριγώνοις τὸ ἀπὸ τῆς τὴν ὀρθὴν γωνίαν ὑποτεινούσης πλευρᾶς τετράγωνον ἴσον ἐστὶ τοῖς ἀπὸ τῶν τὴν ὀρθὴν γωνίαν περιεχουσῶν πλευρῶν τετραγώνοις";
+    label ru unofficial "контрапозиция I.47: ни при одной позиции квадраты не сходятся — треугольник не прямоугольный";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b != c * c)
+        and (b * b + c * c != a * a)
+        and (a * a + c * c != b * b);
+    then grc.euclid.stoicheia_i::ouk_orthogonion(t);
+}
+
+@source(INTEGER_READING)
+constraint OrthogonionKaiOukOrthogonionAsymbata(
+    t: grc.euclid.stoicheia_i::Trigonon,
+) {
+    label ru unofficial "инвариант §93.1: не бывает сразу прямоугольным по I.48 и непрямоугольным по I.47";
+    when grc.euclid.stoicheia_i::orthogonion(t);
+    require not grc.euclid.stoicheia_i::ouk_orthogonion(t);
+    severity error;
+    message "I.47/I.48 разошлись: треугольник признан и прямоугольным, и непрямоугольным";
+}

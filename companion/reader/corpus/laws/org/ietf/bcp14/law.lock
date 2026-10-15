@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:1cf0201b4da1f04a7dfef334f9198359b925a99ca8281e6b354cc9eaeaae2eef",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:626227e9c1137aba2ac9e73a217e9e6caf5e43240230972dc33069664aef27bf",
+    "name": "ietf.bcp14",
+    "namespace": "urn:ietf:clir:bcp14",
+    "sourceHash": "sha256:5f3f7ab0f3aec2b79752fe2f018b0f765d2bc276206a21b381622e617a6a2917",
+    "version": "0.1.0"
+  }
+}

@@ -1,0 +1,143 @@
+// Базовое дело демонстрации: полный состав документов. Сцены `run_demo.py`
+// получаются из него ИСКЛЮЧЕНИЕМ документов — программа во всех сценах одна.
+//
+// Пять документов:
+//   A17  приказ финансовой службы о согласовании покупки P42;
+//   R25  чек поставщика на 10 000 RUB по покупке P42;
+//   B91  подлинное банковское подтверждение — но по ЧУЖОЙ покупке P99;
+//   B92  банковское подтверждение по P42;
+//   B93  второе, независимое банковское подтверждение по P42.
+
+language "law.core" version "0.2";
+package demo.expense_evidence version "0.1.0";
+namespace "urn:demo:expense-evidence";
+
+case ReimbursementBase {
+    context {
+        legal_time @2026-03-01;
+        decision_time @2026-03-01T00:00:00Z;
+        knowledge_time @2026-03-01T00:00:00Z;
+        timezone "UTC";
+        evidence_policy ExpenseEvidenceV1;
+    }
+
+    // Кадровый факт организации: политикой он не защищён и приходит делом.
+    assert "assert-incurred": incurred_by(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")) {
+        origin case_input;
+    }
+
+    evidence A17: ApprovalOrder {
+        id "doc-A17";
+        status verified;
+        issuer "urn:demo:issuer:finance-office";
+        observed_at @2026-02-01T09:00:00Z;
+        recorded_at @2026-02-01T09:00:05Z;
+        valid [@2026-02-01, infinity);
+        content_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+        kind "approval_order";
+        purchase entity_ref("urn:demo:purchase:42");
+        employee entity_ref("urn:demo:employee:7");
+    }
+
+    evidence R25: VendorReceipt {
+        id "doc-R25";
+        status verified;
+        issuer "urn:demo:issuer:vendor-beta";
+        observed_at @2026-02-03T12:00:00Z;
+        recorded_at @2026-02-03T12:00:10Z;
+        valid [@2026-02-03, infinity);
+        content_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+        kind "vendor_receipt";
+        purchase entity_ref("urn:demo:purchase:42");
+        employee entity_ref("urn:demo:employee:7");
+        amount 10000 RUB;
+    }
+
+    evidence B91: BankConfirmation {
+        id "doc-B91";
+        status verified;
+        issuer "urn:demo:issuer:bank-alpha";
+        observed_at @2026-02-05T08:00:00Z;
+        recorded_at @2026-02-05T08:00:03Z;
+        valid [@2026-02-05, infinity);
+        content_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+        kind "bank_confirmation";
+        purchase entity_ref("urn:demo:purchase:99");
+        employee entity_ref("urn:demo:employee:7");
+        amount 10000 RUB;
+    }
+
+    evidence B92: BankConfirmation {
+        id "doc-B92";
+        status verified;
+        issuer "urn:demo:issuer:bank-alpha";
+        observed_at @2026-02-06T08:00:00Z;
+        recorded_at @2026-02-06T08:00:04Z;
+        valid [@2026-02-06, infinity);
+        content_hash "sha256:9292929292929292929292929292929292929292929292929292929292929292";
+        kind "bank_confirmation";
+        purchase entity_ref("urn:demo:purchase:42");
+        employee entity_ref("urn:demo:employee:7");
+        amount 10000 RUB;
+    }
+
+    evidence B93: BankConfirmation {
+        id "doc-B93";
+        status verified;
+        issuer "urn:demo:issuer:bank-alpha";
+        observed_at @2026-02-07T08:00:00Z;
+        recorded_at @2026-02-07T08:00:05Z;
+        valid [@2026-02-07, infinity);
+        content_hash "sha256:9393939393939393939393939393939393939393939393939393939393939393";
+        kind "bank_confirmation";
+        purchase entity_ref("urn:demo:purchase:42");
+        employee entity_ref("urn:demo:employee:7");
+        amount 10000 RUB;
+    }
+
+    verification VA17 {
+        evidence A17;
+        document_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+        verifier "urn:demo:verifier:audit-desk";
+        outcome verified;
+        recorded @2026-02-10T10:00:00Z;
+    }
+
+    verification VR25 {
+        evidence R25;
+        document_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+        verifier "urn:demo:verifier:audit-desk";
+        outcome verified;
+        recorded @2026-02-10T10:00:01Z;
+    }
+
+    verification VB91 {
+        evidence B91;
+        document_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+        verifier "urn:demo:verifier:audit-desk";
+        outcome verified;
+        recorded @2026-02-10T10:00:02Z;
+    }
+
+    verification VB92 {
+        evidence B92;
+        document_hash "sha256:9292929292929292929292929292929292929292929292929292929292929292";
+        verifier "urn:demo:verifier:audit-desk";
+        outcome verified;
+        recorded @2026-02-10T10:00:03Z;
+    }
+
+    verification VB93 {
+        evidence B93;
+        document_hash "sha256:9393939393939393939393939393939393939393939393939393939393939393";
+        verifier "urn:demo:verifier:audit-desk";
+        outcome verified;
+        recorded @2026-02-10T10:00:04Z;
+    }
+
+    support A17 supports approved(entity_ref("urn:demo:purchase:42"));
+    support R25 supports expense_amount(entity_ref("urn:demo:purchase:42"), 10000 RUB);
+    support B91 supports paid(entity_ref("urn:demo:purchase:42"));
+    support B92 supports paid(entity_ref("urn:demo:purchase:42"));
+    support B93 supports paid(entity_ref("urn:demo:purchase:42"));
+}

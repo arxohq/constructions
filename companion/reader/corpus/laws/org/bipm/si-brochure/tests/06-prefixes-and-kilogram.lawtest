@@ -1,0 +1,46 @@
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+// §3: миллиграмм — префикс к грамму.
+test "urn:query:si-t06a-milligram" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefixed_si_unit(Milli, Gram));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(PrefixAttachesToUnit);
+    expect applied(LongStandingPrefix);
+}
+
+// §3: префикс к килограмму не присоединяется — FALSE_ONLY, а не «не выведено».
+test "urn:query:si-t06b-millikilogram-forbidden" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefixed_si_unit(Milli, Kilogram));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NoPrefixOnKilogram);
+}
+
+// §3: километр.
+test "urn:query:si-t06c-kilometre" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefixed_si_unit(Kilo, Metre));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// §2.3.4: префикс с единицей со специальным названием — меганьютон.
+test "urn:query:si-t06d-meganewton" {
+    given {
+        context { decision_time @2024-01-01T12:00:00Z; knowledge_time @2024-01-01T12:00:00Z; legal_time @2024-01-01; timezone "UTC"; }
+    }
+    evaluate truth(prefixed_si_unit(Mega, Newton));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,508 @@
+// Разделы 5…5-3: Scrum-команда и три ответственности.
+//
+// ═══ СОСТАВ СЧИТАЕТСЯ АГРЕГАТОМ §59 ПО ЭМПИРИЧЕСКИМ ОТНОШЕНИЯМ ═══════════
+//
+// «The Scrum Team consists of one Scrum Master, one Product Owner, and
+// Developers» и «The Product Owner is one person, not a committee» —
+// числовые пределы состава. Они считаются `count(collect …)` по
+// `product_owner_of`/`scrum_master_of`/`developer_of` — эмпирическим
+// отношениям: агрегат по выводимому предикату упирается в барьер §111
+// (NON_EXECUTABLE_RULE на всё правило). Каждый предел — ПАРА правил по обе
+// стороны границы (ноль и больше одного), а не одно с «≠».
+//
+// «Within a Scrum Team, there are no sub-teams or hierarchies» опровергает
+// соответствие состава эмпирическим фактом; приоритет отдаёт факту.
+//
+// ═══ ПЕРЕЧНИ ОТВЕТСТВЕННОСТИ — ЗАКРЫТЫЕ ПЕРЕЧИСЛЕНИЯ ══════════════════════
+//
+// Руководство перечисляет, за что ВСЕГДА отвечают Developers (четыре пункта),
+// что входит в управление бэклогом у Product Owner-а (четыре) и как Scrum
+// Master служит команде, владельцу продукта и организации (по четыре).
+// Каждый пункт — своё правило с меткой-цитатой: одно основание — одно правило,
+// иначе whynot и argmap не различат, какой из пунктов установлен.
+//
+// «Typically 10 or fewer people» — не норма (00-package.law, решение 5).
+// «If Scrum Teams become too large, they should consider reorganizing» —
+// «should consider», рекомендация без условия и статуса; не формализуется.
+
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+use self::{
+    Organization,
+    Person,
+    SG_S5,
+    SG_S5_1,
+    SG_S5_2,
+    SG_S5_3,
+    ScrumEvent,
+    Sprint,
+    Team,
+    checked_sprint,
+    developer_of,
+    event_of_sprint,
+    organization_of,
+    product_owner_of,
+    scrum_master_of,
+    scrum_team,
+    sprint_ends,
+    sprint_of_team,
+    sprint_starts,
+    timebox_exceeded,
+};
+
+// ═══ Раздел 5. Scrum Team ════════════════════════════════════════════════
+
+relation has_sub_teams_or_hierarchies(t: Team) kind empirical {
+    label en official "the team contains sub-teams or hierarchies";
+}
+relation team_composition_conforms(t: Team) kind institutional {
+    label en official "the team is composed as a Scrum Team: one Scrum Master, one Product Owner, Developers, and no sub-teams or hierarchies";
+}
+relation product_owner_is_one_person(t: Team) kind institutional {
+    label en official "the Product Owner of the team is one person";
+}
+relation product_owner_is_a_committee(t: Team) kind institutional {
+    label en official "the Product Owner accountability of the team is held by more than one person";
+}
+relation increment_delivered(s: Sprint) kind empirical {
+    label en official "a valuable, useful Increment has been created in the Sprint";
+}
+relation usable_increment_created(s: Sprint) kind institutional {
+    label en official "an Increment is born in the Sprint: a Product Backlog item selected for it meets the Definition of Done";
+}
+
+// Условие обязанности — ЭМПИРИЧЕСКОЕ `increment_delivered`, закрытое по
+// домену спринтов, а не выведенное `usable_increment_created`: замыкание
+// §70 над выводимым предикатом объявляет ложным вывод собственных
+// продюсеров (измерено на конституции Claude, ACON-02), а без замыкания
+// обязанность достижения после окна остаётся UNDETERMINED. Выведенная
+// классификация «инкремент родился» живёт в 05-artifacts.law и спрашивается
+// отдельно.
+closure IncrementDeliveredClosure {
+    label en official "a Sprint not recorded as having delivered an Increment delivered none";
+    predicate increment_delivered;
+    domain checked_sprint;
+    snapshot "urn:scrum:snapshot:increment-delivered:2020-11-18";
+    complete_as_of @2020-11-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(SG_S5)
+rule TeamCompositionPresumedConforming(t: Team) defeasible {
+    label en official "The Scrum Team consists of one Scrum Master, one Product Owner, and Developers";
+    when scrum_team(t)
+        and (count distinct p: Person where product_owner_of(p, t)) == 1
+        and (count distinct p: Person where scrum_master_of(p, t)) == 1
+        and (count distinct p: Person where developer_of(p, t)) >= 1;
+    then team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule SubTeamsBreakComposition(t: Team) defeasible {
+    label en official "Within a Scrum Team, there are no sub-teams or hierarchies";
+    when scrum_team(t) and has_sub_teams_or_hierarchies(t);
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+priority SubTeamsBeatPresumptionOfComposition {
+    label en official "established sub-teams or hierarchies prevail over the presumption that the composition conforms";
+    prefer SubTeamsBreakComposition over TeamCompositionPresumedConforming;
+    reason explicit_exception;
+}
+
+@source(SG_S5)
+rule NoProductOwnerBreaksComposition(t: Team) defeasible {
+    label en official "a team without a Product Owner is not composed as a Scrum Team";
+    when scrum_team(t)
+        and (count distinct p: Person where product_owner_of(p, t)) < 1;
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule SeveralProductOwnersBreakComposition(t: Team) defeasible {
+    label en official "a team with more than one Product Owner is not composed as a Scrum Team";
+    when scrum_team(t)
+        and (count distinct p: Person where product_owner_of(p, t)) > 1;
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule NoScrumMasterBreaksComposition(t: Team) defeasible {
+    label en official "a team without a Scrum Master is not composed as a Scrum Team";
+    when scrum_team(t)
+        and (count distinct p: Person where scrum_master_of(p, t)) < 1;
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule SeveralScrumMastersBreakComposition(t: Team) defeasible {
+    label en official "a team with more than one Scrum Master is not composed as a Scrum Team";
+    when scrum_team(t)
+        and (count distinct p: Person where scrum_master_of(p, t)) > 1;
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule NoDevelopersBreakComposition(t: Team) defeasible {
+    label en official "a team without Developers is not composed as a Scrum Team";
+    when scrum_team(t)
+        and (count distinct p: Person where developer_of(p, t)) < 1;
+    then not team_composition_conforms(t);
+}
+
+@source(SG_S5)
+rule TeamAccountableForIncrementEverySprint(t: Team, s: Sprint, a: Date, b: Date) strict {
+    label en official "The entire Scrum Team is accountable for creating a valuable, useful Increment every Sprint";
+    when scrum_team(t) and sprint_of_team(s, t)
+        and sprint_starts(s, a) and sprint_ends(s, b);
+    then duty CreateIncrementEverySprint {
+        bearer t;
+        achieve increment_delivered(s) during [a, b];
+    };
+}
+
+// ═══ Раздел 5-1. Developers ══════════════════════════════════════════════
+
+pub enum DeveloperAccountability {
+    label en official "what the Developers are always accountable for";
+    CreatingSprintBacklog,
+    AdheringToDefinitionOfDone,
+    AdaptingPlanDaily,
+    HoldingEachOtherAccountable
+}
+
+relation developers_accountable_for(t: Team, a: DeveloperAccountability) kind institutional {
+    label en official "the Developers of the team are accountable for the named matter";
+}
+relation committed_to_creating_increment(p: Person, t: Team) kind institutional {
+    label en official "the person is committed to creating any aspect of a usable Increment each Sprint";
+}
+
+@source(SG_S5_1)
+rule DevelopersCommittedToIncrement(p: Person, t: Team) strict {
+    label en official "Developers are the people in the Scrum Team that are committed to creating any aspect of a usable Increment each Sprint";
+    when developer_of(p, t);
+    then committed_to_creating_increment(p, t);
+}
+
+@source(SG_S5_1)
+rule DevelopersAccountableForSprintBacklog(t: Team) strict {
+    label en official "the Developers are always accountable for creating a plan for the Sprint, the Sprint Backlog";
+    when scrum_team(t);
+    then developers_accountable_for(t, CreatingSprintBacklog);
+}
+
+@source(SG_S5_1)
+rule DevelopersAccountableForQuality(t: Team) strict {
+    label en official "the Developers are always accountable for instilling quality by adhering to a Definition of Done";
+    when scrum_team(t);
+    then developers_accountable_for(t, AdheringToDefinitionOfDone);
+}
+
+@source(SG_S5_1)
+rule DevelopersAccountableForDailyAdaptation(t: Team) strict {
+    label en official "the Developers are always accountable for adapting their plan each day toward the Sprint Goal";
+    when scrum_team(t);
+    then developers_accountable_for(t, AdaptingPlanDaily);
+}
+
+@source(SG_S5_1)
+rule DevelopersAccountableToEachOther(t: Team) strict {
+    label en official "the Developers are always accountable for holding each other accountable as professionals";
+    when scrum_team(t);
+    then developers_accountable_for(t, HoldingEachOtherAccountable);
+}
+
+// ═══ Раздел 5-2. Product Owner ═══════════════════════════════════════════
+
+pub enum ProductOwnerAccountability {
+    label en official "what the Product Owner is accountable for";
+    MaximizingProductValue,
+    DevelopingProductGoal,
+    CreatingBacklogItems,
+    OrderingBacklogItems,
+    EnsuringBacklogTransparency
+}
+
+relation product_owner_accountable_for(p: Person, t: Team, a: ProductOwnerAccountability) kind institutional {
+    label en official "the Product Owner is accountable for the named matter";
+}
+relation delegates_backlog_work(p: Person, t: Team, other: Person) kind empirical {
+    label en official "the Product Owner delegates Product Backlog management work to another person";
+}
+relation remains_accountable_for_backlog(p: Person, t: Team) kind institutional {
+    label en official "the Product Owner remains accountable for Product Backlog management despite delegation";
+}
+relation respects_product_owner_decisions(org: Organization, t: Team) kind institutional {
+    label en official "the organization respects the decisions of the Product Owner";
+}
+relation overrides_product_owner_decision(org: Organization, t: Team) kind empirical {
+    label en official "the organization overrides a decision of the Product Owner visible in the content or ordering of the Product Backlog";
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAccountableForValue(p: Person, t: Team) strict {
+    label en official "The Product Owner is accountable for maximizing the value of the product resulting from the work of the Scrum Team";
+    when product_owner_of(p, t);
+    then product_owner_accountable_for(p, t, MaximizingProductValue);
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAccountableForProductGoal(p: Person, t: Team) strict {
+    label en official "effective Product Backlog management includes developing and explicitly communicating the Product Goal";
+    when product_owner_of(p, t);
+    then product_owner_accountable_for(p, t, DevelopingProductGoal);
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAccountableForItems(p: Person, t: Team) strict {
+    label en official "effective Product Backlog management includes creating and clearly communicating Product Backlog items";
+    when product_owner_of(p, t);
+    then product_owner_accountable_for(p, t, CreatingBacklogItems);
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAccountableForOrdering(p: Person, t: Team) strict {
+    label en official "effective Product Backlog management includes ordering Product Backlog items";
+    when product_owner_of(p, t);
+    then product_owner_accountable_for(p, t, OrderingBacklogItems);
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAccountableForTransparency(p: Person, t: Team) strict {
+    label en official "effective Product Backlog management includes ensuring that the Product Backlog is transparent, visible and understood";
+    when product_owner_of(p, t);
+    then product_owner_accountable_for(p, t, EnsuringBacklogTransparency);
+}
+
+@source(SG_S5_2)
+rule DelegationKeepsAccountability(p: Person, t: Team, other: Person) strict {
+    label en official "The Product Owner may do the above work or may delegate the responsibility to others. Regardless, the Product Owner remains accountable";
+    when product_owner_of(p, t) and delegates_backlog_work(p, t, other);
+    then remains_accountable_for_backlog(p, t);
+}
+
+@source(SG_S5_2)
+rule RespectPresumed(org: Organization, t: Team) defeasible {
+    label en official "the organization is presumed to respect the Product Owner's decisions until the contrary is established";
+    when organization_of(t, org);
+    then respects_product_owner_decisions(org, t);
+}
+
+@source(SG_S5_2)
+rule OverrideBreaksRespect(org: Organization, t: Team) defeasible {
+    label en official "an organization overriding the Product Owner's decision does not respect it";
+    when organization_of(t, org) and overrides_product_owner_decision(org, t);
+    then not respects_product_owner_decisions(org, t);
+}
+
+@source(SG_S5_2)
+priority OverrideBeatsPresumptionOfRespect {
+    label en official "an established override prevails over the presumption of respect";
+    prefer OverrideBreaksRespect over RespectPresumed;
+    reason explicit_exception;
+}
+
+@source(SG_S5_2)
+rule OrganizationMustRespectProductOwner(org: Organization, t: Team) strict {
+    label en official "For Product Owners to succeed, the entire organization must respect their decisions";
+    when organization_of(t, org);
+    then duty RespectProductOwnerDecisions {
+        bearer org;
+        maintain respects_product_owner_decisions(org, t) during [@2020-11-18, infinity);
+    };
+}
+
+@source(SG_S5_2)
+rule ProductOwnerIsOnePerson(t: Team) strict {
+    label en official "The Product Owner is one person, not a committee";
+    when scrum_team(t)
+        and (count distinct p: Person where product_owner_of(p, t)) == 1;
+    then product_owner_is_one_person(t);
+}
+
+@source(SG_S5_2)
+rule ProductOwnerAsCommittee(t: Team) strict {
+    label en official "a Product Owner accountability held by several people is a committee, which the Product Owner is not";
+    when scrum_team(t)
+        and (count distinct p: Person where product_owner_of(p, t)) > 1;
+    then product_owner_is_a_committee(t);
+}
+
+// ═══ Раздел 5-3. Scrum Master ════════════════════════════════════════════
+
+pub enum ScrumMasterAccountability {
+    label en official "what the Scrum Master is accountable for";
+    EstablishingScrum,
+    TeamEffectiveness
+}
+
+pub enum ScrumMasterService {
+    label en official "the ways in which the Scrum Master serves the Scrum Team, the Product Owner and the organization";
+    CoachingSelfManagement,
+    FocusingOnHighValueIncrements,
+    CausingRemovalOfImpediments,
+    EnsuringEventsWithinTimebox,
+    ProductGoalAndBacklogTechniques,
+    ClearAndConciseBacklogItems,
+    EmpiricalProductPlanning,
+    StakeholderCollaboration,
+    LeadingOrganizationalAdoption,
+    PlanningImplementations,
+    EmpiricalApproachForEmployees,
+    RemovingBarriersBetweenStakeholdersAndTeams
+}
+
+relation scrum_master_accountable_for(p: Person, t: Team, a: ScrumMasterAccountability) kind institutional {
+    label en official "the Scrum Master is accountable for the named matter";
+}
+relation scrum_master_serves_team_by(p: Person, t: Team, s: ScrumMasterService) kind institutional {
+    label en official "the Scrum Master serves the Scrum Team in the named way";
+}
+relation scrum_master_serves_product_owner_by(p: Person, t: Team, s: ScrumMasterService) kind institutional {
+    label en official "the Scrum Master serves the Product Owner in the named way";
+}
+relation scrum_master_serves_organization_by(p: Person, t: Team, s: ScrumMasterService) kind institutional {
+    label en official "the Scrum Master serves the organization in the named way";
+}
+relation events_kept_within_timebox(t: Team) kind institutional {
+    label en official "all Scrum events of the team take place and are kept within the timebox";
+}
+
+@source(SG_S5_3)
+rule ScrumMasterEstablishesScrum(p: Person, t: Team) strict {
+    label en official "The Scrum Master is accountable for establishing Scrum as defined in the Scrum Guide";
+    when scrum_master_of(p, t);
+    then scrum_master_accountable_for(p, t, EstablishingScrum);
+}
+
+@source(SG_S5_3)
+rule ScrumMasterAccountableForEffectiveness(p: Person, t: Team) strict {
+    label en official "The Scrum Master is accountable for the Scrum Team's effectiveness";
+    when scrum_master_of(p, t);
+    then scrum_master_accountable_for(p, t, TeamEffectiveness);
+}
+
+@source(SG_S5_3)
+rule ServesTeamByCoaching(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Scrum Team by coaching the team members in self-management and cross-functionality";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_team_by(p, t, CoachingSelfManagement);
+}
+
+@source(SG_S5_3)
+rule ServesTeamByFocus(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Scrum Team by helping it focus on creating high-value Increments that meet the Definition of Done";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_team_by(p, t, FocusingOnHighValueIncrements);
+}
+
+@source(SG_S5_3)
+rule ServesTeamByRemovingImpediments(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Scrum Team by causing the removal of impediments to the Scrum Team's progress";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_team_by(p, t, CausingRemovalOfImpediments);
+}
+
+@source(SG_S5_3)
+rule ServesTeamByTimeboxedEvents(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Scrum Team by ensuring that all Scrum events take place and are positive, productive, and kept within the timebox";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_team_by(p, t, EnsuringEventsWithinTimebox);
+}
+
+@source(SG_S5_3)
+rule ServesProductOwnerByTechniques(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Product Owner by helping find techniques for effective Product Goal definition and Product Backlog management";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_product_owner_by(p, t, ProductGoalAndBacklogTechniques);
+}
+
+@source(SG_S5_3)
+rule ServesProductOwnerByClearItems(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Product Owner by helping the Scrum Team understand the need for clear and concise Product Backlog items";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_product_owner_by(p, t, ClearAndConciseBacklogItems);
+}
+
+@source(SG_S5_3)
+rule ServesProductOwnerByEmpiricalPlanning(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Product Owner by helping establish empirical product planning for a complex environment";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_product_owner_by(p, t, EmpiricalProductPlanning);
+}
+
+@source(SG_S5_3)
+rule ServesProductOwnerByStakeholderCollaboration(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Product Owner by facilitating stakeholder collaboration as requested or needed";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_product_owner_by(p, t, StakeholderCollaboration);
+}
+
+@source(SG_S5_3)
+rule ServesOrganizationByLeadingAdoption(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the organization by leading, training, and coaching the organization in its Scrum adoption";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_organization_by(p, t, LeadingOrganizationalAdoption);
+}
+
+@source(SG_S5_3)
+rule ServesOrganizationByPlanning(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the organization by planning and advising Scrum implementations within the organization";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_organization_by(p, t, PlanningImplementations);
+}
+
+@source(SG_S5_3)
+rule ServesOrganizationByEmpiricalApproach(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the organization by helping employees and stakeholders understand and enact an empirical approach for complex work";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_organization_by(p, t, EmpiricalApproachForEmployees);
+}
+
+@source(SG_S5_3)
+rule ServesOrganizationByRemovingBarriers(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the organization by removing barriers between stakeholders and Scrum Teams";
+    when scrum_master_of(p, t);
+    then scrum_master_serves_organization_by(p, t, RemovingBarriersBetweenStakeholdersAndTeams);
+}
+
+// Обязанность держать события в таймбоксе. Условие презюмируется; опровергает
+// его выведенный в 04-events.law факт `timebox_exceeded` любого события любого
+// спринта команды. Носитель — Scrum Master, а не команда: текст адресует
+// «ensuring» именно ему.
+
+@source(SG_S5_3)
+rule EventsPresumedWithinTimebox(t: Team) defeasible {
+    label en official "the events of a Scrum Team are presumed to take place within their timebox until an overrun is established";
+    when scrum_team(t);
+    then events_kept_within_timebox(t);
+}
+
+@source(SG_S5_3)
+rule OverrunBreaksTimeboxKeeping(t: Team, s: Sprint, e: ScrumEvent) defeasible {
+    label en official "an event of the team exceeding its timebox means the events are not kept within the timebox";
+    when scrum_team(t) and sprint_of_team(s, t) and event_of_sprint(e, s)
+        and timebox_exceeded(e);
+    then not events_kept_within_timebox(t);
+}
+
+@source(SG_S5_3)
+priority OverrunBeatsPresumptionOfTimebox {
+    label en official "an established overrun prevails over the presumption that events are kept within the timebox";
+    prefer OverrunBreaksTimeboxKeeping over EventsPresumedWithinTimebox;
+    reason explicit_exception;
+}
+
+@source(SG_S5_3)
+rule ScrumMasterEnsuresTimeboxes(p: Person, t: Team) strict {
+    label en official "the Scrum Master serves the Scrum Team by ensuring that all Scrum events take place and are kept within the timebox";
+    when scrum_master_of(p, t);
+    then duty EnsureEventsWithinTimebox {
+        bearer p;
+        maintain events_kept_within_timebox(t) during [@2020-11-18, infinity);
+    };
+}

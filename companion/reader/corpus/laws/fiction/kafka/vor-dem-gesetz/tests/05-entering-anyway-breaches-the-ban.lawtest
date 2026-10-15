@@ -1,0 +1,17 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// Вошедший вопреки запрету нарушает его — даже если попробовать предложил
+// сам привратник: приглашение стоит в одной фразе с запретом («trotz meines
+// Verbotes») и потому предполагает его силу.
+test "urn:query:vor-dem-gesetz-ban-breached" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+        assert "vg05-1": ohne_erlaubnis_eingetreten(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")) { origin case_input; }
+    }
+    evaluate truth(verbot_verletzt(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,15 @@
+{
+  "dependencyEdges": [],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [],
+  "resolutionHash": "sha256:133c8ce060df3a33dced8fabe4075c5017c920643663b331e9cade7eef895f91",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:0693207d43e39757db40210599e0c2f9c3b7255be721eaa227bc9b036920347f",
+    "name": "scrum.guide",
+    "namespace": "urn:scrum:clir:guide",
+    "sourceHash": "sha256:411cdf6468cc1cff1a62c21b0f8ee447a16807b78ad6dc1bbe3af63dfc76006a",
+    "version": "0.1.0"
+  }
+}

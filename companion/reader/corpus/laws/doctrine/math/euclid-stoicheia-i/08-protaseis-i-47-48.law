@@ -1,0 +1,75 @@
+// Προτάσεις μζ΄—μη΄ (I.47—I.48)
+//
+// Числовая тень: стороны — Integer, «квадрат на стороне» — произведение.
+// Доказательство (ветряная мельница) остаётся в байтах STO_PROP47 / STO_PROP48.
+// pub — для последующего импорта grc.eukleides.pythagoras.
+
+use self::{
+    STO_PROP47,
+    STO_PROP48,
+    Trigonon,
+    orthogonion,
+    pleurai_trigonou,
+    trigonon_synistatai,
+};
+
+pub relation pythagoras_apotelema(t: Trigonon) kind institutional {
+    label ru unofficial "пифагорово соотношение выполнено";
+}
+
+pub relation ouk_orthogonion(t: Trigonon) kind institutional {
+    label ru unofficial "треугольник не прямоугольный по контрапозиции I.47";
+}
+
+@source(STO_PROP47)
+pub rule OrthogonionKataPythagoran(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label grc official "τὸ ἀπὸ τῆς τὴν ὀρθὴν γωνίαν ὑποτεινούσης πλευρᾶς τετράγωνον ἴσον ἐστὶ τοῖς ἀπὸ τῶν τὴν ὀρθὴν γωνίαν περιεχουσῶν πλευρῶν τετραγώνοις";
+    label ru unofficial "I.47: прямоугольный — квадрат гипотенузы равен сумме квадратов катетов";
+    when supported(trigonon_synistatai(t))
+        and pleurai_trigonou(t, a, b, c)
+        and supported(orthogonion(t))
+        and (a * a + b * b == c * c);
+    then pythagoras_apotelema(t);
+}
+
+@source(STO_PROP47)
+pub rule OukOrthogonionKataPythagoran(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.47 контрапозиция: ни при одной позиции квадраты не сходятся";
+    when supported(trigonon_synistatai(t))
+        and pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b != c * c)
+        and (b * b + c * c != a * a)
+        and (a * a + c * c != b * b);
+    then ouk_orthogonion(t);
+}
+
+@source(STO_PROP47)
+constraint OrthogonionKaiOukOrthogonionAsymbata(t: Trigonon) {
+    label ru unofficial "треугольник не бывает сразу прямоугольным по I.48 и непрямоугольным по I.47";
+    when orthogonion(t);
+    require not ouk_orthogonion(t);
+    severity error;
+    message "I.47/I.48 разошлись: треугольник признан и прямоугольным, и непрямоугольным";
+}
+
+@source(STO_PROP48)
+pub rule OrthogonionApoTetragonon(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label grc official "ἡ περιεχομένη γωνία ὑπὸ τῶν λοιπῶν … ὀρθή ἐστιν";
+    label ru unofficial "I.48: квадрат третьей равен сумме квадратов первых двух — прямой угол";
+    when supported(trigonon_synistatai(t)) and pleurai_trigonou(t, a, b, c) and (a * a + b * b == c * c);
+    then orthogonion(t);
+}
+
+@source(STO_PROP48)
+pub rule OrthogonionApoTetragononProtei(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.48: квадрат первой равен сумме двух других — прямой угол";
+    when supported(trigonon_synistatai(t)) and pleurai_trigonou(t, a, b, c) and (b * b + c * c == a * a);
+    then orthogonion(t);
+}
+
+@source(STO_PROP48)
+pub rule OrthogonionApoTetragononDeuterai(t: Trigonon, a: Integer, b: Integer, c: Integer) strict {
+    label ru unofficial "I.48: квадрат второй равен сумме двух других — прямой угол";
+    when supported(trigonon_synistatai(t)) and pleurai_trigonou(t, a, b, c) and (a * a + c * c == b * b);
+    then orthogonion(t);
+}

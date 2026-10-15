@@ -1,0 +1,301 @@
+// Демонстрация §78.2 (DECISION-0126). Четыре сцены одного дела:
+//   1) не тот платёж   — оплата не установлена, возмещение не выполнено;
+//   2) верный платёж   — оплата установлена, возмещение выполнено;
+//   3) исключение B92  — возврат к сцене 1 при второй опоре, снятой вместе с ней;
+//   4) две опоры       — исключение одной оставляет вторую.
+// Сцены 3 и 4 воспроизводятся тем же .lawtest: они отличаются составом
+// документов дела, а не программой.
+
+language "law.core" version "0.2";
+package demo.expense_evidence version "0.1.0";
+namespace "urn:demo:expense-evidence";
+
+// --- Сцена 1: подлинное банковское подтверждение ЧУЖОЙ покупки ------------
+
+test "urn:demo:expense-evidence:test:wrong-payment" {
+    given {
+        context {
+            legal_time @2026-03-01;
+            decision_time @2026-03-01T00:00:00Z;
+            knowledge_time @2026-03-01T00:00:00Z;
+            timezone "UTC";
+            evidence_policy ExpenseEvidenceV1;
+        }
+
+        assert "assert-incurred": incurred_by(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")) {
+            origin case_input;
+        }
+
+        evidence A17: ApprovalOrder {
+            id "doc-A17";
+            status verified;
+            issuer "urn:demo:issuer:finance-office";
+            observed_at @2026-02-01T09:00:00Z;
+            recorded_at @2026-02-01T09:00:05Z;
+            valid [@2026-02-01, infinity);
+            content_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            kind "approval_order";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+        }
+
+        evidence R25: VendorReceipt {
+            id "doc-R25";
+            status verified;
+            issuer "urn:demo:issuer:vendor-beta";
+            observed_at @2026-02-03T12:00:00Z;
+            recorded_at @2026-02-03T12:00:10Z;
+            valid [@2026-02-03, infinity);
+            content_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            kind "vendor_receipt";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        // Подлинный документ, относящийся к ДРУГОЙ покупке.
+        evidence B91: BankConfirmation {
+            id "doc-B91";
+            status verified;
+            issuer "urn:demo:issuer:bank-alpha";
+            observed_at @2026-02-05T08:00:00Z;
+            recorded_at @2026-02-05T08:00:03Z;
+            valid [@2026-02-05, infinity);
+            content_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+            kind "bank_confirmation";
+            purchase entity_ref("urn:demo:purchase:99");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        verification VA17 {
+            evidence A17;
+            document_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:00Z;
+        }
+
+        verification VR25 {
+            evidence R25;
+            document_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:01Z;
+        }
+
+        verification VB91 {
+            evidence B91;
+            document_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:02Z;
+        }
+
+        support A17 supports approved(entity_ref("urn:demo:purchase:42"));
+        support R25 supports expense_amount(entity_ref("urn:demo:purchase:42"), 10000 RUB);
+        support B91 supports paid(entity_ref("urn:demo:purchase:42"));
+    }
+
+    evaluate truth(reimbursable(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// --- Сцена 2: добавлено подтверждение B92 с верными реквизитами -----------
+//
+// Тот же вход плюс один документ. Оплата установлена принятой опорой, три
+// условия возмещения выполнены без противоречия.
+
+test "urn:demo:expense-evidence:test:right-payment" {
+    given {
+        context {
+            legal_time @2026-03-01;
+            decision_time @2026-03-01T00:00:00Z;
+            knowledge_time @2026-03-01T00:00:00Z;
+            timezone "UTC";
+            evidence_policy ExpenseEvidenceV1;
+        }
+
+        assert "assert-incurred": incurred_by(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")) {
+            origin case_input;
+        }
+
+        evidence A17: ApprovalOrder {
+            id "doc-A17";
+            status verified;
+            issuer "urn:demo:issuer:finance-office";
+            observed_at @2026-02-01T09:00:00Z;
+            recorded_at @2026-02-01T09:00:05Z;
+            valid [@2026-02-01, infinity);
+            content_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            kind "approval_order";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+        }
+
+        evidence R25: VendorReceipt {
+            id "doc-R25";
+            status verified;
+            issuer "urn:demo:issuer:vendor-beta";
+            observed_at @2026-02-03T12:00:00Z;
+            recorded_at @2026-02-03T12:00:10Z;
+            valid [@2026-02-03, infinity);
+            content_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            kind "vendor_receipt";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        evidence B91: BankConfirmation {
+            id "doc-B91";
+            status verified;
+            issuer "urn:demo:issuer:bank-alpha";
+            observed_at @2026-02-05T08:00:00Z;
+            recorded_at @2026-02-05T08:00:03Z;
+            valid [@2026-02-05, infinity);
+            content_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+            kind "bank_confirmation";
+            purchase entity_ref("urn:demo:purchase:99");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        evidence B92: BankConfirmation {
+            id "doc-B92";
+            status verified;
+            issuer "urn:demo:issuer:bank-alpha";
+            observed_at @2026-02-06T08:00:00Z;
+            recorded_at @2026-02-06T08:00:04Z;
+            valid [@2026-02-06, infinity);
+            content_hash "sha256:9292929292929292929292929292929292929292929292929292929292929292";
+            kind "bank_confirmation";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        verification VA17 {
+            evidence A17;
+            document_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:00Z;
+        }
+
+        verification VR25 {
+            evidence R25;
+            document_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:01Z;
+        }
+
+        verification VB91 {
+            evidence B91;
+            document_hash "sha256:9191919191919191919191919191919191919191919191919191919191919191";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:02Z;
+        }
+
+        verification VB92 {
+            evidence B92;
+            document_hash "sha256:9292929292929292929292929292929292929292929292929292929292929292";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:03Z;
+        }
+
+        support A17 supports approved(entity_ref("urn:demo:purchase:42"));
+        support R25 supports expense_amount(entity_ref("urn:demo:purchase:42"), 10000 RUB);
+        support B91 supports paid(entity_ref("urn:demo:purchase:42"));
+        support B92 supports paid(entity_ref("urn:demo:purchase:42"));
+    }
+
+    evaluate truth(reimbursable(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// --- Сцена 5: голое утверждение защищённого факта политику не обходит -----
+//
+// Дело утверждает `paid(P42)` прямо, документов оплаты не предъявляя.
+// Утверждение не входит в поддержку (§78.2.4), и возмещение не выполнено.
+
+test "urn:demo:expense-evidence:test:bare-assertion-does-not-bypass" {
+    given {
+        context {
+            legal_time @2026-03-01;
+            decision_time @2026-03-01T00:00:00Z;
+            knowledge_time @2026-03-01T00:00:00Z;
+            timezone "UTC";
+            evidence_policy ExpenseEvidenceV1;
+        }
+
+        assert "assert-incurred": incurred_by(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")) {
+            origin case_input;
+        }
+
+        assert "assert-bare-paid": paid(entity_ref("urn:demo:purchase:42")) {
+            origin adjudicated;
+        }
+
+        evidence A17: ApprovalOrder {
+            id "doc-A17";
+            status verified;
+            issuer "urn:demo:issuer:finance-office";
+            observed_at @2026-02-01T09:00:00Z;
+            recorded_at @2026-02-01T09:00:05Z;
+            valid [@2026-02-01, infinity);
+            content_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            kind "approval_order";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+        }
+
+        evidence R25: VendorReceipt {
+            id "doc-R25";
+            status verified;
+            issuer "urn:demo:issuer:vendor-beta";
+            observed_at @2026-02-03T12:00:00Z;
+            recorded_at @2026-02-03T12:00:10Z;
+            valid [@2026-02-03, infinity);
+            content_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            kind "vendor_receipt";
+            purchase entity_ref("urn:demo:purchase:42");
+            employee entity_ref("urn:demo:employee:7");
+            amount 10000 RUB;
+        }
+
+        verification VA17 {
+            evidence A17;
+            document_hash "sha256:a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a17a";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:00Z;
+        }
+
+        verification VR25 {
+            evidence R25;
+            document_hash "sha256:2525252525252525252525252525252525252525252525252525252525252525";
+            verifier "urn:demo:verifier:audit-desk";
+            outcome verified;
+            recorded @2026-02-10T10:00:01Z;
+        }
+
+        support A17 supports approved(entity_ref("urn:demo:purchase:42"));
+        support R25 supports expense_amount(entity_ref("urn:demo:purchase:42"), 10000 RUB);
+    }
+
+    evaluate truth(reimbursable(entity_ref("urn:demo:purchase:42"), entity_ref("urn:demo:employee:7")));
+
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}

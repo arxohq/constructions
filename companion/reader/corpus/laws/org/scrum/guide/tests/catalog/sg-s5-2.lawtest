@@ -1,0 +1,40 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-DELEGATIONKEEPSACCOUNTABILITY" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": product_owner_of(entity_ref("urn:law:catalog:delegationkeepsaccountability:v0"), entity_ref("urn:law:catalog:delegationkeepsaccountability:v1")) { origin case_input; }
+        assert "cat-1": delegates_backlog_work(entity_ref("urn:law:catalog:delegationkeepsaccountability:v0"), entity_ref("urn:law:catalog:delegationkeepsaccountability:v1"), entity_ref("urn:law:catalog:delegationkeepsaccountability:v2")) { origin case_input; }
+    }
+    evaluate truth(remains_accountable_for_backlog(entity_ref("urn:law:catalog:delegationkeepsaccountability:v0"), entity_ref("urn:law:catalog:delegationkeepsaccountability:v1")));
+    expect truth_status == TRUE_ONLY;
+}
+
+// 
+test "CATALOG-ORGANIZATIONMUSTRESPECTPRODUCTOWNER" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": organization_of(entity_ref("urn:law:catalog:organizationmustrespectproductowner:v1"), entity_ref("urn:law:catalog:organizationmustrespectproductowner:v0")) { origin case_input; }
+    }
+    evaluate positions();
+    expect evaluation_status == COMPUTED;
+    expect position(RespectProductOwnerDecisions, ACTIVE);
+}
+
+// 
+test "CATALOG-PRODUCTOWNERACCOUNTABLEFORITEMS" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": product_owner_of(entity_ref("urn:law:catalog:productowneraccountableforitems:v0"), entity_ref("urn:law:catalog:productowneraccountableforitems:v1")) { origin case_input; }
+    }
+    evaluate truth(product_owner_accountable_for(entity_ref("urn:law:catalog:productowneraccountableforitems:v0"), entity_ref("urn:law:catalog:productowneraccountableforitems:v1"), CreatingBacklogItems));
+    expect truth_status == TRUE_ONLY;
+}

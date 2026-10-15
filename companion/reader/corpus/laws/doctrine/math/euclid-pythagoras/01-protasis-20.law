@@ -1,0 +1,25 @@
+// Целочисленное прочтение I.20: байты принадлежат `grc.euclid.stoicheia_i`,
+// здесь — те же гарды над импортированным треугольником, чтобы SMT-атака
+// трихотомии видела I.20 в CLIR прочтения (как IntegerDivides видит divides).
+
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+use self::{
+    INTEGER_READING,
+};
+
+@source(INTEGER_READING)
+rule TrigononEstin(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label grc official "αἱ δύο πλευραὶ τῆς λοιπῆς μείζονές εἰσι πάντῃ μεταλαμβανόμεναι";
+    label ru unofficial "I.20, целочисленное прочтение: тройка сторон составляет треугольник";
+    when grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a + b > c) and (b + c > a) and (a + c > b);
+    then grc.euclid.stoicheia_i::trigonon_synistatai(t);
+}

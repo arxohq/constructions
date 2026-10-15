@@ -1,0 +1,4154 @@
+{
+  "state": "release_ready",
+  "rights": "accepted for the curated noncommercial scope",
+  "source_revision": "01bf047e392252b92f6abebc5408428ad47cec32",
+  "binary": {
+    "binaryHash": "sha256:f92d66559467a23091c58e4d7cdf66666363e713c9b1b3b183e31ceff3c54433",
+    "lawql": {
+      "language": "lawql/1",
+      "queryResult": "0.1"
+    },
+    "semantics": [
+      "law.core/0.2"
+    ],
+    "std": [
+      {
+        "language": "0.2",
+        "std": "0.2.0"
+      }
+    ],
+    "tool": "0.2.4"
+  },
+  "binary_sha256": "f92d66559467a23091c58e4d7cdf66666363e713c9b1b3b183e31ceff3c54433",
+  "sources": {
+    "corpus/laws/doctrine/chem/acid-base/01-definitions.law": {
+      "sha256": "47a17a6d63626c09d16f34ea6fdb8115b495c60f39792887e8446c4f30389d7f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/chem/acid-base/02-readings.law": {
+      "sha256": "75c83caa074d015108022b05e97a366c46182e1921a74ce98fff9b249b80bc42",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/chem/acid-base/law.lock": {
+      "sha256": "b697c59ba0815b740cf273c9e0874cb7df4cdf580b5a08da787899e1195cc6d3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/chem/acid-base/law.toml": {
+      "sha256": "e084b70f800b19038d4d6449f8a582c92fdc30b768b5be71abe4961a83d9357f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/chem/acid-base/tests/chem-acid-base.lawtest": {
+      "sha256": "d30d020e4fefab5cefe36882a0fa12f143235ef2bda7b29d1d526d6916024fc6",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/00-package.law": {
+      "sha256": "a1cb6fe64b65433e9dd64796d416df3eaa910f889247773e48d4594818ea6df3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/01-protasis-20.law": {
+      "sha256": "446b0a3f88f8ddcf09ec5edf2398113ac9737712d7da5eba1f406409919044ac",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/02-protasis-47.law": {
+      "sha256": "af35c11626ac25ae78ac9bd2528e2acacc944983802046ac2840261221025fff",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/03-protasis-48.law": {
+      "sha256": "dbd50aef0fbca4c56487e9b3c58cf238d0316b10ba83ca5764d20feb7a71a2ac",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/04-protasis-ii-12-13.law": {
+      "sha256": "df0243349696dd2fa34ec7b915fdfd3c7876099a386eab14d1ecd32899dadc17",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/audit.ru.md": {
+      "sha256": "6b4d861ee470115551e296d9baa1098de591b1dfbcb2aea8ca4e2601c4213088",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/law.lock": {
+      "sha256": "b904de1f1672d52f943e776be30a9131a38d290abfcc065ed50e59e44c7a4f51",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/law.toml": {
+      "sha256": "0cbd8c0e386e9931d8a782b99c01fb0c60ee608ca7d5acc8d4226fb21faca752",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/sources.law": {
+      "sha256": "cd8bcb368f046d68c32ffe78a4af61ff989655d80d13385f1d2ad121a4926fc5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/sources/euclid-pythagoras/articles.json": {
+      "sha256": "e55069681f6b54158e9bf4f78e40494fae0375eaa7bc5455a715ed51452bf758",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/sources/euclid-pythagoras/grc-ii.txt": {
+      "sha256": "4170cfbcc7d200e88b9390cf21c4eb4b5e2584c4d693699de62e911912904912",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/sources/school-reading.txt": {
+      "sha256": "c867c55f7c14174240e93c9808e4ae6a9814d5a8221cdc11b4f0040874fe842c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/01-aigyptiako-345.lawtest": {
+      "sha256": "77bc25a46d5f1f30cbacdc101a82c3dcd12e3e14a36cdf244fa04de9dec93d59",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/02-ekfylismenon-123.lawtest": {
+      "sha256": "1e1450e60cd4e80f4fe047c74f666998bff0e6d926fb634d197d069c1bef4b96",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/03-oxygonion-456.lawtest": {
+      "sha256": "1f7a8e7e6e2e71ac872207bb457da2678afcc5b3ece5e5b0c672cd956b0ba662",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/04-enantiosis-234.lawtest": {
+      "sha256": "512569f4c90e3d777385d0102c2f6691ace2654a043d2197d44e832eecd52e25",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/05-pyle-033.lawtest": {
+      "sha256": "221af3ad7207aaeed4186da68a3c7f892d27fe5b0cdcd1843c761f148732dd91",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/06-orthogonion-pros-protei-543.lawtest": {
+      "sha256": "ada009ff898ef9669f6f58c1efa1f30097ffb30c58fea2b197821fd8b0129813",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/07-orthogonion-pros-deuterai-354.lawtest": {
+      "sha256": "401811147c244495800e4813668cad17ab66a5a40464e188ff3716215f8b7703",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/08-ouk-orthogonion-717.lawtest": {
+      "sha256": "1909e2d70d8741898b7ae71b4b028997003e8feefdf1254454de3c933ccfee48",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/09-oude-trigonon-000.lawtest": {
+      "sha256": "4690b81558365d08395a64410cc1c71edb5302f84d8a46fdce6b57f0b1517dfe",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/10-trigonon-estin-111.lawtest": {
+      "sha256": "f4a9f69a0b356b16357780a177210fe5c8435d5fee1e9d997e1e1756ae5085ef",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/11-enantiosis-arnetikai-pleurai.lawtest": {
+      "sha256": "00df024b87b418b73fb8191a257d84da54ca76c4b17467e46ecef4c3caa0a288",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/12-amblygonion-234.lawtest": {
+      "sha256": "185f9c24ff6bddcb9dd39220126cbcb668adc1012be0252f0f3a5c824c6572d0",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/13-oxygonion-456.lawtest": {
+      "sha256": "456242800e3ac9a9b382f871f3c688d1573bb4664b65289cd01f44689451df26",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/14-orthogonion-oute-amblygonion-345.lawtest": {
+      "sha256": "5498aaa4de7e0659739f366006783fd5f0edbab9a7fb147337ebc774d1740a8a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/15-smt-amblygonion-pros-tritei-267.lawtest": {
+      "sha256": "adbe47310b55c43d3493830ba258a6c1dff81bd497613020314b582163ea975a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/16-smt-amblygonion-pros-protei-542.lawtest": {
+      "sha256": "0bf62cff30bdc80e013c88e98448ac912082da3625ba71db8aeabb951b95abdb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/17-smt-amblygonion-pros-deuterai-474.lawtest": {
+      "sha256": "1d963264b31330a8cfa4ff0818645beca43d77186df3cb4d395d731581e90ed6",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/18-smt-oxygonion-331.lawtest": {
+      "sha256": "c7ed2a1059f2f8e2b07fbde32fdbbf4469a33aa09e462ec419e41eaa61f5d0d0",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-pythagoras/tests/pythagoras.lawtest": {
+      "sha256": "2cbc221492313a3c504f7d59cb1c808e1bfdda48bc556c2006e5c0b5c8c4b46a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/00-package.law": {
+      "sha256": "dc940eb7de5f59d5c89e72487403f9a0454e2db653a7f52ff080d6152c06d89a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/01-articuli-45-48.law": {
+      "sha256": "70183e5b12e1d4d8b3a4d12f1b64492ab725953c0b832dfc83409163986d4bea",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/02-articuli-49-50.law": {
+      "sha256": "8c9dfb45a14d6ad441f2ad85f14e0c16d49d3e69f0baacc28d675d1f20dcc41b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/audit.ru.md": {
+      "sha256": "3ae61e269b0feac92f599825c2df4009db4d1bcd5890299202ea045c401bd592",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/law.toml": {
+      "sha256": "b0f28309e03979b9e58acb9c8e483f17b5204357d8948537e0a7e17940e8ba26",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/sources.law": {
+      "sha256": "ae0de95fb8743b439603c0de2393623e3aea2402174e4165cc00767aa35ff87d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/sources/gauss-theorema-fermatianum/articles.json": {
+      "sha256": "f10d64db623dcf7e252cf37430363f5d7c302539e3051b04d7a445b56776df09",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/sources/gauss-theorema-fermatianum/la.txt": {
+      "sha256": "016db01192786f6663289e3789b5ae42e1e2ff940a94f0025e20e0c1197556ab",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/01-probatio-7-basis-2.lawtest": {
+      "sha256": "b292b9efd85861ef5eb703ec9ffc6291025e6184ef785c18b4aba57511142ba3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/02-primus-7-praesumitur.lawtest": {
+      "sha256": "6e814baeddb6900b331ca9cfb69954c01d55f4f9af20e89ad9442b0c2c77051d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/03-pseudoprimus-341-basis-2.lawtest": {
+      "sha256": "c03691f638f281c63fafb72bc4383e88c4172db6b315b869d22f02a32b450df4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/04-probatio-341-basis-3-cadit.lawtest": {
+      "sha256": "6569e4187aa7fd0a0b604d51110684affaff51d1325fcdf834323fbcc0931b22",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/05-primus-341-divisore-victus.lawtest": {
+      "sha256": "8920229ab8d27e60b63266bbd3f0f349bbfe835e3e4f58554382008ac53565ac",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/06-carmichael-561-basis-2.lawtest": {
+      "sha256": "732b651f051ecee7a9ccf5c821cd0e47a40bcc60af6d3df7ae42f82e0359f9eb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/07-carmichael-561-basis-7.lawtest": {
+      "sha256": "82a33109d199aa738c75ee4843c41fa25ae90e4412e33a675ad0712665d9b80b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/08-primus-561-divisore-victus.lawtest": {
+      "sha256": "2d88af6e424c6d2ed09e906a2345f8149ac29d075da872e495522c134130022f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/09-divisor-non-metiens-nihil-agit.lawtest": {
+      "sha256": "cff57a2c9df9a278b9ba1061377dac08f9fd99019c93b964004995b4ee696fc1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/10-vestigium-falsum-in-gradu.lawtest": {
+      "sha256": "acd22e172547f30f9a3794f9be590d332920f5a1232f211a122c1ad71ad7ec8c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/11-vestigium-falsum-in-duplicatione.lawtest": {
+      "sha256": "f7e67dee5da45cd38d6c5f96ed81077a3db5791fa1e357ef41f8049aa849a590",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/12-vestigium-ruptum.lawtest": {
+      "sha256": "f9336716b5555606c15e9982a1ce4a8d6cf0a7bcec9dcf1b4d73f88f81dbc04c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/13-compendium-3-ad-1000-mod-13.lawtest": {
+      "sha256": "db69be7e82ad78ce9509f730251075be84f70505cd45f7c6de865491dbf5de9d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/14-probatio-per-ordinem.lawtest": {
+      "sha256": "3be03eb5a553d56a35d4d194c86a92eac6bb7fe7871c18ec3435f88da4c9d331",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/15-ordo-anticipatus.lawtest": {
+      "sha256": "2d53af15e3b18d9f2d91cb654504ea9b46b83649cfdc01a1f248c2dd8a020b09",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/fermat.lawtest": {
+      "sha256": "d44459ad7933eccf305dd2e3e9f7953bd59fc9413c2c19050f0c1a04bfce72cf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/00-package.law": {
+      "sha256": "8202d41283aec5904ed782c0c2d8759746948241030f446f50c1fa99e5cda4b9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/01-verknuepfung.law": {
+      "sha256": "06fdf090867a6d51a24d5d60b6ddbcd3709bd7098325ab95ea2effc814f9e38c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/02-anordnung.law": {
+      "sha256": "25b55890a82c92cb5035b093ea74c88b707e217c4b1d341eb5ea1ee3dbda736e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/03-parallelen.law": {
+      "sha256": "a6c28f839c5469eb8985da95a1fa1c05f1acc9f07de7b252fb35364956b24ac4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/audit.ru.md": {
+      "sha256": "a54318ac61114585e599c05af63ee52c117733b902a54bb41f43fdb5623494a7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/law.lock": {
+      "sha256": "1519becd13416e93b76b86edbc76fc7455bc1ee3f210b1781acedd9e85a61707",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/law.toml": {
+      "sha256": "9593074d5725c25c4def1f97306511289e8ffc593099303f31bfb49c3ab2d60f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/sources.law": {
+      "sha256": "2163484a4b29757926881ece61bf15846d0e3abdecfc13be30a0ebc5f814e7fb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/sources/hilbert-grundlagen/articles.json": {
+      "sha256": "d87235ff46641fec15b55aa79c23f846f365c6b78beaf241122e6bc8868f6a56",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/sources/hilbert-grundlagen/en.txt": {
+      "sha256": "a0d1553a7360b4cc10c81a97c2fbdeea13ac634fc8ec00fc2a3d1c5da2b9ffbf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/01-gerade-meidet-punkt.lawtest": {
+      "sha256": "53de1b40266a7bf5c952d029ca26f5af6dc0e252b9560f56b6da150a544173f5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/02-zwei-geraden-fallen-zusammen.lawtest": {
+      "sha256": "a6877d15bfbaa80c3a5651b95e97d7ddf609ac0aa0978aabd3316f29965c8ef2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/03-dreieck-aus-zwei-abschluessen.lawtest": {
+      "sha256": "33252dadd31313c7d0d94dd6dd692c140f023b1273c21e2a613addd426eff357",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/04-book-point-outside-figure.lawtest": {
+      "sha256": "26390b6b975cdee5e1da5734c7a9a0e623aee5985ee320bebf7ba06205fe95d3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/05-book-point-declared-without-incidence.lawtest": {
+      "sha256": "0e27536fec323b41568a09a0707f3949bed762b46a51ce8376ba2f85ac5c86c0",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/06-playfair-eine-parallele.lawtest": {
+      "sha256": "f7a8619caa519471e8f86595d78c53ab6e7a46d0892bb030d394408c9c0b67eb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/hilbert-grundlagen/tests/07-playfair-zwei-parallelen.lawtest": {
+      "sha256": "b1b1d8b27fc5cd9ba9101585beca0954dacc6be4b94153b9a31e9b83930a2730",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/00-key.law": {
+      "sha256": "2eb83bec58535fd63dc47fff378fba0e212ed1a4e8d170478bb50e9090b3d0fd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/01-verdicts.law": {
+      "sha256": "93c4fae0e087880f474dd26e85bdf3e9b3594cfdb9828e4b2d44773807a57315",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/02-preparation-and-boundaries.law": {
+      "sha256": "ed66858dd785a53f7c62048039cf6e5f18fda31ab6fdd0fe56b73f68776ef9cf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/audit.ru.md": {
+      "sha256": "aca24d8b361aadb2c6d3aeef281dc0fea93126eb850047ec5f2fde45c5718673",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/gyromitra-boil-count.lawparam.json": {
+      "sha256": "ef2a5effd6d592192df6a87a5a8c0d180450f192505a07567daeb9df4d92ff59",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/gyromitra-boil-minutes.lawparam.json": {
+      "sha256": "de03a7f44e3e1942d257b60a3e6af4866042e9483961e41c72bf0e83901e1b4a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/latency-syndrome.lawtable.json": {
+      "sha256": "71f2ad3b153c70b0047fa638c6d7123fe108e211a249ff9019bda8b40837837f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/law.lock": {
+      "sha256": "111a72b164ec30a52a388d41b8f64551a6aad4bc6a7f43d938826ced3d71a79c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/law.toml": {
+      "sha256": "78f565d059f435912d39c903e031cec69f749173ac20ba94c77ceb48721ddf44",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/loophole-goal.json": {
+      "sha256": "889fb759ed49f0f77b3b8871f67c22a0a535d4447376965900624a29e9a33fef",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/package.law": {
+      "sha256": "60547f1896de19978ba49c51d2986aa8990b37ec144ff563757e338f0f6f5b43",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/sources.law": {
+      "sha256": "0870ca83aff35c773df0816dfcc6649b11d5485c22ecc0c8b02fac5f1654f8a3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/sources/opredelitel/articles.json": {
+      "sha256": "56d25eeaf6c43aecfa5adbf6b0ec09bbb3dfbbe4fa94626b89ffab6fbbe87bfd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/sources/opredelitel/ru.txt": {
+      "sha256": "735bc3286cda9dafa573bac55b382aa1319bd97e3e5cae6d58583c5efe301f81",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/tests/01-no-spore-print-is-neither.lawtest": {
+      "sha256": "d4d4583fb935f84dff6b384122956e6a75fe37f1178f52bebd10a75ab68f2337",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/tests/02-book-presumption-stands.lawtest": {
+      "sha256": "7218a3eb261af485e16247d3241778a037d3187c1aca013c606356ead4a25df6",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/myco/opredelitel/tests/03-book-verdict-lifts-bar.lawtest": {
+      "sha256": "c663fb6092863c22d5679e3fba2f93d706a8deaa22097829da8c79900de4af96",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/01-tor.law": {
+      "sha256": "5e006fcf08d10569e2d7af73501d782efb90ae53069fe1fddf9ca75b2c516dfd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/02-erlaubnis.law": {
+      "sha256": "fdfd1d87da0d3cfdeebcefabd31bf11185fc0ff939f8781958ea6499a55b2023",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/03-versuche.law": {
+      "sha256": "d3171891cd1cb59af7ae0862832a138d6923318593c8c73ca2ce413ae0f7d6f3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/04-verfahren.law": {
+      "sha256": "a2d9dde73ef6b901edf93d10438bb7a5d7995692d62a8c9ab7b74c11c6db8edd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/05-bestimmung.law": {
+      "sha256": "7d280e9bcdb958d2af4f4b1c4d73256ef56e4d0b2df65433f8520ce4fdcca0f7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/06-auslegung.law": {
+      "sha256": "82dc81fb033daae36dfd4804dd5994a75460617040a80734535dda0c1a2f1da3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/README.ru.md": {
+      "sha256": "b304ca27396af020cb6fe89a0c54f7b06509237bfc9d4689f2ecda2867efc158",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/audit.ru.md": {
+      "sha256": "eadef9ea6a2091b79c6dc562b8c33bc436e96bb4ea90e2546dfcef8700b6a048",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/i18n/en.json": {
+      "sha256": "e577ca33641a97ab8e2bab9e7ddc3afd9bc162ee467cde61ce3212079372f13b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/law.toml": {
+      "sha256": "4de3962aa315df120e3ad7e7570661a18d74769a2b068a4b26993a925a89e7b5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/package.law": {
+      "sha256": "9ddc26616e5edb2b68f623eca1c0d113eff8dc412edc45375ac00719daa9f499",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/sources.law": {
+      "sha256": "3b575924556333133adc916e912d9879c484944488732db0f31f772f1e99b7b8",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/sources/vor-dem-gesetz/articles.json": {
+      "sha256": "24fd2f3be08f00dd00b29e221a7b5e13833ebc691d35395ebc1bb55f72a539a9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/sources/vor-dem-gesetz/de-prozess-im-dom.txt": {
+      "sha256": "d3e280fb6145fe346c445bae9ddb503c7400d96894ea390d13f13a32bfb6d825",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/sources/vor-dem-gesetz/de.txt": {
+      "sha256": "bfca5c5f92ef6346b48014b6b617ebb5eb8bc9cdc308fc8d7d49069bc3cd1bcd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/01-entry-requires-the-doorkeepers-judgment.lawtest": {
+      "sha256": "a30dfcae7c6a7a4ff6042af02d89e868ef77ef0104e0bc6d5599077d5ec08bf4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/02-doorkeeper-grants-entry.lawtest": {
+      "sha256": "013e9acf8f30c4a77c277cfa6bb27e38e068e240440abd903be876c0a3d91e13",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/03-doorkeeper-refuses-closes-question-not-truth.lawtest": {
+      "sha256": "0e504505e883a4854f0d28a6b03a1136d12d7cf5626b6bd88c2754075bfd4aa9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/04-way-is-free-without-any-judgment.lawtest": {
+      "sha256": "edf9e1e6223d2bf2bcc2e1a78a4bc4ffdee0d572bfb3e78fcc0445665383de6d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/05-entering-anyway-breaches-the-ban.lawtest": {
+      "sha256": "260352de1772a826ca7986be2f96b44cb85f064b0140274e700d6457de9b252a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/06-no-sanction-is-named.lawtest": {
+      "sha256": "0ab16901c34198123edc7da79a4a4cf2a175edd047bdac415f45f81e0899b163",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/07-destination-unknown-before-the-last-word.lawtest": {
+      "sha256": "3558e6f88c7cbdd25b3272d4f104445035bd4079c258f32c5bfb16148d6c1d66",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/08-destination-revealed-by-the-last-word.lawtest": {
+      "sha256": "1e6ccefd2a4279e30172d41be51152199bca08749edd153b7c4ac27658e58a39",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/09-gifts-accepted-create-no-claim.lawtest": {
+      "sha256": "31852c652ba3810432effdbe2cc6351209858cd2528d1ba68492bcb6ceb4db84",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/10-all-attempts-do-not-move-the-answer.lawtest": {
+      "sha256": "806869f810858f0ebae8394332c5612b4128b0a3c2fa830cf48421d61d96fba3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/11-closure-is-declared-not-narrated.lawtest": {
+      "sha256": "5c6056530eaa81ad207213f7b0a44e18586e4c5f62bbee01dedee4b2bf90d613",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/vor-dem-gesetz.lawtest": {
+      "sha256": "6b48be9aed59624600f0ab0832ac6cd866b13dc10eae34afa7e352dca26ebc1d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/00-package.law": {
+      "sha256": "0ca97fcca503292fa47d444c3c5d36fb012d7b77a25f1d1ab5c340d5b27817f8",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/01-sources.law": {
+      "sha256": "cffa29117c85289df1eb0dc42606805006d999e786cdf80c6f66a84018aa62a2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/02-yqsham-tulgalar.law": {
+      "sha256": "95f1884a9a7d77fe0aa21cbfed7e1bb36cd819d8929dbe6f1910bcc27ebfc07b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/audit.ru.md": {
+      "sha256": "764f4315e53b8c989cdc6e91eb356d2522efaefd964f5837becfccc3f92bdfbd",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/law.toml": {
+      "sha256": "1ab8e2a4187af7d2cbab366e70bdd46bbe21505a348d65ffad747b595b5efabf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/sources/yqsham-tulgalar/anyqtagysh-soz-sazy-kk.txt": {
+      "sha256": "9a5c6abb0dd3e608f36b432129b7f556e5dae67a91b7d11130dd4746da4248f3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/sources/yqsham-tulgalar/articles.json": {
+      "sha256": "6625006f4fba0325275baebba393b92bc4b684259dd09cbaac4c2d9f7f89f730",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/kz/grammar/yqsham-tulgalar/tests/grammar-yqsham-tulgalar.lawtest": {
+      "sha256": "db93cdba423caf22d56918c422b0c7888de9a41dbc93b00849ec12715d58322e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/01-defining-constants.law": {
+      "sha256": "756836ef5252f922483e4eabc4f73714ca27e4395337cb35cac7546a87d4cb0c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/02-base-units.law": {
+      "sha256": "41970e1ef25b50610d76f36cbc79451ed96b541604b638c9b7c55c46a81fc6f5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/03-derived-units.law": {
+      "sha256": "f78aed794119d88e0d2c7d1a030e7592400410dbb647f9b01cd6836f4d8dae45",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/04-prefixes.law": {
+      "sha256": "6a9fd108c102a996e6c413f8a64210513105e5fe826d4cb4261785a06ee2cdf4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/05-non-si-units.law": {
+      "sha256": "d83df89eb9a26c8dad5ef732a09a160ea1df5e60e1a703967c9efa38d0879c43",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/06-algebra.law": {
+      "sha256": "476d0a056eb3c0e474f89febe1b6fe6b83261578a3ebe2ed49ebf4ca11805f4c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/07-celsius.law": {
+      "sha256": "bad5649511a4a02309e673730a1ed6cc593102c7fe74e9fb33d01e321c5a7158",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/law.toml": {
+      "sha256": "a2d22cb2468316651a0153184236340a367c0a1db59a7b213d24cad5f2f1dcad",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/package.law": {
+      "sha256": "6d7c0d0949c5f1140621abc68f6be8c039cf46d2cdb90a5bd93f6f92be985505",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/sources.law": {
+      "sha256": "a0fab6f29df3f81aaaaebd86ae7bb21bb1c40be673f555b622dd19953f62bc0e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/sources/si-brochure/en8.txt": {
+      "sha256": "75189f3babd57d9246af75c773507d027a0df049e5fb9eceb71fb9bb958f60e1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/sources/si-brochure/en9.txt": {
+      "sha256": "e4de27dc33f988f97fc94da61a28830deb61d82944ff9023c1b8e8e119f2b980",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/sources/si-brochure/fr9.txt": {
+      "sha256": "bceec64d96fc9c791aea38592c93bfa852600adecddfcac295c155d3646456b9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/01-kilogram-redefinition.lawtest": {
+      "sha256": "045cef584013bf96566590aadec544bcbf6aa9424bd7aeeb0c79308dba4386b5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/02-units-unchanged-across-editions.lawtest": {
+      "sha256": "95f270df1edb476331511c6d01b630dc54692f0d7976f7114c92b16248079bae",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/03-ampere-kelvin-mole-editions.lawtest": {
+      "sha256": "516840a2d6012ba9133f2d09b6c6773c106858254ff8a3fb415cb5567402c876",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/04-defining-constants.lawtest": {
+      "sha256": "0087c04b2a930168cfdb7fc513b9ec198dc244fa8ca42f1b46eb6f13610f7dc5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/05-derived-units.lawtest": {
+      "sha256": "2d4ef36cd39dc03861c2ec9a115dd7f9eafb6499014ed3a176c2981e4be460cf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/06-prefixes-and-kilogram.lawtest": {
+      "sha256": "a7a836704e9dc86cb328246a6cc2d80a06a73f50f29b6a30a08e7228f4afcf39",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/07-compound-prefix.lawtest": {
+      "sha256": "6432c66e9842f292ddd6c2511a30bda3dd7535ce1f84f6a5064c460c0b5adad8",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/08-prefixes-2022.lawtest": {
+      "sha256": "419eb85d69ddefb48e3671a2fe99b8d25d32b8daafcda3d0a8a42c114b3ba02b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/09-non-si-units.lawtest": {
+      "sha256": "bc724f71994af3c2db6223fa9d3fada8060d44cf1596039ffc28d2df55eccff3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/10-why-not-before-redefinition.lawtest": {
+      "sha256": "5edef8d59f678786f1639c72cad5809ba4d03b58490f8be35e84892f8a977215",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/11-algebra-verifies-tables.lawtest": {
+      "sha256": "c00855ae94871afff80e6cf464fcb3dc89988f05773ff0ba63c77b9b412412c3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/12-algebra-remaining-rows.lawtest": {
+      "sha256": "5ae3673e5fae992e52bd1136afc4059f20801e3b754f600cfc6952f75117c44c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/bipm/si-brochure/tests/13-celsius.lawtest": {
+      "sha256": "7f706753d76dc782cb6f13daa4a12102e698aff6f2af8a8ee7f645d1bf1e4d62",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/01-capitalization.law": {
+      "sha256": "58e097ed35d125f2ab2f7514eef13bd62d032e816b811dda6333ab11f0061630",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/02-requirement-levels.law": {
+      "sha256": "f7ad198bc75ed911439fa5e56bba03366bf7dcde63717853217ad018beac04cf",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/03-imperatives.law": {
+      "sha256": "bc6ec473688b8dc0de2804f31ec0e31c0bf3cd1a8980bf8c4cea87382df3a969",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/README.ru.md": {
+      "sha256": "866aa88a411b90d6b9fe275d2b986a7da8cd016d522956a3ba4c2923c67a3095",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/analysis/questions.json": {
+      "sha256": "f2ca97ad130fc469ec0ec4bc0125f5a12e672874cb7496a98def90f4c8ef8120",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/law.toml": {
+      "sha256": "1e6a45aafe414e2222fccb985c83389163a08350f8aad48e1cc1bd348e0308e1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/package-info.json": {
+      "sha256": "c2ca596131704c9acfad89f3d69ba3660f70c9a99178947db56b955cfecac30e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/package.law": {
+      "sha256": "0951da69812a3d8ae6902823df9b4d639d92d74d93ca2b49846263b71050fcf6",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/sources.law": {
+      "sha256": "e8dedfee3ba0582b2fd06d7f779651dfc5b77aa224ab5603f615e61212a57f1f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/sources/rfc2119/articles.json": {
+      "sha256": "945136039fa152a2ee10641cda43b85d3e2628c50e32b49c2bd9603a076af603",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/sources/rfc2119/en.txt": {
+      "sha256": "3c2ceb7bfc84cd34720f4a5271338ab9d8280d34bdd1eb250c64306202f2ed8b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/sources/rfc8174/articles.json": {
+      "sha256": "0df166d3f43df2aec1be12c732d1a4f017bb80b0dc5e1747bb91269af5d1e4d2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/sources/rfc8174/en.txt": {
+      "sha256": "5ca0e2f90be0bc5928ee465f76518fee316dfa775aed885658a29a419cc293b7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/01-must-breached-is-violated.lawtest": {
+      "sha256": "4e3f8520b795784b0cd7b25b4d6eebb8deb1c2257194b8e6afade55d1dd5a496",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/02-must-not-breached-is-violated.lawtest": {
+      "sha256": "85df60447ce6bcdda874d3d6532407c620b655a4d7086ed5cc4d2a8170e06c11",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/03-lowercase-keyword-carries-no-force.lawtest": {
+      "sha256": "3113ee2fc185a58a772863480bd0ac7d3431e4bd4b47204c5cf1b71e8a8b4dc2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/04-should-deviation-requires-judgment.lawtest": {
+      "sha256": "3c26448aa668be81fa0f26952f82fd80e5a8d7b4b4f5da655dd0145dff3aa226",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/05-pre-8174-reading-revives-lowercase.lawtest": {
+      "sha256": "b0b99e5bd8d01aa8694a991a944e4d3a3e0042ecd6005d964d0fb8bb34104f30",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/bcp14.lawtest": {
+      "sha256": "e009ffd37a47314a60442634a7fe0c09cb237d5a6b270949aad40c9cf7149e15",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/ietf/bcp14/tests/catalog/general.lawtest": {
+      "sha256": "dbcefddeabb08e0435ec3fd496c7536af93691a712adb6693af9076ee3a1f1c3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/01-species.law": {
+      "sha256": "d132465e00981e18d599e0c233c276003d379c4df48072fc077aa5c9c599412e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/law.toml": {
+      "sha256": "fb29cc0b7655f83123fab59e56ed1a35057d6a41c76503900d73425606b80eef",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/sources.law": {
+      "sha256": "08a1dcb0e541e1abfca29606cc53708f0475167ca604bd4721557a307fdbcc39",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/sources/chemistry-2e/en.txt": {
+      "sha256": "9cd690ddec85843d14d55896b354718158ebe80bb58ea4f9a9da9fc315ab6177",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/sources/chemistry-2e/manifest.json": {
+      "sha256": "5bc301265c3e21f7c0363961677a6daf99bb68c2988adc04020023e650ab3c18",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest": {
+      "sha256": "5632f9d6fc3bbfbc11b6f7888fcbf31ed616a5144bc163924f71e117fde00c86",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/01-quantities.law": {
+      "sha256": "715b9545142c1f5f6000fc2d3527edf7b6f385cb9eced4d92e3a22d71a834cac",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/02-dimensions.law": {
+      "sha256": "c6c9b485cefe9f72f90e89c127c4a10cca35d09e1b8de403bb360b1dff94505a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/03-uncertainty.law": {
+      "sha256": "cca8fb146d9e3f8acff6a3ae6a8ae21a9c77b5c7bb2b806ec9cbc7926b7a61b4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/04-vectors.law": {
+      "sha256": "316469c085079beee67ef63e1aa0a2cc5acf03235c6241668809146b73f1fa1e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/law.toml": {
+      "sha256": "ce8b2e4ddf546bdb1e97e08d2bd22dd86ea1f198a91fdfb2480d9f23267e4359",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/package.law": {
+      "sha256": "2b61d124d59496390d394028140ad13f282d27164bda5591d913722c87f318e1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources.law": {
+      "sha256": "b33d4101bfe8cfed0331ae09e3e0cd6db77a830e1f5f9c55a2561888b40f884c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58268.cnxml": {
+      "sha256": "499dfb5d64df05e3bcb59723588a4f6428c6bd004d3b368361a1a3ada5f7261a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58269.cnxml": {
+      "sha256": "f16c5725898ec4e66db1687639afa5f229895312adf24911e94abf70216c6322",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58270.cnxml": {
+      "sha256": "4116491d82fc9c69d374b14aefa1caa822e3258a18ef214ee4d0cc3724cb0f9c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58271.cnxml": {
+      "sha256": "d29f5478b77cada00bdb769b4b87dd7f0e51ed39dffdba07a1d1a1dd1c283184",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58272.cnxml": {
+      "sha256": "ea6c3b0bc1942a32691d8ae39c9ded766900429ce8a567d504963e8c7ec66028",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58273.cnxml": {
+      "sha256": "3ce8fd926c05a7479b685746bf7feea23c20dab6c909dc52ee920d04ca552494",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58274.cnxml": {
+      "sha256": "91a1f32c827e3993d02e5c2b69ab72204a33a69d894ad5694523a8e8b903aade",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58275.cnxml": {
+      "sha256": "5a1b0fff5b0763a19f3ab2238614bd65a21e6fb769e7b9a53355dfbeb86b61a4",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58276.cnxml": {
+      "sha256": "c65e6709a3bd92b46d7e13c1c2f0ec35da6bc62bbd3b64a72e2b8da104e4a942",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58277.cnxml": {
+      "sha256": "90c66fec7014d2a2e4d26e0724af07d2ed238cdda4aa55d9e4497c007c6f8c71",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58278.cnxml": {
+      "sha256": "e2ecdce98b5ecfa4472faf6749fd4683c8675a3f06f4e09c3b106eedf51cc45b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58279.cnxml": {
+      "sha256": "7f31ae189b90e5b9a0491c376b2567b6189fb705db67513f7f08f34f1df08ced",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/sources/measurement/m58280.cnxml": {
+      "sha256": "ea9ae700aa4a47517fda9ff985f9190bb0e4e809f07f66a96e80088b676f3803",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/tests/01-dimensional-consistency.lawtest": {
+      "sha256": "71d722b70339bfce13e8d9bc95821509594d48337f4540ea0f9ccb83be89baff",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/tests/02-algebra-rejects-the-answer.lawtest": {
+      "sha256": "4dfb419fae4ea34a949c19b554c934334edbd1f3bbf7bf5b286d24b2207ade5b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/tests/03-quantities-and-units.lawtest": {
+      "sha256": "b25fab28ee02b72d6442de04cffc0b5d0e4d0146b3b817c21941282927721205",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/tests/04-uncertainty.lawtest": {
+      "sha256": "d4c0f12280d57098632d56fa750d4e6790262dce7f875075aab6bcd280e1a9fb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/openstax/measurement/tests/05-vectors.lawtest": {
+      "sha256": "64060287d112457289b4c62d946162c1ad41b431a424fd9b8ee1613d6d4e5896",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/00-package.law": {
+      "sha256": "3bca96a6e8f0451d2ea72b81b0fc1941d8c8a7e444d7faa1dc911771c69b87a0",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/02-theory.law": {
+      "sha256": "8f4edfcd89d4eabf839f5b8499c1b3b878171bd86ffa70eb6ebf8dffa40feb62",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/03-team.law": {
+      "sha256": "6906230c1a0f9e0c70b969d134b18ac89362fe78bcb83f71a4185020f98c4cdb",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/04-events.law": {
+      "sha256": "645110989cf6d8daab41dbf449bcc11f09b2022ed691b079d403869dbcb78b18",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/05-artifacts.law": {
+      "sha256": "04a3136c46744a8a24c9d155db27de5b95521825d4b2ee818069bc185e682ced",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/06-end-note.law": {
+      "sha256": "3a0b972448b84b203afaf358a7cefb00b28676e87ea625f3f248d9c7d8ec3d4a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/QUESTIONS.md": {
+      "sha256": "8c68f0e36c905f55a2b3bc72dd9401e633973df1390d589ccda579e27a4fb4c1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/analysis/questions.json": {
+      "sha256": "493a5125b5ac663509a511ee0f5b817b6986a9e47f1eeab53aaa7b997c217895",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/law.toml": {
+      "sha256": "5c7a8ba1bfabf4982ef06035083f24473476a6742eaea6fce31d38dc071a066f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/package-info.json": {
+      "sha256": "82f523b2cff96dabcaec9fea3396eb499c1660a8339742fbcabaacad0b973b61",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/sources.law": {
+      "sha256": "4ffebf6ddeee6a8d9af4f84b4ac847e26787f82d6072dd2ea91ac010cc9d0cc9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/sources/guide/articles.json": {
+      "sha256": "5bdc2bb1c71b51a29441e78499f5be093a866bf513973c361823ccfe22cdc732",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/sources/guide/en.txt": {
+      "sha256": "bd2bc0d52015e5248c410b9565724761f50e21cea2ac38364956147d14404698",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/01-product-owner-is-not-a-committee.lawtest": {
+      "sha256": "6aa82f73aa1cf03bec8ed8ea4326b3f9eea0a2ae9b2b8cb35243cf8708aae478",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/02-sprint-of-exactly-one-month-conforms.lawtest": {
+      "sha256": "826079385dd3b5be974bdf0409a8be63697da770936a3680bf88c438b69903fa",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/03-daily-scrum-of-sixteen-minutes-exceeds-timebox.lawtest": {
+      "sha256": "01597f7cefb0b275d966435d204acfc95c529238abd306e258da297d43907898",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/04-developer-cannot-cancel-the-sprint.lawtest": {
+      "sha256": "7b08f300eeda766a706d288a283874db34355b98700dfa372aad34bbc299849a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/05-partial-scrum-is-not-scrum.lawtest": {
+      "sha256": "f299319da05bf6ee38d200d16c410247b16b630c91954de4e0de0be7758b8629",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/06-organization-overriding-product-owner-violates.lawtest": {
+      "sha256": "15e2b7902cfa89d7636435a758bbd3c11dc7d0a062ec495b524bad2bff316de8",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/07-book-work-presumed-visible.lawtest": {
+      "sha256": "8008fd01aa85806e8b32ec02c15321f7e5fe0e55eeb803d7134d499f0c21972d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/08-book-hidden-work-prevails-by-priority.lawtest": {
+      "sha256": "db44ea7afed25c8a071e9b9d762695b439f2cb08ec6181570787632dd9bfbd0b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/general.lawtest": {
+      "sha256": "6d7a3127f4b3e4a8192628892cc67497d8b7097b0422b8b4784f5d978721877b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s2.lawtest": {
+      "sha256": "54edcf77897d42752328b3d8aa00c52c182e3858ecad0661cf8087801c552591",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-1.lawtest": {
+      "sha256": "8f99dcda1cb834d2dbf921068ec3803b144094d8b13c6f2acf677b89d0303c25",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-2.lawtest": {
+      "sha256": "763f3a4d0d5c0eabf9eedb7b9570d6789ae64b1f7a1a249b31f58c7cfc4076ca",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-3.lawtest": {
+      "sha256": "42eb129b38444548c30d242cdd465e617b94a139e1aadcb72218ce62934f07b7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-1.lawtest": {
+      "sha256": "fb78bfea6c2732834a2c7f3d28e37fea0720d794670e5da8846f04a616b5f85f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-2.lawtest": {
+      "sha256": "b469d297072bc853eb52b97844fdc903684bc110160788e3171cac4a86acd039",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-3.lawtest": {
+      "sha256": "aadbf7a3531beb26e60b5dbc9456d09a6507eb25dfde6b4a374a0b1385f93475",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-1.lawtest": {
+      "sha256": "585f6398a7d223f12e51d4f676dca564f98b455b818ab516a33081217cdab8c2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-2.lawtest": {
+      "sha256": "38c0b67216364a2d87b49f39f2ae8d693bc584048ed2ffa4771750589c67aad9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-3.lawtest": {
+      "sha256": "cd1b0528710b3a9186c7c8ab9db400c6745ca0eaa67855e2c6994cf10a626097",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2.lawtest": {
+      "sha256": "2a6f562af4c4cb6e26004dbf4aae1401fbee301cbc21c0f0af7e5338b22f64e1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-3.lawtest": {
+      "sha256": "79d08f16504433c03df4e0b79a9dab6b25e739689ebde88540b96156cab45f7a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s6.lawtest": {
+      "sha256": "bc22362e94d34cfdc3309c50379a453b772dfdf2dc4ee6aa253f3cc3b2fdeead",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1-1.lawtest": {
+      "sha256": "7324906bf2d283927d76ec974c53dabd11595c676adca4129d4e84df2e3ef290",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1.lawtest": {
+      "sha256": "bb6619f56b868b7d9de12d9f7c9a0ad1d09fc251f4f196c0d92828ad3d5a751e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2-1.lawtest": {
+      "sha256": "55525f13422c54a9b394f30e19fa9398f405d34f72447f2317192216e11fb049",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2.lawtest": {
+      "sha256": "2b640fa002e1e80d2b3cf26c4126f3eac4d5ad5dc0f19dd5d56cf280933791b9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3-1.lawtest": {
+      "sha256": "ce972f5c45e9da5909e018703a0adae3832c07a101ef472b547b35b370b60203",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3.lawtest": {
+      "sha256": "0b6c3dea9b7a93b05157c65f8ee49dd077e8b818d698d2dbfead76f35448b387",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/org/scrum/guide/tests/catalog/sg-s7.lawtest": {
+      "sha256": "f9a816ff0b316f8546f7b2d3d85a9960cf70c1fe984228e07be2e2a1a750d928",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/tools/sources/sync/sync_bcp14_fragments.py": {
+      "sha256": "b7e4e374bd2bed4af0dbed4ac4621315daaa6f74ad860da43aa2b6096e3daead",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "engines/lawc/crates/law-cli/src/mutate.rs": {
+      "sha256": "b8e86da44a5ba0c3e38eea1e47c27141c1ff7069115347de11e07b7ac8ef42f7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/README.md": {
+      "sha256": "5fc2d88eb004c6f72b29d152421df9f6cbbdeaca667994b45b922f5fb9f9ddd3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/laws/expense-evidence.law": {
+      "sha256": "596af63dc189afde000d779e7703db27e637bee97f815b9676f61a3039fd62a5",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/laws/law.toml": {
+      "sha256": "213361ac1b171fdbcb9a29c36cc804a85ca28243cd0aa90a1cc19713a80817f9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/run_demo.py": {
+      "sha256": "4c59b69d32ac5da141cf0b19f10af6adaab3a8bc7469ea944d2c2323f069809b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/scenes/base.lawcase": {
+      "sha256": "37408eee17d0574e1be608f4736661c088a4b743ae9b9b1e13c02a2b8a794952",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/tests/reimbursement.lawtest": {
+      "sha256": "43f183db565cbb6642673ff774b07aa69b318da93c6d598a4072dc9fc8ccba4d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/demo/expense-evidence/tools/differential.py": {
+      "sha256": "3524d013900d80e40cb08b49b00e3e5922b61cd2bf18a88b6dbc0c42dd0defb9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/01-kinematics.law": {
+      "sha256": "599e0c03664e9a0e8c4ba007f0f8dfb658d7b9572fc8b9570031c3948cc17dc1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/02-dynamics.law": {
+      "sha256": "229f1bd81a20eecdb70404e7fc294f8f664b3d281aecaa68525c8770ec536875",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/03-efficiency.law": {
+      "sha256": "a6033e2fbb1daa416fbd21536cb8f3a2b937c3be97e873c4080271d162f4d78e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/README.ru.md": {
+      "sha256": "4d06829930bc76f3804f2b83291a8267064de520533454b025612eb44014351e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/law.toml": {
+      "sha256": "42f098dd531bcfffc9ef7aa61c14acc34748a326b175e6a272c071203dd3f686",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/package.law": {
+      "sha256": "c847ba042892c4fb7024118d342fc9ce7e73fb9d1d4974c84378e52b26113b1a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/primitives/natural-sciences/mechanics/tests/calc-mechanics.lawtest": {
+      "sha256": "f985a6aaab94713586e0db4082ea8e9ce378d4b2f1892891663ca112e7eb787f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/units/si/law.toml": {
+      "sha256": "f6687af6b646b7c3ed94495b26d2f08111e268e6bf3e8c2cfb3ca664eaace0f8",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/units/si/package-info.json": {
+      "sha256": "edfcc4cbc58f22d27ba2a406eee91b36830341dd32d4699fd06cccbd150793ae",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/units/si/si.law": {
+      "sha256": "ba083f33b86e6c26d3185e28836d486547de82260f82a70c030a4a6435803f4a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/units/si/tools/gen_units.py": {
+      "sha256": "3443f407345a0dfb3855686c1a3f93a41f665c5ba23468ba885283f19144f1b6",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "packs/units/si/units.json": {
+      "sha256": "9dd29926da71cfdbccf71278d0ad9cf7f7999c4a747487353296de14b3a93765",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/04-part-iv-project-and-files.ru.md": {
+      "sha256": "201205815ed9bdfcd42362d4e750df3e30cf5e5b8404b65839ba4dfb3a8cc2b9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/06-part-vi-package-and-module-system.ru.md": {
+      "sha256": "751b4e90bc25ce9fd6a82780c1b9544ecffb1e93c1f31b36ee8e5eec294510ca",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/07-part-vii-source-and-document-model.ru.md": {
+      "sha256": "903abae6fbb47697d30ae4c899888f92cce6157cbf63f0f97be293ae050798c9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/08-part-viii-type-system.ru.md": {
+      "sha256": "0c8159407f45fd297e75bc15a2176aa21273eae7f248c974aa3a64445eefe2e7",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/10-part-x-propositions-and-four-valued-support.ru.md": {
+      "sha256": "b48a3150039e51f1668ca894142078b5a94eebdfddd3ec1f47daf520287b0327",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/11-part-xi-assertions-facts-evidence.ru.md": {
+      "sha256": "a9f60915da37885576b66eec9e52296a1a2e5dd1c19361e409aa4a224948df6d",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/13-part-xiii-context-scope-applicability.ru.md": {
+      "sha256": "4f69576666ff3626f5897573608b59d8e19dcada2e3e6956f73a7aca3e387fd9",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/14-part-xiii-a-non-derivational-constraints.ru.md": {
+      "sha256": "5d26ac6e406ed14ac381c3082b37331afa503467cb2f5fe8f69c8a1793f092c1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/16-part-xv-defeasible-semantics-and-conflict-resolution.ru.md": {
+      "sha256": "7d27f2d548bd5c2e031bf18fbe0abadcbd532b0f7737959265e6e1b99700923b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/18-part-xvii-normative-positions.ru.md": {
+      "sha256": "b183febee62838d318554aacd37a85f07b06c56773afa7476995026566338dba",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/19-part-xviii-norm-lifecycle-fulfillment-violation.ru.md": {
+      "sha256": "722f17ebc571f735a3760df1b115e7a8aee8af11bf41f732f25ea2bf69d54c3b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/21-part-xx-interpretations-and-theories.ru.md": {
+      "sha256": "ae1a85cad6731822b73ce1bb0a1470217744609b6137092d2a17d6f857bd1368",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/24-part-xxiii-cases-snapshots-evaluation.ru.md": {
+      "sha256": "cb55cc6fbb09bb15c79b47c857e9ca1de7448f074b33b110f0aacabea226c7b2",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/26-part-xxv-proof-graph-and-explanations.ru.md": {
+      "sha256": "cef7a7fec53682e6e4069e3449e7e8a0bf0d7e75a2d73623b371959117539822",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/28-part-xxvii-canonical-legal-ir.ru.md": {
+      "sha256": "8fc819205b4804cf17685e769bca55b4675617175662d924aabf5cb8e81e3f8b",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "spec/SPEC.ru/36-part-xxxiv-conformance-tests.ru.md": {
+      "sha256": "20cbb64e2375a82bbb70066f5e603b61ce7336fbb269ef63cbf853568f717e0f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "verify/ci/gates/coverage/check_formalization_depth.py": {
+      "sha256": "ad0fa5c07c43df54116f11d058714a6115daad11295c7a5268610d0e0c3e556f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/00-package.law": {
+      "sha256": "63310928e90016e7b26efb763389bdec769d68f828590c7341be3249fdfef536",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/01-horoi.law": {
+      "sha256": "e19e77e2bae551a75e3d3dfa2f20a42e7a30c7d5280187e84afb5787e9eb0e31",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/02-aitemata.law": {
+      "sha256": "f1c8882c2828766681ed69b5a69510ba64ba8ad41774c9b76478cd61c9e349c1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/03-koinai-ennoiai.law": {
+      "sha256": "9f97cdbdaf9f80ad6cd6be69dd11d14808c0dfb8e73712b0f6bf682028c125bc",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/04-protaseis-i-01-12.law": {
+      "sha256": "01645a889cf08f3a741ab24f78c61b5a62e1cdeac79e3dda7e05a7e39e445fd3",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/05-protaseis-i-13-26.law": {
+      "sha256": "f2c062cac4a732ed75034c7cda37f778adab2319bbfe205e001525a58074a290",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/06-protaseis-i-27-32.law": {
+      "sha256": "89496e2279106f65876e758307eba40f7d90a775c63a57d0e39616ecfa4d741a",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/07-protaseis-i-33-46.law": {
+      "sha256": "1ac629ae470906def47878307183e0ffcb951c67e73dfe99b55a809b94e69895",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/08-protaseis-i-47-48.law": {
+      "sha256": "dc6d925e3ffa631a519ee7c7dc8cb2cdaaa1fc28d50304702481c037ef6ff80f",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/audit.ru.md": {
+      "sha256": "0ea0f95c374a99a73166f25b7b5d98831345d8a8a81cf8d8873442ae6df60dca",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/law.lock": {
+      "sha256": "005861c7ea7a52a26448b9f7435dfd4723d2c19c7d7e6766e21158f92d6c9a5c",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/law.toml": {
+      "sha256": "03a87fc6f4bc340c922f119e5b9bde8ab61d0765fcade8594ac08a97afe37609",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources.law": {
+      "sha256": "b235caeb10a682edf092233eda94a1a0943e393f57accb56b939dbdfdbaac426",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources/euclid-stoicheia-i/articles.json": {
+      "sha256": "f411b368f18fbfa0a3c48cd978788f0d2271b45dd1a88805d0aa5f0320394600",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources/euclid-stoicheia-i/grc-aitemata.txt": {
+      "sha256": "8bba5998f6d5a3002eecbd4351348acc2342dd84ed70536f57d6141b8675eef1",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources/euclid-stoicheia-i/grc-ennoiai.txt": {
+      "sha256": "97f93b94c774dc426f15e92b6a93363524531208254d640b28a241b942692824",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources/euclid-stoicheia-i/grc-horoi.txt": {
+      "sha256": "77b103a811cf1440183a42bfc28d3dc7c7e3b7ccefdf50ab4f286f89a9c65f7e",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/sources/euclid-stoicheia-i/grc-protaseis.txt": {
+      "sha256": "d9b113a330cb2f13d8f1ef84ae6d53f104f0650716cb01e213589ec4a0a5eaec",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/01-isopleuron-synestatai.lawtest": {
+      "sha256": "00f6f28f2797704058140b7147c73817941814f227b4f68e71320d4055008a76",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/02-smezhnye-isos-dyo-orthai.lawtest": {
+      "sha256": "5f4cc94c609c725e001411093bc0be4a2e0f1b73d7d2a6aaf32f7890a6cc73ef",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/03-paralleloi-ek-enallaxon.lawtest": {
+      "sha256": "4e1315ac06d2862107690b81f3f7b9bd6e32f0ca4ceb5ef14245dbb4f78d5635",
+      "repository": "arxo-io/law",
+      "revision": "01bf047e392252b92f6abebc5408428ad47cec32"
+    },
+    "voda/law.toml": {
+      "sha256": "426b0894f489aafeba117b48ca35992d7b48075b732ea583c29e05ee57eb8fd4",
+      "repository": "arxo-books",
+      "working_copy": true
+    },
+    "voda/package.law": {
+      "sha256": "df8150cf4e4b0ecef5e3cdcbf927bab5606af1fdcc66dfa4048fac2c4c5e4b4b",
+      "repository": "arxo-books",
+      "working_copy": true
+    },
+    "voda/cases/voda.lawcase": {
+      "sha256": "176c6abf100facfb2b21b51f099528b88559c4fbe4de444a91bd5221c77f3f7d",
+      "repository": "arxo-books",
+      "working_copy": true
+    }
+  },
+  "compiled": {
+    "units-si": {
+      "status": "compiled",
+      "sha256": "94f079ef2cef7b9ef14d9a9c6352c783ec260a8abe62c1d6353f6d816a03646f",
+      "program": "reader/clir/units-si.lawir.json"
+    },
+    "openstax-chemistry-acids": {
+      "status": "compiled",
+      "sha256": "2774c7593c359cc8f8be8d41caa9358744021dba7f54049d08b84b745b5e1824",
+      "program": "reader/clir/openstax-chemistry-acids.lawir.json"
+    },
+    "grc-euclid-stoicheia-i": {
+      "status": "compiled",
+      "sha256": "fb34d73df173cec3175da94f37edfa16d8d7c035d146827bc83dc2f0c048a27d",
+      "program": "reader/clir/grc-euclid-stoicheia-i.lawir.json"
+    },
+    "de-hilbert-grundlagen": {
+      "status": "compiled",
+      "sha256": "0be402f972547f9503fdf08478bd8f900c39cc1f119d9208aea61aeb6c97d399",
+      "program": "reader/clir/de-hilbert-grundlagen.lawir.json"
+    },
+    "myco-opredelitel": {
+      "status": "compiled",
+      "sha256": "b9ff78fbb2af846de4d414cd7b72fb0d6cacc8d6db6a7cb0364871947765b6c0",
+      "program": "reader/clir/myco-opredelitel.lawir.json"
+    },
+    "scrum-guide": {
+      "status": "compiled",
+      "sha256": "0693207d43e39757db40210599e0c2f9c3b7255be721eaa227bc9b036920347f",
+      "program": "reader/clir/scrum-guide.lawir.json"
+    },
+    "de-vor-dem-gesetz": {
+      "status": "compiled",
+      "sha256": "bc43319976fabeecd6713b241e9216767845beb38449fe358291cf20194f3110",
+      "program": "reader/clir/de-vor-dem-gesetz.lawir.json"
+    },
+    "kz-grammar-yqsham-tulgalar": {
+      "status": "compiled",
+      "sha256": "8647a6c2e4fe894b8a59673ba07676196a0ad029798da3b8f5c125ab9d59c1cc",
+      "program": "reader/clir/kz-grammar-yqsham-tulgalar.lawir.json"
+    },
+    "ietf-bcp14": {
+      "status": "compiled",
+      "sha256": "626227e9c1137aba2ac9e73a217e9e6caf5e43240230972dc33069664aef27bf",
+      "program": "reader/clir/ietf-bcp14.lawir.json"
+    },
+    "la-gauss-theorema-fermatianum": {
+      "status": "compiled",
+      "sha256": "cec167869fd7fb68042ec6820c05537fd3a9c90c16f6dd9aa95e82e35763947b",
+      "program": "reader/clir/la-gauss-theorema-fermatianum.lawir.json"
+    },
+    "expense-evidence": {
+      "status": "compiled",
+      "sha256": "3f574fb9c50a17070fefcfa5997a8186ce237c84bf7c02ac071df2fdb0a70a2f",
+      "program": "reader/clir/expense-evidence.lawir.json"
+    },
+    "grc-euclid-pythagoras": {
+      "status": "compiled",
+      "sha256": "4ac87e46ec544204095bbcab30fb8c8f66965b0598dc84b00ad936898e2769f9",
+      "program": "reader/clir/grc-euclid-pythagoras.lawir.json",
+      "test_world": "reader/corpus/clir/grc-euclid-pythagoras.lawir.json",
+      "world_sha256": "7e74a8e33d17cd809cf3f8b22d7e1aa924714444c6128629282beeb713f069e9"
+    },
+    "bipm-si-brochure": {
+      "status": "compiled",
+      "sha256": "577fbb9b40a108e018ee2496838c482f646df9ca9f9b3ecd585f549c652b65a9",
+      "program": "reader/clir/bipm-si-brochure.lawir.json",
+      "test_world": "reader/corpus/clir/bipm-si-brochure.lawir.json",
+      "world_sha256": "5c151adf1f83b9128efa7a1f6bd49a47ae16782e482355d2784af62e82523203"
+    },
+    "chem-acid-base": {
+      "status": "compiled",
+      "sha256": "d68465b85b9984b988ba2825acd3385b12d359edec778f593d1d23b82d0696a2",
+      "program": "reader/clir/chem-acid-base.lawir.json",
+      "test_world": "reader/corpus/clir/chem-acid-base.lawir.json",
+      "world_sha256": "4457b832b7326519a950ff6b27bf83c65fd0df45ed70ea24fd77a55e41411660"
+    },
+    "calc-mechanics": {
+      "status": "compiled",
+      "sha256": "472a69a1542aaff1fbee5139fd59259596ffdbfe9edce94a2a513300333bc91b",
+      "program": "reader/clir/calc-mechanics.lawir.json",
+      "test_world": "reader/corpus/clir/calc-mechanics.lawir.json",
+      "world_sha256": "a4bdb024692b1f10a813d4481b3eabd66976df4b1614f598b4e0152fef8facb8"
+    },
+    "openstax-measurement": {
+      "status": "compiled",
+      "sha256": "c7dfaf265472986ec0fe88d2407a6da5a3faf4bb48f9446aa1c80944b7d72395",
+      "program": "reader/clir/openstax-measurement.lawir.json",
+      "test_world": "reader/corpus/clir/openstax-measurement.lawir.json",
+      "world_sha256": "0d38930c8f5cd4be84cc1e325bb21e7f6f930a9820d17adf85eeba205606c9c8"
+    }
+  },
+  "tests": [
+    {
+      "package": "openstax-chemistry-acids",
+      "test": "corpus/laws/org/openstax/chemistry-acids/tests/openstax-chemistry-acids.lawtest",
+      "ok": true,
+      "passed": 22,
+      "failed": 0,
+      "total": 22
+    },
+    {
+      "package": "grc-euclid-stoicheia-i",
+      "test": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/01-isopleuron-synestatai.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-stoicheia-i",
+      "test": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/02-smezhnye-isos-dyo-orthai.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-stoicheia-i",
+      "test": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/03-paralleloi-ek-enallaxon.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/01-gerade-meidet-punkt.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/02-zwei-geraden-fallen-zusammen.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/03-dreieck-aus-zwei-abschluessen.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/04-book-point-outside-figure.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/05-book-point-declared-without-incidence.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/06-playfair-eine-parallele.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-hilbert-grundlagen",
+      "test": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/07-playfair-zwei-parallelen.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "myco-opredelitel",
+      "test": "corpus/laws/doctrine/myco/opredelitel/tests/01-no-spore-print-is-neither.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "myco-opredelitel",
+      "test": "corpus/laws/doctrine/myco/opredelitel/tests/02-book-presumption-stands.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "myco-opredelitel",
+      "test": "corpus/laws/doctrine/myco/opredelitel/tests/03-book-verdict-lifts-bar.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/01-product-owner-is-not-a-committee.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/02-sprint-of-exactly-one-month-conforms.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/03-daily-scrum-of-sixteen-minutes-exceeds-timebox.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/04-developer-cannot-cancel-the-sprint.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/05-partial-scrum-is-not-scrum.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/06-organization-overriding-product-owner-violates.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/07-book-work-presumed-visible.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/08-book-hidden-work-prevails-by-priority.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/general.lawtest",
+      "ok": true,
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-1.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-3.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-1.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-2.lawtest",
+      "ok": true,
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-3.lawtest",
+      "ok": true,
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-1.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-3.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-3.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1-1.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2-1.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3-1.lawtest",
+      "ok": true,
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "scrum-guide",
+      "test": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/01-entry-requires-the-doorkeepers-judgment.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/02-doorkeeper-grants-entry.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/03-doorkeeper-refuses-closes-question-not-truth.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/04-way-is-free-without-any-judgment.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/05-entering-anyway-breaches-the-ban.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/06-no-sanction-is-named.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/07-destination-unknown-before-the-last-word.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/08-destination-revealed-by-the-last-word.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/09-gifts-accepted-create-no-claim.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/10-all-attempts-do-not-move-the-answer.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/11-closure-is-declared-not-narrated.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "de-vor-dem-gesetz",
+      "test": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/vor-dem-gesetz.lawtest",
+      "ok": true,
+      "passed": 15,
+      "failed": 0,
+      "total": 15
+    },
+    {
+      "package": "kz-grammar-yqsham-tulgalar",
+      "test": "corpus/laws/kz/grammar/yqsham-tulgalar/tests/grammar-yqsham-tulgalar.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/01-must-breached-is-violated.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/02-must-not-breached-is-violated.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/03-lowercase-keyword-carries-no-force.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/04-should-deviation-requires-judgment.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/05-pre-8174-reading-revives-lowercase.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/bcp14.lawtest",
+      "ok": true,
+      "passed": 22,
+      "failed": 0,
+      "total": 22
+    },
+    {
+      "package": "ietf-bcp14",
+      "test": "corpus/laws/org/ietf/bcp14/tests/catalog/general.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/01-probatio-7-basis-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/02-primus-7-praesumitur.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/03-pseudoprimus-341-basis-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/04-probatio-341-basis-3-cadit.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/05-primus-341-divisore-victus.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/06-carmichael-561-basis-2.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/07-carmichael-561-basis-7.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/08-primus-561-divisore-victus.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/09-divisor-non-metiens-nihil-agit.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/10-vestigium-falsum-in-gradu.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/11-vestigium-falsum-in-duplicatione.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/12-vestigium-ruptum.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/13-compendium-3-ad-1000-mod-13.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/14-probatio-per-ordinem.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/15-ordo-anticipatus.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "la-gauss-theorema-fermatianum",
+      "test": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/fermat.lawtest",
+      "ok": true,
+      "passed": 26,
+      "failed": 0,
+      "total": 26
+    },
+    {
+      "package": "expense-evidence",
+      "test": "packs/demo/expense-evidence/tests/reimbursement.lawtest",
+      "ok": true,
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/01-aigyptiako-345.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/02-ekfylismenon-123.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/03-oxygonion-456.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/04-enantiosis-234.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/05-pyle-033.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/06-orthogonion-pros-protei-543.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/07-orthogonion-pros-deuterai-354.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/08-ouk-orthogonion-717.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/09-oude-trigonon-000.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/10-trigonon-estin-111.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/11-enantiosis-arnetikai-pleurai.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/12-amblygonion-234.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/13-oxygonion-456.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/14-orthogonion-oute-amblygonion-345.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/15-smt-amblygonion-pros-tritei-267.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/16-smt-amblygonion-pros-protei-542.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/17-smt-amblygonion-pros-deuterai-474.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/18-smt-oxygonion-331.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "grc-euclid-pythagoras",
+      "test": "corpus/laws/doctrine/math/euclid-pythagoras/tests/pythagoras.lawtest",
+      "ok": true,
+      "passed": 27,
+      "failed": 0,
+      "total": 27
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/01-kilogram-redefinition.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/02-units-unchanged-across-editions.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/03-ampere-kelvin-mole-editions.lawtest",
+      "ok": true,
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/04-defining-constants.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/05-derived-units.lawtest",
+      "ok": true,
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/06-prefixes-and-kilogram.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/07-compound-prefix.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/08-prefixes-2022.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/09-non-si-units.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/10-why-not-before-redefinition.lawtest",
+      "ok": true,
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/11-algebra-verifies-tables.lawtest",
+      "ok": true,
+      "passed": 33,
+      "failed": 0,
+      "total": 33
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/12-algebra-remaining-rows.lawtest",
+      "ok": true,
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    {
+      "package": "bipm-si-brochure",
+      "test": "corpus/laws/org/bipm/si-brochure/tests/13-celsius.lawtest",
+      "ok": true,
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    {
+      "package": "chem-acid-base",
+      "test": "corpus/laws/doctrine/chem/acid-base/tests/chem-acid-base.lawtest",
+      "ok": true,
+      "passed": 17,
+      "failed": 0,
+      "total": 17
+    },
+    {
+      "package": "calc-mechanics",
+      "test": "packs/primitives/natural-sciences/mechanics/tests/calc-mechanics.lawtest",
+      "ok": true,
+      "passed": 10,
+      "failed": 0,
+      "total": 10
+    },
+    {
+      "package": "openstax-measurement",
+      "test": "corpus/laws/org/openstax/measurement/tests/01-dimensional-consistency.lawtest",
+      "ok": true,
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    {
+      "package": "openstax-measurement",
+      "test": "corpus/laws/org/openstax/measurement/tests/02-algebra-rejects-the-answer.lawtest",
+      "ok": true,
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    {
+      "package": "openstax-measurement",
+      "test": "corpus/laws/org/openstax/measurement/tests/03-quantities-and-units.lawtest",
+      "ok": true,
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    {
+      "package": "openstax-measurement",
+      "test": "corpus/laws/org/openstax/measurement/tests/04-uncertainty.lawtest",
+      "ok": true,
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    {
+      "package": "openstax-measurement",
+      "test": "corpus/laws/org/openstax/measurement/tests/05-vectors.lawtest",
+      "ok": true,
+      "passed": 11,
+      "failed": 0,
+      "total": 11
+    }
+  ],
+  "test_migrations": [
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/01-isopleuron-synestatai.lawtest",
+      "candidate": "migrated-tests/grc-euclid-stoicheia-i/01-isopleuron-synestatai.lawtest",
+      "before_sha256": "00f6f28f2797704058140b7147c73817941814f227b4f68e71320d4055008a76",
+      "after_sha256": "b92dd3afc421f90ec7a441ad335fae7fecb04c699c4b0febce6626c984df4fdd",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/02-smezhnye-isos-dyo-orthai.lawtest",
+      "candidate": "migrated-tests/grc-euclid-stoicheia-i/02-smezhnye-isos-dyo-orthai.lawtest",
+      "before_sha256": "5f4cc94c609c725e001411093bc0be4a2e0f1b73d7d2a6aaf32f7890a6cc73ef",
+      "after_sha256": "1e271a431ae42435524af2bb89eab446128d58692b6a785dfbb4a0779c881c6e",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/tests/03-paralleloi-ek-enallaxon.lawtest",
+      "candidate": "migrated-tests/grc-euclid-stoicheia-i/03-paralleloi-ek-enallaxon.lawtest",
+      "before_sha256": "4e1315ac06d2862107690b81f3f7b9bd6e32f0ca4ceb5ef14245dbb4f78d5635",
+      "after_sha256": "56152356c5c96358a4bd90df3b04a4bfaa773d55c727d4d49a187839251a357c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/01-gerade-meidet-punkt.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/01-gerade-meidet-punkt.lawtest",
+      "before_sha256": "53de1b40266a7bf5c952d029ca26f5af6dc0e252b9560f56b6da150a544173f5",
+      "after_sha256": "cd477bde7573b159cbf03e7d3fc6ec9479b7674dda177f6c288cb40f06a24262",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "independent incidence query remains COMPUTED; unrelated constraint diagnostics are retained (SPEC §181.2 / E-0236)"
+      ],
+      "expectations_changed": true,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/02-zwei-geraden-fallen-zusammen.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/02-zwei-geraden-fallen-zusammen.lawtest",
+      "before_sha256": "a6877d15bfbaa80c3a5651b95e97d7ddf609ac0aa0978aabd3316f29965c8ef2",
+      "after_sha256": "109fc8f13e345ba2a8ce3769a9324afe2a237c5aa983cc71be0b72de361d4ad2",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/03-dreieck-aus-zwei-abschluessen.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/03-dreieck-aus-zwei-abschluessen.lawtest",
+      "before_sha256": "33252dadd31313c7d0d94dd6dd692c140f023b1273c21e2a613addd426eff357",
+      "after_sha256": "970b817c3ad2b179d5d47ddce8e07473fe9fa250e41b8642a0c357007023d7c1",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/04-book-point-outside-figure.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/04-book-point-outside-figure.lawtest",
+      "before_sha256": "26390b6b975cdee5e1da5734c7a9a0e623aee5985ee320bebf7ba06205fe95d3",
+      "after_sha256": "3286177a36b690bbf6ab984f2666f37df1921bb60a1a3a921d99c050ee5f2c1e",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "independent incidence query remains COMPUTED; unrelated constraint diagnostics are retained (SPEC §181.2 / E-0236)"
+      ],
+      "expectations_changed": true,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/05-book-point-declared-without-incidence.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/05-book-point-declared-without-incidence.lawtest",
+      "before_sha256": "0e27536fec323b41568a09a0707f3949bed762b46a51ce8376ba2f85ac5c86c0",
+      "after_sha256": "fc108c4b54140bb9b724eb1991db97156fb9f72a95a03732a29d9c32fe3dce59",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "independent incidence query remains COMPUTED; unrelated constraint diagnostics are retained (SPEC §181.2 / E-0236)"
+      ],
+      "expectations_changed": true,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/06-playfair-eine-parallele.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/06-playfair-eine-parallele.lawtest",
+      "before_sha256": "f7a8619caa519471e8f86595d78c53ab6e7a46d0892bb030d394408c9c0b67eb",
+      "after_sha256": "f0df831e9a81fd38a6179d846e0b254b7387681dbca359ab8d5b259fbe41595e",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "independent incidence query remains COMPUTED; unrelated constraint diagnostics are retained (SPEC §181.2 / E-0236)"
+      ],
+      "expectations_changed": true,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/tests/07-playfair-zwei-parallelen.lawtest",
+      "candidate": "migrated-tests/de-hilbert-grundlagen/07-playfair-zwei-parallelen.lawtest",
+      "before_sha256": "b1b1d8b27fc5cd9ba9101585beca0954dacc6be4b94153b9a31e9b83930a2730",
+      "after_sha256": "36cfed10ed9faaf7f9c261a6fd3b2bc1c6f5ddfe0adb95232bc557f3b4e8428f",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/myco/opredelitel/tests/01-no-spore-print-is-neither.lawtest",
+      "candidate": "migrated-tests/myco-opredelitel/01-no-spore-print-is-neither.lawtest",
+      "before_sha256": "d4d4583fb935f84dff6b384122956e6a75fe37f1178f52bebd10a75ab68f2337",
+      "after_sha256": "eb0143f6bff7170bdaa7bb15e3124efb351884e697b3410fd23fd9054cb10210",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/01-product-owner-is-not-a-committee.lawtest",
+      "candidate": "migrated-tests/scrum-guide/01-product-owner-is-not-a-committee.lawtest",
+      "before_sha256": "6aa82f73aa1cf03bec8ed8ea4326b3f9eea0a2ae9b2b8cb35243cf8708aae478",
+      "after_sha256": "bb6735eedb48e27ac356d3a22ecf8cf67a37bd40c6d34705d2b53fb7cd471787",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/02-sprint-of-exactly-one-month-conforms.lawtest",
+      "candidate": "migrated-tests/scrum-guide/02-sprint-of-exactly-one-month-conforms.lawtest",
+      "before_sha256": "826079385dd3b5be974bdf0409a8be63697da770936a3680bf88c438b69903fa",
+      "after_sha256": "87a344b10cfa9db1a5268cb8594710b18110d983b759caa07e6ca33f4b43e361",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "inline deadline policy replaced by the same named policy fields"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/03-daily-scrum-of-sixteen-minutes-exceeds-timebox.lawtest",
+      "candidate": "migrated-tests/scrum-guide/03-daily-scrum-of-sixteen-minutes-exceeds-timebox.lawtest",
+      "before_sha256": "01597f7cefb0b275d966435d204acfc95c529238abd306e258da297d43907898",
+      "after_sha256": "15d4b272df805567811620aa0b8db066a5b4cc0d28b23bb8edb0bcd881eca94b",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/04-developer-cannot-cancel-the-sprint.lawtest",
+      "candidate": "migrated-tests/scrum-guide/04-developer-cannot-cancel-the-sprint.lawtest",
+      "before_sha256": "7b08f300eeda766a706d288a283874db34355b98700dfa372aad34bbc299849a",
+      "after_sha256": "5b7e3fea07405d62d1b27b3b6b948ae3edfa4a78c3782bf660aaa7838552afe6",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/05-partial-scrum-is-not-scrum.lawtest",
+      "candidate": "migrated-tests/scrum-guide/05-partial-scrum-is-not-scrum.lawtest",
+      "before_sha256": "f299319da05bf6ee38d200d16c410247b16b630c91954de4e0de0be7758b8629",
+      "after_sha256": "d7a2934afe9304ee0533b292b01195d5a50296fb4ec6eab545bb0272d501ee1d",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/06-organization-overriding-product-owner-violates.lawtest",
+      "candidate": "migrated-tests/scrum-guide/06-organization-overriding-product-owner-violates.lawtest",
+      "before_sha256": "15e2b7902cfa89d7636435a758bbd3c11dc7d0a062ec495b524bad2bff316de8",
+      "after_sha256": "5429e202ed00298642b086a5c894759106e537dfcc29f60fea531774637f48a3",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/general.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/general.lawtest",
+      "before_sha256": "6d7a3127f4b3e4a8192628892cc67497d8b7097b0422b8b4784f5d978721877b",
+      "after_sha256": "2eb9205c505143b1698c2d0176fa9665ab1b398be3e32b3dd2fd3b87323f2127",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s2.lawtest",
+      "before_sha256": "54edcf77897d42752328b3d8aa00c52c182e3858ecad0661cf8087801c552591",
+      "after_sha256": "2afc80c7968be8acedfdbcdb3898b3bfbf14bd2b6e6ded62045843ffee79b242",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s3-1.lawtest",
+      "before_sha256": "8f99dcda1cb834d2dbf921068ec3803b144094d8b13c6f2acf677b89d0303c25",
+      "after_sha256": "88e47ff9efa75025355b2c396fcd1e27cf1d5bd64e7d9431fb63bf7a08ec853c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s3-2.lawtest",
+      "before_sha256": "763f3a4d0d5c0eabf9eedb7b9570d6789ae64b1f7a1a249b31f58c7cfc4076ca",
+      "after_sha256": "3d858034196db724c92fea1f1138e3e4e71c88352cea532533936ffe53d0bfbb",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s3-3.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s3-3.lawtest",
+      "before_sha256": "42eb129b38444548c30d242cdd465e617b94a139e1aadcb72218ce62934f07b7",
+      "after_sha256": "356673c76478fa375d6c3e172fea68c6590289bf44ba339758aafc22461cc9bc",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s5-1.lawtest",
+      "before_sha256": "fb78bfea6c2732834a2c7f3d28e37fea0720d794670e5da8846f04a616b5f85f",
+      "after_sha256": "7eeefb915dd16038da95179aa7b2680e2f268636aa44868c69018e27b1a763d4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s5-2.lawtest",
+      "before_sha256": "b469d297072bc853eb52b97844fdc903684bc110160788e3171cac4a86acd039",
+      "after_sha256": "31fbec004bb0ac7dba157a56f1868fc9a10be5de3c12a26685040a026f344bde",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s5-3.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s5-3.lawtest",
+      "before_sha256": "aadbf7a3531beb26e60b5dbc9456d09a6507eb25dfde6b4a374a0b1385f93475",
+      "after_sha256": "c775cae2762f4879b4b90538b18ca992867c4c1636ae915b13f611633e60b232",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6-1.lawtest",
+      "before_sha256": "585f6398a7d223f12e51d4f676dca564f98b455b818ab516a33081217cdab8c2",
+      "after_sha256": "ee08d10b20886f9c743fb05eed275013ea9b1759b5b418b467b76fcb6c93a69d",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6-2-2.lawtest",
+      "before_sha256": "38c0b67216364a2d87b49f39f2ae8d693bc584048ed2ffa4771750589c67aad9",
+      "after_sha256": "24779b01cedc7fe6627db4e3add04e32931ec6bdcbd8bb968cfb988fcf2a6ca0",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2-3.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6-2-3.lawtest",
+      "before_sha256": "cd1b0528710b3a9186c7c8ab9db400c6745ca0eaa67855e2c6994cf10a626097",
+      "after_sha256": "f38f842a27b58d3f1cf9e8325f121dc7ecac6a88d38678c61d30a3fea001b3bf",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6-2.lawtest",
+      "before_sha256": "2a6f562af4c4cb6e26004dbf4aae1401fbee301cbc21c0f0af7e5338b22f64e1",
+      "after_sha256": "4396a0c8d0672f1d3c384193d66dbd094db01a87294c2898e099e1da08e99495",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6-3.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6-3.lawtest",
+      "before_sha256": "79d08f16504433c03df4e0b79a9dab6b25e739689ebde88540b96156cab45f7a",
+      "after_sha256": "091e0045bbea3faa5559fb2171df06e4a3cb71862ad178038eaa99328c235545",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s6.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s6.lawtest",
+      "before_sha256": "bc22362e94d34cfdc3309c50379a453b772dfdf2dc4ee6aa253f3cc3b2fdeead",
+      "after_sha256": "28aed8e694134572c7081e75c07a26a5cb36c9d8ca38e3ec2c41c93014e90798",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-1-1.lawtest",
+      "before_sha256": "7324906bf2d283927d76ec974c53dabd11595c676adca4129d4e84df2e3ef290",
+      "after_sha256": "4b7804ecaaf7f990d9b5ca2a221a0cd29eb0838b36ed17db2944c33b3c6740e5",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-1.lawtest",
+      "before_sha256": "bb6619f56b868b7d9de12d9f7c9a0ad1d09fc251f4f196c0d92828ad3d5a751e",
+      "after_sha256": "04b7f806b517f124113ec8bc3a80cec6470c4524fd3d7fcbdf81e439dd874553",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-2-1.lawtest",
+      "before_sha256": "55525f13422c54a9b394f30e19fa9398f405d34f72447f2317192216e11fb049",
+      "after_sha256": "5aed188d24544d449d2243f42e6598b24091e7b629988094a0cd3e032ecb70e4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-2.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-2.lawtest",
+      "before_sha256": "2b640fa002e1e80d2b3cf26c4126f3eac4d5ad5dc0f19dd5d56cf280933791b9",
+      "after_sha256": "8660620109e2158da0fb62e0bffe1e1cc81995c5bbc0383d40bf013090dae646",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3-1.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-3-1.lawtest",
+      "before_sha256": "ce972f5c45e9da5909e018703a0adae3832c07a101ef472b547b35b370b60203",
+      "after_sha256": "a00eb6bc7c5e8b49df62cba8ef1ca1024571cb263d278b54d1217fbcb5bb0157",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7-3.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7-3.lawtest",
+      "before_sha256": "0b6c3dea9b7a93b05157c65f8ee49dd077e8b818d698d2dbfead76f35448b387",
+      "after_sha256": "0bdfc4626656263239552519e04247c611c2059610ca0b006c83aa8946a918e1",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/tests/catalog/sg-s7.lawtest",
+      "candidate": "migrated-tests/scrum-guide/catalog/sg-s7.lawtest",
+      "before_sha256": "f9a816ff0b316f8546f7b2d3d85a9960cf70c1fe984228e07be2e2a1a750d928",
+      "after_sha256": "ed57730a9a2af00346185963b980c270d8ea6ecc1ac56a9f2530328db17df6bc",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/01-entry-requires-the-doorkeepers-judgment.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/01-entry-requires-the-doorkeepers-judgment.lawtest",
+      "before_sha256": "a30dfcae7c6a7a4ff6042af02d89e868ef77ef0104e0bc6d5599077d5ec08bf4",
+      "after_sha256": "5942e4675ca75f58b877e522612dfe80b0dcb34368cae2a7364868821db58838",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/02-doorkeeper-grants-entry.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/02-doorkeeper-grants-entry.lawtest",
+      "before_sha256": "013e9acf8f30c4a77c277cfa6bb27e38e068e240440abd903be876c0a3d91e13",
+      "after_sha256": "324fff754055c08e3e308236362862282cfde105e93c5df5cd981491c88c16e4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/03-doorkeeper-refuses-closes-question-not-truth.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/03-doorkeeper-refuses-closes-question-not-truth.lawtest",
+      "before_sha256": "0e504505e883a4854f0d28a6b03a1136d12d7cf5626b6bd88c2754075bfd4aa9",
+      "after_sha256": "ee47e0296ace151e0d5bad4ac3006ac7055946ad2ec16c835b4dba0ac21d2a87",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/04-way-is-free-without-any-judgment.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/04-way-is-free-without-any-judgment.lawtest",
+      "before_sha256": "edf9e1e6223d2bf2bcc2e1a78a4bc4ffdee0d572bfb3e78fcc0445665383de6d",
+      "after_sha256": "47c0955716de050d9a87b3f33e27ad2beb0daed99b70353a9d4749b3572f2cb9",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/05-entering-anyway-breaches-the-ban.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/05-entering-anyway-breaches-the-ban.lawtest",
+      "before_sha256": "260352de1772a826ca7986be2f96b44cb85f064b0140274e700d6457de9b252a",
+      "after_sha256": "096d7ac29b857fecc5743737ac59db96ce5765049863246674a608d1c1f93070",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/06-no-sanction-is-named.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/06-no-sanction-is-named.lawtest",
+      "before_sha256": "0ab16901c34198123edc7da79a4a4cf2a175edd047bdac415f45f81e0899b163",
+      "after_sha256": "d23562b9e41ac2df2bfe55e52c831378b69504f57a90c1059d887ffc5f67c3b4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/07-destination-unknown-before-the-last-word.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/07-destination-unknown-before-the-last-word.lawtest",
+      "before_sha256": "3558e6f88c7cbdd25b3272d4f104445035bd4079c258f32c5bfb16148d6c1d66",
+      "after_sha256": "5ae19a9bda46ed5190667c7c4cf9cdcc75e0026b5522e666226c66cbe876c857",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/08-destination-revealed-by-the-last-word.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/08-destination-revealed-by-the-last-word.lawtest",
+      "before_sha256": "1e6ccefd2a4279e30172d41be51152199bca08749edd153b7c4ac27658e58a39",
+      "after_sha256": "efe12c05e47df98439b9e4bc8ea608d8e1a3396adf0a2d81ecac18b1244b0103",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/09-gifts-accepted-create-no-claim.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/09-gifts-accepted-create-no-claim.lawtest",
+      "before_sha256": "31852c652ba3810432effdbe2cc6351209858cd2528d1ba68492bcb6ceb4db84",
+      "after_sha256": "eda4c50f9d2d72c209182cd9052f419a8c39df6651e57d8b4d38ca6f7f8ae33e",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/10-all-attempts-do-not-move-the-answer.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/10-all-attempts-do-not-move-the-answer.lawtest",
+      "before_sha256": "806869f810858f0ebae8394332c5612b4128b0a3c2fa830cf48421d61d96fba3",
+      "after_sha256": "43b5985178e8a29c1880c33134c7101601ad22169ece28f0a0cd8da7e4faa659",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/tests/11-closure-is-declared-not-narrated.lawtest",
+      "candidate": "migrated-tests/de-vor-dem-gesetz/11-closure-is-declared-not-narrated.lawtest",
+      "before_sha256": "5c6056530eaa81ad207213f7b0a44e18586e4c5f62bbee01dedee4b2bf90d613",
+      "after_sha256": "3da24e7abfc42034a080866f98b05792a640ef6a70e17c51ba48f0c7e5f049c3",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/01-must-breached-is-violated.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/01-must-breached-is-violated.lawtest",
+      "before_sha256": "4e3f8520b795784b0cd7b25b4d6eebb8deb1c2257194b8e6afade55d1dd5a496",
+      "after_sha256": "2d8134f8e8034a9af3cadeeb5714f9eea26808fb49dce10d0806e5eeeda6e873",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/02-must-not-breached-is-violated.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/02-must-not-breached-is-violated.lawtest",
+      "before_sha256": "85df60447ce6bcdda874d3d6532407c620b655a4d7086ed5cc4d2a8170e06c11",
+      "after_sha256": "2ba0ffe2d2ca717cc47fa40bf427a68a15790ed3b8fe786fdc709baee148553a",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/03-lowercase-keyword-carries-no-force.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/03-lowercase-keyword-carries-no-force.lawtest",
+      "before_sha256": "3113ee2fc185a58a772863480bd0ac7d3431e4bd4b47204c5cf1b71e8a8b4dc2",
+      "after_sha256": "a3bbfc341b62636e593ac04e40fe5d86e33bec672bdda8e01adc58b656733f4b",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/04-should-deviation-requires-judgment.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/04-should-deviation-requires-judgment.lawtest",
+      "before_sha256": "3c26448aa668be81fa0f26952f82fd80e5a8d7b4b4f5da655dd0145dff3aa226",
+      "after_sha256": "d0ae484e78d8cfdb80fb8a903de9b3b9ec165da072887e78e757c64e402f9bcc",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/05-pre-8174-reading-revives-lowercase.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/05-pre-8174-reading-revives-lowercase.lawtest",
+      "before_sha256": "b0b99e5bd8d01aa8694a991a944e4d3a3e0042ecd6005d964d0fb8bb34104f30",
+      "after_sha256": "acf99023929cc9a96b687952b8742ffa6cbb09965f445ce22b86b9070496562b",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/tests/catalog/general.lawtest",
+      "candidate": "migrated-tests/ietf-bcp14/catalog/general.lawtest",
+      "before_sha256": "dbcefddeabb08e0435ec3fd496c7536af93691a712adb6693af9076ee3a1f1c3",
+      "after_sha256": "d75b957aa26fe570ed5e10758736079817aeda94b4fd114517f14985b8196f20",
+      "changes": [
+        "test language header 0.1 to 0.2",
+        "quote the existing position name containing a slash"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/01-probatio-7-basis-2.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/01-probatio-7-basis-2.lawtest",
+      "before_sha256": "b292b9efd85861ef5eb703ec9ffc6291025e6184ef785c18b4aba57511142ba3",
+      "after_sha256": "3b7e02a3b7d8b0b611e0f77d66a2761ebefd7afe8b68de0096c46fb313e36944",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/02-primus-7-praesumitur.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/02-primus-7-praesumitur.lawtest",
+      "before_sha256": "6e814baeddb6900b331ca9cfb69954c01d55f4f9af20e89ad9442b0c2c77051d",
+      "after_sha256": "5361d3371c9c36649bbf111456f8e550334c3d477ff8923241429a778d370a87",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/03-pseudoprimus-341-basis-2.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/03-pseudoprimus-341-basis-2.lawtest",
+      "before_sha256": "c03691f638f281c63fafb72bc4383e88c4172db6b315b869d22f02a32b450df4",
+      "after_sha256": "88977e5f666f40168c89de874d92bd0c445d28309ddae3c5801b1e4b00e7606a",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/04-probatio-341-basis-3-cadit.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/04-probatio-341-basis-3-cadit.lawtest",
+      "before_sha256": "6569e4187aa7fd0a0b604d51110684affaff51d1325fcdf834323fbcc0931b22",
+      "after_sha256": "478b34c81ac655dbbf08aa8ddb689cf25fd606f541152d783a4f1a38f64ae8ec",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/05-primus-341-divisore-victus.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/05-primus-341-divisore-victus.lawtest",
+      "before_sha256": "8920229ab8d27e60b63266bbd3f0f349bbfe835e3e4f58554382008ac53565ac",
+      "after_sha256": "84d69a5b0e596f0f3359cb23da6a2440414471a06615ac97bba3bc9028aa49fb",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/06-carmichael-561-basis-2.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/06-carmichael-561-basis-2.lawtest",
+      "before_sha256": "732b651f051ecee7a9ccf5c821cd0e47a40bcc60af6d3df7ae42f82e0359f9eb",
+      "after_sha256": "85cde3a4c53abc8ccd1e9846cadee5d2a19d134eed7c6dab62187bb0a49f99e7",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/07-carmichael-561-basis-7.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/07-carmichael-561-basis-7.lawtest",
+      "before_sha256": "82a33109d199aa738c75ee4843c41fa25ae90e4412e33a675ad0712665d9b80b",
+      "after_sha256": "450607021bfa28ff7fc035be9b854cf629d2dbed7b0a96bfe4a5f0e37b0a39a1",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/08-primus-561-divisore-victus.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/08-primus-561-divisore-victus.lawtest",
+      "before_sha256": "2d88af6e424c6d2ed09e906a2345f8149ac29d075da872e495522c134130022f",
+      "after_sha256": "cb59db04f38f45c05786a9c744818b2483fe0e2645ee632b0f5d891907f36347",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/09-divisor-non-metiens-nihil-agit.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/09-divisor-non-metiens-nihil-agit.lawtest",
+      "before_sha256": "cff57a2c9df9a278b9ba1061377dac08f9fd99019c93b964004995b4ee696fc1",
+      "after_sha256": "314f572c4b374bf914aa8181968b3869149fcb658d96e71951cf3805215d8cb5",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/10-vestigium-falsum-in-gradu.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/10-vestigium-falsum-in-gradu.lawtest",
+      "before_sha256": "acd22e172547f30f9a3794f9be590d332920f5a1232f211a122c1ad71ad7ec8c",
+      "after_sha256": "1fa12fe72d2b015205366a950f4aa53ffc52cfb64b832ac89157bec131a27971",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/11-vestigium-falsum-in-duplicatione.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/11-vestigium-falsum-in-duplicatione.lawtest",
+      "before_sha256": "f7e67dee5da45cd38d6c5f96ed81077a3db5791fa1e357ef41f8049aa849a590",
+      "after_sha256": "76be7aba8868de3576db2be6081541aa571c4c5b066d7b755f0ab6fb44935be2",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/12-vestigium-ruptum.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/12-vestigium-ruptum.lawtest",
+      "before_sha256": "f9336716b5555606c15e9982a1ce4a8d6cf0a7bcec9dcf1b4d73f88f81dbc04c",
+      "after_sha256": "77bb5391f48f4f6ae771e4c0f6e9a990363d560da408fb59f38ebb1b5622525c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/13-compendium-3-ad-1000-mod-13.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/13-compendium-3-ad-1000-mod-13.lawtest",
+      "before_sha256": "db69be7e82ad78ce9509f730251075be84f70505cd45f7c6de865491dbf5de9d",
+      "after_sha256": "0da688afbe0ad3273a6358aef711234d1b333603b7d7015368b42305d5468df8",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/14-probatio-per-ordinem.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/14-probatio-per-ordinem.lawtest",
+      "before_sha256": "3be03eb5a553d56a35d4d194c86a92eac6bb7fe7871c18ec3435f88da4c9d331",
+      "after_sha256": "f5cf8e034b929e3bdfbbcfe19fd1970a2ef522c00b22f031593da3b7656219c4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/tests/15-ordo-anticipatus.lawtest",
+      "candidate": "migrated-tests/la-gauss-theorema-fermatianum/15-ordo-anticipatus.lawtest",
+      "before_sha256": "2d53af15e3b18d9f2d91cb654504ea9b46b83649cfdc01a1f248c2dd8a020b09",
+      "after_sha256": "1b781f72eff4dcc81e9086c61dca6075c0a6cf34af1ed1220dd57669fa930dd4",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/01-aigyptiako-345.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/01-aigyptiako-345.lawtest",
+      "before_sha256": "77bc25a46d5f1f30cbacdc101a82c3dcd12e3e14a36cdf244fa04de9dec93d59",
+      "after_sha256": "e9fe704e9d2feb7248566934e3aab261a42df56b7ea7b9a59a55030526c6fbfd",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/02-ekfylismenon-123.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/02-ekfylismenon-123.lawtest",
+      "before_sha256": "1e1450e60cd4e80f4fe047c74f666998bff0e6d926fb634d197d069c1bef4b96",
+      "after_sha256": "f3139eed84e77a22bd4fb433067f2372a30108639d495ccfb7f018b36dc2c4be",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/03-oxygonion-456.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/03-oxygonion-456.lawtest",
+      "before_sha256": "1f7a8e7e6e2e71ac872207bb457da2678afcc5b3ece5e5b0c672cd956b0ba662",
+      "after_sha256": "fab6441cf6ac90423b6e595593231efbd472ca6facea7cc4a5b7d767e42709bd",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/04-enantiosis-234.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/04-enantiosis-234.lawtest",
+      "before_sha256": "512569f4c90e3d777385d0102c2f6691ace2654a043d2197d44e832eecd52e25",
+      "after_sha256": "86487a40053c45d4a7f24296d6e993e20187ca2e30cfb0e939cb5ec20acad523",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/05-pyle-033.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/05-pyle-033.lawtest",
+      "before_sha256": "221af3ad7207aaeed4186da68a3c7f892d27fe5b0cdcd1843c761f148732dd91",
+      "after_sha256": "0e5d2688d665e523991b09b125df982627e4bb925331bde40861f3f87eaf5e5c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/06-orthogonion-pros-protei-543.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/06-orthogonion-pros-protei-543.lawtest",
+      "before_sha256": "ada009ff898ef9669f6f58c1efa1f30097ffb30c58fea2b197821fd8b0129813",
+      "after_sha256": "26ddac29821ec5446f159ae1c52a710cae57777e62696250a69001c19dee3d2e",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/07-orthogonion-pros-deuterai-354.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/07-orthogonion-pros-deuterai-354.lawtest",
+      "before_sha256": "401811147c244495800e4813668cad17ab66a5a40464e188ff3716215f8b7703",
+      "after_sha256": "d35651d427ea7b2b63011afd2c3067f4351af0f5eec2f1f9ff2cc4904fa6341e",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/08-ouk-orthogonion-717.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/08-ouk-orthogonion-717.lawtest",
+      "before_sha256": "1909e2d70d8741898b7ae71b4b028997003e8feefdf1254454de3c933ccfee48",
+      "after_sha256": "09b7ea791586b13acf52fc8501e8a284688b0324600d712dc55fbef7ae76a535",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/09-oude-trigonon-000.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/09-oude-trigonon-000.lawtest",
+      "before_sha256": "4690b81558365d08395a64410cc1c71edb5302f84d8a46fdce6b57f0b1517dfe",
+      "after_sha256": "cddff4f2ad24c6649d6cbb62334547e67bc416612ebb31ef67c2bb74c18a188c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/10-trigonon-estin-111.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/10-trigonon-estin-111.lawtest",
+      "before_sha256": "f4a9f69a0b356b16357780a177210fe5c8435d5fee1e9d997e1e1756ae5085ef",
+      "after_sha256": "68ce2fba938aa5d55164809c5b20093005320dd32427bf75feb5c4106103e777",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/11-enantiosis-arnetikai-pleurai.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/11-enantiosis-arnetikai-pleurai.lawtest",
+      "before_sha256": "00df024b87b418b73fb8191a257d84da54ca76c4b17467e46ecef4c3caa0a288",
+      "after_sha256": "6127e2ef9f4fd9da6a1ba9c8b7a45a2943bb633616cadfbf3696a70478ead6fe",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/12-amblygonion-234.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/12-amblygonion-234.lawtest",
+      "before_sha256": "185f9c24ff6bddcb9dd39220126cbcb668adc1012be0252f0f3a5c824c6572d0",
+      "after_sha256": "fcb49f62c6e62a14435ef0d159ecaad22d8df018f711f8948e1b1a07dab7f6de",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/13-oxygonion-456.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/13-oxygonion-456.lawtest",
+      "before_sha256": "456242800e3ac9a9b382f871f3c688d1573bb4664b65289cd01f44689451df26",
+      "after_sha256": "bacf4f01046ce38fc9d5c7b09bc0de506c07b9b5b77e5929f4445917859448cd",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/14-orthogonion-oute-amblygonion-345.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/14-orthogonion-oute-amblygonion-345.lawtest",
+      "before_sha256": "5498aaa4de7e0659739f366006783fd5f0edbab9a7fb147337ebc774d1740a8a",
+      "after_sha256": "d0beeddd4db74ad9d574b8e9299933fb20cfe1f1d2d9225a7234d10113a0fbf5",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/15-smt-amblygonion-pros-tritei-267.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/15-smt-amblygonion-pros-tritei-267.lawtest",
+      "before_sha256": "adbe47310b55c43d3493830ba258a6c1dff81bd497613020314b582163ea975a",
+      "after_sha256": "ae7daede5c540c4180ccedf274c3b7e7a1e641e3723537aef6cd34d8b854f09c",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/16-smt-amblygonion-pros-protei-542.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/16-smt-amblygonion-pros-protei-542.lawtest",
+      "before_sha256": "0bf62cff30bdc80e013c88e98448ac912082da3625ba71db8aeabb951b95abdb",
+      "after_sha256": "8d1edfe973d50cd2e5244eaecceba1426b7b73e24603a4bfa8c1ffc2200e8daa",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/17-smt-amblygonion-pros-deuterai-474.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/17-smt-amblygonion-pros-deuterai-474.lawtest",
+      "before_sha256": "1d963264b31330a8cfa4ff0818645beca43d77186df3cb4d395d731581e90ed6",
+      "after_sha256": "6658c1cd316cbcce77cc61e1e172a25288062170afa763c16fe0c770154f1416",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/tests/18-smt-oxygonion-331.lawtest",
+      "candidate": "migrated-tests/grc-euclid-pythagoras/18-smt-oxygonion-331.lawtest",
+      "before_sha256": "c7ed2a1059f2f8e2b07fbde32fdbbf4469a33aa09e462ec419e41eaa61f5d0d0",
+      "after_sha256": "05ded12280bea7e11515416da6660de63089fa839af6e7695d8ef5372d2437a3",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "packs/primitives/natural-sciences/mechanics/tests/calc-mechanics.lawtest",
+      "candidate": "migrated-tests/calc-mechanics/calc-mechanics.lawtest",
+      "before_sha256": "f985a6aaab94713586e0db4082ea8e9ce378d4b2f1892891663ca112e7eb787f",
+      "after_sha256": "2cebf57a1c58cec57f0780ed5f429e3195e0c8c09a2d8a16d50d6449427bbc8b",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/tests/01-dimensional-consistency.lawtest",
+      "candidate": "migrated-tests/openstax-measurement/01-dimensional-consistency.lawtest",
+      "before_sha256": "71d722b70339bfce13e8d9bc95821509594d48337f4540ea0f9ccb83be89baff",
+      "after_sha256": "4b803f7b8053530efec240a33531573413ec7db53c0021b938c8f9285dfe07d8",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/tests/02-algebra-rejects-the-answer.lawtest",
+      "candidate": "migrated-tests/openstax-measurement/02-algebra-rejects-the-answer.lawtest",
+      "before_sha256": "4dfb419fae4ea34a949c19b554c934334edbd1f3bbf7bf5b286d24b2207ade5b",
+      "after_sha256": "b2ea29cf0c18bc0a11ba719897ba99211ab005956be0df0ca654018ec2fa8a1f",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/tests/03-quantities-and-units.lawtest",
+      "candidate": "migrated-tests/openstax-measurement/03-quantities-and-units.lawtest",
+      "before_sha256": "b25fab28ee02b72d6442de04cffc0b5d0e4d0146b3b817c21941282927721205",
+      "after_sha256": "59153283a33d9b44bff8e003b1142b1dd1f34cd894e6451a38d4698c1255ba89",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/tests/04-uncertainty.lawtest",
+      "candidate": "migrated-tests/openstax-measurement/04-uncertainty.lawtest",
+      "before_sha256": "d4c0f12280d57098632d56fa750d4e6790262dce7f875075aab6bcd280e1a9fb",
+      "after_sha256": "ed4ef5ab9da9a502dc8c454351e0a6a27e0023fd1e07c44ec8c877efd4bfa60a",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/tests/05-vectors.lawtest",
+      "candidate": "migrated-tests/openstax-measurement/05-vectors.lawtest",
+      "before_sha256": "64060287d112457289b4c62d946162c1ad41b431a424fd9b8ee1613d6d4e5896",
+      "after_sha256": "5f9e21cd6ab07aa3394cbd0763c37578031a2c916ae740d137a966d3a649f123",
+      "changes": [
+        "test language header 0.1 to 0.2"
+      ],
+      "expectations_changed": false,
+      "semantic_equivalence_to_retired_release": "not_claimed"
+    }
+  ],
+  "source_overlays": [
+    {
+      "source": "corpus/laws/org/openstax/chemistry-acids/01-species.law",
+      "candidate": "source-overlays/openstax-chemistry-acids/01-species.law",
+      "before_sha256": "d132465e00981e18d599e0c233c276003d379c4df48072fc077aa5c9c599412e",
+      "after_sha256": "5e963f1b80bd879a7e806fe2fe704ab49ebb3edd11e939fa1b887aa54ea9f799",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/00-package.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/00-package.law",
+      "before_sha256": "63310928e90016e7b26efb763389bdec769d68f828590c7341be3249fdfef536",
+      "after_sha256": "835f87e8bc1b4e7633344d7ecb5c64a5a207cc17d233ef348a9b4f99887a79dc",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/01-horoi.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/01-horoi.law",
+      "before_sha256": "e19e77e2bae551a75e3d3dfa2f20a42e7a30c7d5280187e84afb5787e9eb0e31",
+      "after_sha256": "b1e8727f94ba753f8fc0ab2cc293f4b8ef9455236eeb7eb72716e5b8bd344094",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/02-aitemata.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/02-aitemata.law",
+      "before_sha256": "f1c8882c2828766681ed69b5a69510ba64ba8ad41774c9b76478cd61c9e349c1",
+      "after_sha256": "ada7654e11fb1006dc6a4f9a20d930364a6ff5b04f4dec941877de1eb6b54035",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/03-koinai-ennoiai.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/03-koinai-ennoiai.law",
+      "before_sha256": "9f97cdbdaf9f80ad6cd6be69dd11d14808c0dfb8e73712b0f6bf682028c125bc",
+      "after_sha256": "bde05d783f6708ad57d11fb0b1e972542ce3057243c9b6f33c031b0351744dde",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/04-protaseis-i-01-12.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/04-protaseis-i-01-12.law",
+      "before_sha256": "01645a889cf08f3a741ab24f78c61b5a62e1cdeac79e3dda7e05a7e39e445fd3",
+      "after_sha256": "7ee274824e582d94ffe2ae34b04a540dea3814b5d99e695716968fe0edefa1df",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/05-protaseis-i-13-26.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/05-protaseis-i-13-26.law",
+      "before_sha256": "f2c062cac4a732ed75034c7cda37f778adab2319bbfe205e001525a58074a290",
+      "after_sha256": "5636a5c83017b21c2c2ebc98491c44810f124000691fe9c6807d15e234ce0516",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/06-protaseis-i-27-32.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/06-protaseis-i-27-32.law",
+      "before_sha256": "89496e2279106f65876e758307eba40f7d90a775c63a57d0e39616ecfa4d741a",
+      "after_sha256": "34aa7da4c584cd2ae905960e8e77e3fb949bd765177c12c52deab17ce6364f04",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/07-protaseis-i-33-46.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/07-protaseis-i-33-46.law",
+      "before_sha256": "1ac629ae470906def47878307183e0ffcb951c67e73dfe99b55a809b94e69895",
+      "after_sha256": "cc32afda88be9e5101c470e4c58464b66ba274335eea945ce1bf2c64a4092982",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-stoicheia-i/08-protaseis-i-47-48.law",
+      "candidate": "source-overlays/grc-euclid-stoicheia-i/08-protaseis-i-47-48.law",
+      "before_sha256": "dc6d925e3ffa631a519ee7c7dc8cb2cdaaa1fc28d50304702481c037ef6ff80f",
+      "after_sha256": "413d97f684a18b79f21bc5ffc2549c0b8e52f5e98c8b0ef4efbbd2567f29eb2a",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/00-package.law",
+      "candidate": "source-overlays/de-hilbert-grundlagen/00-package.law",
+      "before_sha256": "8202d41283aec5904ed782c0c2d8759746948241030f446f50c1fa99e5cda4b9",
+      "after_sha256": "dd6fac26d19b83262bd8992ef8971ce58044e368070adffdc34bb0c67b284030",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/01-verknuepfung.law",
+      "candidate": "source-overlays/de-hilbert-grundlagen/01-verknuepfung.law",
+      "before_sha256": "06fdf090867a6d51a24d5d60b6ddbcd3709bd7098325ab95ea2effc814f9e38c",
+      "after_sha256": "a54225677fb9934521f1576820e44347af53db267298fd4b5923d6a259d2650f",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/02-anordnung.law",
+      "candidate": "source-overlays/de-hilbert-grundlagen/02-anordnung.law",
+      "before_sha256": "25b55890a82c92cb5035b093ea74c88b707e217c4b1d341eb5ea1ee3dbda736e",
+      "after_sha256": "885a004ee936f8087d4dd6bf18cd37cfd463f3eee52d06ac543eb525b3cbde20",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/hilbert-grundlagen/03-parallelen.law",
+      "candidate": "source-overlays/de-hilbert-grundlagen/03-parallelen.law",
+      "before_sha256": "a6c28f839c5469eb8985da95a1fa1c05f1acc9f07de7b252fb35364956b24ac4",
+      "after_sha256": "4db260616db95fdce7558f7f574555db527121fec2955a8e820b528553eae6f9",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/myco/opredelitel/00-key.law",
+      "candidate": "source-overlays/myco-opredelitel/00-key.law",
+      "before_sha256": "2eb83bec58535fd63dc47fff378fba0e212ed1a4e8d170478bb50e9090b3d0fd",
+      "after_sha256": "3a901c9b8d3c8ed579744c5a9406f00928b9c4e051d8bd4a583d92a273891d47",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/myco/opredelitel/01-verdicts.law",
+      "candidate": "source-overlays/myco-opredelitel/01-verdicts.law",
+      "before_sha256": "93c4fae0e087880f474dd26e85bdf3e9b3594cfdb9828e4b2d44773807a57315",
+      "after_sha256": "c7a7da35cf69f1de004292305d49d0939434640c1794b7cdad6fc99e0dcc99ec",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/myco/opredelitel/02-preparation-and-boundaries.law",
+      "candidate": "source-overlays/myco-opredelitel/02-preparation-and-boundaries.law",
+      "before_sha256": "ed66858dd785a53f7c62048039cf6e5f18fda31ab6fdd0fe56b73f68776ef9cf",
+      "after_sha256": "7a0a363d14204064fa8355dcbdb535e899953674c87e03bb649760ad3911c34d",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/00-package.law",
+      "candidate": "source-overlays/scrum-guide/00-package.law",
+      "before_sha256": "3bca96a6e8f0451d2ea72b81b0fc1941d8c8a7e444d7faa1dc911771c69b87a0",
+      "after_sha256": "fdd1e330e31011f4fee88d01cb069654d798387ebe71e5f85ef54bee402d70c7",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/02-theory.law",
+      "candidate": "source-overlays/scrum-guide/02-theory.law",
+      "before_sha256": "8f4edfcd89d4eabf839f5b8499c1b3b878171bd86ffa70eb6ebf8dffa40feb62",
+      "after_sha256": "122a4f67c33067c1451ef6fa6a658558ec870704c731ac4f1229440a2431ab76",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/03-team.law",
+      "candidate": "source-overlays/scrum-guide/03-team.law",
+      "before_sha256": "6906230c1a0f9e0c70b969d134b18ac89362fe78bcb83f71a4185020f98c4cdb",
+      "after_sha256": "571faf44659d0b756647b2f213472ae5fe357bcad28b5ca7a9547d53360e511f",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/04-events.law",
+      "candidate": "source-overlays/scrum-guide/04-events.law",
+      "before_sha256": "645110989cf6d8daab41dbf449bcc11f09b2022ed691b079d403869dbcb78b18",
+      "after_sha256": "e9fc04a1ddd706d3ff0b372c85ea5c513888a5005b8c3f03ad7bf7036b72a017",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/05-artifacts.law",
+      "candidate": "source-overlays/scrum-guide/05-artifacts.law",
+      "before_sha256": "04a3136c46744a8a24c9d155db27de5b95521825d4b2ee818069bc185e682ced",
+      "after_sha256": "4a7479c66ac1b2d2c8c5237b324a84248c572ddfb558104674b4873d607c5214",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/scrum/guide/06-end-note.law",
+      "candidate": "source-overlays/scrum-guide/06-end-note.law",
+      "before_sha256": "3a0b972448b84b203afaf358a7cefb00b28676e87ea625f3f248d9c7d8ec3d4a",
+      "after_sha256": "21bcaa7471e8adfed325dcf4dd47554e904186f2df319187a12c74567d5cf8a6",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/01-tor.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/01-tor.law",
+      "before_sha256": "5e006fcf08d10569e2d7af73501d782efb90ae53069fe1fddf9ca75b2c516dfd",
+      "after_sha256": "8701f47f5000140f3aac68a957e227b78615d999841ca22ea36a6d29063192e2",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/02-erlaubnis.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/02-erlaubnis.law",
+      "before_sha256": "fdfd1d87da0d3cfdeebcefabd31bf11185fc0ff939f8781958ea6499a55b2023",
+      "after_sha256": "cbf1a599fc9df1b06ddfdcfdff9510f2e61daf7acd600b249ac9b7f85451e5df",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/03-versuche.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/03-versuche.law",
+      "before_sha256": "d3171891cd1cb59af7ae0862832a138d6923318593c8c73ca2ce413ae0f7d6f3",
+      "after_sha256": "e67ac42e72db79bf11628101a82e1860e14bb79fc02eb075b8e8aa80d72c6566",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/04-verfahren.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/04-verfahren.law",
+      "before_sha256": "a2d9dde73ef6b901edf93d10438bb7a5d7995692d62a8c9ab7b74c11c6db8edd",
+      "after_sha256": "b000dbc1cc770e8cf8482c1584010839ab2217aafb84a9b8a1c636234eee5fb0",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/05-bestimmung.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/05-bestimmung.law",
+      "before_sha256": "7d280e9bcdb958d2af4f4b1c4d73256ef56e4d0b2df65433f8520ce4fdcca0f7",
+      "after_sha256": "60645e5a49562e7b53a40a0782f7663f176613e1bd488981db7c1a77ed3496c5",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/06-auslegung.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/06-auslegung.law",
+      "before_sha256": "82dc81fb033daae36dfd4804dd5994a75460617040a80734535dda0c1a2f1da3",
+      "after_sha256": "561bbb61398de57a88b774632e0f53c9539440c4d76a19502e5ecc57cc411386",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/fiction/kafka/vor-dem-gesetz/package.law",
+      "candidate": "source-overlays/de-vor-dem-gesetz/package.law",
+      "before_sha256": "9ddc26616e5edb2b68f623eca1c0d113eff8dc412edc45375ac00719daa9f499",
+      "after_sha256": "32ece5fb45df5fbd239d676d7247ff553be08a7b11c1257da34b5bb6f720d7ba",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/kz/grammar/yqsham-tulgalar/01-sources.law",
+      "candidate": "source-overlays/kz-grammar-yqsham-tulgalar/01-sources.law",
+      "before_sha256": "cffa29117c85289df1eb0dc42606805006d999e786cdf80c6f66a84018aa62a2",
+      "after_sha256": "83061676b9fe1c63cf68436283178951c1461190ff1026add2c5176c660d95c1",
+      "change": "external Kazakh bibliographic reference; ABSTRACT_ONLY; handbook and fragment quotations excluded; rules and expectations preserved",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/kz/grammar/yqsham-tulgalar/02-yqsham-tulgalar.law",
+      "candidate": "source-overlays/kz-grammar-yqsham-tulgalar/02-yqsham-tulgalar.law",
+      "before_sha256": "95f1884a9a7d77fe0aa21cbfed7e1bb36cd819d8929dbe6f1910bcc27ebfc07b",
+      "after_sha256": "16d4f17acedeeec8b204aa53ca38b73a684ad096f3279ca302d006a58b66fa6b",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/01-capitalization.law",
+      "candidate": "source-overlays/ietf-bcp14/01-capitalization.law",
+      "before_sha256": "58e097ed35d125f2ab2f7514eef13bd62d032e816b811dda6333ab11f0061630",
+      "after_sha256": "d52333c20698368056251270b5ac2d1f710b782df35b0bd71f10542843bd115f",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/02-requirement-levels.law",
+      "candidate": "source-overlays/ietf-bcp14/02-requirement-levels.law",
+      "before_sha256": "f7ad198bc75ed911439fa5e56bba03366bf7dcde63717853217ad018beac04cf",
+      "after_sha256": "0fb4af12690f43c6be6dd0ad14bd729931fa89552860d0ac87bc71176afbeb02",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/03-imperatives.law",
+      "candidate": "source-overlays/ietf-bcp14/03-imperatives.law",
+      "before_sha256": "bc6ec473688b8dc0de2804f31ec0e31c0bf3cd1a8980bf8c4cea87382df3a969",
+      "after_sha256": "f0317ace4a3b54c75c9cb22ea08cdb85057bafe52f54042e0ba97212735de9a3",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/ietf/bcp14/package.law",
+      "candidate": "source-overlays/ietf-bcp14/package.law",
+      "before_sha256": "0951da69812a3d8ae6902823df9b4d639d92d74d93ca2b49846263b71050fcf6",
+      "after_sha256": "c8dc5c59aa0c2d9e146354e41a4d040410152e8ca393f4e17ceb9c68c470419c",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/01-articuli-45-48.law",
+      "candidate": "source-overlays/la-gauss-theorema-fermatianum/01-articuli-45-48.law",
+      "before_sha256": "70183e5b12e1d4d8b3a4d12f1b64492ab725953c0b832dfc83409163986d4bea",
+      "after_sha256": "97827e644598243b9ff4a1da9c29cf7abe9b05e817fb7c72f9c070670331a39b",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/gauss-theorema-fermatianum/02-articuli-49-50.law",
+      "candidate": "source-overlays/la-gauss-theorema-fermatianum/02-articuli-49-50.law",
+      "before_sha256": "8c9dfb45a14d6ad441f2ad85f14e0c16d49d3e69f0baacc28d675d1f20dcc41b",
+      "after_sha256": "daf86ee9c29254f2e8c4821ed08b83caa0dbeee2402f054bd464c213005eb0de",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "packs/demo/expense-evidence/laws/expense-evidence.law",
+      "candidate": "source-overlays/expense-evidence/expense-evidence.law",
+      "before_sha256": "596af63dc189afde000d779e7703db27e637bee97f815b9676f61a3039fd62a5",
+      "after_sha256": "78d780ccb19c73bdede3ce2736a789907d3eaf2d8f8314c63854860a3598a87a",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/00-package.law",
+      "candidate": "source-overlays/grc-euclid-pythagoras/00-package.law",
+      "before_sha256": "a1cb6fe64b65433e9dd64796d416df3eaa910f889247773e48d4594818ea6df3",
+      "after_sha256": "b19a80c2810c107299aecc6192d4ba9e759016928922a7137922e3a31c1766ea",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/01-protasis-20.law",
+      "candidate": "source-overlays/grc-euclid-pythagoras/01-protasis-20.law",
+      "before_sha256": "446b0a3f88f8ddcf09ec5edf2398113ac9737712d7da5eba1f406409919044ac",
+      "after_sha256": "ef4daafa3f695ea3ca0e740fa89696bdae98a725cd83c0ab2de3cb82c2f6ddf3",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/02-protasis-47.law",
+      "candidate": "source-overlays/grc-euclid-pythagoras/02-protasis-47.law",
+      "before_sha256": "af35c11626ac25ae78ac9bd2528e2acacc944983802046ac2840261221025fff",
+      "after_sha256": "d45be28ef6b1a9649b9cc401587146e9a1bf3263d23ae46404eb4396f7fdba3e",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/03-protasis-48.law",
+      "candidate": "source-overlays/grc-euclid-pythagoras/03-protasis-48.law",
+      "before_sha256": "dbd50aef0fbca4c56487e9b3c58cf238d0316b10ba83ca5764d20feb7a71a2ac",
+      "after_sha256": "11343586bb6e3a0552d3ebc83df2c658efa562c9d677759e54227d7a89695639",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/math/euclid-pythagoras/04-protasis-ii-12-13.law",
+      "candidate": "source-overlays/grc-euclid-pythagoras/04-protasis-ii-12-13.law",
+      "before_sha256": "df0243349696dd2fa34ec7b915fdfd3c7876099a386eab14d1ecd32899dadc17",
+      "after_sha256": "562af79f698b3e602f28c30c945a3dcc47372cc16753b02c6fe5fba34aec61ee",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/01-defining-constants.law",
+      "candidate": "source-overlays/bipm-si-brochure/01-defining-constants.law",
+      "before_sha256": "756836ef5252f922483e4eabc4f73714ca27e4395337cb35cac7546a87d4cb0c",
+      "after_sha256": "b40bab3d53e6789dbebbad9b2e0a1d8a643182e0d58e8690d12d911e9dce3636",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/02-base-units.law",
+      "candidate": "source-overlays/bipm-si-brochure/02-base-units.law",
+      "before_sha256": "41970e1ef25b50610d76f36cbc79451ed96b541604b638c9b7c55c46a81fc6f5",
+      "after_sha256": "c81de0149888146f54772df5e916b7c2e635a6e0a8ff1f410b241887fce6e574",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/03-derived-units.law",
+      "candidate": "source-overlays/bipm-si-brochure/03-derived-units.law",
+      "before_sha256": "f78aed794119d88e0d2c7d1a030e7592400410dbb647f9b01cd6836f4d8dae45",
+      "after_sha256": "cc4d9e3477dbb75d6074068d8e286c2c8ae9e9a4dd2dade25739fdfa06cdf97f",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/04-prefixes.law",
+      "candidate": "source-overlays/bipm-si-brochure/04-prefixes.law",
+      "before_sha256": "6a9fd108c102a996e6c413f8a64210513105e5fe826d4cb4261785a06ee2cdf4",
+      "after_sha256": "404841fbd400eae5ad48268b4db32a5ebc32a40aa6ec5fb242e7f3d9342ad098",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/05-non-si-units.law",
+      "candidate": "source-overlays/bipm-si-brochure/05-non-si-units.law",
+      "before_sha256": "d83df89eb9a26c8dad5ef732a09a160ea1df5e60e1a703967c9efa38d0879c43",
+      "after_sha256": "2411de3885b58bf26e10707ccce2cc78214e5c63dbc9f51aa7deb455b73f9fe3",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/06-algebra.law",
+      "candidate": "source-overlays/bipm-si-brochure/06-algebra.law",
+      "before_sha256": "476d0a056eb3c0e474f89febe1b6fe6b83261578a3ebe2ed49ebf4ca11805f4c",
+      "after_sha256": "12f68f81f07ba7c85e3b14ae9f533de5504b2276327aeee2fea1799302269652",
+      "change": "exact Rational unity in seven SI rule calls and their explanatory comment; all comparisons and expectations preserved",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/bipm/si-brochure/07-celsius.law",
+      "candidate": "source-overlays/bipm-si-brochure/07-celsius.law",
+      "before_sha256": "bad5649511a4a02309e673730a1ed6cc593102c7fe74e9fb33d01e321c5a7158",
+      "after_sha256": "4436fcb41e23ff2b1b35bd3bc3705cacf80e263f4038ebbf731257609282a845",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/doctrine/chem/acid-base/02-readings.law",
+      "candidate": "source-overlays/chem-acid-base/02-readings.law",
+      "before_sha256": "75c83caa074d015108022b05e97a366c46182e1921a74ce98fff9b249b80bc42",
+      "after_sha256": "104a40165cbbe553ba591d6a45cdf6116981ac59fb1eb9381ec04a00dd8eb960",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "packs/primitives/natural-sciences/mechanics/01-kinematics.law",
+      "candidate": "source-overlays/calc-mechanics/01-kinematics.law",
+      "before_sha256": "599e0c03664e9a0e8c4ba007f0f8dfb658d7b9572fc8b9570031c3948cc17dc1",
+      "after_sha256": "793b79bb0fe593a2bd68fd806a5f002ec167741123a1860abbbc13882a077336",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "packs/primitives/natural-sciences/mechanics/02-dynamics.law",
+      "candidate": "source-overlays/calc-mechanics/02-dynamics.law",
+      "before_sha256": "229f1bd81a20eecdb70404e7fc294f8f664b3d281aecaa68525c8770ec536875",
+      "after_sha256": "ad444599d97da4543c03a7ceaf70969f8ff7ee0e8b0d316810dc3d3789095cb0",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "packs/primitives/natural-sciences/mechanics/03-efficiency.law",
+      "candidate": "source-overlays/calc-mechanics/03-efficiency.law",
+      "before_sha256": "a6033e2fbb1daa416fbd21536cb8f3a2b937c3be97e873c4080271d162f4d78e",
+      "after_sha256": "7dd3d1c607b6f5221c11031b79da98a4d604043714060a07691341f809de5c81",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/01-quantities.law",
+      "candidate": "source-overlays/openstax-measurement/01-quantities.law",
+      "before_sha256": "715b9545142c1f5f6000fc2d3527edf7b6f385cb9eced4d92e3a22d71a834cac",
+      "after_sha256": "d356437c9953f643ac3872a7e023c8bfbe69c5ef87fddfd2c896a98acd55076d",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/02-dimensions.law",
+      "candidate": "source-overlays/openstax-measurement/02-dimensions.law",
+      "before_sha256": "c6c9b485cefe9f72f90e89c127c4a10cca35d09e1b8de403bb360b1dff94505a",
+      "after_sha256": "dca99918362c8a06027383e7e09f621da9c7280d25f3690f70f78d2b48f677f1",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/03-uncertainty.law",
+      "candidate": "source-overlays/openstax-measurement/03-uncertainty.law",
+      "before_sha256": "cca8fb146d9e3f8acff6a3ae6a8ae21a9c77b5c7bb2b806ec9cbc7926b7a61b4",
+      "after_sha256": "23ce5dd1f9a695cac95f5e2ab0b9ec9b6e003c4c647870a604a1a21969f80063",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    },
+    {
+      "source": "corpus/laws/org/openstax/measurement/04-vectors.law",
+      "candidate": "source-overlays/openstax-measurement/04-vectors.law",
+      "before_sha256": "316469c085079beee67ef63e1aa0a2cc5acf03235c6241668809146b73f1fa1e",
+      "after_sha256": "ef7b8d55677eecb98ccbd82dec8b588ba3c51ff21e7c3661b13e8a2202330954",
+      "change": "current CLI explicit local imports; expense evidence profile 0.2; Scrum named deadline policy where applicable",
+      "rule_conditions_changed": false
+    }
+  ],
+  "passed": 383,
+  "failed": 0,
+  "water": {
+    "accepted": true,
+    "replayed": true,
+    "truth_status": "TRUE_ONLY"
+  },
+  "scope": "selected book packages plus their pinned Euclid dependency; no full corpus",
+  "semantic_equivalence_to_retired_release": "not_claimed",
+  "unaccepted_test_files": [],
+  "execution_status": "accepted",
+  "distribution_exclusions": [
+    "corpus/laws/kz/grammar/yqsham-tulgalar/sources/yqsham-tulgalar/anyqtagysh-soz-sazy-kk.txt",
+    "engines/lawc/crates/law-cli/src/mutate.rs"
+  ],
+  "water_package": "reader/docs/books/postroeniya-alt/examples/voda",
+  "build_evidence": "retained by publisher; scenario results summarised here"
+}

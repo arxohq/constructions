@@ -1,0 +1,30 @@
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// Зеркало теста 03: ТОТ ЖЕ факт — строчное «must» — под до-8174-м прочтением
+// даёт силу ключевого слова. Ось §168.2 «context { interpretation X; }» в
+// поверхности §267 работает (проверено мутантом 30.08.2026, см. ниже).
+//
+// ОЖИДАНИЕ ВЫБРАНО НЕДОСТИЖИМЫМ В БАЗЕ, И ЭТО НЕ ПРИДИРКА. Зелёный тест сам
+// по себе не доказывает, что выбор прочтения доехал: он зелен и тогда, когда
+// ось молча отброшена, — если ожидание совпадает с базовой теорией. Здесь
+// совпасть оно не может: без прочтения тот же факт даёт FALSE_ONLY (тест 03),
+// и получить TRUE_ONLY в базе нельзя ничем. Мутант подтверждает: снимите
+// строку «interpretation PreRfc8174Practice;» — тест падает с FALSE_ONLY.
+test "urn:query:bcp14-test-pre-8174-revives-lowercase" {
+    given {
+        context {
+            decision_time @2026-08-30T12:00:00Z;
+            knowledge_time @2026-08-30T12:00:00Z;
+            legal_time @2026-08-30;
+            timezone "UTC";
+            interpretation PreRfc8174Practice;
+        }
+        assert "bcp14-t5-a": keyword_written(entity_ref("urn:ietf:rfc:9110#allow"), Must, Lowercase) { origin case_input; }
+    }
+    evaluate truth(keyword_used(entity_ref("urn:ietf:rfc:9110#allow"), Must));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,13 @@
+{
+  "format": "law.package-info/0.1",
+  "purpose": "Unités SI comme données exécutables, sans juridiction : le mètre n'est pas un acte.",
+  "limitations": [
+    "Ne qualifie aucune norme. Définit les unités comme données, sans force."
+  ],
+  "examples": [
+    "si.law"
+  ],
+  "license": "Apache-2.0 (voir LICENSE). Ce paquet ne porte pas de texte d'acte de tiers : primitive de calcul sans juridiction.",
+  "maintainer": "Rifat Dzhumagulov (hi@arxo.io)",
+  "repository": "https://github.com/arxohq/arxo-code-civil"
+}

@@ -1,0 +1,162 @@
+// RFC 2119, разделы 6 и 7: норма о нормотворчестве и раскрытие последствий.
+//
+// РАЗДЕЛ 6 — ЭТО НОРМА О НОРМАХ, и адресат у неё не реализация, а АВТОР
+// документа. Прямой родственник — закон «О правовых актах» РК (пакет
+// kz.corpus.legal_acts), предписывающий нормодателю, как писать нормы. Редкость
+// здесь в другом: раздел 6 применяет к себе ту самую машинерию, которую
+// определяет, — и делает это неоднородно.
+//
+// ТРИ ПРЕДЛОЖЕНИЯ РАЗДЕЛА 6, И РЕГИСТР У НИХ РАЗНЫЙ:
+//
+//   1. «Imperatives of the type defined in this memo must be used with care
+//      and sparingly.» — must СТРОЧНЫМИ;
+//   2. «In particular, they MUST only be used where it is actually required
+//      for interoperation or to limit behavior which has potential for
+//      causing harm» — MUST ЗАГЛАВНЫМИ;
+//   3. «For example, they must not be used to try to impose a particular
+//      method on implementors where the method is not required for
+//      interoperability.» — must not СТРОЧНЫМИ.
+//
+// По базовому (узкому) прочтению нормативно ТОЛЬКО ВТОРОЕ. Первое и третье —
+// обычный английский: пожелание и пример. Это не придирка формалиста: ровно
+// такой разбор и предписал RFC 8174, и раздел 6 своего же документа — первый
+// случай, где он что-то меняет. Поэтому предложения 1 и 3 живут в толковании
+// `PreRfc8174Practice` (модуль 01), а не в базовой теории.
+
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+use self::{
+    Author,
+    Document,
+    RFC2119_S6,
+    RFC2119_S7,
+    Requirement,
+    adopted_bcp14,
+    authored_by,
+};
+
+// --- Раздел 6. Когда императив употреблять можно ----------------------------
+
+pub relation uses_imperative(a: Author, r: Requirement) kind empirical {
+    label en official "the author has used a BCP 14 imperative for this requirement";
+}
+
+// ДВА ОСНОВАНИЯ ДОПУСТИМОСТИ, И ОБА ОЦЕНОЧНЫ. «Actually required for
+// interoperation» — вопрос, из-за которого рабочие группы спорят десятилетиями
+// (и из-за которого, по общему мнению, императивов в RFC больше, чем нужно).
+// Вычислимым предикатом он не является; орган, который его решает, у IETF есть
+// и назван самим процессом — рабочая группа, достигающая грубого консенсуса.
+// Это НЕ тот же орган, что в разделе 3: там оценку совершает реализатор в
+// момент выбора, здесь — сообщество при выпуске документа.
+pub external judgment relation actually_required_for_interoperation(r: Requirement) {
+    authority WorkingGroup;
+    label en official "the requirement is actually required for interoperation";
+}
+
+pub external judgment relation limits_potentially_harmful_behavior(r: Requirement) {
+    authority WorkingGroup;
+    label en official "the requirement limits behavior which has potential for causing harm";
+}
+
+relation imperative_use_admissible(r: Requirement) kind institutional {
+    label en official "it is established that the imperative was used where BCP 14 allows it";
+}
+
+// ДВА ПРАВИЛА С ОДНОЙ ГОЛОВОЙ, А НЕ `or` В ТЕЛЕ: раздел 6 соединяет основания
+// союзом «or», а дизъюнкцию в теле принимает парсер и отвергают ОБА движка.
+// Каноническое расщепление §206. Оба правила СТРОГИЕ и с литеральной головой —
+// иначе канал суждения §47.3 не поднялся бы: поражаемый потребитель гасит его
+// целиком, а голова-норма не несёт вовсе.
+@source(RFC2119_S6)
+rule ImperativeAdmissibleForInteroperation(r: Requirement) strict {
+    label en official "imperatives MUST only be used where it is actually required for interoperation";
+    when actually_required_for_interoperation(r);
+    then imperative_use_admissible(r);
+}
+
+@source(RFC2119_S6)
+rule ImperativeAdmissibleToLimitHarm(r: Requirement) strict {
+    label en official "imperatives MUST only be used to limit behavior which has potential for causing harm";
+    when limits_potentially_harmful_behavior(r);
+    then imperative_use_admissible(r);
+}
+
+// ОТКАЗ ПО ОБОИМ ОСНОВАНИЯМ ДЕЛАЕТ УПОТРЕБЛЕНИЕ НЕДОПУСТИМЫМ, и без этого
+// правила норма раздела 6 не могла бы быть нарушена НИКОГДА: две
+// положительные головы выше дают `NEITHER` при молчании органа и `TRUE` при
+// согласии, а `FALSE` не даёт ничто. Обязанность, у которой нет пути к
+// `VIOLATED`, есть украшение, а не норма, — и именно так молча выглядит
+// половина деонтических записей, сделанных без исполнения.
+//
+// `defeasible`, а не `strict`: негативная голова строгого правила в срезе 0.1
+// не исполняется и молчит при зелёном `check`. Оба суждения стоят под
+// отрицанием — то есть правило срабатывает, когда рабочая группа ОТВЕТИЛА
+// «нет» по обоим основаниям, а не когда она промолчала: неотвеченное суждение
+// даёт `NEITHER`, и конъюнкт `and not` его не пропускает.
+@source(RFC2119_S6)
+rule ImperativeUseInadmissibleWhereNeitherGroundHolds(a: Author, r: Requirement) defeasible {
+    label en official "an imperative used neither where it is actually required for interoperation nor to limit potentially harmful behavior is used where BCP 14 does not allow it";
+    when uses_imperative(a, r)
+        and not actually_required_for_interoperation(r)
+        and not limits_potentially_harmful_behavior(r);
+    then not imperative_use_admissible(r);
+}
+
+// ОБЯЗАННОСТЬ АВТОРА. Носитель назван текстом («they MUST only be used» —
+// употребляет их автор), цель — поддерживаемая: пока императив стоит в
+// документе, его допустимость обязана сохраняться. `VIOLATED` наступает
+// тогда, когда рабочая группа СКАЗАЛА «нет» по обоим основаниям, а не тогда,
+// когда она промолчала: до суждения `imperative_use_admissible` остаётся
+// NEITHER, позиция — ACTIVE, и это правильный ответ, а не пробел.
+@source(RFC2119_S6)
+rule AuthorMustUseImperativesOnlyWhereAllowed(a: Author, r: Requirement) strict {
+    label en official "imperatives must be used with care and sparingly: they MUST only be used where it is actually required for interoperation or to limit behavior which has potential for causing harm";
+    when uses_imperative(a, r);
+    then duty UseImperativesOnlyWhereAllowed {
+        bearer a;
+        maintain imperative_use_admissible(r) during [@1997-03-01, infinity);
+    };
+}
+
+// --- Раздел 7. Раскрытие последствий неисполнения ---------------------------
+//
+// ЗДЕСЬ ЖИВЁТ ЕДИНСТВЕННЫЙ РАЗДЕЛ ПАКЕТА УРОВНЯ `INTERPRETED`, И ЭТО
+// ИЗМЕРЕНИЕ, А НЕ ОЦЕНКА. Раздел 7 говорит: «Document authors should take the
+// time to elaborate the security implications of not following recommendations
+// or requirements». `should` набрано СТРОЧНЫМИ, и по базовому прочтению
+// специального значения не несёт — то есть обязанности из раздела 7 не
+// возникает вовсе. По до-8174-му прочтению возникает, и это ровно та разница,
+// ради которой толкование заведено.
+//
+// Поэтому правило раздела 7 стоит ВНУТРИ `PreRfc8174SecurityDuty` и без
+// выбранного прочтения из базовой теории вычёркивается (§152/§157). Мера
+// глубины §33.1 назовёт раздел 7 `INTERPRETED`, а не `EXECUTABLE`, — и это
+// верно: на обычном деле из него не выводится ничего.
+//
+// КРИТЕРИЙ УМЕСТНОСТИ `include` СОБЛЮДЁН И ЗДЕСЬ. Толкование выбирает не
+// между «строгим» и «мягким» СОДЕРЖАНИЕМ обязанности, а между её
+// СУЩЕСТВОВАНИЕМ и несуществованием: до мая 2017 года из раздела 7 обязанность
+// выводили, после — нет. Иначе выглядит соблазн, которому здесь не поддались:
+// записать раздел 7 базовым правилом и «пометить спорность» включением —
+// именно так гасят живые нормы молча.
+
+relation elaborates_security_implications(a: Author, d: Document) kind empirical {
+    label en official "the author has elaborated the security implications of not following the recommendations or requirements";
+}
+
+interpretation PreRfc8174SecurityDuty of RFC2119_S7 {
+    status disputed;
+    label en unofficial "pre-2017 reading of section 7: the lowercase 'should' was read as the BCP 14 key word, and the author owed a duty to elaborate the security implications";
+
+    @source(RFC2119_S7)
+    rule AuthorShouldElaborateSecurityImplications(a: Author, d: Document) defeasible {
+        label en unofficial "document authors should take the time to elaborate the security implications of not following recommendations or requirements";
+        when authored_by(d, a) and adopted_bcp14(d);
+        then duty ElaborateSecurityImplications {
+            bearer a;
+            maintain elaborates_security_implications(a, d) during [@1997-03-01, infinity);
+        };
+    }
+}

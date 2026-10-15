@@ -1,0 +1,224 @@
+// Кислота и основание: три определения одного термина как БАЗОВАЯ ТЕОРИЯ.
+//
+// ЗАЧЕМ ОТДЕЛЬНЫЕ ПРЕДИКАТЫ НА КАЖДОЕ ОПРЕДЕЛЕНИЕ. Прочтения §152 (файл 02)
+// отвечают на вопрос «кислота ли эта частица» — по одному ответу на прочтение,
+// и результаты не смешиваются. Но у учебника есть и утверждения О САМИХ
+// определениях: одно ОБЩЕЕ по отношению к другому. Такое утверждение
+// невыразимо через общий предикат `is_acid`: внутри выбранного прочтения
+// второго определения просто нет. Поэтому здесь, в базовой теории, живут три
+// РАЗЛИЧИМЫХ предиката — `arrhenius_acid`, `bronsted_acid`, `lewis_acid` и три
+// парных для оснований, — а прочтения лишь выбирают, какой из них отвечает на
+// общий вопрос.
+//
+// ГРАНИЦА МОДЕЛИ. Все посылки — эмпирические листья соседнего пакета
+// `openstax/chemistry-acids`: «отдаёт протон», «даёт в воде катион водорода»,
+// «принимает пару электронов». Из строения частицы система их не выводит и не
+// притворяется, что выводит; она удостоверяет применение определения к
+// предъявленному случаю (правило 5 `docs/sciences/README.ru.md`).
+
+language "law.core" version "0.2";
+package chem.acid_base version "0.1.0";
+namespace "urn:chem:clir:acid-base";
+
+import openstax.chemistry_acids version "0.1.0";
+
+// --- Общий вопрос: отвечает выбранное прочтение --------------------------
+
+pub relation is_acid(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "частица признаётся кислотой по выбранному прочтению";
+    label en unofficial "the species is an acid under the selected reading";
+}
+
+pub relation is_base(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "частица признаётся основанием по выбранному прочтению";
+    label en unofficial "the species is a base under the selected reading";
+}
+
+// --- Три определения, различимые между собой -----------------------------
+
+pub relation arrhenius_acid(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "кислота по Аррениусу: в воде даёт катионы водорода";
+    label en unofficial "Arrhenius acid: yields hydrogen cations in water";
+}
+
+pub relation arrhenius_base(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "основание по Аррениусу: в воде даёт гидроксид-анионы";
+    label en unofficial "Arrhenius base: yields hydroxide anions in water";
+}
+
+pub relation bronsted_acid(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "кислота по Брёнстеду—Лоури: донор протона";
+    label en unofficial "Brønsted-Lowry acid: proton donor";
+}
+
+pub relation bronsted_base(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "основание по Брёнстеду—Лоури: акцептор протона";
+    label en unofficial "Brønsted-Lowry base: proton acceptor";
+}
+
+pub relation lewis_acid(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "кислота по Льюису: акцептор электронной пары";
+    label en unofficial "Lewis acid: electron-pair acceptor";
+}
+
+pub relation lewis_base(s: openstax.chemistry_acids::Species) kind institutional {
+    label ru unofficial "основание по Льюису: донор электронной пары";
+    label en unofficial "Lewis base: electron-pair donor";
+}
+
+// --- Аррениус (14.1, исторический абзац) ---------------------------------
+
+@source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+pub rule ArrheniusAcidYieldsHydrogenCation(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "растворяющаяся в воде частица, дающая катионы водорода, — кислота Аррениуса";
+    label en unofficial "a compound that dissolves in water to yield hydrogen cations is an Arrhenius acid";
+    when openstax.chemistry_acids::dissolves_in_water(s)
+        and openstax.chemistry_acids::yields_hydrogen_cation(s);
+    then arrhenius_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+pub rule ArrheniusBaseYieldsHydroxide(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "растворяющаяся в воде частица, дающая гидроксид-анионы, — основание Аррениуса";
+    label en unofficial "a compound that dissolves in water to yield hydroxide anions is an Arrhenius base";
+    when openstax.chemistry_acids::dissolves_in_water(s)
+        and openstax.chemistry_acids::yields_hydroxide_anion(s);
+    then arrhenius_base(s);
+}
+
+// Отрицательная голова (DECISION-0088). Определение Аррениуса ЗАМКНУТО двумя
+// условиями, и опровержение любого из них есть утверждение «не кислота
+// Аррениуса», а не молчание. Связывает позитивная посылка §190 — предмет дела
+// (`species_in_question`): о частице, которой дело не предъявляло, определение
+// молчит, и правильно молчит. Опровержением здесь считается только ЯВНОЕ
+// `assert not …` дела: `refuted` — не «в деле не сказано».
+@source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+pub rule NotArrheniusAcidWithoutHydrogenCation(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутым выделением катионов водорода — не кислота Аррениуса";
+    label en unofficial "a presented species whose hydrogen-cation yield is refuted is not an Arrhenius acid";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::yields_hydrogen_cation(s));
+    then not arrhenius_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+pub rule NotArrheniusAcidWhenInsoluble(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "нерастворимая в воде частица — не кислота Аррениуса, чем бы она ни была";
+    label en unofficial "a species whose dissolution in water is refuted is not an Arrhenius acid";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::dissolves_in_water(s));
+    then not arrhenius_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_ARRHENIUS)
+pub rule NotArrheniusBaseWithoutHydroxide(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутым выделением гидроксид-анионов — не основание Аррениуса";
+    label en unofficial "a presented species whose hydroxide yield is refuted is not an Arrhenius base";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::yields_hydroxide_anion(s));
+    then not arrhenius_base(s);
+}
+
+// --- Брёнстед и Лоури (14.1) ---------------------------------------------
+
+@source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+pub rule BronstedAcidDonatesProton(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "отдающая протон частица — кислота Брёнстеда—Лоури";
+    label en unofficial "a compound that donates a proton is a Brønsted-Lowry acid";
+    when openstax.chemistry_acids::donates_proton(s);
+    then bronsted_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+pub rule BronstedBaseAcceptsProton(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "принимающая протон частица — основание Брёнстеда—Лоури";
+    label en unofficial "a compound that accepts a proton is a Brønsted-Lowry base";
+    when openstax.chemistry_acids::accepts_proton(s);
+    then bronsted_base(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+pub rule NotBronstedAcidWithoutDonation(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутой донорностью протона — не кислота Брёнстеда";
+    label en unofficial "a presented species whose proton donation is refuted is not a Brønsted-Lowry acid";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::donates_proton(s));
+    then not bronsted_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+pub rule NotBronstedBaseWithoutAcceptance(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутой акцепторностью протона — не основание Брёнстеда";
+    label en unofficial "a presented species whose proton acceptance is refuted is not a Brønsted-Lowry base";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::accepts_proton(s));
+    then not bronsted_base(s);
+}
+
+// --- Льюис (15.2) --------------------------------------------------------
+
+@source(openstax.chemistry_acids::OS_15_2_ADDUCT)
+pub rule LewisAcidAcceptsElectronPair(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "принимающая электронную пару частица — кислота Льюиса";
+    label en unofficial "the species accepting the electron pair is a Lewis acid";
+    when openstax.chemistry_acids::accepts_electron_pair(s);
+    then lewis_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_15_2_ADDUCT)
+pub rule LewisBaseDonatesElectronPair(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "отдающая электронную пару частица — основание Льюиса";
+    label en unofficial "the species donating the electron pair is a Lewis base";
+    when openstax.chemistry_acids::donates_electron_pair(s);
+    then lewis_base(s);
+}
+
+@source(openstax.chemistry_acids::OS_15_2_ADDUCT)
+pub rule NotLewisAcidWithoutAcceptance(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутой акцепторностью пары — не кислота Льюиса";
+    label en unofficial "a presented species whose electron-pair acceptance is refuted is not a Lewis acid";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::accepts_electron_pair(s));
+    then not lewis_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_15_2_ADDUCT)
+pub rule NotLewisBaseWithoutDonation(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "предъявленная частица с опровергнутой донорностью пары — не основание Льюиса";
+    label en unofficial "a presented species whose electron-pair donation is refuted is not a Lewis base";
+    when openstax.chemistry_acids::species_in_question(s)
+        and refuted(openstax.chemistry_acids::donates_electron_pair(s));
+    then not lewis_base(s);
+}
+
+// --- Две леммы-моста, и обе — ровно то, что говорит учебник ---------------
+//
+// ЧТО ЗДЕСЬ НЕ НАПИСАНО И ПОЧЕМУ. Соблазнительная лемма «всякая кислота
+// Брёнстеда — кислота Льюиса» ЛОЖНА в том виде, в каком её обычно пересказывают,
+// и учебник её не утверждает. §15.2 говорит буквально: реакции Брёнстеда—Лоури
+// суть подкласс реакций Льюиса, «specifically, those in which the acid species
+// is H+» — кислотой Льюиса там оказывается сам ПРОТОН, а не отдающая его
+// молекула HA. Поэтому мост проведён по ОСНОВАНИЯМ, где он верен буквально:
+// акцептор протона предоставляет протону электронную пару, то есть является
+// донором пары.
+//
+// Обратные включения намеренно отсутствуют, и это утверждение, а не пропуск:
+// BF3 — кислота Льюиса (15.2) и не кислота Брёнстеда, потому что протона не
+// отдаёт; аммиак — основание Брёнстеда и не основание Аррениуса, потому что
+// гидроксид-анионов в воде не даёт. Обе границы стоят сценами пакета.
+
+@source(openstax.chemistry_acids::OS_14_1_BRONSTED)
+pub rule ArrheniusAcidIsBronstedAcid(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "определение Брёнстеда—Лоури общее: всякая кислота Аррениуса — кислота Брёнстеда";
+    label en unofficial "the Brønsted-Lowry description is more general: every Arrhenius acid is a Brønsted-Lowry acid";
+    when arrhenius_acid(s);
+    then bronsted_acid(s);
+}
+
+@source(openstax.chemistry_acids::OS_15_2_ADDUCT)
+pub rule BronstedBaseIsLewisBase(s: openstax.chemistry_acids::Species) strict {
+    label ru unofficial "определение Льюиса общее: всякое основание Брёнстеда — основание Льюиса";
+    label en unofficial "the Lewis definition is generalized: every Brønsted-Lowry base is a Lewis base";
+    when bronsted_base(s);
+    then lewis_base(s);
+}

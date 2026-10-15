@@ -1,0 +1,147 @@
+// §1.2 «Units and Standards» и §1.3 «Unit Conversion»: физическая величина,
+// базовая и производная величина, единица и её стандарт, пересчёт единиц.
+//
+// МОСТ К БРОШЮРЕ, А НЕ ВТОРОЙ СЛОВАРЬ ЕДИНИЦ. Учебник называет единицы, но
+// определений им не даёт: «kilogram: SI unit for mass, abbreviated kg» —
+// это ИМЯ и роль, а не определение. Поэтому `SiUnit` и `BaseQuantity` здесь
+// не объявляются: они читаются из `bipm.si_brochure` квалифицированными
+// именами, и всё, что пакет умеет сказать о самой единице, он говорит через
+// её факты (`base_unit`, `special_unit`, `si_unit`).
+//
+// ПЕРЕСЧЁТ ЕДИНИЦ — ЯВНЫЙ, И ЭТО НЕ ОГРАНИЧЕНИЕ ЯЗЫКА, А §1.3. Учебник
+// требует умножать на коэффициент пересчёта, у которого числитель и
+// знаменатель — одна и та же величина в разных единицах; неявного перевода
+// в §1.3 нет ровно так же, как его нет в §48/§49. Поэтому `unit_convert`
+// вызывается ЯВНО, а не подставляется молча.
+
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+use self::{
+    Measurement,
+    UP_M58270_BASE_QUANTITY,
+    UP_M58270_BASE_UNIT,
+    UP_M58270_DERIVED_UNITS,
+    UP_M58270_PHYSICAL_QUANTITY,
+    UP_M58270_SI_UNITS,
+    UP_M58270_UNITS,
+    UP_M58271_CONVERSION_FACTOR,
+};
+
+// --- Что дело предъявляет об измерении -------------------------------------
+
+@source(UP_M58270_PHYSICAL_QUANTITY)
+relation measured_value(m: Measurement, value: Quantity) kind empirical {
+    label en official "the case presents the measured value of the physical quantity, with its unit";
+    label ru unofficial "дело предъявляет измеренное значение величины вместе с её единицей";
+}
+
+@source(UP_M58270_BASE_QUANTITY)
+relation measures_base_quantity(m: Measurement, q: bipm.si_brochure::BaseQuantity) kind empirical {
+    label en official "the case says which base quantity the measurement measures";
+    label ru unofficial "дело сообщает, какую базовую величину измеряет измерение";
+}
+
+@source(UP_M58270_UNITS)
+relation reported_in_unit(m: Measurement, u: bipm.si_brochure::SiUnit) kind empirical {
+    label en official "the case says in which named unit the measurement is reported";
+    label ru unofficial "дело сообщает, в какой именованной единице записано измерение";
+}
+
+// --- Выводы §1.2 ------------------------------------------------------------
+
+relation physical_quantity(m: Measurement) kind institutional {
+    label en official "§1.2: the measurement is a physical quantity — a property that can be measured or calculated from other measurements";
+    label ru unofficial "§1.2: измерение есть физическая величина — свойство, которое можно измерить или вычислить из других измерений";
+}
+
+@source(UP_M58270_PHYSICAL_QUANTITY)
+rule MeasuredIsPhysicalQuantity(m: Measurement, value: Quantity) strict {
+    label en official "§1.2: what has been measured is a physical quantity";
+    label ru unofficial "§1.2: измеренное есть физическая величина";
+    when measured_value(m, value);
+    then physical_quantity(m);
+}
+
+relation expressed_in_si(m: Measurement) kind institutional {
+    label en official "§1.2: the measurement is reported in a unit of the SI";
+    label ru unofficial "§1.2: измерение записано в единице SI";
+}
+
+@source(UP_M58270_SI_UNITS)
+rule ReportedUnitIsSiUnit(m: Measurement, u: bipm.si_brochure::SiUnit) strict {
+    label en official "§1.2: a measurement reported in an SI unit is expressed in the SI";
+    label ru unofficial "§1.2: измерение, записанное в единице SI, выражено в SI";
+    when reported_in_unit(m, u) and bipm.si_brochure::si_unit(u);
+    then expressed_in_si(m);
+}
+
+relation reported_in_base_unit(m: Measurement) kind institutional {
+    label en official "§1.2: the measurement is reported in the SI base unit of the base quantity it measures";
+    label ru unofficial "§1.2: измерение записано в базовой единице SI той базовой величины, которую оно измеряет";
+}
+
+// Мост к таблице 2 брошюры: базовая единица величины названа ТАМ, а не здесь.
+// Совпадение «единица записи есть базовая единица измеряемой величины» и есть
+// содержание §1.2 «base unit: standard for expressing the measurement of a
+// base quantity».
+@source(UP_M58270_BASE_UNIT)
+rule ReportedInBaseUnitOfItsQuantity(
+    m: Measurement,
+    q: bipm.si_brochure::BaseQuantity,
+    u: bipm.si_brochure::SiUnit,
+    symbol: Text,
+) strict {
+    label en official "§1.2: the unit of report is the SI base unit of the base quantity measured (Table 2 of the SI Brochure names it)";
+    label ru unofficial "§1.2: единица записи есть базовая единица SI измеряемой базовой величины (называет её таблица 2 брошюры)";
+    when measures_base_quantity(m, q)
+        and reported_in_unit(m, u)
+        and bipm.si_brochure::base_unit(u, q, symbol);
+    then reported_in_base_unit(m);
+}
+
+relation reported_in_derived_unit(m: Measurement) kind institutional {
+    label en official "§1.2: the measurement is reported in a derived unit — one calculated from the base units";
+    label ru unofficial "§1.2: измерение записано в производной единице — вычисляемой из базовых";
+}
+
+@source(UP_M58270_DERIVED_UNITS)
+rule ReportedInSpecialNamedUnit(
+    m: Measurement,
+    u: bipm.si_brochure::SiUnit,
+    quantity_name: Text,
+    symbol: Text,
+) strict {
+    label en official "§1.2: a unit with a special name in Table 4 of the SI Brochure is a derived unit";
+    label ru unofficial "§1.2: единица со специальным названием из таблицы 4 брошюры есть производная единица";
+    when reported_in_unit(m, u)
+        and bipm.si_brochure::special_unit(u, quantity_name, symbol);
+    then reported_in_derived_unit(m);
+}
+
+// --- §1.3: пересчёт единиц явным коэффициентом ------------------------------
+
+@source(UP_M58271_CONVERSION_FACTOR)
+relation asked_in_unit(m: Measurement, unit_tag: Text) kind empirical {
+    label en official "the case asks for the measurement restated in the named unit";
+    label ru unofficial "дело просит записать измерение в названной единице";
+}
+
+relation converted_value(m: Measurement, value: Quantity) kind institutional {
+    label en official "§1.3: the measurement restated in the asked unit by an explicit conversion factor";
+    label ru unofficial "§1.3: измерение, записанное в запрошенной единице явным коэффициентом пересчёта";
+}
+
+// §1.3 велит УМНОЖИТЬ на коэффициент пересчёта — отношение, у которого
+// числитель и знаменатель суть одна величина в разных единицах. Здесь этот
+// шаг делает `unit_convert` §259.1: цель разрешается в реестре §49.2, и
+// перевод между РАЗНЫМИ размерностями отказывает — «you can't convert metres
+// into seconds» есть свойство операции, а не забывчивость автора.
+@source(UP_M58271_CONVERSION_FACTOR)
+rule ConvertToAskedUnit(m: Measurement, value: Quantity, unit_tag: Text) strict {
+    label en official "§1.3: multiply by the conversion factor to restate the quantity in the asked unit";
+    label ru unofficial "§1.3: умножение на коэффициент пересчёта записывает величину в запрошенной единице";
+    when measured_value(m, value) and asked_in_unit(m, unit_tag);
+    then converted_value(m, quantity_of(unit_convert(magnitude(value), unit_tag), unit_tag));
+}

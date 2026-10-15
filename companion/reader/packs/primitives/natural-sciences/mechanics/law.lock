@@ -1,0 +1,37 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "calc.mechanics",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "units.si"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:94f079ef2cef7b9ef14d9a9c6352c783ec260a8abe62c1d6353f6d816a03646f",
+      "features": [
+        "core-executable"
+      ],
+      "name": "units.si",
+      "namespace": "urn:law:units:si",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/units.si/0.1.0",
+      "sourceHash": "sha256:0d21b2ad2160bdee197ef84b28fac45edd11ac81dab52efbe631be9fc6f8e07b",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:e86829c6438d42217179a178353d13683caa3949f7b0cdf73b51c8f5d1e6122c",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:472a69a1542aaff1fbee5139fd59259596ffdbfe9edce94a2a513300333bc91b",
+    "name": "calc.mechanics",
+    "namespace": "urn:law:calc:mechanics",
+    "sourceHash": "sha256:4de0142eb064708973149a54d4f664c1c3e84cfcc44ed732ab8b306838363d8f",
+    "version": "0.1.0"
+  },
+  "semanticLayer": "L1"
+}

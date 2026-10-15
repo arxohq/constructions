@@ -1,0 +1,429 @@
+language "law.core" version "0.2";
+package openstax.chemistry_acids version "0.1.0";
+namespace "urn:openstax:clir:chemistry-acids";
+
+// Сцены пакета: единственный вывод словаря — амфипротность по абзацу 14.1
+// («Species capable of either donating or accepting protons are called
+// amphiprotic»), и обе его границы.
+//
+// ТРИ РАЗНЫХ ОТВЕТА, И ОНИ РАЗЛИЧИМЫ. TRUE_ONLY — обе роли установлены;
+// FALSE_ONLY — одна установлена, вторая ОПРОВЕРГНУТА делом (`assert not …`);
+// NEITHER — вторая просто не названа. Третий случай не есть отрицание, и
+// сцены 05–07 показывают это тремя способами: молчание о донорности, молчание
+// об акцепторности и молчание об обеих.
+
+// --- Обе роли установлены: амфипротна ------------------------------------
+
+test "urn:query:openstax-chem-acids-01-water-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os01-q": species_in_question(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "os01-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "os01-2": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmphiproticDonatesAndAccepts);
+}
+
+// Второй пример того же абзаца: гидрокарбонат-ион реагирует с водой и как
+// кислота, и как основание.
+test "urn:query:openstax-chem-acids-02-bicarbonate-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os02-q": species_in_question(entity_ref("urn:case:chem:hco3")) { origin case_input; }
+        assert "os02-1": donates_proton(entity_ref("urn:case:chem:hco3")) { origin case_input; }
+        assert "os02-2": accepts_proton(entity_ref("urn:case:chem:hco3")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:hco3")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmphiproticDonatesAndAccepts);
+}
+
+// --- Одна роль опровергнута: НЕ амфипротна (FALSE_ONLY) -------------------
+
+test "urn:query:openstax-chem-acids-03-ammonia-not-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os03-q": species_in_question(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "os03-1": accepts_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+        assert "os03-2": not donates_proton(entity_ref("urn:case:chem:nh3")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAmphiproticWithoutDonation);
+}
+
+test "urn:query:openstax-chem-acids-04-hydrogen-chloride-not-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os04-q": species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "os04-1": donates_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "os04-2": not accepts_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:hcl")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAmphiproticWithoutAcceptance);
+}
+
+// --- Молчание дела — не отрицание ----------------------------------------
+
+test "urn:query:openstax-chem-acids-05-silence-on-donation-why-not" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os05-q": species_in_question(entity_ref("urn:case:chem:so4")) { origin case_input; }
+        assert "os05-1": accepts_proton(entity_ref("urn:case:chem:so4")) { origin case_input; }
+    }
+    evaluate why_not(amphiprotic(entity_ref("urn:case:chem:so4")));
+    expect truth_status == NEITHER;
+    expect blocked_by("AmphiproticDonatesAndAccepts");
+}
+
+test "urn:query:openstax-chem-acids-06-silence-on-acceptance" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os06-q": species_in_question(entity_ref("urn:case:chem:hno3")) { origin case_input; }
+        assert "os06-1": donates_proton(entity_ref("urn:case:chem:hno3")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:hno3")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Ни одной роли не названо: связывающей посылки нет ни у одного правила, и
+// изложение молчит — как и должно. Это НЕ FALSE_ONLY: «о частице ничего не
+// известно» и «частица не амфипротна» — разные ответы.
+test "urn:query:openstax-chem-acids-07-silence-on-both" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os07-q": species_in_question(entity_ref("urn:case:chem:ar")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:ar")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Обе роли ОПРОВЕРГНУТЫ, и ответ всё равно NEITHER: у обоих отрицательных
+// правил связывающая посылка позитивна (§190), и ни одно не срабатывает.
+// Граница модели названа сценой, а не спрятана.
+test "urn:query:openstax-chem-acids-08-both-refuted-still-neither" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os08-q": species_in_question(entity_ref("urn:case:chem:ch4")) { origin case_input; }
+        assert "os08-1": not donates_proton(entity_ref("urn:case:chem:ch4")) { origin case_input; }
+        assert "os08-2": not accepts_proton(entity_ref("urn:case:chem:ch4")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:ch4")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// --- Пары сопряжённых частиц: гидроксоний и гидроксид --------------------
+
+test "urn:query:openstax-chem-acids-09-hydronium-not-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os09-q": species_in_question(entity_ref("urn:case:chem:h3o")) { origin case_input; }
+        assert "os09-1": donates_proton(entity_ref("urn:case:chem:h3o")) { origin case_input; }
+        assert "os09-2": not accepts_proton(entity_ref("urn:case:chem:h3o")) { origin case_input; }
+        assert "os09-3": conjugate_acid_of(entity_ref("urn:case:chem:h3o"), entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h3o")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAmphiproticWithoutAcceptance);
+}
+
+test "urn:query:openstax-chem-acids-10-hydroxide-not-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os10-q": species_in_question(entity_ref("urn:case:chem:oh")) { origin case_input; }
+        assert "os10-1": accepts_proton(entity_ref("urn:case:chem:oh")) { origin case_input; }
+        assert "os10-2": not donates_proton(entity_ref("urn:case:chem:oh")) { origin case_input; }
+        assert "os10-3": conjugate_acid_of(entity_ref("urn:case:chem:h2o"), entity_ref("urn:case:chem:oh")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:oh")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAmphiproticWithoutDonation);
+}
+
+// --- Растворитель дела: словарь несёт его, вывода о нём здесь нет --------
+//
+// Эффект выравнивания 14.3 («HCl, HBr и HI сильны в воде и слабы в этаноле»)
+// живёт в `chem/acid-strength`; здесь показано лишь, что дело умеет назвать
+// растворитель и растворённую частицу, и что молчание об их следствиях
+// остаётся молчанием.
+test "urn:query:openstax-chem-acids-11-solvent-is-declared-not-derived" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "os11-q": species_in_question(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+        assert "os11-1": solvent_of(entity_ref("urn:case:chem:sol-ethanol"), entity_ref("urn:case:chem:etoh")) { origin case_input; }
+        assert "os11-2": dissolved_in(entity_ref("urn:case:chem:hcl"), entity_ref("urn:case:chem:sol-ethanol")) { origin case_input; }
+        assert "os11-3": not ionizes_completely_in(entity_ref("urn:case:chem:hcl"), entity_ref("urn:case:chem:etoh")) { origin case_input; }
+        assert "os11-4": donates_proton(entity_ref("urn:case:chem:hcl")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:hcl")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// --- Сценарии части I книги «Построения» (docs/books/postroeniya/PLAN.ru.md,
+// §7.1 и §8.1) ---------------------------------------------------------------
+//
+// Один объект — вода — во всех сценариях; меняются только сведения дела
+// и вопрос. Каждый напечатанный в книге ответ есть ожидание отсюда, а не
+// захваченный вывод. `species_in_question` здесь не утверждается: правила
+// этого словаря его не читают (его читатели — определения `chem/acid-base`),
+// а книга объясняет его там, где оно нужно (глава 14).
+
+// Глава 1. Исходный факт записан — и о нём спрошено.
+test "urn:query:openstax-chem-acids-12-book-water-donation-recorded" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k12-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// Глава 1. Отношение объявлено для любой частицы, но приписано только воде:
+// об аммиаке дело молчит, и ответ — молчание, а не отрицание.
+test "urn:query:openstax-chem-acids-13-book-ammonia-nothing-recorded" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k13-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:nh3")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Глава 2. Две посылки — и правило даёт третье.
+test "urn:query:openstax-chem-acids-14-book-water-both-roles-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k14-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k14-2": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmphiproticDonatesAndAccepts);
+}
+
+// Глава 2. Одну посылку убрали — вывода нет; это нехватка основания.
+test "urn:query:openstax-chem-acids-15-book-water-one-role-no-conclusion" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k15-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Глава 3. Четыре состояния одного исходного отношения. TRUE_ONLY — сценарий
+// 12; ниже FALSE_ONLY, BOTH и NEITHER на том же объекте.
+test "urn:query:openstax-chem-acids-16-book-water-donation-refuted" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k16-1": not donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+}
+
+// Две записи дела о воде спорят; порядок строк спор не решает.
+test "urn:query:openstax-chem-acids-17-book-water-donation-both" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k17-yes": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k17-no": not donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == BOTH;
+    expect evaluation_status == COMPUTED;
+}
+
+// Запись о другой способности той же частицы об этой не говорит ничего.
+test "urn:query:openstax-chem-acids-18-book-water-donation-unrecorded" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k18-1": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(donates_proton(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}
+
+// Глава 3, конец: отрицательное правило с `refuted` — опровергнутая
+// способность даёт опровержение амфипротности, а не молчание.
+test "urn:query:openstax-chem-acids-19-book-water-acceptance-refuted-not-amphiprotic" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k19-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k19-2": not accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(NotAmphiproticWithoutAcceptance);
+}
+
+// Глава 4. Почему вывода нет: объяснение называет правило и недостающую посылку.
+test "urn:query:openstax-chem-acids-20-book-water-why-not-without-acceptance" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k20-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate why_not(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == NEITHER;
+    expect blocked_by("AmphiproticDonatesAndAccepts");
+}
+
+// Глава 4. Посторонняя запись ответа не меняет и в основание не входит.
+test "urn:query:openstax-chem-acids-21-book-water-extraneous-record" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k21-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k21-2": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k21-3": conjugate_acid_of(entity_ref("urn:case:chem:h3o"), entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(AmphiproticDonatesAndAccepts);
+}
+
+// Глава 3, граница: спор дела о приёме протона (BOTH) не даёт амфипротности
+// ни поддержки, ни опровержения. Положительная посылка правила «за» требует
+// установленного приёма, посылка `refuted` правила «против» — опровергнутого;
+// противоречивая опора не удовлетворяет ни той ни другой, и оба правила молчат.
+test "urn:query:openstax-chem-acids-22-book-water-acceptance-disputed-neither" {
+    given {
+        context {
+            decision_time @2026-09-06T12:00:00Z;
+            knowledge_time @2026-09-06T12:00:00Z;
+            legal_time @2026-09-06;
+            timezone "UTC";
+        }
+        assert "k22-1": donates_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k22-yes": accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+        assert "k22-no": not accepts_proton(entity_ref("urn:case:chem:h2o")) { origin case_input; }
+    }
+    evaluate truth(amphiprotic(entity_ref("urn:case:chem:h2o")));
+    expect truth_status == NEITHER;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,12 @@
+[package]
+name = "kniga.voda"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:kniga:clir:voda"
+
+[dependencies]
+"openstax.chemistry_acids" = "0.1.0"
+
+[[cases]]
+name = "Voda"
+path = "cases/voda.lawcase"

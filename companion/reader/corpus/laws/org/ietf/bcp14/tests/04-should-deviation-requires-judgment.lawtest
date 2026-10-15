@@ -1,0 +1,28 @@
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// Раздел 3 RFC 2119: «there may exist valid reasons in particular
+// circumstances to ignore a particular item». Вескость причины вычислимым
+// предикатом не является и притворяться им не должна — она записана каналом
+// суждения §47.3 с органом Implementor.
+//
+// СПРАШИВАЕТСЯ МОСТ, А НЕ НОРМА, и это не стилистика: через голову-НОРМУ
+// канал §47.3 не проходит вовсе (разбор недостижимости идёт по ЛИТЕРАЛУ, а у
+// нормы литерала нет — голова лоуверится в norm_template_ref), и запрос
+// positions ответил бы COMPUTED с пустым judgmentRequests, то есть обычным
+// молчанием открытого мира ровно там, где право назвало того, кто скажет.
+test "urn:query:bcp14-test-should-requires-judgment" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @2026-08-30; timezone "UTC"; }
+        assert "bcp14-t4-a": adopted_bcp14(entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t4-b": stated_in(entity_ref("urn:ietf:rfc:9110#allow"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t4-c": claims_conformance(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110")) { origin case_input; }
+        assert "bcp14-t4-d": keyword_written(entity_ref("urn:ietf:rfc:9110#allow"), Should, AllCapitals) { origin case_input; }
+        assert "bcp14-t4-e": implications_understood_and_weighed(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110#allow")) { origin case_input; }
+    }
+    evaluate truth(deviation_from_recommendation_justified(entity_ref("urn:case:impl:server"), entity_ref("urn:ietf:rfc:9110#allow")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == NEITHER;
+    expect evaluation_status == REQUIRES_JUDGMENT;
+}

@@ -1,0 +1,38 @@
+language "law.core" version "0.1";
+package la.gauss.theorema_fermatianum version "0.1.0";
+namespace "urn:la:gauss:clir:theorema-fermatianum";
+
+// Сторож шага: звено показателя 5 подменено (истинное 2^5 mod 341 = 32,
+// в деле стои́т 33). Подделка обязана звучать, а не проходить молча.
+// След вычислен возведением в степень по модулю и ПРОВЕРЯЕТСЯ движком
+// звено за звеном (артикул 46); воспроизводится строкой
+//   python3 -c "n,a=341,2;[print(e,pow(a,e,n)) for e in [1, 2, 4, 5, 10, 20, 21, 42, 84, 85, 170, 340]]"
+
+test "urn:query:10-vestigium-falsum-in-gradu" {
+    given {
+        context {
+            decision_time @0001-01-01T12:00:00Z;
+            knowledge_time @0001-01-01T12:00:00Z;
+            legal_time @0001-01-01;
+            timezone "UTC";
+        }
+        assert "flt-propositum": propositum(entity_ref("urn:case:flt:probatio"), 341, 2) { origin case_input; }
+        assert "flt-vestigium": vestigium(entity_ref("urn:case:flt:probatio"), 340) { origin case_input; }
+        assert "flt-residuum-0": residuum(entity_ref("urn:case:flt:probatio"), 1, 2) { origin case_input; }
+        assert "flt-residuum-1": residuum(entity_ref("urn:case:flt:probatio"), 2, 4) { origin case_input; }
+        assert "flt-residuum-2": residuum(entity_ref("urn:case:flt:probatio"), 4, 16) { origin case_input; }
+        assert "flt-residuum-3": residuum(entity_ref("urn:case:flt:probatio"), 5, 33) { origin case_input; }
+        assert "flt-residuum-4": residuum(entity_ref("urn:case:flt:probatio"), 10, 1) { origin case_input; }
+        assert "flt-residuum-5": residuum(entity_ref("urn:case:flt:probatio"), 20, 1) { origin case_input; }
+        assert "flt-residuum-6": residuum(entity_ref("urn:case:flt:probatio"), 21, 2) { origin case_input; }
+        assert "flt-residuum-7": residuum(entity_ref("urn:case:flt:probatio"), 42, 4) { origin case_input; }
+        assert "flt-residuum-8": residuum(entity_ref("urn:case:flt:probatio"), 84, 16) { origin case_input; }
+        assert "flt-residuum-9": residuum(entity_ref("urn:case:flt:probatio"), 85, 32) { origin case_input; }
+        assert "flt-residuum-10": residuum(entity_ref("urn:case:flt:probatio"), 170, 1) { origin case_input; }
+        assert "flt-residuum-11": residuum(entity_ref("urn:case:flt:probatio"), 340, 1) { origin case_input; }
+    }
+    evaluate truth(vestigium_falsum(entity_ref("urn:case:flt:probatio")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

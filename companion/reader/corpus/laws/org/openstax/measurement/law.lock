@@ -1,0 +1,63 @@
+{
+  "dependencyEdges": [
+    {
+      "features": [],
+      "from": "bipm.si_brochure",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "units.si"
+    },
+    {
+      "features": [],
+      "from": "openstax.measurement",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "bipm.si_brochure"
+    },
+    {
+      "features": [],
+      "from": "openstax.measurement",
+      "requested": "0.1.0",
+      "resolved": "0.1.0",
+      "to": "units.si"
+    }
+  ],
+  "languageSemantics": "law.core/0.2.11",
+  "lockVersion": "0.4",
+  "packages": [
+    {
+      "artifactHash": "sha256:577fbb9b40a108e018ee2496838c482f646df9ca9f9b3ecd585f549c652b65a9",
+      "features": [
+        "core-executable"
+      ],
+      "name": "bipm.si_brochure",
+      "namespace": "urn:bipm:clir:si-brochure",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/bipm.si_brochure/0.1.0",
+      "sourceHash": "sha256:0884634794a1027170c0732d0995f6fe71628bb7d35ba688d4bc58eb7faecebb",
+      "version": "0.1.0"
+    },
+    {
+      "artifactHash": "sha256:94f079ef2cef7b9ef14d9a9c6352c783ec260a8abe62c1d6353f6d816a03646f",
+      "features": [
+        "core-executable"
+      ],
+      "name": "units.si",
+      "namespace": "urn:law:units:si",
+      "registryId": "constructions-npm-reader",
+      "resolverUri": "workspace://constructions-npm-reader/units.si/0.1.0",
+      "sourceHash": "sha256:0d21b2ad2160bdee197ef84b28fac45edd11ac81dab52efbe631be9fc6f8e07b",
+      "version": "0.1.0"
+    }
+  ],
+  "resolutionHash": "sha256:3a5a18c79a0e5859ad34ba71b605d2d2209d58faa95fb90f936f075ef9c656c5",
+  "resources": [],
+  "root": {
+    "artifactHash": "sha256:c7dfaf265472986ec0fe88d2407a6da5a3faf4bb48f9446aa1c80944b7d72395",
+    "name": "openstax.measurement",
+    "namespace": "urn:openstax:clir:measurement",
+    "sourceHash": "sha256:086d2ab1cc9ef20bb2f89c081a527f383f75bea0c7f8574afa8308906dcea468",
+    "version": "0.1.0"
+  },
+  "semanticLayer": "L1"
+}

@@ -1,0 +1,16 @@
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+// ВТОРОЙ ПУТЬ ЗА ВРАТА, и он иной природы. Врата открыты «wie immer», значит
+// пройти можно — и это выводится БЕЗ единого обращения к привратнику. Ровно
+// поэтому ответ о достижимости входа — не «невозможно».
+test "urn:query:vor-dem-gesetz-way-is-free" {
+    given {
+        context { decision_time @2026-08-30T12:00:00Z; knowledge_time @2026-08-30T12:00:00Z; legal_time @1000-01-05; timezone "UTC"; }
+    }
+    evaluate truth(weg_frei(entity_ref("urn:de:kafka:clir:vor-dem-gesetz#Mann")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == TRUE_ONLY;
+    expect evaluation_status == COMPUTED;
+}

@@ -1,0 +1,55 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "grc.eukleides.pythagoras"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:grc:eukleides:clir:pythagoras"
+
+[dependencies]
+"grc.euclid.stoicheia_i" = "0.1.0"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит. Выводимые поля
+# сверяются с source-декларациями воротами check_package_metadata.py.
+[metadata]
+act = "grc-euclid-pythagoras"
+title = "Теорема Пифагора как целочисленное прочтение I.20, I.47, I.48 книги I и трихотомия II.12, II.13"
+primarySource = "STOICHEIA_II"
+
+# Выводимые. Совпадение с sources.law держат ворота, а не эти строки.
+jurisdiction = "none"
+instrument = "treatise"
+sourceFidelity = "pinned_unofficial_copy"
+
+# Невыводимые — не сверяет никто, поэтому у каждого записана причина.
+#
+# issuer: у трактата нет издателя в том смысле, в каком он есть у закона;
+# «Евклид» — имя, под которым александрийская традиция передала свод, и
+# самый закреплённый текст прошёл через редактуру Теона и издание Гейберга.
+# Писать сюда лицо значило бы решать текстологический вопрос от имени
+# пакета; традиция названа вместо лица — тем же ходом, что у prior-analytics.
+issuer = "евклидова геометрическая традиция (Στοιχεῖα)"
+# legalStatus: doctrine — сочинение никем не введено в действие и не
+# отменено; оно нормативно так, как нормативна математика: силой вывода.
+legalStatus = "doctrine"
+# verifiedAgainstSource: сверка с независимым набором издания Гейберга
+# (Perseus tlg1799.tlg001.perseus-grc2) по книге II, 31.08.2026; статуса
+# материализации она не поднимает (unofficial навсегда).
+#
+# primarySource — STOICHEIA_II: книга I принадлежит grc.euclid.stoicheia_i.
+verifiedAgainstSource = true
+
+# Рукописные сценарии пакета: исполняются общим раннером,
+# в учёт покрытия регрессии не входят.
+[[tests]]
+family = "grc.eukleides.pythagoras#authored"
+regression = false
+suites = ["tests/01-aigyptiako-345.lawtest", "tests/02-ekfylismenon-123.lawtest", "tests/03-oxygonion-456.lawtest", "tests/04-enantiosis-234.lawtest", "tests/05-pyle-033.lawtest", "tests/06-orthogonion-pros-protei-543.lawtest", "tests/07-orthogonion-pros-deuterai-354.lawtest", "tests/08-ouk-orthogonion-717.lawtest", "tests/09-oude-trigonon-000.lawtest", "tests/10-trigonon-estin-111.lawtest", "tests/11-enantiosis-arnetikai-pleurai.lawtest", "tests/12-amblygonion-234.lawtest", "tests/13-oxygonion-456.lawtest", "tests/14-orthogonion-oute-amblygonion-345.lawtest", "tests/15-smt-amblygonion-pros-tritei-267.lawtest", "tests/16-smt-amblygonion-pros-protei-542.lawtest", "tests/17-smt-amblygonion-pros-deuterai-474.lawtest", "tests/18-smt-oxygonion-331.lawtest"]
+world = ["grc.eukleides.pythagoras", "grc.euclid.stoicheia_i"]
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "pythagoras"
+suites = ["tests/pythagoras.lawtest"]
+world = ["grc.eukleides.pythagoras", "grc.euclid.stoicheia_i"]

@@ -1,0 +1,187 @@
+// Врата и запрет: что открыто, что запрещено и чего не сказано вовсе.
+//
+// ТРИ УТВЕРЖДЕНИЯ ТЕКСТА, КОТОРЫЕ ЗДЕСЬ ДЕРЖАТСЯ ПОРОЗНЬ, ХОТЯ СОБЛАЗН
+// СЛИТЬ ИХ В ОДНО ВЕЛИК:
+//
+//   1. ВРАТА ОТКРЫТЫ. «Da das Tor zum Gesetz offen steht wie immer und der
+//      Türhüter beiseite tritt». Не «заперты», не «охраняются силой» —
+//      открыты, и привратник отступает в сторону. В конце это подтверждено
+//      от противного: «Ich gehe jetzt und schließe ihn» — закрыть можно
+//      лишь то, что было открыто, и до последней реплики оно было открыто.
+//   2. ЗАПРЕТ ЕСТЬ. «versuche es doch trotz meines Verbotes hineinzugehen» —
+//      запрет назван самим привратником и назван СВОИМ. Он существует
+//      ровно постольку, поскольку объявлен; притча не выводит его ни из
+//      какого высшего порядка и не говорит, что привратник объявляет его
+//      от имени Закона.
+//   3. САНКЦИИ НЕТ. За вход вопреки запрету не обещано НИЧЕГО. Названы
+//      только следующие привратники, «einer mächtiger als der andere», — но
+//      это сообщение о власти, а не о последствии нарушения: ни лишения,
+//      ни взыскания, ни изгнания текст не назначает.
+//
+// ОТСЮДА `strafe_fuer_verbotsverstoss` — ОБЪЯВЛЕНИЕ БЕЗ ЕДИНОГО ПРАВИЛА, и
+// это сделано нарочно. Вопрос «что будет тому, кто войдёт вопреки запрету»
+// обязан быть ЗАДАВАЕМ — иначе о молчании притчи нельзя даже спросить, — и
+// обязан получить NEITHER. Выдумать сюда санкцию значило бы дописать за
+// Кафку самое важное из недосказанного. Символ занесён в
+// `corpus/slices/dead-symbols.json` с этой причиной: он мёртв не по
+// недосмотру, а по составу источника.
+//
+// ЗАПРЕТ И НАРУШЕНИЕ ДЕРЖАТСЯ ДВУМЯ УЗЛАМИ, а не одним, по той же причине,
+// что у запрета чулана в ru.afanasyev.koschei и у запрета впускать в
+// de.grimm.geisslein: `prohibition` в 0.1 есть сахар над обязанностью
+// воздержания, а такая позиция знает только ACTIVE и EXPIRED и VIOLATED не
+// становится никогда, сколько бы фактов о нарушении ни лежало в деле.
+// Позиция §140 показывает, что запрет ДЕЙСТВУЕТ; состав нарушения выведен
+// предикатом.
+
+language "law.core" version "0.2";
+package de.kafka.vor_dem_gesetz version "0.1.0";
+namespace "urn:de:kafka:clir:vor-dem-gesetz";
+
+use self::{
+    DerTuerhueter,
+    Eingang,
+    Mann,
+    Person,
+    TO_MACHT,
+    TO_TOR_OFFEN,
+    TO_VERBOT,
+    Tor,
+    eingang_zum_gesetz,
+    mann_vom_lande,
+    tuerhueter,
+};
+
+// --- Врата открыты -------------------------------------------------------------
+
+relation tor_offen(e: Eingang) kind empirical {
+    label de official "das Tor steht offen wie immer, und der Türhüter tritt beiseite";
+    label ru official "врата стоят открытыми, как всегда, и привратник отступает в сторону";
+}
+
+@source(TO_TOR_OFFEN)
+assert tor_offen(Tor) { evidence VDG_1915_TEXT; }
+
+// ПУТЬ СВОБОДЕН, И ЭТО ВЫВОД, А НЕ ФАКТ ДЕЛА. Из того, что врата — врата
+// Закона и что они открыты, следует: пройти можно. Вывод нужен затем, чтобы
+// второй путь автомата (вход вопреки запрету) опирался на СОСТОЯНИЕ ВРАТ, а
+// не висел на голом факте прохода: препятствие у этих врат нормативное, и
+// сказать это обязана машина, а не комментарий. Голова унарна, потому что её
+// читает гард перехода, а процедура идёт над лицом: свободная переменная в
+// теле перехода — та же беда, что свободная в голове моста суждения.
+
+relation weg_frei(m: Person) kind institutional {
+    label de official "der Weg durch das Tor steht ihm offen: das Tor ist offen, und der Türhüter tritt beiseite";
+    label ru official "путь в врата ему свободен: врата открыты, и привратник отступает в сторону";
+}
+
+@source(TO_TOR_OFFEN)
+rule WegIstFrei(m: Person, e: Eingang) strict {
+    label de official "Das Tor zum Gesetz steht offen wie immer und der Türhüter tritt beiseite — der Weg hinein ist frei";
+    label ru official "Врата Закона стоят открытыми, как всегда, и привратник отступает в сторону — путь внутрь свободен";
+    when mann_vom_lande(m) and eingang_zum_gesetz(e) and tor_offen(e);
+    then weg_frei(m);
+}
+
+// --- Запрет объявлен -----------------------------------------------------------
+//
+// ИНСТИТУЦИОНАЛЬНОЕ, А НЕ ЭМПИРИЧЕСКОЕ: запрет существует оттого, что
+// объявлен, и объявившее его лицо названо первым аргументом. Слить лицо с
+// нормой значило бы потерять то самое «meines», на котором стоит вся
+// экзегеза священника из «Процесса».
+
+relation verbot_erklaert(h: Person, m: Person) kind institutional {
+    label de official "der Türhüter hat gegenüber diesem Mann sein Verbot erklärt";
+    label ru official "привратник объявил этому просителю свой запрет";
+}
+
+@source(TO_VERBOT)
+assert verbot_erklaert(DerTuerhueter, Mann) { evidence VDG_1915_TEXT; }
+
+// ПРИГЛАШЕНИЕ ПОПРОБОВАТЬ — в той же фразе, что и запрет. Привратник не
+// препятствует: он предупреждает. Факт стоит отдельным объявлением, потому
+// что именно он делает второй путь автомата достижимым по ФАКТУ, а не по
+// суждению.
+
+relation versuch_eingeladen(h: Person, m: Person) kind institutional {
+    label de official "der Türhüter selbst lädt ein, es trotz des Verbotes zu versuchen";
+    label ru official "привратник сам предлагает попробовать войти вопреки запрету";
+}
+
+@source(TO_VERBOT)
+assert versuch_eingeladen(DerTuerhueter, Mann) { evidence VDG_1915_TEXT; }
+
+// ИЕРАРХИЯ ПРИВРАТНИКОВ — единственное, что названо на случай входа вопреки
+// запрету. Пакет закрепляет её как ОБЪЯВЛЕНИЕ привратника, и ничего из неё
+// не выводит: что произойдёт при встрече со вторым и третьим, притча не
+// говорит, а «Schon den Anblick des Dritten kann nicht einmal ich mehr
+// ertragen» есть высказывание о самом привратнике, а не о просителе.
+
+relation maechtigere_tuerhueter_angekuendigt(h: Person) kind institutional {
+    label de official "der Türhüter kündigt weitere, je mächtigere Türhüter von Saal zu Saal an";
+    label ru official "привратник объявляет о следующих привратниках, из зала в зал, один сильнее другого";
+}
+
+@source(TO_MACHT)
+assert maechtigere_tuerhueter_angekuendigt(DerTuerhueter) { evidence VDG_1915_TEXT; }
+
+// --- Норма запрета -------------------------------------------------------------
+//
+// Носитель — проситель, связанный позитивным конъюнктом `mann_vom_lande(m)`
+// (§190: носитель нормы обязан быть связан; тип носителем не делает).
+//
+// ОКНО ОТКРЫТО ВПРАВО. Срока запрет не имеет: «jetzt aber nicht» относится к
+// отказу во входе, а не к сроку действия запрета, и верхняя граница осталась
+// бы литералом, которого источник не даёт.
+
+relation ohne_erlaubnis_eingetreten(m: Person) kind empirical {
+    label de official "er ist ohne Erlaubnis durch das Tor gegangen";
+    label ru official "он прошёл в врата без разрешения";
+}
+
+@source(TO_VERBOT)
+rule EintrittOhneErlaubnisVerboten(h: Person, m: Person) strict {
+    label de official "Der Türhüter verbietet dem Mann, ohne Erlaubnis einzutreten — und lädt ihn zugleich ein, es zu versuchen";
+    label ru official "Привратник запрещает просителю входить без разрешения — и тут же предлагает попробовать";
+    when tuerhueter(h) and mann_vom_lande(m) and verbot_erklaert(h, m);
+    then prohibition OhneErlaubnisEintreten {
+        bearer m;
+        action ohne_erlaubnis_eingetreten(m);
+        window [@1000-01-01, infinity);
+    };
+}
+
+// --- Состав нарушения ----------------------------------------------------------
+//
+// НАРУШЕНИЕ ОБЪЕКТИВНО И НИЧЕМ НЕ ОПРАВДЫВАЕТСЯ, потому что оправданий
+// притча не называет: приглашение попробовать запрета не снимает — оно
+// стоит в одной фразе с ним («trotz meines Verbotes»), то есть предполагает
+// его силу. Проситель, вошедший по приглашению, нарушает запрет; и это всё,
+// что можно сказать, потому что дальше текст молчит.
+
+relation verbot_verletzt(m: Person) kind institutional {
+    label de official "das Verbot des Türhüters ist verletzt: er ist ohne Erlaubnis eingetreten";
+    label ru official "запрет привратника нарушен: вошёл без разрешения";
+}
+
+@source(TO_VERBOT)
+rule VerbotVerletzt(h: Person, m: Person) strict {
+    label de official "Wer ohne Erlaubnis eintritt, verletzt das Verbot des Türhüters — auch wenn dieser selbst zum Versuch eingeladen hat";
+    label ru official "Вошедший без разрешения нарушает запрет привратника — даже если тот сам предлагал попробовать";
+    when tuerhueter(h) and mann_vom_lande(m) and verbot_erklaert(h, m)
+        and ohne_erlaubnis_eingetreten(m);
+    then verbot_verletzt(m);
+}
+
+// --- Последствие, которого текст не называет -----------------------------------
+//
+// ОБЪЯВЛЕНИЕ БЕЗ ПРАВИЛА — СОЗНАТЕЛЬНО (см. шапку файла). Спросить об этом
+// можно; ответом будет NEITHER, и это честный ответ, а не пробел
+// формализации: за вход вопреки запрету притча не назначает ни лишения, ни
+// взыскания, ни изгнания. Появись здесь голова у правила — пакет начал бы
+// утверждать о Кафке то, чего у Кафки нет.
+
+relation strafe_fuer_verbotsverstoss(m: Person) kind institutional {
+    label de official "die Folge, die dem Übertretenden angedroht ist — im Text nicht benannt";
+    label ru official "последствие, грозящее нарушителю запрета, — текстом не названо";
+}

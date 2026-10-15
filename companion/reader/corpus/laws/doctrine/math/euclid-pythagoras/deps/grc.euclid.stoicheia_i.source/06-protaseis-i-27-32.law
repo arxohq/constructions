@@ -1,0 +1,129 @@
+// Προτάσεις κζ΄—λβ΄ (I.27—I.32)
+//
+// I.27 и I.28 — от равенства углов к параллельности; I.29 — обратно.
+// Секущая — первый аргумент отношений, как в grc.euclid.angles.
+// Градусов нет: равенство — isos_gonia, сумма — isos_dyo_orthais.
+
+use self::{
+    Eutheia,
+    Gonion,
+    STO_PROP27,
+    STO_PROP28,
+    STO_PROP29,
+    STO_PROP30,
+    STO_PROP31,
+    STO_PROP32,
+    Trigonon,
+    isos_dyo_goniais,
+    isos_dyo_orthais,
+    isos_gonia,
+    paralleloi,
+    smeznye_entos,
+    treis_isos_dyo_orthais,
+};
+
+relation enallax_gonia(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) kind empirical {
+    label grc official "αἱ ἐναλλὰξ γωνίαι";
+    label ru unofficial "накрест лежащие углы при секущей t к прямым m, n";
+}
+
+relation ektos_entos_gonia(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) kind empirical {
+    label grc official "ἡ ἐκτὸς … τῇ ἐντὸς καὶ ἀπεναντίον";
+    label ru unofficial "соответственные углы при секущей";
+}
+
+relation parallel_prostheisa(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) kind empirical {
+    label ru unofficial "построена параллель n к m через точку на секущей";
+}
+
+relation ektos_gonia_trigonou(t: Trigonon, ext: Gonion, a: Gonion, b: Gonion) kind empirical {
+    label grc official "ἡ ἐκτὸς γωνία δυσὶ ταῖς ἐντὸς καὶ ἀπεναντίον";
+    label ru unofficial "внешний угол и два внутренних противолежащих";
+}
+
+relation trigonon_treis_gonia(t: Trigonon, a: Gonion, b: Gonion, c: Gonion) kind empirical {
+    label grc official "αἱ ἐντὸς τοῦ τριγώνου τρεῖς γωνίαι";
+    label ru unofficial "три внутренних угла треугольника";
+}
+
+@source(STO_PROP27)
+pub rule ParallelEkEnallax(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τὰς ἐναλλὰξ γωνίας ἴσας … παράλληλοι ἔσονται";
+    label ru unofficial "I.27: равные накрест лежащие — прямые параллельны";
+    when enallax_gonia(t, m, n, g, h) and supported(isos_gonia(g, h));
+    then paralleloi(m, n);
+}
+
+@source(STO_PROP28)
+pub rule ParallelEkEktos(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τὴν ἐκτὸς γωνίαν τῇ ἐντὸς … ἴσην … παράλληλοι";
+    label ru unofficial "I.28: равные соответственные — прямые параллельны";
+    when ektos_entos_gonia(t, m, n, g, h) and supported(isos_gonia(g, h));
+    then paralleloi(m, n);
+}
+
+@source(STO_PROP28)
+pub rule ParallelEkSmeznykh(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τὰς ἐντὸς καὶ ἐπὶ τὰ αὐτὰ μέρη δυσὶν ὀρθαῖς ἴσας";
+    label ru unofficial "I.28: внутренние односторонние равны двум прямым — параллельны";
+    when smeznye_entos(t, m, n, g, h) and supported(isos_dyo_orthais(g, h));
+    then paralleloi(m, n);
+}
+
+@source(STO_PROP29)
+pub rule EnallaxApoParallel(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τάς τε ἐναλλὰξ γωνίας ἴσας ἀλλήλαις ποιεῖ";
+    label ru unofficial "I.29: при параллельных накрест лежащие равны";
+    when enallax_gonia(t, m, n, g, h) and supported(paralleloi(m, n));
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP29)
+pub rule EktosApoParallel(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τὴν ἐκτὸς τῇ ἐντὸς καὶ ἀπεναντίον ἴσην";
+    label ru unofficial "I.29: при параллельных соответственные равны";
+    when ektos_entos_gonia(t, m, n, g, h) and supported(paralleloi(m, n));
+    then isos_gonia(g, h);
+}
+
+@source(STO_PROP29)
+pub rule SmeznyeApoParallel(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "τὰς ἐντὸς καὶ ἐπὶ τὰ αὐτὰ μέρη δυσὶν ὀρθαῖς ἴσας";
+    label ru unofficial "I.29: при параллельных внутренние односторонние равны двум прямым";
+    when smeznye_entos(t, m, n, g, h) and supported(paralleloi(m, n));
+    then isos_dyo_orthais(g, h);
+}
+
+@source(STO_PROP30)
+pub rule ParallelEkParallel(l: Eutheia, m: Eutheia, n: Eutheia) strict {
+    label grc official "αἱ τῷ αὐτῷ παράλληλοι καὶ ἀλλήλαις εἰσὶ παράλληλοι";
+    label ru unofficial "I.30: параллельные одной и той же — параллельны между собой";
+    when supported(paralleloi(l, m)) and supported(paralleloi(l, n));
+    then paralleloi(m, n);
+}
+
+@source(STO_PROP31)
+rule ParallelProstheisa(t: Eutheia, m: Eutheia, n: Eutheia, g: Gonion, h: Gonion) strict {
+    label grc official "διὰ τοῦ δοθέντος σημείου … παράλληλον … ἀγαγεῖν";
+    label ru unofficial "I.31: построенная параллель через точку";
+    when parallel_prostheisa(t, m, n, g, h)
+        and enallax_gonia(t, m, n, g, h)
+        and supported(isos_gonia(g, h));
+    then paralleloi(m, n);
+}
+
+@source(STO_PROP32)
+pub rule EktosIsosDyoEntos(t: Trigonon, ext: Gonion, a: Gonion, b: Gonion) strict {
+    label grc official "ἡ ἐκτὸς γωνία δυσὶ ταῖς ἐντὸς καὶ ἀπεναντίον ἴση ἐστίν";
+    label ru unofficial "I.32: внешний равен двум внутренним противолежащим";
+    when ektos_gonia_trigonou(t, ext, a, b);
+    then isos_dyo_goniais(ext, a, b);
+}
+
+@source(STO_PROP32)
+pub rule TreisGoniaiDyoOrthais(t: Trigonon, a: Gonion, b: Gonion, c: Gonion) strict {
+    label grc official "αἱ ἐντὸς τοῦ τριγώνου τρεῖς γωνίαι δυσὶν ὀρθαῖς ἴσαι εἰσίν";
+    label ru unofficial "I.32: три угла треугольника равны двум прямым";
+    when trigonon_treis_gonia(t, a, b, c);
+    then treis_isos_dyo_orthais(a, b, c);
+}

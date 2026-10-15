@@ -1,0 +1,91 @@
+// Раздел 8. End Note: неделимость Scrum.
+//
+// «The Scrum framework, as outlined herein, is immutable. While implementing
+// only parts of Scrum is possible, the result is not Scrum. Scrum exists only
+// in its entirety». Санкция Руководства — потеря имени, и раздел 8 есть
+// единственное место, где она записана.
+//
+// Форма — ПРЕЗУМПЦИЯ с двумя поражающими правилами, а не замыкание §70:
+// «реализация включает элемент» — двуместное отношение (реализация ×
+// элемент), а замыкание v1 закрывает только унарный предикат. Презумпция
+// «это Scrum» держится у всякой реализации, пока дело не назовёт пропущенный
+// элемент или изменение базовой конструкции; приоритет отдаёт факту.
+// Элементы — закрытое перечисление того, что Руководство объявило составом
+// фреймворка: три ответственности, пять событий, три артефакта, три
+// обязательства.
+
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+use self::{
+    SG_S8,
+};
+
+entity ScrumImplementation { label en official "an implementation of Scrum by a team or an organization"; }
+
+pub enum ScrumElement {
+    label en official "the elements of the Scrum framework as outlined in the Scrum Guide";
+    ScrumMasterAccountability,
+    ProductOwnerAccountability,
+    DevelopersAccountability,
+    TheSprint,
+    SprintPlanningEvent,
+    DailyScrumEvent,
+    SprintReviewEvent,
+    SprintRetrospectiveEvent,
+    ProductBacklogArtifact,
+    SprintBacklogArtifact,
+    IncrementArtifact,
+    ProductGoalCommitment,
+    SprintGoalCommitment,
+    DefinitionOfDoneCommitment
+}
+
+relation implementation(i: ScrumImplementation) kind empirical {
+    label en official "the implementation claims to be Scrum";
+}
+relation omits_element(i: ScrumImplementation, el: ScrumElement) kind empirical {
+    label en official "the implementation leaves out the named element of the Scrum framework";
+}
+relation modifies_core_design(i: ScrumImplementation) kind empirical {
+    label en official "the implementation changes the core design or ideas of Scrum";
+}
+relation is_scrum(i: ScrumImplementation) kind institutional {
+    label en official "the implementation is Scrum";
+}
+
+@source(SG_S8)
+rule ImplementationPresumedScrum(i: ScrumImplementation) defeasible {
+    label en official "an implementation of the framework as outlined in the Guide is Scrum";
+    when implementation(i);
+    then is_scrum(i);
+}
+
+@source(SG_S8)
+rule PartialImplementationIsNotScrum(i: ScrumImplementation, el: ScrumElement) defeasible {
+    label en official "While implementing only parts of Scrum is possible, the result is not Scrum. Scrum exists only in its entirety";
+    when implementation(i) and omits_element(i, el);
+    then not is_scrum(i);
+}
+
+@source(SG_S8)
+rule ModifiedFrameworkIsNotScrum(i: ScrumImplementation) defeasible {
+    label en official "The Scrum framework, as outlined herein, is immutable";
+    when implementation(i) and modifies_core_design(i);
+    then not is_scrum(i);
+}
+
+@source(SG_S8)
+priority OmissionBeatsPresumptionOfScrum {
+    label en official "an established omission of an element prevails over the presumption that the implementation is Scrum";
+    prefer PartialImplementationIsNotScrum over ImplementationPresumedScrum;
+    reason explicit_exception;
+}
+
+@source(SG_S8)
+priority ModificationBeatsPresumptionOfScrum {
+    label en official "an established change of the core design prevails over the presumption that the implementation is Scrum";
+    prefer ModifiedFrameworkIsNotScrum over ImplementationPresumedScrum;
+    reason explicit_exception;
+}

@@ -1,0 +1,521 @@
+// RFC 2119, разделы 1…5: пять уровней требования и позиции, которые из них
+// следуют.
+//
+// ЧТО ЗДЕСЬ ПРОИСХОДИТ. Разделы 1…5 — это ОПРЕДЕЛЕНИЯ слов, а не нормы. Но
+// определения даны через нормативные последствия («an absolute requirement of
+// the specification», «an absolute prohibition», «truly optional»), и
+// последствие адресовано реализации. Поэтому каждый раздел даёт здесь два
+// слоя: классификацию требования по уровню (`absolute_requirement` и её
+// четыре сестры) и позицию §123, возникающую у реализации, которая заявила
+// соответствие документу.
+//
+// ═══ ПОЧЕМУ ЗАПРЕТ ЗАПИСАН НЕ `prohibition` ════════════════════════════════
+//
+// Соблазн записать раздел 2 как `then prohibition …` велик и был бы неверен.
+// В срезе 0.1 позиция воздержания (`goal forbearance`, §130) НИКОГДА не
+// получает `VIOLATED` — только `ACTIVE` либо `EXPIRED`: обнаружение
+// совершённого действия требует событийной модели §79, которой в 0.1 нет.
+// Дело может заявить факт совершения запрещённого, факт попадёт в базу, из
+// него выведутся другие предикаты — а позиция останется `ACTIVE`. Для акта,
+// у которого «нарушение MUST NOT» есть ГЛАВНЫЙ ожидаемый ответ, это молчание
+// в самом дорогом месте.
+//
+// Поэтому раздел 2 записан обязанностью ВОЗДЕРЖАНИЯ с целью `maintenance`:
+// поддерживаемое условие — `abstains_from(i, r)`, презумпция воздержания,
+// которую совершение действия ОПРОВЕРГАЕТ отрицательной головой. §137 даёт
+// `VIOLATED` от контрпримера, и запрет наконец нарушается. Это не обход
+// семантики, а перевод запрета в ту его форму, которую 0.1 исполняет: «не
+// делать X» и «поддерживать состояние невыполненности X» — одно и то же
+// утверждение о поведении, и второе движок умеет проверять.
+//
+// СТОРОЖ У ЭТОГО ВЫБОРА ЕСТЬ И СТОИТ В СЦЕНАРИЯХ: BCP14-04 требует
+// `VIOLATED`, и если однажды §79 появится, а запись через `prohibition`
+// станет исполнимой, комментарий выше устареет — но не молча.
+//
+// ═══ ПОЧЕМУ ПОЗИЦИИ РОЖДАЮТСЯ ИЗ `defeasible`-СЛОЯ ═════════════════════════
+//
+// `keyword_used` производится поражаемыми правилами модуля 01 (иначе
+// надстройка до-8174-го прочтения не смогла бы его побеждать). Строгое
+// правило не вправе читать голым предикат, производимый поражаемым, —
+// `LDC-E4103`. Поэтому пять классификаций объявлены `defeasible`; правила же
+// с ДЕОНТИЧЕСКОЙ головой под запрет не подпадают и остаются строгими.
+
+language "law.core" version "0.2";
+package ietf.bcp14 version "0.1.0";
+namespace "urn:ietf:clir:bcp14";
+
+// --- Пять уровней требования ------------------------------------------------
+
+pub relation absolute_requirement(r: Requirement) kind institutional {
+    label en official "the definition is an absolute requirement of the specification";
+}
+
+pub relation absolute_prohibition(r: Requirement) kind institutional {
+    label en official "the definition is an absolute prohibition of the specification";
+}
+
+pub relation recommended_item(r: Requirement) kind institutional {
+    label en official "the item is recommended: valid reasons may exist to ignore it";
+}
+
+pub relation discouraged_item(r: Requirement) kind institutional {
+    label en official "the behavior is discouraged: valid reasons may exist when it is acceptable or even useful";
+}
+
+pub relation truly_optional(r: Requirement) kind institutional {
+    label en official "the item is truly optional";
+}
+
+// Раздел 1. Три слова — один уровень. Расщепление на три правила с одной
+// головой, а не `or` в теле: дизъюнкцию в теле принимает парсер и отвергают
+// ОБА движка (`flatten_body` знает только `and`), причём предупреждение
+// читается как ограничение языка и этим обманывает. Каноническое расщепление
+// §206 — N правил с одной головой.
+@source(RFC2119_S1)
+rule MustDenotesAnAbsoluteRequirement(r: Requirement) defeasible {
+    label en official "MUST: this word means that the definition is an absolute requirement of the specification";
+    when keyword_used(r, Must);
+    then absolute_requirement(r);
+}
+
+@source(RFC2119_S1)
+rule RequiredDenotesAnAbsoluteRequirement(r: Requirement) defeasible {
+    label en official "REQUIRED: this term means that the definition is an absolute requirement of the specification";
+    when keyword_used(r, Required);
+    then absolute_requirement(r);
+}
+
+@source(RFC2119_S1)
+rule ShallDenotesAnAbsoluteRequirement(r: Requirement) defeasible {
+    label en official "SHALL: this term means that the definition is an absolute requirement of the specification";
+    when keyword_used(r, Shall);
+    then absolute_requirement(r);
+}
+
+@source(RFC2119_S2)
+rule MustNotDenotesAnAbsoluteProhibition(r: Requirement) defeasible {
+    label en official "MUST NOT: this phrase means that the definition is an absolute prohibition of the specification";
+    when keyword_used(r, MustNot);
+    then absolute_prohibition(r);
+}
+
+@source(RFC2119_S2)
+rule ShallNotDenotesAnAbsoluteProhibition(r: Requirement) defeasible {
+    label en official "SHALL NOT: this phrase means that the definition is an absolute prohibition of the specification";
+    when keyword_used(r, ShallNot);
+    then absolute_prohibition(r);
+}
+
+@source(RFC2119_S3)
+rule ShouldDenotesARecommendation(r: Requirement) defeasible {
+    label en official "SHOULD: this word means that there may exist valid reasons in particular circumstances to ignore a particular item";
+    when keyword_used(r, Should);
+    then recommended_item(r);
+}
+
+@source(RFC2119_S3)
+rule RecommendedDenotesARecommendation(r: Requirement) defeasible {
+    label en official "RECOMMENDED: this adjective means that there may exist valid reasons in particular circumstances to ignore a particular item";
+    when keyword_used(r, Recommended);
+    then recommended_item(r);
+}
+
+@source(RFC2119_S4)
+rule ShouldNotDenotesDiscouragement(r: Requirement) defeasible {
+    label en official "SHOULD NOT: this phrase means that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful";
+    when keyword_used(r, ShouldNot);
+    then discouraged_item(r);
+}
+
+@source(RFC2119_S4)
+rule NotRecommendedDenotesDiscouragement(r: Requirement) defeasible {
+    label en official "NOT RECOMMENDED: this phrase means that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful";
+    when keyword_used(r, NotRecommended);
+    then discouraged_item(r);
+}
+
+@source(RFC2119_S5)
+rule MayDenotesTrueOptionality(r: Requirement) defeasible {
+    label en official "MAY: this word means that an item is truly optional";
+    when keyword_used(r, May);
+    then truly_optional(r);
+}
+
+@source(RFC2119_S5)
+rule OptionalDenotesTrueOptionality(r: Requirement) defeasible {
+    label en official "OPTIONAL: this adjective means that an item is truly optional";
+    when keyword_used(r, Optional);
+    then truly_optional(r);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// РАЗДЕЛ 1. АБСОЛЮТНОЕ ТРЕБОВАНИЕ — ОБЯЗАННОСТЬ
+// ═══════════════════════════════════════════════════════════════════════════
+
+pub relation requirement_satisfied(i: Implementation, r: Requirement) kind institutional {
+    label en official "the implementation satisfies the requirement";
+}
+
+@source(RFC2119_S1)
+rule ConformingBehaviourSatisfiesTheRequirement(i: Implementation, r: Requirement) defeasible {
+    label en official "observed conforming behaviour satisfies the requirement";
+    when subject_to(i, r) and behaviour_conforms(i, r);
+    then requirement_satisfied(i, r);
+}
+
+// Отрицательная голова стоит на ПОРАЖАЕМОМ правиле намеренно: в срезе 0.1
+// негативная голова строгого правила не исполняется и молчит при зелёном
+// `check`. Без неё `requirement_satisfied` никогда не стал бы `FALSE_ONLY`,
+// а без `FALSE_ONLY` цель `maintenance` §137 не даёт `VIOLATED` — то есть
+// нарушенный MUST выглядел бы точно так же, как MUST, о котором ничего не
+// известно. Ровно это различие и есть весь смысл пакета.
+@source(RFC2119_S1)
+rule DeviatingBehaviourFailsTheRequirement(i: Implementation, r: Requirement) defeasible {
+    label en official "observed deviating behaviour fails the requirement";
+    when subject_to(i, r) and behaviour_deviates(i, r);
+    then not requirement_satisfied(i, r);
+}
+
+// НАЙДЕНО ФАЗЗЕРОМ, А НЕ ЧТЕНИЕМ (`lawref fuzz … --targeted 40`, мир 3):
+// «КОНФЛИКТ правил §115 на requirement_satisfied». Дело вправе заявить и
+// соответствующее, и отступающее поведение — реальный трейс так и выглядит,
+// когда сервер отвечает верно на одном обмене и неверно на другом, — и без
+// приоритета обе головы выводились бы разом, давая `BOTH` вместо ответа.
+//
+// Разрешение не техническое, а по тексту: раздел 1 называет требование
+// АБСОЛЮТНЫМ («an absolute requirement of the specification»), а абсолютное
+// требование ломает любое единичное отступление; одно верное поведение его не
+// чинит. Поэтому побеждает контрпример.
+@source(RFC2119_S1)
+priority DeviationBeatsConformance {
+    label en official "an absolute requirement is failed by any deviation: the counterexample prevails over conforming behaviour observed elsewhere";
+    prefer DeviatingBehaviourFailsTheRequirement over ConformingBehaviourSatisfiesTheRequirement;
+    reason explicit_exception;
+}
+
+@source(RFC2119_S1)
+rule AbsoluteRequirementBindsTheImplementation(i: Implementation, r: Requirement) strict {
+    label en official "an absolute requirement of the specification binds every implementation which claims conformance";
+    when subject_to(i, r) and absolute_requirement(r);
+    then duty SatisfyAbsoluteRequirement {
+        bearer i;
+        maintain requirement_satisfied(i, r) during [@1997-03-01, infinity);
+    };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// РАЗДЕЛ 2. АБСОЛЮТНЫЙ ЗАПРЕТ — ОБЯЗАННОСТЬ ВОЗДЕРЖАНИЯ
+// ═══════════════════════════════════════════════════════════════════════════
+
+pub relation abstains_from(i: Implementation, r: Requirement) kind institutional {
+    label en official "the implementation abstains from the behaviour which the requirement prohibits";
+}
+
+@source(RFC2119_S2)
+rule AbstentionIsPresumed(i: Implementation, r: Requirement) defeasible {
+    label en official "an implementation is presumed to abstain from a prohibited behaviour until the contrary appears";
+    when subject_to(i, r) and absolute_prohibition(r);
+    then abstains_from(i, r);
+}
+
+// ТЕЛО ПОВТОРЯЕТ ОБА КОНЪЮНКТА ПРЕЗУМПЦИИ, И ЭТО НЕ ИЗБЫТОК. Приоритет §116
+// применяется только внутри одной страты §110/§111, а ранг правила растёт от
+// чтения ПОРАЖАЕМОГО предиката в теле: оставь здесь один эмпирический
+// `behaviour_deviates` — и поражающее правило уехало бы стратой ниже
+// презумпции, которая читает поражаемый `absolute_prohibition`. Приоритет
+// молчал бы вовсе, при полностью зелёном `check` и без единого issue: ответ
+// `BOTH` вместо `FALSE_ONLY`. Повтор конъюнктов ещё и вернее по существу —
+// поведение опровергает воздержание ОТ ЭТОГО запрета, а не вообще.
+@source(RFC2119_S2)
+rule ProhibitedBehaviourBreaksAbstention(i: Implementation, r: Requirement) defeasible {
+    label en official "performing the prohibited behaviour breaks the abstention";
+    when subject_to(i, r) and absolute_prohibition(r) and behaviour_deviates(i, r);
+    then not abstains_from(i, r);
+}
+
+@source(RFC2119_S2)
+priority PerformanceBeatsThePresumptionOfAbstention {
+    label en official "the observed prohibited behaviour prevails over the presumption of abstention";
+    prefer ProhibitedBehaviourBreaksAbstention over AbstentionIsPresumed;
+    reason explicit_exception;
+}
+
+@source(RFC2119_S2)
+rule AbsoluteProhibitionBindsTheImplementation(i: Implementation, r: Requirement) strict {
+    label en official "an absolute prohibition of the specification binds every implementation which claims conformance";
+    when subject_to(i, r) and absolute_prohibition(r);
+    then duty AbstainFromProhibitedBehaviour {
+        bearer i;
+        maintain abstains_from(i, r) during [@1997-03-01, infinity);
+    };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// РАЗДЕЛ 3. SHOULD — ПОРАЖАЕМАЯ ОБЯЗАННОСТЬ И КАНАЛ СУЖДЕНИЯ §47.3
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// SHOULD — самое трудное слово деонтической логики: «обязан, но не совсем».
+// RFC 2119 §3 даёт ему ДВА условия отступления, и они разной природы:
+//
+//   (а) «there may exist valid reasons in particular circumstances to ignore
+//       a particular item» — ВЕСКОСТЬ причины. Вычислимым предикатом она не
+//       является и притворяться им не должна;
+//   (б) «but the full implications must be understood and carefully weighed
+//       before choosing a different course» — факт о ПРОЦЕССЕ, который можно
+//       заявить и опровергнуть.
+//
+// (а) записана каналом суждения §47.3, (б) — обычным эмпирическим предикатом.
+// Отступление правомерно ТОЛЬКО при обоих; текст соединяет их «but», то есть
+// конъюнкцией, а не альтернативой.
+//
+// ОРГАН СУЖДЕНИЯ — ЕДИНСТВЕННОЕ МЕСТО, ГДЕ МОДЕЛЬ НАЗЫВАЕТ ТО, ЧЕГО НЕ
+// НАЗЫВАЕТ ТЕКСТ, и потому сказано вслух. RFC 2119 органа не учреждает
+// вовсе: у IETF нет ни суда, ни надзора, а «rough consensus and running
+// code» суда не образует. Выбран `Implementor` — тот, кто по букве §3 и
+// совершает оценку («before choosing a different course» выбирает
+// реализатор). Альтернатива — рабочая группа, разбирающая спор постфактум;
+// она была бы верна для конфликта, но не для момента, о котором говорит
+// текст. Выбор меняет только имя органа в `JudgmentRequest` и не меняет ни
+// одного исхода; он записан здесь, чтобы его можно было оспорить.
+pub external judgment relation valid_reason_to_ignore(i: Implementation, r: Requirement) {
+    authority Implementor;
+    label en official "there exist valid reasons in particular circumstances to ignore this particular item";
+}
+
+pub relation implications_understood_and_weighed(i: Implementation, r: Requirement) kind empirical {
+    label en official "the full implications have been understood and carefully weighed before choosing a different course";
+}
+
+// МОСТ. Канал §47.3 не проходит ни через голову-НОРМУ, ни через ПОРАЖАЕМОЕ
+// правило: `whynot.judgment_blockers` разбирает недостижимость ЛИТЕРАЛА, а у
+// нормы литерала нет; поражаемый потребитель гасит канал целиком. Поэтому
+// между суждением и поражаемым слоем стоит СТРОГОЕ правило с литеральной
+// головой. Оба аргумента суждения стоят в голове моста — иначе канал
+// оборвался бы на свободной переменной и запрос органу не выдавался бы.
+@source(RFC2119_S3)
+rule DeviationFromRecommendationIsJustified(i: Implementation, r: Requirement) strict {
+    label en official "ignoring a recommended item is justified when valid reasons exist and the full implications have been weighed";
+    when subject_to(i, r)
+        and implications_understood_and_weighed(i, r)
+        and valid_reason_to_ignore(i, r);
+    then deviation_from_recommendation_justified(i, r);
+}
+
+relation deviation_from_recommendation_justified(i: Implementation, r: Requirement)
+        kind institutional {
+    label en official "it is established that ignoring this recommended item is justified";
+}
+
+pub relation recommendation_binding(i: Implementation, r: Requirement) kind institutional {
+    label en official "the recommendation binds this implementation";
+}
+
+@source(RFC2119_S3)
+rule RecommendationBindsUnlessJustifiedOtherwise(i: Implementation, r: Requirement) defeasible {
+    label en official "a recommended item binds the implementation which claims conformance";
+    when subject_to(i, r) and recommended_item(r);
+    then recommendation_binding(i, r);
+}
+
+@source(RFC2119_S3)
+rule JustifiedDeviationReleasesFromTheRecommendation(i: Implementation, r: Requirement) defeasible {
+    label en official "where the deviation is justified the recommendation does not bind";
+    when subject_to(i, r) and recommended_item(r)
+        and deviation_from_recommendation_justified(i, r);
+    then not recommendation_binding(i, r);
+}
+
+@source(RFC2119_S3)
+priority JustifiedDeviationBeatsTheRecommendation {
+    label en official "a justified deviation prevails over the recommendation it departs from";
+    prefer JustifiedDeviationReleasesFromTheRecommendation over RecommendationBindsUnlessJustifiedOtherwise;
+    reason explicit_exception;
+}
+
+@source(RFC2119_S3)
+rule RecommendationCreatesADefeasibleDuty(i: Implementation, r: Requirement) strict {
+    label en official "a binding recommendation creates a duty to satisfy the item";
+    when recommendation_binding(i, r);
+    then duty FollowRecommendation {
+        bearer i;
+        maintain requirement_satisfied(i, r) during [@1997-03-01, infinity);
+    };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// РАЗДЕЛ 4. SHOULD NOT — ЗЕРКАЛО РАЗДЕЛА 3
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// Раздел 4 не повторяет раздел 3 дословно, и различие записано: там причина
+// оправдывает ИГНОРИРОВАНИЕ пункта, здесь — совершение поведения, которое
+// «acceptable or even useful». Условие взвешенности то же по существу, но
+// текст ставит его в строчном `should be understood` вместо `must be
+// understood` раздела 3 — и по базовому прочтению это НЕ ключевое слово.
+// Условие всё равно осталось конъюнктом: оно определяет объём отступления, а
+// не создаёт отдельную обязанность, и потому от регистра не зависит.
+
+relation discouraged_behaviour_acceptable(i: Implementation, r: Requirement)
+        kind institutional {
+    label en official "it is established that the discouraged behaviour is acceptable or even useful here";
+}
+
+pub external judgment relation valid_reason_for_discouraged_behaviour(
+        i: Implementation, r: Requirement) {
+    authority Implementor;
+    label en official "there exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful";
+}
+
+@source(RFC2119_S4)
+rule DiscouragedBehaviourIsAcceptableHere(i: Implementation, r: Requirement) strict {
+    label en official "the discouraged behaviour is acceptable where valid reasons exist and the case has been carefully weighed";
+    when subject_to(i, r)
+        and implications_understood_and_weighed(i, r)
+        and valid_reason_for_discouraged_behaviour(i, r);
+    then discouraged_behaviour_acceptable(i, r);
+}
+
+pub relation discouragement_binding(i: Implementation, r: Requirement) kind institutional {
+    label en official "the discouragement binds this implementation";
+}
+
+@source(RFC2119_S4)
+rule DiscouragementBindsUnlessAcceptable(i: Implementation, r: Requirement) defeasible {
+    label en official "a discouraged behaviour is to be avoided by the implementation which claims conformance";
+    when subject_to(i, r) and discouraged_item(r);
+    then discouragement_binding(i, r);
+}
+
+@source(RFC2119_S4)
+rule AcceptableBehaviourReleasesFromTheDiscouragement(
+    i: Implementation,
+    r: Requirement,
+) defeasible {
+    label en official "where the behaviour is acceptable or even useful the discouragement does not bind";
+    when subject_to(i, r) and discouraged_item(r)
+        and discouraged_behaviour_acceptable(i, r);
+    then not discouragement_binding(i, r);
+}
+
+@source(RFC2119_S4)
+priority AcceptabilityBeatsTheDiscouragement {
+    label en official "an established acceptability prevails over the discouragement it departs from";
+    prefer AcceptableBehaviourReleasesFromTheDiscouragement over DiscouragementBindsUnlessAcceptable;
+    reason explicit_exception;
+}
+
+@source(RFC2119_S4)
+rule DiscouragementCreatesADefeasibleDutyOfAbstention(i: Implementation, r: Requirement) strict {
+    label en official "a binding discouragement creates a duty to abstain from the behaviour";
+    when discouragement_binding(i, r);
+    then duty AvoidDiscouragedBehaviour {
+        bearer i;
+        maintain abstains_from(i, r) during [@1997-03-01, infinity);
+    };
+}
+
+// Презумпция воздержания раздела 2 обслуживает и раздел 4: её тело читает
+// `absolute_prohibition`, поэтому для SHOULD NOT нужна своя пара.
+@source(RFC2119_S4)
+rule AbstentionFromDiscouragedBehaviourIsPresumed(i: Implementation, r: Requirement) defeasible {
+    label en official "an implementation is presumed to abstain from a discouraged behaviour until the contrary appears";
+    when subject_to(i, r) and discouraged_item(r);
+    then abstains_from(i, r);
+}
+
+@source(RFC2119_S4)
+rule DiscouragedBehaviourPerformedBreaksAbstention(i: Implementation, r: Requirement) defeasible {
+    label en official "performing the discouraged behaviour breaks the abstention";
+    when subject_to(i, r) and discouraged_item(r) and behaviour_deviates(i, r);
+    then not abstains_from(i, r);
+}
+
+@source(RFC2119_S4)
+priority PerformanceBeatsThePresumptionOfAbstentionForDiscouragedBehaviour {
+    label en official "the observed discouraged behaviour prevails over the presumption of abstention";
+    prefer DiscouragedBehaviourPerformedBreaksAbstention over AbstentionFromDiscouragedBehaviourIsPresumed;
+    reason explicit_exception;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// РАЗДЕЛ 5. MAY — СВОБОДА, И ДВЕ СОБСТВЕННЫЕ ОБЯЗАННОСТИ RFC 2119
+// ═══════════════════════════════════════════════════════════════════════════
+//
+// Раздел 5 — единственный в RFC 2119, где сам документ употребляет ключевое
+// слово ЗАГЛАВНЫМИ в собственном нормативном смысле, дважды и в обе стороны:
+// реализация БЕЗ опции обязана быть готова работать с реализацией, у которой
+// опция есть, и наоборот. Это не иллюстрация к определению MAY — это две
+// настоящие обязанности с носителем, и они здесь записаны как обязанности.
+
+pub relation includes_option(i: Implementation, r: Requirement) kind empirical {
+    label en official "the implementation includes the optional item";
+}
+
+// ПОЧЕМУ ОПУЩЕНИЕ ОПЦИИ — ОТДЕЛЬНЫЙ ПОЛОЖИТЕЛЬНЫЙ ФАКТ, А НЕ ОТРИЦАНИЕ.
+// Обе обязанности раздела 5 стоят на противоположных состояниях одного
+// свойства, и вторая («an implementation which does not include a particular
+// option») напрашивается на конъюнкт `and not includes_option(i, r)`. Так
+// записать нельзя: строгое правило с `and not p(...)` над НЕ заявленным
+// фактом даёт `NEITHER`, а не `TRUE`, и норма молчала бы ровно тогда, когда
+// обязана срабатывать, — при полностью зелёном `check`.
+//
+// Канонический выход — замыкание §70, и он здесь ЗАКРЫТ ГРОМКО: `closure` в
+// срезе v1 поддерживает только УНАРНЫЙ предикат (`LDC-E2114`), а включение
+// опции есть свойство ПАРЫ «реализация, опция». Диагностика называет и
+// обходной путь — овеществить пару отдельной сущностью и замкнуть её унарное
+// свойство, — но он стоил бы четырёх служебных отношений ради одного
+// отрицания и завёл бы в словарь предмет, которого RFC 2119 не знает.
+//
+// ЧЕГО ЭТА ЗАПИСЬ НЕ ДЕРЖИТ, СКАЗАНО ЗДЕСЬ, А НЕ СПРЯТАНО: два независимых
+// факта можно заявить одновременно, и дело вправе утверждать, что реализация
+// опцию и включает, и опускает. После E-0086 такой состав можно было бы
+// дополнительно назвать исполнимым `constraint` §93.1; здесь его не добавляют,
+// потому что это отдельное изменение модели. Пока ответом будут ОБЕ обязанности
+// сразу. Сторож стоит в паре сценариев
+// BCP14-12/13: каждый требует ровно ОДНОЙ позиции интероперабельности и
+// отсутствия противоположной.
+pub relation omits_option(i: Implementation, r: Requirement) kind empirical {
+    label en official "the implementation does not include the optional item";
+}
+
+@source(RFC2119_S5)
+rule OptionalItemMayBeIncludedOrOmitted(i: Implementation, r: Requirement) strict {
+    label en official "MAY: one vendor may choose to include the item while another vendor may omit the same item";
+    when subject_to(i, r) and truly_optional(r);
+    then liberty IncludeOrOmitTheOption {
+        holder i;
+        action includes_option(i, r);
+        window [@1997-03-01, infinity);
+    };
+}
+
+// Предикат действия нормы (§122): действие обязано быть отношением пакета
+// (LDC-E2102); факт совершения действия подаёт дело. Метка — по метке нормы.
+relation prepared_to_interoperate_with_including(i: Implementation, r: Requirement) kind empirical {
+    label ru-KZ unofficial "действие нормы: prepared to interoperate with including";
+}
+
+@source(RFC2119_S5)
+rule OmittingImplementationMustInteroperate(i: Implementation, r: Requirement) strict {
+    label en official "an implementation which does not include a particular option MUST be prepared to interoperate with another implementation which does include the option";
+    when subject_to(i, r) and truly_optional(r) and omits_option(i, r);
+    then duty InteroperateWithIncludingImplementation {
+        bearer i;
+        maintain prepared_to_interoperate_with_including(i, r) during [@1997-03-01, infinity);
+    };
+}
+
+// Предикат действия нормы (§122): действие обязано быть отношением пакета
+// (LDC-E2102); факт совершения действия подаёт дело. Метка — по метке нормы.
+relation prepared_to_interoperate_with_omitting(i: Implementation, r: Requirement) kind empirical {
+    label ru-KZ unofficial "действие нормы: prepared to interoperate with omitting";
+}
+
+@source(RFC2119_S5)
+rule IncludingImplementationMustInteroperate(i: Implementation, r: Requirement) strict {
+    label en official "an implementation which does include a particular option MUST be prepared to interoperate with another implementation which does not include the option";
+    when subject_to(i, r) and truly_optional(r) and includes_option(i, r);
+    then duty InteroperateWithOmittingImplementation {
+        bearer i;
+        maintain prepared_to_interoperate_with_omitting(i, r) during [@1997-03-01, infinity);
+    };
+}

@@ -1,0 +1,46 @@
+// Public book layer: external bibliographic reference only.
+// Original publication digest retained; source text is not supplied.
+// Источник реестрового среза №53 «ықшам тұлғалар»: §§33—34 раздела
+// «ОРФОЭПИЯЛЫҚ ЕРЕЖЕЛЕР. СӨЗ САЗЫН КЕЛТІРУ ҚАҒИДАЛАРЫ» справочника Сыздық.
+// Байты публикации скопированы без изменения из kz.grammar.yrgaq;
+// content_hash публикации совпадает.
+
+
+source ANYQTAGYSH_SYZDYQ {
+    kind treatise;
+    jurisdiction KZ;
+    authority AhmetBaitursynulyAtyndagyTilBilimiInstituty;
+    number "Рәбиға Сыздық. Қазақ тілінің анықтағышы (емле, тыныс белгілері, сөз сазы). Астана: Елорда, 2000, 532 б.";
+    label kk-KZ official "Қазақ тілінің анықтағышы: емле, тыныс белгілері, сөз сазы";
+    label ru-KZ translation "Справочник казахского языка: орфография, пунктуация, звучание слова";
+}
+
+edition ANYQ_SOZ_SAZY of ANYQTAGYSH_SYZDYQ {
+    language kk;
+    officiality unofficial;
+    adopted @2000-01-01;
+    materialization_status ABSTRACT_ONLY;
+    label kk-KZ official "«ОРФОЭПИЯЛЫҚ ЕРЕЖЕЛЕР. СӨЗ САЗЫН КЕЛТІРУ ҚАҒИДАЛАРЫ»: § 1 — § 36 (scope пакета — §§ 33—34)";
+    label ru-KZ translation "«Орфоэпические правила. Правила благозвучия слова»: § 1 — § 36 (scope пакета — §§ 33—34)";
+}
+
+publication ANYQ_SOZ_SAZY_TEXT of ANYQ_SOZ_SAZY {
+    media_type "text/plain; charset=utf-8";
+    uri "https://qazcorpus.kz/_oqu-ishorpus/Sauattik/pdf/%D2%9A%D0%B0%D0%B7%D0%B0%D2%9B_%D1%82%D1%96%D0%BB%D1%96%D0%BD%D1%96%D2%A3_%D0%B0%D0%BD%D1%8B%D2%9B%D1%82%D0%B0%D2%93%D1%8B%D1%88%D1%8B.pdf";
+    retrieved_at @2026-08-30T12:00:00Z;
+    content_hash "sha256:9a5c6abb0dd3e608f36b432129b7f556e5dae67a91b7d11130dd4746da4248f3";
+}
+
+// §33 — полная и сокращённая формы глагола идут рядом; произносить надо РОВНО
+// ту, что дана, и обратное источник называет недопустимым в обе стороны.
+fragment YQSH_F_SOZ_33 in ANYQ_SOZ_SAZY {
+    kind paragraph;
+    locator "article/33";
+}
+
+// §34 — в стихе окончание -ды, -ді сокращается до -д ради размера и рифмы, и
+// такие формы произносятся даже с т (тілдесет, есет).
+fragment YQSH_F_SOZ_34 in ANYQ_SOZ_SAZY {
+    kind paragraph;
+    locator "article/34";
+}

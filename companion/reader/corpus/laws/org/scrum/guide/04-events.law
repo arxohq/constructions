@@ -1,0 +1,556 @@
+// Разделы 6…6-5: спринт как контейнер, четыре события, таймбоксы, отмена.
+//
+// ═══ ТАЙМБОКСЫ — ТЕРМЫ §84.1, А НЕ ФАКТЫ С ВЕЛИЧИНОЙ В ИМЕНИ ══════════════
+//
+// Каждое событие несёт мгновения начала и конца; длительность считается
+// `minutes_between` и сравнивается с порогом в минутах: Sprint Planning —
+// 480 (восемь часов), Daily Scrum — 15, Sprint Review — 240, Sprint
+// Retrospective — 180. Порог «for a one-month Sprint» прочитан как ПОТОЛОК
+// для любого спринта (00-package.law, решение 2). Daily Scrum текст называет
+// не потолком, а длиной («is a 15-minute event») — записано тем же потолком:
+// перебор есть нарушение таймбокса, недобор Руководство не наказывает.
+//
+// ═══ ДЛИНА СПРИНТА — КАЛЕНДАРНЫЙ МЕСЯЦ ═══════════════════════════════════
+//
+// «one month or less»: конец спринта не позднее `add_calendar_period(start,
+// 1 calendar_month)`. Пара правил по обе стороны: ровно месяц — соответствует,
+// на день дольше — превышает.
+//
+// ═══ ОТМЕНА — ПОЛНОМОЧИЕ §127 С ЕДИНСТВЕННЫМ НОСИТЕЛЕМ ═══════════════════
+//
+// «Only the Product Owner has the authority to cancel the Sprint» —
+// утверждение о ВЛАСТИ, не об обязанности: полномочие есть у того, кто
+// заявляет отмену, а действительно оно только когда заявитель — владелец
+// продукта. Отмена другим лицом — попытка без правового эффекта: эффект
+// `sprint_cancelled` не материализуется, переход автомата не наступает.
+// «could be cancelled if the Sprint Goal becomes obsolete» — основание, не
+// условие действительности: текст не говорит, что отмена при живой цели
+// ничтожна; в `valid_when` его нет намеренно, и это записанное прочтение.
+//
+// ═══ АВТОМАТ СПРИНТА §160 ════════════════════════════════════════════════
+//
+// NotStarted → InProgress (Sprint Planning initiates the Sprint) →
+// Concluded (The Sprint Retrospective concludes the Sprint) либо Cancelled
+// (эффект полномочия). «A new Sprint starts immediately after the conclusion
+// of the previous Sprint» — срок начала следующего выводится датой конца
+// предыдущего.
+
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+use self::{
+    BacklogItem,
+    EventKind,
+    Person,
+    SG_S6,
+    SG_S6_1,
+    SG_S6_2,
+    SG_S6_2_1,
+    SG_S6_2_2,
+    SG_S6_2_3,
+    SG_S6_3,
+    SG_S6_4,
+    SG_S6_5,
+    ScrumEvent,
+    Sprint,
+    Team,
+    checked_event,
+    checked_sprint,
+    developer_of,
+    event_ended_at,
+    event_kind,
+    event_of_sprint,
+    event_started_at,
+    product_owner_of,
+    scrum_master_of,
+    sprint_ends,
+    sprint_of_team,
+    sprint_starts,
+};
+
+// ═══ Раздел 6. Scrum Events ══════════════════════════════════════════════
+
+relation event_not_operated_as_prescribed(s: Sprint, k: EventKind) kind empirical {
+    label en official "the event of the named kind was not operated in the Sprint as prescribed";
+}
+relation formal_inspection_opportunity(e: ScrumEvent) kind institutional {
+    label en official "the event is a formal opportunity to inspect and adapt Scrum artifacts";
+}
+relation inspection_opportunity_lost(s: Sprint, k: EventKind) kind institutional {
+    label en official "an opportunity to inspect and adapt has been lost in the Sprint";
+}
+
+@source(SG_S6)
+rule EachEventIsAnInspectionOpportunity(e: ScrumEvent, s: Sprint, k: EventKind) strict {
+    label en official "The Sprint is a container for all other events. Each event in Scrum is a formal opportunity to inspect and adapt Scrum artifacts";
+    when event_of_sprint(e, s) and event_kind(e, k);
+    then formal_inspection_opportunity(e);
+}
+
+@source(SG_S6)
+rule FailureToOperateLosesOpportunity(s: Sprint, k: EventKind) strict {
+    label en official "Failure to operate any events as prescribed results in lost opportunities to inspect and adapt";
+    when event_not_operated_as_prescribed(s, k);
+    then inspection_opportunity_lost(s, k);
+}
+
+// ═══ Раздел 6-1. The Sprint ══════════════════════════════════════════════
+
+relation follows_sprint(next: Sprint, prev: Sprint) kind empirical {
+    label en official "the Sprint is the next Sprint after the previous one";
+}
+relation change_endangering_sprint_goal_made(s: Sprint) kind empirical {
+    label en official "a change that would endanger the Sprint Goal has been made during the Sprint";
+}
+relation quality_decreased(s: Sprint) kind empirical {
+    label en official "quality has decreased during the Sprint";
+}
+relation renegotiates_scope(p: Person, s: Sprint) kind empirical {
+    label en official "the person clarifies or renegotiates the scope of the Sprint";
+}
+relation product_owner_agrees_scope(s: Sprint) kind empirical {
+    label en official "the Product Owner agrees to the clarified or renegotiated scope of the Sprint";
+}
+relation cancels_sprint(p: Person, s: Sprint) kind empirical {
+    label en official "the person declares the Sprint cancelled";
+}
+
+relation sprint_length_conforms(s: Sprint) kind institutional {
+    label en official "the Sprint is a fixed length event of one month or less";
+}
+relation sprint_exceeds_one_month(s: Sprint) kind institutional {
+    label en official "the Sprint is longer than one month";
+}
+relation next_sprint_start_due(next: Sprint, d: Date) kind institutional {
+    label en official "the next Sprint is due to start on the date, immediately after the conclusion of the previous Sprint";
+}
+relation sprint_goal_kept_safe(s: Sprint) kind institutional {
+    label en official "no changes are made that would endanger the Sprint Goal";
+}
+relation quality_maintained(s: Sprint) kind institutional {
+    label en official "quality does not decrease during the Sprint";
+}
+relation scope_renegotiation_valid(p: Person, s: Sprint) kind institutional {
+    label en official "the person is a Developer of the Sprint's team and the Product Owner agrees to the renegotiated scope";
+}
+relation scope_renegotiated(s: Sprint) kind institutional {
+    label en official "the scope of the Sprint has been clarified and renegotiated with the Product Owner";
+}
+relation sprint_cancelled(s: Sprint) kind institutional {
+    label en official "the Sprint is cancelled";
+}
+
+// ЭМПИРИЧЕСКАЯ СТОРОНА ТОЙ ЖЕ ОТМЕНЫ — ДЛЯ АВТОМАТА, А НЕ ВМЕСТО ПОЛНОМОЧИЯ.
+// `sprint_cancelled` есть ЭФФЕКТ полномочия §127, и гард перехода его читать
+// не вправе: DECISION-0156 §201.1 отвергает такое чтение статически
+// (LDC-E1348) — иначе ход дела зависел бы от материализации деонтического
+// эффекта, а барьер стратификации свёртки §161 такой цикл не пропускает.
+// Автомат читает ТО ЖЕ основание с фактической стороны: объявление отмены
+// сделано и сделано владельцем продукта команды спринта. Условия совпадают с
+// `exercise` и `valid_when` полномочия дословно, поэтому второго прочтения
+// §6.1 здесь не заводится: «Only the Product Owner has the authority to
+// cancel the Sprint».
+relation cancellation_declared_by_product_owner(s: Sprint) kind institutional {
+    label en official "the Product Owner of the Sprint's team has declared the Sprint cancelled";
+}
+
+@source(SG_S6_1)
+rule SprintWithinOneMonth(s: Sprint, a: Date, b: Date) strict {
+    label en official "Sprints are fixed length events of one month or less to create consistency";
+    when sprint_starts(s, a) and sprint_ends(s, b)
+        and b <= add_calendar_period(a, 1 calendar_month);
+    then sprint_length_conforms(s);
+}
+
+@source(SG_S6_1)
+rule SprintLongerThanOneMonth(s: Sprint, a: Date, b: Date) strict {
+    label en official "a Sprint ending later than one month after its start is longer than Scrum allows";
+    when sprint_starts(s, a) and sprint_ends(s, b)
+        and b > add_calendar_period(a, 1 calendar_month);
+    then sprint_exceeds_one_month(s);
+}
+
+@source(SG_S6_1)
+rule NextSprintStartsImmediately(next: Sprint, prev: Sprint, d: Date) strict {
+    label en official "A new Sprint starts immediately after the conclusion of the previous Sprint";
+    when follows_sprint(next, prev) and sprint_ends(prev, d);
+    then next_sprint_start_due(next, d);
+}
+
+@source(SG_S6_1)
+rule SprintGoalPresumedSafe(s: Sprint, t: Team) defeasible {
+    label en official "during the Sprint the Sprint Goal is presumed not endangered until an endangering change is established";
+    when sprint_of_team(s, t);
+    then sprint_goal_kept_safe(s);
+}
+
+@source(SG_S6_1)
+rule EndangeringChangeBreaksSafety(s: Sprint, t: Team) defeasible {
+    label en official "a change that would endanger the Sprint Goal breaks the safety of the Sprint Goal";
+    when sprint_of_team(s, t) and change_endangering_sprint_goal_made(s);
+    then not sprint_goal_kept_safe(s);
+}
+
+@source(SG_S6_1)
+priority EndangeringChangeBeatsPresumption {
+    label en official "an established endangering change prevails over the presumption that the Sprint Goal is safe";
+    prefer EndangeringChangeBreaksSafety over SprintGoalPresumedSafe;
+    reason explicit_exception;
+}
+
+@source(SG_S6_1)
+rule NoEndangeringChangesDuringSprint(s: Sprint, t: Team, a: Date, b: Date) strict {
+    label en official "During the Sprint: no changes are made that would endanger the Sprint Goal";
+    when sprint_of_team(s, t) and sprint_starts(s, a) and sprint_ends(s, b);
+    then duty KeepSprintGoalSafe {
+        bearer t;
+        maintain sprint_goal_kept_safe(s) during [a, b];
+    };
+}
+
+@source(SG_S6_1)
+rule QualityPresumedMaintained(s: Sprint, t: Team) defeasible {
+    label en official "during the Sprint quality is presumed maintained until a decrease is established";
+    when sprint_of_team(s, t);
+    then quality_maintained(s);
+}
+
+@source(SG_S6_1)
+rule DecreaseBreaksQuality(s: Sprint, t: Team) defeasible {
+    label en official "an established decrease in quality means quality is not maintained";
+    when sprint_of_team(s, t) and quality_decreased(s);
+    then not quality_maintained(s);
+}
+
+@source(SG_S6_1)
+priority DecreaseBeatsPresumptionOfQuality {
+    label en official "an established decrease prevails over the presumption that quality is maintained";
+    prefer DecreaseBreaksQuality over QualityPresumedMaintained;
+    reason explicit_exception;
+}
+
+@source(SG_S6_1)
+rule QualityDoesNotDecreaseDuringSprint(s: Sprint, t: Team, a: Date, b: Date) strict {
+    label en official "During the Sprint: quality does not decrease";
+    when sprint_of_team(s, t) and sprint_starts(s, a) and sprint_ends(s, b);
+    then duty MaintainQuality {
+        bearer t;
+        maintain quality_maintained(s) during [a, b];
+    };
+}
+
+@source(SG_S6_1)
+rule ScopeRenegotiationValid(p: Person, s: Sprint, t: Team) strict {
+    label en official "scope is renegotiated validly by a Developer of the team with the Product Owner's agreement";
+    when renegotiates_scope(p, s) and sprint_of_team(s, t)
+        and developer_of(p, t) and product_owner_agrees_scope(s);
+    then scope_renegotiation_valid(p, s);
+}
+
+@source(SG_S6_1)
+rule ScopeMayBeRenegotiated(p: Person, s: Sprint, t: Team) strict {
+    label en official "During the Sprint: scope may be clarified and renegotiated with the Product Owner as more is learned";
+    when renegotiates_scope(p, s) and sprint_of_team(s, t);
+    then power RenegotiateScope {
+        holder p;
+        exercise renegotiates_scope(p, s);
+        valid_when scope_renegotiation_valid(p, s);
+        effect scope_renegotiated(s);
+    };
+}
+
+@source(SG_S6_1)
+rule OnlyProductOwnerCancelsSprint(p: Person, s: Sprint, t: Team) strict {
+    label en official "A Sprint could be cancelled if the Sprint Goal becomes obsolete. Only the Product Owner has the authority to cancel the Sprint";
+    when cancels_sprint(p, s) and sprint_of_team(s, t);
+    then power ProductOwnerCancelsSprint {
+        holder p;
+        exercise cancels_sprint(p, s);
+        valid_when product_owner_of(p, t);
+        effect sprint_cancelled(s);
+    };
+}
+
+@source(SG_S6_1)
+rule CancellationDeclaredByProductOwner(p: Person, s: Sprint, t: Team) strict {
+    label en official "the declaration of cancellation is made by the Product Owner of the Sprint's team";
+    when cancels_sprint(p, s) and sprint_of_team(s, t) and product_owner_of(p, t);
+    then cancellation_declared_by_product_owner(s);
+}
+
+// ═══ Раздел 6-2. Sprint Planning ═════════════════════════════════════════
+
+relation attendees_prepared(e: ScrumEvent) kind empirical {
+    label en official "the attendees of Sprint Planning are prepared to discuss the most important Product Backlog items and how they map to the Product Goal";
+}
+
+closure AttendeesPreparedClosure {
+    label en official "an event not recorded as having prepared attendees had none";
+    predicate attendees_prepared;
+    domain checked_event;
+    snapshot "urn:scrum:snapshot:attendees-prepared:2020-11-18";
+    complete_as_of @2020-11-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+relation invites_to_planning(t: Team, p: Person, e: ScrumEvent) kind empirical {
+    label en official "the Scrum Team invites the person to attend Sprint Planning to provide advice";
+}
+relation sprint_planning_started(s: Sprint) kind institutional {
+    label en official "Sprint Planning has initiated the Sprint";
+}
+relation adviser_admitted(p: Person, e: ScrumEvent) kind institutional {
+    label en official "the invited person attends Sprint Planning to provide advice";
+}
+
+@source(SG_S6_2)
+rule SprintPlanningInitiatesSprint(s: Sprint, e: ScrumEvent, at: Instant) strict {
+    label en official "Sprint Planning initiates the Sprint by laying out the work to be performed for the Sprint";
+    when event_of_sprint(e, s) and event_kind(e, SprintPlanning)
+        and event_started_at(e, at);
+    then sprint_planning_started(s);
+}
+
+@source(SG_S6_2)
+rule ProductOwnerEnsuresPreparation(
+    p: Person,
+    t: Team,
+    s: Sprint,
+    e: ScrumEvent,
+    at: Instant,
+) strict {
+    label en official "The Product Owner ensures that attendees are prepared to discuss the most important Product Backlog items and how they map to the Product Goal";
+    when product_owner_of(p, t) and sprint_of_team(s, t)
+        and event_of_sprint(e, s) and event_kind(e, SprintPlanning)
+        and event_started_at(e, at);
+    then duty EnsureAttendeesPrepared {
+        bearer p;
+        achieve attendees_prepared(e) during [@2020-11-18T00:00:00Z, at];
+    };
+}
+
+@source(SG_S6_2)
+rule TeamMayInviteAdvisers(t: Team, p: Person, e: ScrumEvent, s: Sprint) strict {
+    label en official "The Scrum Team may also invite other people to attend Sprint Planning to provide advice";
+    when invites_to_planning(t, p, e) and event_of_sprint(e, s) and sprint_of_team(s, t)
+        and event_kind(e, SprintPlanning);
+    then adviser_admitted(p, e);
+}
+
+// ═══ Раздел 6-2-1. Topic One: Why is this Sprint valuable? ═══════════════
+
+relation sprint_goal_finalized(s: Sprint) kind empirical {
+    label en official "the Sprint Goal has been finalized";
+}
+
+closure SprintGoalFinalizedClosure {
+    label en official "a Sprint not recorded as having a finalized Sprint Goal has none";
+    predicate sprint_goal_finalized;
+    domain checked_sprint;
+    snapshot "urn:scrum:snapshot:sprint-goal-finalized:2020-11-18";
+    complete_as_of @2020-11-18T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+@source(SG_S6_2_1)
+rule SprintGoalFinalizedBeforePlanningEnds(
+    t: Team,
+    s: Sprint,
+    e: ScrumEvent,
+    a: Instant,
+    b: Instant,
+) strict {
+    label en official "The Sprint Goal must be finalized prior to the end of Sprint Planning";
+    when sprint_of_team(s, t) and event_of_sprint(e, s)
+        and event_kind(e, SprintPlanning)
+        and event_started_at(e, a) and event_ended_at(e, b);
+    then duty FinalizeSprintGoal {
+        bearer t;
+        achieve sprint_goal_finalized(s) during [a, b];
+    };
+}
+
+// ═══ Раздел 6-2-2. Topic Two: What can be Done this Sprint? ══════════════
+
+relation selects_for_sprint(p: Person, item: BacklogItem, s: Sprint) kind empirical {
+    label en official "the person selects the Product Backlog item for inclusion in the Sprint";
+}
+relation selected_for_sprint(item: BacklogItem, s: Sprint) kind institutional {
+    label en official "the Product Backlog item is selected for the Sprint";
+}
+
+@source(SG_S6_2_2)
+rule DevelopersSelectItems(p: Person, item: BacklogItem, s: Sprint, t: Team) strict {
+    label en official "Through discussion with the Product Owner, the Developers select items from the Product Backlog to include in the current Sprint";
+    when selects_for_sprint(p, item, s) and sprint_of_team(s, t);
+    then power SelectBacklogItems {
+        holder p;
+        exercise selects_for_sprint(p, item, s);
+        valid_when developer_of(p, t);
+        effect selected_for_sprint(item, s);
+    };
+}
+
+// ═══ Раздел 6-2-3. Topic Three: How will the chosen work get done? ═══════
+
+relation work_planning_at_developers_discretion(s: Sprint) kind institutional {
+    label en official "how the selected work gets done is at the sole discretion of the Developers";
+}
+relation event_minutes(e: ScrumEvent, m: Integer) kind institutional {
+    label en official "the event lasted the number of full minutes";
+}
+relation timebox_exceeded(e: ScrumEvent) kind institutional {
+    label en official "the event exceeded its timebox";
+}
+
+@source(SG_S6_2_3)
+rule HowIsAtDevelopersDiscretion(s: Sprint, t: Team) strict {
+    label en official "How this is done is at the sole discretion of the Developers. No one else tells them how to turn Product Backlog items into Increments of value";
+    when sprint_of_team(s, t);
+    then work_planning_at_developers_discretion(s);
+}
+
+@source(SG_S6_2_3)
+rule EventDurationInMinutes(e: ScrumEvent, a: Instant, b: Instant) strict {
+    label en official "the duration of a Scrum event is the number of full minutes between its start and its end";
+    when event_started_at(e, a) and event_ended_at(e, b);
+    then event_minutes(e, minutes_between(a, b));
+}
+
+@source(SG_S6_2_3)
+rule SprintPlanningTimebox(e: ScrumEvent, m: Integer) strict {
+    label en official "Sprint Planning is timeboxed to a maximum of eight hours for a one-month Sprint";
+    when event_kind(e, SprintPlanning) and event_minutes(e, m) and m > 480;
+    then timebox_exceeded(e);
+}
+
+// ═══ Раздел 6-3. Daily Scrum ═════════════════════════════════════════════
+
+relation actively_working_on_sprint_backlog(p: Person, s: Sprint) kind empirical {
+    label en official "the person is actively working on items in the Sprint Backlog";
+}
+relation daily_scrum_participant(p: Person, e: ScrumEvent) kind institutional {
+    label en official "the person participates in the Daily Scrum as a Developer";
+}
+
+@source(SG_S6_3)
+rule DailyScrumTimebox(e: ScrumEvent, m: Integer) strict {
+    label en official "The Daily Scrum is a 15-minute event for the Developers of the Scrum Team";
+    when event_kind(e, DailyScrum) and event_minutes(e, m) and m > 15;
+    then timebox_exceeded(e);
+}
+
+@source(SG_S6_3)
+rule DevelopersParticipateInDailyScrum(p: Person, t: Team, s: Sprint, e: ScrumEvent) strict {
+    label en official "The Daily Scrum is an event for the Developers of the Scrum Team";
+    when developer_of(p, t) and sprint_of_team(s, t)
+        and event_of_sprint(e, s) and event_kind(e, DailyScrum);
+    then daily_scrum_participant(p, e);
+}
+
+@source(SG_S6_3)
+rule ProductOwnerParticipatesAsDeveloper(p: Person, t: Team, s: Sprint, e: ScrumEvent) strict {
+    label en official "If the Product Owner is actively working on items in the Sprint Backlog, they participate as a Developer";
+    when product_owner_of(p, t) and sprint_of_team(s, t)
+        and actively_working_on_sprint_backlog(p, s)
+        and event_of_sprint(e, s) and event_kind(e, DailyScrum);
+    then daily_scrum_participant(p, e);
+}
+
+@source(SG_S6_3)
+rule ScrumMasterParticipatesAsDeveloper(p: Person, t: Team, s: Sprint, e: ScrumEvent) strict {
+    label en official "If the Scrum Master is actively working on items in the Sprint Backlog, they participate as a Developer";
+    when scrum_master_of(p, t) and sprint_of_team(s, t)
+        and actively_working_on_sprint_backlog(p, s)
+        and event_of_sprint(e, s) and event_kind(e, DailyScrum);
+    then daily_scrum_participant(p, e);
+}
+
+// ═══ Раздел 6-4. Sprint Review ═══════════════════════════════════════════
+
+relation review_precedes_retrospective(s: Sprint) kind institutional {
+    label en official "the Sprint Review is held before the Sprint Retrospective, as the second to last event of the Sprint";
+}
+
+@source(SG_S6_4)
+rule SprintReviewTimebox(e: ScrumEvent, m: Integer) strict {
+    label en official "The Sprint Review is timeboxed to a maximum of four hours for a one-month Sprint";
+    when event_kind(e, SprintReview) and event_minutes(e, m) and m > 240;
+    then timebox_exceeded(e);
+}
+
+@source(SG_S6_4)
+rule ReviewIsSecondToLast(
+    s: Sprint,
+    review: ScrumEvent,
+    retro: ScrumEvent,
+    review_end: Instant,
+    retro_start: Instant,
+) strict {
+    label en official "The Sprint Review is the second to last event of the Sprint";
+    when event_of_sprint(review, s) and event_kind(review, SprintReview)
+        and event_ended_at(review, review_end)
+        and event_of_sprint(retro, s) and event_kind(retro, SprintRetrospective)
+        and event_started_at(retro, retro_start)
+        and minutes_between(review_end, retro_start) >= 0;
+    then review_precedes_retrospective(s);
+}
+
+// ═══ Раздел 6-5. Sprint Retrospective ════════════════════════════════════
+
+relation retrospective_concluded(s: Sprint) kind institutional {
+    label en official "the Sprint Retrospective has concluded the Sprint";
+}
+
+@source(SG_S6_5)
+rule SprintRetrospectiveTimebox(e: ScrumEvent, m: Integer) strict {
+    label en official "The Sprint Retrospective is timeboxed to a maximum of three hours for a one-month Sprint";
+    when event_kind(e, SprintRetrospective) and event_minutes(e, m) and m > 180;
+    then timebox_exceeded(e);
+}
+
+@source(SG_S6_5)
+rule RetrospectiveConcludesSprint(s: Sprint, e: ScrumEvent, at: Instant) strict {
+    label en official "The Sprint Retrospective concludes the Sprint";
+    when event_of_sprint(e, s) and event_kind(e, SprintRetrospective)
+        and event_ended_at(e, at);
+    then retrospective_concluded(s);
+}
+
+// ═══ Автомат спринта §160 ════════════════════════════════════════════════
+
+procedure SprintLifecycle(s: Sprint) {
+    state NotStarted initial {
+        label en official "the Sprint has not started";
+    }
+    state InProgress {
+        label en official "the Sprint is in progress";
+    }
+    state Concluded terminal {
+        label en official "the Sprint has been concluded by the Sprint Retrospective";
+    }
+    state Cancelled terminal {
+        label en official "the Sprint has been cancelled by the Product Owner";
+    }
+
+    transition StartSprint {
+        label en official "Sprint Planning initiates the Sprint";
+        from NotStarted;
+        to InProgress;
+        when sprint_planning_started(s);
+    }
+
+    transition ConcludeSprint {
+        label en official "the Sprint Retrospective concludes the Sprint";
+        from InProgress;
+        to Concluded;
+        when retrospective_concluded(s);
+    }
+
+    transition CancelSprint {
+        label en official "the Product Owner cancels the Sprint";
+        from InProgress;
+        to Cancelled;
+        when cancellation_declared_by_product_owner(s);
+    }
+}

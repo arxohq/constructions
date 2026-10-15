@@ -1,0 +1,20 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Раздел 5-2: «For Product Owners to succeed, the entire organization must
+// respect their decisions». Обязанность поддержания с презумпцией уважения;
+// установленное вмешательство опровергает её приоритетом §116 и даёт
+// VIOLATED. Дело намеренно без `scrum_team`: тогда позиция в документе одна,
+// и ожидание читается по ней, а не по агрегату нескольких обязанностей.
+test "urn:query:scrum-test-organization-override" {
+    given {
+        context { decision_time @2026-09-15T12:00:00Z; knowledge_time @2026-09-15T12:00:00Z; legal_time @2026-09-15; timezone "UTC"; }
+        assert "sg-t6-a": organization_of(entity_ref("urn:scrum:team:t"), entity_ref("urn:scrum:org:o")) { origin case_input; }
+        assert "sg-t6-b": overrides_product_owner_decision(entity_ref("urn:scrum:org:o"), entity_ref("urn:scrum:team:t")) { origin case_input; }
+    }
+    evaluate positions();
+    expect result_kind == NORM_POSITION;
+    expect evaluation_status == COMPUTED;
+    expect normative_status == VIOLATED;
+}

@@ -1,0 +1,343 @@
+// §2.1 «Scalars and Vectors», §2.2 «Coordinate Systems and Components of a
+// Vector», §2.3 «Algebra of Vectors»: скалярная и векторная величина, вектор
+// и его компоненты, равенство, параллельность, ортогональность, нулевой
+// вектор.
+//
+// ЧТО ЛОЖИТСЯ И ЧТО НЕТ. Глава 2 — про АЛГЕБРУ векторов, и большей её части в
+// языке нет: длина вектора требует корня, поворот и разложение по углу —
+// тригонометрии, векторное произведение — синуса; в §58 нет ни одного из
+// них. Поэтому пакет берёт из главы 2 ровно то, что выражается СРАВНЕНИЕМ
+// предъявленных чисел, а не их вычислением:
+//
+//   ложится   классификация «скаляр или вектор» (§2.1), равенство векторов
+//             покомпонентно (§2.3: «two vectors are equal if and only if all
+//             their corresponding components are equal»), нулевой вектор
+//             (§2.3), параллельность и антипараллельность по углу
+//             направления, ортогональность по углу (§2.1), проверка
+//             предъявленного разложения на компоненты;
+//   не ложится длина вектора, сумма и разность, скалярное и векторное
+//             произведение, поворот системы координат.
+//
+// Это ГРАНИЦА ЯЗЫКА, названная в лоб, а не пробел словаря: обойти её
+// вычислением в скрипте сцены запрещено инвариантом 5.
+//
+// УГОЛ ЗДЕСЬ — ЧИСЛО ГРАДУСОВ, И ЭТО ГРАНИЦА, А НЕ НЕБРЕЖНОСТЬ. Алгебра
+// §49.1 ключует единицу вектором показателей по СЕМИ базовым величинам SI, а
+// плоский угол по самой брошюре (таблица 4, сноска b) есть величина
+// РАЗМЕРНОСТИ ОДИН: у радиана вектор показателей нулевой. Отсюда два
+// следствия, оба неприятные и оба честные:
+//
+//   1. `rad` и `deg` неразличимы вектором показателей — обе дали бы пустой
+//      мультимножитель, то есть ОДНУ идентичность, и `90 deg == 90 rad`
+//      отвечало бы ИСТИНОЙ вместо отказа. Простой единицы нулевой
+//      размерности §49.2 не выражает вовсе (`dimension` требует хотя бы
+//      одного неотрицательного показателя), и завести её значило бы менять
+//      грамматику — errata и полный круг, чего задача не разрешает.
+//   2. Перевод градуса в радиан ТОЧНО невозможен: множитель π/180
+//      иррационален, а масштаб §49.2 есть пара целых. Даже с отдельной
+//      размерностью угла конверсия осталась бы невыразимой.
+//
+// Поэтому угол направления предъявляется `Decimal` числом градусов, и
+// единица названа в имени отношения, а не в значении. С errata E-0152
+// градусы ПЕРЕВОДЯТСЯ в радианы отрезком (`pi_bounds` · θ/180), а синус и
+// косинус берутся от отрезка (`sin_bounds`, `cos_bounds`): длина вектора и
+// его компоненты по углу выводятся правилами в конце модуля. Цена записана: сцена,
+// подающая радианы под видом градусов, пакетом не ловится — её ловит
+// читающий. Это ровно тот случай, о котором §1.4 предупреждает первым, и
+// единственное место пакета, где единица живёт в имени, а не в теге.
+
+language "law.core" version "0.2";
+package openstax.measurement version "0.1.0";
+namespace "urn:openstax:clir:measurement";
+
+use self::{
+    Measurement,
+    UP_M58277_ANTIPARALLEL_VECTORS,
+    UP_M58277_ORTHOGONAL_VECTORS,
+    UP_M58277_PARALLEL_VECTORS,
+    UP_M58277_SCALAR_QUANTITY,
+    UP_M58277_VECTOR,
+    UP_M58277_VECTOR_QUANTITY,
+    UP_M58278_DIRECTION_ANGLE,
+    UP_M58278_VECTOR_COMPONENTS,
+    UP_M58279_EQUAL_VECTORS,
+    UP_M58279_NULL_VECTOR,
+    Vector,
+};
+
+// --- §2.1: скаляр против вектора ---------------------------------------------
+
+@source(UP_M58277_SCALAR_QUANTITY)
+relation specified_by_single_number(m: Measurement) kind empirical {
+    label en official "the case says the quantity is completely specified by a single number with a physical unit";
+    label ru unofficial "дело сообщает, что величина полностью задаётся одним числом с физической единицей";
+}
+
+@source(UP_M58277_VECTOR_QUANTITY)
+relation specified_by_magnitude_and_direction(m: Measurement) kind empirical {
+    label en official "the case says the quantity is specified by both a magnitude and a direction";
+    label ru unofficial "дело сообщает, что величина задаётся и модулем, и направлением";
+}
+
+relation scalar_quantity(m: Measurement) kind institutional {
+    label en official "§2.1: a scalar quantity — one that can be specified completely by a single number with an appropriate physical unit";
+    label ru unofficial "§2.1: скалярная величина — полностью задаваемая одним числом с подходящей физической единицей";
+}
+
+@source(UP_M58277_SCALAR_QUANTITY)
+rule SingleNumberIsScalar(m: Measurement) strict {
+    label en official "§2.1: a quantity specified completely by a single number with a physical unit is a scalar quantity";
+    label ru unofficial "§2.1: величина, полностью задаваемая одним числом с физической единицей, есть скалярная величина";
+    when specified_by_single_number(m);
+    then scalar_quantity(m);
+}
+
+relation vector_quantity(m: Measurement) kind institutional {
+    label en official "§2.1: a vector quantity — a physical quantity described by specifying both its magnitude and its direction";
+    label ru unofficial "§2.1: векторная величина — описываемая указанием и модуля, и направления";
+}
+
+@source(UP_M58277_VECTOR_QUANTITY)
+rule MagnitudeAndDirectionIsVector(m: Measurement) strict {
+    label en official "§2.1: a quantity described by both magnitude and direction is a vector quantity";
+    label ru unofficial "§2.1: величина, описываемая модулем и направлением, есть векторная величина";
+    when specified_by_magnitude_and_direction(m);
+    then vector_quantity(m);
+}
+
+// §2.1 разводит два рода величин, и разводка исключающая: направление у
+// скаляра не «неизвестно», его нет. Отрицательная голова делает ответ на
+// «векторна ли эта величина» FALSE_ONLY, а не «не установлено».
+@source(UP_M58277_SCALAR_QUANTITY, UP_M58277_VECTOR_QUANTITY)
+rule ScalarIsNotAVector(m: Measurement) strict {
+    label en official "§2.1: a quantity completely specified by a single number is not a vector quantity";
+    label ru unofficial "§2.1: величина, полностью задаваемая одним числом, не есть векторная величина";
+    when specified_by_single_number(m);
+    then not vector_quantity(m);
+}
+
+// --- §2.2: компоненты вектора --------------------------------------------------
+
+@source(UP_M58278_VECTOR_COMPONENTS)
+relation scalar_component(v: Vector, axis: Text, value: Quantity) kind empirical {
+    label en official "§2.2: the case presents the scalar component of the vector along the named axis";
+    label ru unofficial "§2.2: дело предъявляет скалярную компоненту вектора вдоль названной оси";
+}
+
+@source(UP_M58278_DIRECTION_ANGLE)
+relation direction_angle_degrees(v: Vector, angle: Decimal) kind empirical {
+    label en official "§2.2: the case presents the direction angle of the vector in degrees — the angle from the positive x-axis";
+    label ru unofficial "§2.2: дело предъявляет угол направления вектора В ГРАДУСАХ — угол от положительного направления оси x";
+}
+
+// Связыватель §190. Замыкание `count` СЧИТАЕТ, но не связывает: у правила,
+// чьё тело состоит из одних агрегатов, голова не range-restricted
+// (LDC-E4101). Поэтому дело объявляет предъявленные векторы и предъявленные
+// пары отдельными фактами — и это не служебный костыль, а вопрос дела:
+// «равны ли ЭТИ два вектора» задаётся о названной паре, а не обо всех парах
+// корпуса.
+@source(UP_M58277_VECTOR)
+relation vector_presented(v: Vector) kind empirical {
+    label en official "the case presents the vector, so that questions may be asked about it";
+    label ru unofficial "дело предъявляет вектор, чтобы о нём можно было спрашивать";
+}
+
+@source(UP_M58279_EQUAL_VECTORS)
+relation vectors_compared(a: Vector, b: Vector) kind empirical {
+    label en official "the case asks the two presented vectors to be compared";
+    label ru unofficial "дело просит сравнить два предъявленных вектора";
+}
+
+relation null_vector(v: Vector) kind institutional {
+    label en official "§2.3: a null vector — a vector with all its components equal to zero";
+    label ru unofficial "§2.3: нулевой вектор — вектор, все компоненты которого равны нулю";
+}
+
+// НОЛЬ СРАВНИВАЕТСЯ С ВЕЛИЧИНОЙ В ЕЁ СОБСТВЕННОЙ ЕДИНИЦЕ. Записать
+// `value != 0` нельзя: голый `0` безразмерен, и сравнение с `Quantity` есть
+// TYPE_ERROR (§48 — неявных конверсий нет; замер 06.09.2026, сцена 05d
+// краснела именно так). Единицу компоненты правило заранее не знает —
+// компонента приходит делом и бывает в метрах, в м/с и в ньютонах. Поэтому
+// ноль СТРОИТСЯ ИЗ САМОЙ ВЕЛИЧИНЫ: `0 * value` есть `Integer * Quantity`
+// (E-0021) — та же единица, нулевое значение. Эталон нуля на каждую единицу
+// не нужен, и опечатка «ноль не той единицы» невыразима по построению.
+@source(UP_M58279_NULL_VECTOR)
+rule AllComponentsZeroIsNullVector(v: Vector) strict {
+    label en official "§2.3: a vector with all its components equal to zero is the null vector";
+    label ru unofficial "§2.3: вектор, все компоненты которого равны нулю, есть нулевой вектор";
+    when vector_presented(v)
+        and (count distinct axis: Text for value: Quantity where scalar_component(v, axis, value) and value != 0 * value) == 0
+        and (count distinct axis: Text for value: Quantity where scalar_component(v, axis, value)) >= 1;
+    then null_vector(v);
+}
+
+// --- §2.3: равенство векторов ---------------------------------------------------
+
+relation components_differ_on(a: Vector, b: Vector, axis: Text) kind institutional {
+    label en official "§2.3: the two vectors have different scalar components along the named axis";
+    label ru unofficial "§2.3: у двух векторов различны скалярные компоненты вдоль названной оси";
+}
+
+@source(UP_M58279_EQUAL_VECTORS)
+rule ComponentsDifferOnAxis(a: Vector, b: Vector, axis: Text, va: Quantity, vb: Quantity) strict {
+    label en official "§2.3: two vectors whose corresponding components along an axis are unequal differ on that axis";
+    label ru unofficial "§2.3: два вектора, у которых соответственные компоненты вдоль оси не равны, различаются по этой оси";
+    when scalar_component(a, axis, va)
+        and scalar_component(b, axis, vb)
+        and va != vb;
+    then components_differ_on(a, b, axis);
+}
+
+relation equal_vectors(a: Vector, b: Vector) kind institutional {
+    label en official "§2.3: two vectors are equal if and only if all their corresponding components are equal";
+    label ru unofficial "§2.3: два вектора равны тогда и только тогда, когда равны все их соответственные компоненты";
+}
+
+@source(UP_M58279_EQUAL_VECTORS)
+rule VectorsEqualWhenNoComponentDiffers(a: Vector, b: Vector) strict {
+    label en official "§2.3: two vectors no component of which differs are equal";
+    label ru unofficial "§2.3: два вектора, ни одна компонента которых не различается, равны";
+    when vectors_compared(a, b)
+        and (count distinct axis: Text where components_differ_on(a, b, axis)) == 0
+        and (count distinct axis: Text for value: Quantity where scalar_component(a, axis, value)) >= 1
+        and (count distinct axis: Text for value: Quantity where scalar_component(b, axis, value)) >= 1;
+    then equal_vectors(a, b);
+}
+
+@source(UP_M58279_EQUAL_VECTORS)
+rule VectorsUnequalWhenAComponentDiffers(a: Vector, b: Vector, axis: Text) strict {
+    label en official "§2.3: two vectors are equal if and only if ALL corresponding components are equal — one differing component refutes equality";
+    label ru unofficial "§2.3: векторы равны тогда и только тогда, когда равны ВСЕ соответственные компоненты, — одна различная компонента опровергает равенство";
+    when components_differ_on(a, b, axis);
+    then not equal_vectors(a, b);
+}
+
+// --- §2.1: взаимное направление по углу ------------------------------------------
+
+relation parallel_vectors(a: Vector, b: Vector) kind institutional {
+    label en official "§2.1: parallel vectors — two vectors with exactly the same direction angles";
+    label ru unofficial "§2.1: параллельные векторы — два вектора с в точности одинаковыми углами направления";
+}
+
+@source(UP_M58277_PARALLEL_VECTORS)
+rule SameDirectionAngleIsParallel(a: Vector, b: Vector, angle_a: Decimal, angle_b: Decimal) strict {
+    label en official "§2.1: two vectors with exactly the same direction angle are parallel";
+    label ru unofficial "§2.1: два вектора с в точности одинаковым углом направления параллельны";
+    when direction_angle_degrees(a, angle_a)
+        and direction_angle_degrees(b, angle_b)
+        and angle_a == angle_b;
+    then parallel_vectors(a, b);
+}
+
+relation orthogonal_vectors(a: Vector, b: Vector) kind institutional {
+    label en official "§2.1: orthogonal vectors — two vectors with directions that differ by exactly 90 degrees";
+    label ru unofficial "§2.1: ортогональные векторы — два вектора, направления которых различаются ровно на 90 градусов";
+}
+
+// Разность углов — величины одной единицы; 90° приходит ЛИТЕРАЛОМ градуса,
+// потому что число 90 стоит в самом определении §2.1, а не в деле.
+@source(UP_M58277_ORTHOGONAL_VECTORS)
+rule NinetyDegreesApartIsOrthogonal(
+    a: Vector,
+    b: Vector,
+    angle_a: Decimal,
+    angle_b: Decimal,
+) strict {
+    label en official "§2.1: two vectors whose direction angles differ by exactly 90 degrees are orthogonal";
+    label ru unofficial "§2.1: два вектора, углы направления которых различаются ровно на 90 градусов, ортогональны";
+    when direction_angle_degrees(a, angle_a)
+        and direction_angle_degrees(b, angle_b)
+        and abs(angle_a - angle_b) == 90.0;
+    then orthogonal_vectors(a, b);
+}
+
+relation antiparallel_vectors(a: Vector, b: Vector) kind institutional {
+    label en official "§2.1: antiparallel vectors — two vectors with directions that differ by 180 degrees";
+    label ru unofficial "§2.1: антипараллельные векторы — два вектора, направления которых различаются на 180 градусов";
+}
+
+@source(UP_M58277_ANTIPARALLEL_VECTORS)
+rule HundredEightyDegreesApartIsAntiparallel(
+    a: Vector,
+    b: Vector,
+    angle_a: Decimal,
+    angle_b: Decimal,
+) strict {
+    label en official "§2.1: two vectors whose direction angles differ by 180 degrees are antiparallel";
+    label ru unofficial "§2.1: два вектора, углы направления которых различаются на 180 градусов, антипараллельны";
+    when direction_angle_degrees(a, angle_a)
+        and direction_angle_degrees(b, angle_b)
+        and abs(angle_a - angle_b) == 180.0;
+    then antiparallel_vectors(a, b);
+}
+
+// Параллельные векторы не ортогональны: §2.1 задаёт оба через угол, и один
+// угол не бывает сразу нулевым и прямым. Отрицательная голова делает это
+// ВЫВОДОМ, а не умолчанием читателя.
+@source(UP_M58277_PARALLEL_VECTORS, UP_M58277_ORTHOGONAL_VECTORS)
+rule ParallelIsNotOrthogonal(a: Vector, b: Vector) strict {
+    label en official "§2.1: vectors with the same direction angle differ by zero degrees, not by ninety — they are not orthogonal";
+    label ru unofficial "§2.1: векторы с одинаковым углом направления различаются на ноль градусов, а не на девяносто, — они не ортогональны";
+    when parallel_vectors(a, b);
+    then not orthogonal_vectors(a, b);
+}
+
+// --- §2.2: длина вектора и компоненты по углу — корень и тригонометрия (E-0152) ------
+
+pub relation vector_magnitude(v: Vector, m: Quantity) kind institutional {
+    label en official "§2.2: |A| = √(Ax² + Ay²) — the magnitude of a vector from its two components, derived from certified bounds and rounded to a thousandth";
+    label ru unofficial "§2.2: |A| = √(Ax² + Ay²) — длина вектора по двум компонентам, выведенная сертифицированными границами и округлённая до тысячной";
+}
+
+// Сумма квадратов компонент делится на 1 м·1 м — под корень идёт точная
+// безразмерная дробь; точный квадрат даёт вырожденный отрезок.
+@source(UP_M58278_VECTOR_COMPONENTS)
+rule MagnitudeFromComponents(v: Vector, ax: Quantity, ay: Quantity) strict {
+    label en official "§2.2: the magnitude of a vector is the square root of the sum of the squares of its components, evaluated as certified bounds";
+    label ru unofficial "§2.2: длина вектора есть корень из суммы квадратов его компонент, вычисленный сертифицированными границами";
+    when scalar_component(v, "x", ax) and scalar_component(v, "y", ay);
+    then vector_magnitude(v, quantity_of(
+        bounds::round(
+            math::sqrt(scalar_of((unit_convert(magnitude(ax), "m") * unit_convert(magnitude(ax), "m")
+                                   + unit_convert(magnitude(ay), "m") * unit_convert(magnitude(ay), "m"))
+                                  / (magnitude(1 m) * magnitude(1 m))),
+                        "p16/0.1"),
+            3, "HALF_UP") * magnitude(1 m), "m"));
+}
+
+@source(UP_M58278_DIRECTION_ANGLE)
+relation vector_length(v: Vector, r: Quantity) kind empirical {
+    label en official "§2.2: the magnitude of the vector presented by the case together with its direction angle";
+    label ru unofficial "§2.2: длина вектора, предъявленная делом вместе с углом направления";
+}
+
+pub relation component_from_direction(v: Vector, axis: Text, value: Quantity) kind institutional {
+    label en official "§2.2: Ax = |A|cos θ, Ay = |A|sin θ — the component along the named axis from the magnitude and the direction angle in degrees, derived from certified bounds and rounded to a thousandth";
+    label ru unofficial "§2.2: Ax = |A|cos θ, Ay = |A|sin θ — компонента вдоль названной оси по длине и углу направления в градусах, выведенная сертифицированными границами и округлённая до тысячной";
+}
+
+// Градус есть π/180 — отрезок вокруг π, умноженный на точную дробь θ/180;
+// косинус и синус берутся от отрезка подъёмом по липшицевости (§259.2).
+@source(UP_M58278_DIRECTION_ANGLE)
+rule XComponentFromDirection(v: Vector, r: Quantity, theta: Decimal) strict {
+    label en official "§2.2: the x-component is the magnitude times the cosine of the direction angle, the angle converted from degrees through certified bounds of pi";
+    label ru unofficial "§2.2: компонента x есть длина на косинус угла направления; угол переведён из градусов через сертифицированные границы π";
+    when vector_length(v, r) and direction_angle_degrees(v, theta);
+    then component_from_direction(v, "x", quantity_of(
+        bounds::round(
+            bounds::scale(math::cos(bounds::scale(math::pi("p16/0.1"), theta, 180), "p16/0.1"),
+                         scalar_of(unit_convert(magnitude(r), "m") / magnitude(1 m)), 1),
+            3, "HALF_UP") * magnitude(1 m), "m"));
+}
+
+@source(UP_M58278_DIRECTION_ANGLE)
+rule YComponentFromDirection(v: Vector, r: Quantity, theta: Decimal) strict {
+    label en official "§2.2: the y-component is the magnitude times the sine of the direction angle, the angle converted from degrees through certified bounds of pi";
+    label ru unofficial "§2.2: компонента y есть длина на синус угла направления; угол переведён из градусов через сертифицированные границы π";
+    when vector_length(v, r) and direction_angle_degrees(v, theta);
+    then component_from_direction(v, "y", quantity_of(
+        bounds::round(
+            bounds::scale(math::sin(bounds::scale(math::pi("p16/0.1"), theta, 180), "p16/0.1"),
+                         scalar_of(unit_convert(magnitude(r), "m") / magnitude(1 m)), 1),
+            3, "HALF_UP") * magnitude(1 m), "m"));
+}

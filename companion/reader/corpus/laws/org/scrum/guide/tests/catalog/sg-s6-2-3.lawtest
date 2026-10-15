@@ -1,0 +1,18 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Порождённые сценарии-свидетельства каталога вопросов (DECISION-0190):
+// мир выполняет посылки правила, запрос спрашивает его вывод.
+// Собраны corpus/tools/questions_catalog/build_catalog.py по CLIR пакета;
+// правка руками — только вместе с каталогом.
+
+// 
+test "CATALOG-HOWISATDEVELOPERSDISCRETION" {
+    given {
+        context { decision_time @2026-08-25T12:00:00Z; knowledge_time @2026-08-25T12:00:00Z; legal_time @2026-08-25; timezone "Asia/Almaty"; }
+        assert "cat-0": sprint_of_team(entity_ref("urn:law:catalog:howisatdevelopersdiscretion:v0"), entity_ref("urn:law:catalog:howisatdevelopersdiscretion:v1")) { origin case_input; }
+    }
+    evaluate truth(work_planning_at_developers_discretion(entity_ref("urn:law:catalog:howisatdevelopersdiscretion:v0")));
+    expect truth_status == TRUE_ONLY;
+}

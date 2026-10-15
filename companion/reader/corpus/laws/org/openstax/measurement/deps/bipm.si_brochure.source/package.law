@@ -1,0 +1,122 @@
+// Брошюра SI (BIPM), 9-е издание (2019, v4.01) и 8-е издание (2006): общие
+// перечисления и карта модулей.
+//
+// ЧТО ЭТО ЗА ПАКЕТ. Корень естественных наук в корпусе: словари единиц,
+// определяющих констант и префиксов и резолюции ГКМВ как кодекс сообщества.
+// Таблицы брошюры (1, 2, 4, 7, 8) перенесены в блоки `facts` построчно;
+// определения единиц — правила с окнами `effective` вокруг 20 мая 2019, дня
+// вступления в силу пересмотра SI (резолюция 1 26-й ГКМВ, 2018): до него
+// килограмм — масса международного прототипа, ампер — сила между
+// проводниками, кельвин — тройная точка воды, моль — 0,012 кг углерода-12;
+// после — семь единиц через семь констант. Секунда, метр и кандела в обеих
+// редакциях определены через те же константы, и их правила не датированы.
+// Запреты брошюры (составной префикс, префикс к килограмму) — правила с
+// отрицательной головой: ответ FALSE_ONLY, а не «не выведено».
+//
+// СЛОВАРИ ЗАКРЫТЫ ТЕКСТОМ, ПОЭТОМУ ПЕРЕЧИСЛЕНИЯ. Семь базовых единиц, 22 со
+// специальными названиями (таблица 4), 24 префикса (таблица 7), 23
+// внесистемные единицы (таблица 8) — конечные перечни брошюры; грамм в
+// `SiUnit` добавлен потому, что §3 образует кратные массы от него.
+//
+// АЛГЕБРА РАЗМЕРНОСТЕЙ (DECISION-0154, §49.1) — В МОДУЛЕ 06. Строки таблицы
+// 4, множители таблицы 7 и значения таблицы 8 сверяются с реестром единиц
+// `units.si` равенствами величин: «N = kg m s⁻²» — тождество мультимножителей,
+// «1 km = 1000 m» — `unit_convert`. Так у единиц два независимых источника
+// — брошюра (норма) и реестр (машина), — и расхождение между ними стало бы
+// громким. Значения констант остаются `Decimal` с текстом единицы: у J s и
+// mol⁻¹ в реестре имён пока нет; показатели таблицы 4 — целые факты, а не
+// вычисление, потому что `pow` над `Magnitude` не назван §58.1.
+// Единственная дата вне закреплённого текста — 18.11.2022 у правила о
+// префиксах 2022 года: брошюра цитирует резолюцию 3 27-й ГКМВ и её
+// публикацию (CR, 397; Metrologia, 2023, 60, 013001), но не день принятия;
+// он взят из протокола ГКМВ и назван в модуле 04.
+//
+// КАРТА МОДУЛЕЙ
+//   01-defining-constants   таблица 1 и §2.2: семь констант; SI как система,
+//                           в которой они фиксированы (с 20.05.2019)
+//   02-base-units           таблица 2; семь определений §2.3.1 против семи
+//                           определений §2.1.1 8-го издания, окна по датам
+//   03-derived-units        таблица 4: 22 единицы, показатели базовых;
+//                           когерентность §2.3.4; полный набор единиц SI
+//   04-prefixes             таблица 7; префиксы 8-го издания и 2022 года;
+//                           правила §3: неразделимость, запрет составных,
+//                           килограмм и грамм
+//   05-non-si-units         таблица 8 и §4: внесистемные единицы
+//   06-algebra              сверка таблиц 4, 7, 8 с реестром `units.si`
+//                           алгеброй величин §49.1
+//   07-celsius              t/°C = T/K − 273.15 чистой функцией; интервал
+//                           Цельсия — алиас кельвина в реестре
+//   sources                 провенанс: три закреплённых текста, 34 фрагмента
+//
+// ЧТО ЭКСПОРТИРУЕТСЯ И ЗАЧЕМ. Пакет — корень наук, и словарь корня обязан
+// быть виден потребителям: без `pub` импорт несёт пустой интерфейс (§6), и
+// сосед вынужден заводить ДВОЙНИК перечня единиц — ровно то, что этот пакет
+// отменяет. Экспортируются шесть перечислений (член уходит вместе с типом,
+// §6/E-0065) и словарные отношения таблиц 1, 2, 4, 7, 8 плюс их выводы
+// (`coherent_si_unit`, `si_unit`, `si_defining_constant`,
+// `accepted_for_use_with_si`, `defined_by_constant`, `defined_by_reference`).
+// Первый потребитель — `openstax.measurement` (глава 1 University Physics
+// говорит «kilogram — SI unit for mass», а ЧЕМ килограмм определён, говорит
+// брошюра). Правила НЕ экспортируются: импорт несёт интерфейс, а не узлы
+// (§23), и старшинство норм брошюры по имени никому не нужно.
+//
+// ЭТО НЕ АЛГЕБРА РАЗМЕРНОСТЕЙ. Единицы здесь — ИМЕНА в перечислении и целые
+// показатели в фактах таблицы 4; величин с единицами (`Magnitude`, §49.1,
+// DECISION-0154) пакет не строит и деклараций `unit` не несёт. Их держит
+// `units.si` (`packs/units/si`), и потребитель, которому нужен счёт, а не
+// словарь, импортирует ОБА: имя единицы и её нормативное определение — здесь,
+// вычисление над величиной — там.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+import units.si version "0.1.0";
+
+// Единицы SI, имеющие собственное имя: 7 базовых (таблица 2), 22 со
+// специальными названиями (таблица 4) и грамм (§3).
+pub enum SiUnit {
+    Second, Metre, Kilogram, Ampere, Kelvin, Mole, Candela,
+    Gram,
+    Radian, Steradian, Hertz, Newton, Pascal, Joule, Watt, Coulomb, Volt,
+    Farad, Ohm, Siemens, Weber, Tesla, Henry, DegreeCelsius, Lumen, Lux,
+    Becquerel, Gray, Sievert, Katal;
+    label en official "SI unit with its own name: the seven base units, the 22 units with special names, and the gram";
+    label ru unofficial "единица SI с собственным именем: семь базовых, 22 со специальными названиями и грамм";
+}
+
+pub enum BaseQuantity {
+    Time, Length, Mass, ElectricCurrent, ThermodynamicTemperature,
+    AmountOfSubstance, LuminousIntensity;
+    label en official "base quantity of the SI (Table 2)";
+    label ru unofficial "базовая величина SI (таблица 2)";
+}
+
+pub enum DefiningConstant {
+    CaesiumFrequency, SpeedOfLight, PlanckConstant, ElementaryCharge,
+    BoltzmannConstant, AvogadroConstant, LuminousEfficacy;
+    label en official "defining constant of the SI (Table 1)";
+    label ru unofficial "определяющая константа SI (таблица 1)";
+}
+
+// Основания определений 8-го издания, не являющиеся константами.
+pub enum Reference {
+    InternationalPrototypeKilogram, ForceBetweenParallelConductors,
+    TriplePointOfWater, CarbonTwelve;
+    label en official "physical reference used by a pre-2019 definition: artefact, experiment, substance";
+    label ru unofficial "физическая опора определения до 2019 года: артефакт, опыт, вещество";
+}
+
+pub enum Prefix {
+    Deca, Hecto, Kilo, Mega, Giga, Tera, Peta, Exa, Zetta, Yotta, Ronna, Quetta,
+    Deci, Centi, Milli, Micro, Nano, Pico, Femto, Atto, Zepto, Yocto, Ronto, Quecto;
+    label en official "SI prefix (Table 7)";
+    label ru unofficial "префикс SI (таблица 7)";
+}
+
+pub enum NonSiUnit {
+    Minute, Hour, Day, Degree, Arcminute, Arcsecond, Are, Hectare, Barn, Litre,
+    Tonne, Angstrom, Gal, Bar, Dalton, AstronomicalUnit, NauticalMile, Knot,
+    Electronvolt, Neper, Bel, Decibel, Var;
+    label en official "non-SI unit accepted for use with the SI (Table 8)";
+    label ru unofficial "внесистемная единица, допускаемая к применению с SI (таблица 8)";
+}

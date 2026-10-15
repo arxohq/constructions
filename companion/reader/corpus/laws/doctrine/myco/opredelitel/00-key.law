@@ -1,0 +1,60 @@
+language "law.core" version "0.2";
+package myco.opredelitel version "0.1.0";
+namespace "urn:myco:clir:opredelitel";
+
+use self::{
+    AgaricusCampestris,
+    AmanitaPhalloides,
+    ArmillariaMellea,
+    CantharellusCibarius,
+    FleshChange,
+    GalerinaMarginata,
+    GillColor,
+    GyromitraEsculenta,
+    HygrophoropsisAurantiaca,
+    Hymenophore,
+    MYCO_ART5,
+    MYCO_ART6,
+    MYCO_ART7,
+    MYCO_ART8,
+    MorchellaEsculenta,
+    PaxillusInvolutus,
+    Presence,
+    PrintColor,
+    RussulaVirescens,
+    Specimen,
+    Taxon,
+};
+
+// Статьи 2–8. Ключ намеренно состоит из строгих правил над enum-константами:
+// A3-ячейка принимает только скаляр, а не доменную константу признака.
+relation specimen(s: Specimen) kind empirical { label ru-KZ unofficial "экземпляр назван в деле"; }
+relation hymenophore(s: Specimen, v: Hymenophore) kind empirical { label ru-KZ unofficial "гименофор экземпляра"; }
+relation ring(s: Specimen, v: Presence) kind empirical { label ru-KZ unofficial "кольцо на ножке"; }
+relation volva(s: Specimen, v: Presence) kind empirical { label ru-KZ unofficial "вольва у основания"; }
+relation gill_color(s: Specimen, v: GillColor) kind empirical { label ru-KZ unofficial "цвет пластинок"; }
+relation spore_print(s: Specimen, v: PrintColor) kind empirical { label ru-KZ unofficial "цвет спорового отпечатка"; }
+relation latex(s: Specimen, v: Presence) kind empirical { label ru-KZ unofficial "млечный сок"; }
+relation flesh_change(s: Specimen, v: FleshChange) kind empirical { label ru-KZ unofficial "изменение мякоти на срезе"; }
+relation identified_as(s: Specimen, t: Taxon) kind institutional { label ru-KZ unofficial "вид установлен полным ключом"; }
+
+@source(MYCO_ART5)
+rule KeyAmanita(s: Specimen) strict { label ru-KZ unofficial "Статья 5. Ключ бледной поганки"; when specimen(s) and hymenophore(s, Gills) and ring(s, Present) and volva(s, Present) and gill_color(s, White) and spore_print(s, WhitePrint) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, AmanitaPhalloides); }
+@source(MYCO_ART5)
+rule KeyAgaricus(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Present) and volva(s, Absent) and gill_color(s, Pink) and spore_print(s, DarkBrown) and latex(s, Absent) and flesh_change(s, Pinking); then identified_as(s, AgaricusCampestris); }
+@source(MYCO_ART6)
+rule KeyRussula(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Absent) and volva(s, Absent) and gill_color(s, White) and spore_print(s, WhitePrint) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, RussulaVirescens); }
+@source(MYCO_ART6)
+rule KeyChanterelle(s: Specimen) strict { when specimen(s) and hymenophore(s, Ridges) and ring(s, Absent) and volva(s, Absent) and gill_color(s, NotApplicable) and spore_print(s, PaleYellow) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, CantharellusCibarius); }
+@source(MYCO_ART6)
+rule KeyFalseChanterelle(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Absent) and volva(s, Absent) and gill_color(s, Orange) and spore_print(s, WhitePrint) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, HygrophoropsisAurantiaca); }
+@source(MYCO_ART7)
+rule KeyHoneyMushroom(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Present) and volva(s, Absent) and gill_color(s, Pale) and spore_print(s, WhitePrint) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, ArmillariaMellea); }
+@source(MYCO_ART7)
+rule KeyGalerina(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Present) and volva(s, Absent) and gill_color(s, Brown) and spore_print(s, RustBrown) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, GalerinaMarginata); }
+@source(MYCO_ART8)
+rule KeyPaxillus(s: Specimen) strict { when specimen(s) and hymenophore(s, Gills) and ring(s, Absent) and volva(s, Absent) and gill_color(s, Ochre) and spore_print(s, BrownPrint) and latex(s, Absent) and flesh_change(s, Browning); then identified_as(s, PaxillusInvolutus); }
+@source(MYCO_ART8)
+rule KeyGyromitra(s: Specimen) strict { when specimen(s) and hymenophore(s, Folds) and ring(s, Absent) and volva(s, Absent) and gill_color(s, NotApplicable) and spore_print(s, Cream) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, GyromitraEsculenta); }
+@source(MYCO_ART8)
+rule KeyMorchella(s: Specimen) strict { when specimen(s) and hymenophore(s, Pits) and ring(s, Absent) and volva(s, Absent) and gill_color(s, NotApplicable) and spore_print(s, Cream) and latex(s, Absent) and flesh_change(s, Unchanged); then identified_as(s, MorchellaEsculenta); }

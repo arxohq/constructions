@@ -1,0 +1,104 @@
+language "law.core" version "0.2";
+package myco.opredelitel version "0.1.0";
+namespace "urn:myco:clir:opredelitel";
+
+use self::{
+    AgaricusCampestris,
+    AmanitaPhalloides,
+    ArmillariaMellea,
+    CantharellusCibarius,
+    EdibilityClass,
+    GalerinaMarginata,
+    GyromitraEsculenta,
+    HygrophoropsisAurantiaca,
+    MYCO_ART10,
+    MYCO_ART4,
+    MYCO_ART9,
+    MorchellaEsculenta,
+    PaxillusInvolutus,
+    RussulaVirescens,
+    Specimen,
+    Taxon,
+    identified_as,
+    specimen,
+};
+
+relation taxon_class(t: Taxon, c: EdibilityClass) kind empirical { label ru-KZ unofficial "класс съедобности вида по изложению"; }
+relation edible_verdict(s: Specimen) kind institutional { label ru-KZ unofficial "экземпляр разрешён как съедобный"; }
+relation food_barred(s: Specimen) kind institutional { label ru-KZ unofficial "употребление экземпляра запрещено презумпцией несъедобности"; }
+relation deadly_listed(t: Taxon) kind institutional { label ru-KZ unofficial "вид находится в закрытом перечне смертельно ядовитых"; }
+relation taxon_in_slice(t: Taxon) kind institutional { label ru-KZ unofficial "вид входит в десятивидовой срез изложения"; }
+relation deadly_verdict(s: Specimen) kind institutional { label ru-KZ unofficial "экземпляр смертельно ядовит"; }
+
+assert taxon_class(AmanitaPhalloides, Deadly);
+assert taxon_class(AgaricusCampestris, Edible);
+assert taxon_class(RussulaVirescens, Edible);
+assert taxon_class(CantharellusCibarius, Edible);
+assert taxon_class(HygrophoropsisAurantiaca, Poisonous);
+assert taxon_class(ArmillariaMellea, Edible);
+assert taxon_class(GalerinaMarginata, Deadly);
+assert taxon_class(PaxillusInvolutus, Poisonous);
+assert taxon_class(GyromitraEsculenta, Conditional);
+assert taxon_class(MorchellaEsculenta, Edible);
+assert deadly_listed(AmanitaPhalloides);
+assert deadly_listed(GalerinaMarginata);
+assert taxon_in_slice(AmanitaPhalloides);
+assert taxon_in_slice(AgaricusCampestris);
+assert taxon_in_slice(RussulaVirescens);
+assert taxon_in_slice(CantharellusCibarius);
+assert taxon_in_slice(HygrophoropsisAurantiaca);
+assert taxon_in_slice(ArmillariaMellea);
+assert taxon_in_slice(GalerinaMarginata);
+assert taxon_in_slice(PaxillusInvolutus);
+assert taxon_in_slice(GyromitraEsculenta);
+assert taxon_in_slice(MorchellaEsculenta);
+
+// Статья 10 говорит «перечень смертельно ядовитых видов закрыт» — и §70
+// позволяет сказать это ПРЯМО, а не намёком. После замыкания невхождение в
+// перечень есть установленный негатив, и строгое правило вправе его читать.
+// Оговорка той же статьи («невхождение не является выводом съедобности»)
+// сохранена тем, что негатив стоит ГАРДОМ при классе Edible, а не посылкой.
+closure DeadlyListIsClosed {
+    label ru-KZ unofficial "перечень смертельно ядовитых видов закрыт: иных смертельных видов срез не знает";
+    predicate deadly_listed;
+    domain taxon_in_slice;
+    snapshot "urn:myco:restatement:opredelitel:deadly-list";
+    complete_as_of @2026-08-31T00:00:00Z;
+    derive_explicit_negative true;
+}
+
+// Положительный вердикт возможен только после полного ключа и класса Edible.
+@source(MYCO_ART9, MYCO_ART10)
+rule EdibleOnlyAfterIdentification(s: Specimen, t: Taxon) strict { when identified_as(s, t) and taxon_class(t, Edible) and not deadly_listed(t); then edible_verdict(s); }
+@source(MYCO_ART10)
+rule DeadlyFromClosedList(s: Specimen, t: Taxon) strict { when identified_as(s, t) and deadly_listed(t); then deadly_verdict(s); }
+
+// Презумпция несъедобности — отдельная положительная голова. Неизвестность
+// ключа оставляет её в силе; установленная съедобность снимает её defeater-ом,
+// а не правилом `not food_barred`.
+@source(MYCO_ART4, MYCO_ART9)
+rule PresumeInedible(s: Specimen) defeasible { when specimen(s); then food_barred(s); }
+@source(MYCO_ART9)
+rule FullIdentificationDefeatsBar(s: Specimen) defeater { when edible_verdict(s); defeat food_barred(s); }
+
+// Исполнимый инвариант §93.1: после E-0086 evaluation выдаёт находку на деле.
+@source(MYCO_ART9, MYCO_ART10)
+constraint DeadlyTaxonCannotReceiveEdibleVerdict(s: Specimen) {
+    when deadly_verdict(s); require not edible_verdict(s);
+    severity error; message "смертельно ядовитый вид не может получить съедобный вердикт";
+}
+// ЗДЕСЬ СТОЯЛ ДЕФИТЕР `DeadlyBlocksEdibleVerdict`, И ОН НЕ ПОРАЖАЛ НИЧЕГО.
+// Дефитер §107.3 снимает КАНДИДАТА своей страты, а `edible_verdict`
+// производился одним лишь строгим правилом: строгий вывод кандидатом не
+// становится, и поражать было некого. Замер 31.08.2026: дело, приписавшее
+// бледной поганке класс «съедобен», давало `edible_verdict` = TRUE_ONLY
+// одновременно с `deadly_verdict` = TRUE_ONLY — ровно то, что запрещает
+// констрейнт выше, — при чистых `check`, `lower` и воротах мёртвых правил.
+//
+// Второй ценой того же дефитера было МОЛЧАНИЕ ПРЕЗУМПЦИИ. Он делал
+// `edible_verdict` поражаемой головой, чтение поражаемой головы поднимает
+// ранг §110 на единицу, и `FullIdentificationDefeatsBar` уезжал на страту 1,
+// тогда как `PresumeInedible` стоял на страте 0. Установленная съедобность
+// запрета не снимала: шампиньон с полным ключом оставался `food_barred`.
+// Обе стороны презумпции теперь спрашиваются сценариями
+// MYCO-UNKNOWN-PRESUMED-INEDIBLE и MYCO-EDIBLE-VERDICT-LIFTS-THE-BAR.

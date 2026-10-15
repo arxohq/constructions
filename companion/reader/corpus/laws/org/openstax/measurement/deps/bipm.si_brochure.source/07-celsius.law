@@ -1,0 +1,45 @@
+// §2.3.1, температура Цельсия: t/°C = T/K − 273.15.
+//
+// ГРАДУС ЦЕЛЬСИЯ — НЕ ЕДИНИЦА АЛГЕБРЫ, А ШКАЛА. Реестр единиц знает только
+// множители, и это намеренно: произведение аффинных величин бессмысленно, а
+// брошюра сама различает температуру и интервал температур. Интервал сверен в
+// модуле 06 алиасом `degC_interval = K`; абсолютный перевод — формула из
+// закреплённого текста в голове правила. Второму потребителю (термодинамика,
+// химия) перевод выносится функцией в `packs/primitives` по DECISION-0123.
+
+language "law.core" version "0.2";
+package bipm.si_brochure version "0.1.0";
+namespace "urn:bipm:clir:si-brochure";
+
+use self::{
+    SI9_S2_3_1_CELSIUS,
+};
+
+// Измерение температуры: предмет, у которого есть термодинамическая
+// температура в кельвинах.
+entity Measurement {
+    label en official "temperature measurement";
+    label ru unofficial "измерение температуры";
+}
+
+@source(SI9_S2_3_1_CELSIUS)
+relation thermodynamic_temperature(m: Measurement, kelvins: Decimal) kind empirical {
+    label en official "the numerical value of the thermodynamic temperature T expressed in kelvins";
+    label ru unofficial "численное значение термодинамической температуры T в кельвинах";
+}
+
+relation celsius_temperature(m: Measurement, degrees: Decimal) kind institutional {
+    label en official "the numerical value of the Celsius temperature t expressed in degrees Celsius";
+    label ru unofficial "численное значение температуры Цельсия t в градусах Цельсия";
+}
+
+// t/°C = T/K − 273.15 — дословно из §2.3.1, выражением в голове правила:
+// чистая функция несла бы то же самое, но метки §218 у функций нет, и
+// объявление без метки — неразмеченный узел храповика.
+@source(SI9_S2_3_1_CELSIUS)
+rule CelsiusFromKelvin(m: Measurement, kelvins: Decimal) strict {
+    label en official "§2.3.1: the numerical value of a Celsius temperature is the numerical value of the thermodynamic temperature in kelvins minus 273.15";
+    label ru unofficial "§2.3.1: численное значение температуры Цельсия равно численному значению термодинамической температуры в кельвинах минус 273,15";
+    when thermodynamic_temperature(m, kelvins);
+    then celsius_temperature(m, kelvins - 273.15);
+}

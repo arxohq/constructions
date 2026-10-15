@@ -1,0 +1,20 @@
+language "law.core" version "0.2";
+package scrum.guide version "0.1.0";
+namespace "urn:scrum:clir:guide";
+
+// Книга «Построения», глава 8: установленное сокрытие побеждает презумпцию
+// видимости приоритетом HiddenWorkBeatsPresumptionOfVisibility (reason
+// explicit_exception). Итог — поддержка отрицания (FALSE_ONLY), а не
+// снятие поддержки: контраст с дефитером определителя грибов.
+test "urn:query:scrum-test-hidden-work-prevails-by-priority" {
+    given {
+        context { decision_time @2026-09-01T12:00:00Z; knowledge_time @2026-09-01T12:00:00Z; legal_time @2026-09-01; timezone "UTC"; }
+        assert "sg-t8-a": scrum_team(entity_ref("urn:scrum:team:t")) { origin case_input; }
+        assert "sg-t8-b": work_hidden(entity_ref("urn:scrum:team:t")) { origin case_input; }
+    }
+    evaluate truth(work_visible(entity_ref("urn:scrum:team:t")));
+    expect result_kind == PROPOSITION;
+    expect truth_status == FALSE_ONLY;
+    expect evaluation_status == COMPUTED;
+    expect applied(HiddenWorkBreaksTransparency);
+}

@@ -1,0 +1,53 @@
+// Целочисленное прочтение I.48. Три имени §206 сохранены: канарейка SMT
+// ожидает ветвь orthogonion=2 = `OrthogonionProsTritei` при сортировке id.
+
+language "law.core" version "0.2";
+package grc.eukleides.pythagoras version "0.1.0";
+namespace "urn:grc:eukleides:clir:pythagoras";
+
+use self::{
+    INTEGER_READING,
+};
+
+@source(INTEGER_READING)
+rule OrthogonionProsDeuterai(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "I.48, угол против второй стороны: квадрат второй равен сумме квадратов первой и третьей";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + c * c == b * b);
+    then grc.euclid.stoicheia_i::orthogonion(t);
+}
+
+@source(INTEGER_READING)
+rule OrthogonionProsProtei(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label ru unofficial "I.48, угол против первой стороны: квадрат первой равен сумме квадратов второй и третьей";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (b * b + c * c == a * a);
+    then grc.euclid.stoicheia_i::orthogonion(t);
+}
+
+@source(INTEGER_READING)
+rule OrthogonionProsTritei(
+    t: grc.euclid.stoicheia_i::Trigonon,
+    a: Integer,
+    b: Integer,
+    c: Integer,
+) strict {
+    label grc official "ἡ περιεχομένη γωνία ὑπὸ τῶν λοιπῶν τοῦ τριγώνου δύο πλευρῶν ὀρθή ἐστιν";
+    label ru unofficial "I.48, угол против третьей стороны: квадрат третьей равен сумме квадратов первых двух";
+    when grc.euclid.stoicheia_i::trigonon_synistatai(t)
+        and grc.euclid.stoicheia_i::pleurai_trigonou(t, a, b, c)
+        and (a * a + b * b == c * c);
+    then grc.euclid.stoicheia_i::orthogonion(t);
+}

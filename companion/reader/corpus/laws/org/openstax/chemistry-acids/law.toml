@@ -1,0 +1,44 @@
+# Манифест §10 — маркер корня пакета (DECISION-0033). Нормативны заголовки §22
+# в самих .law; манифест обязан с ними совпадать (LDC-E1109, lawc check).
+[package]
+name = "openstax.chemistry_acids"
+version = "0.1.0"
+language = "0.2"
+namespace = "urn:openstax:clir:chemistry-acids"
+
+# Каталожная метадата (DECISION-0051; docs/PACKAGE-METADATA.ru.md). НЕ семантика:
+# в CLIR не понижается, в semantic hash §209 не входит.
+[metadata]
+act = "openstax-chemistry-acids"
+title = "OpenStax Chemistry 2e, гл. 14 и §15.2: словарь частиц и ролей кислотно-основного равновесия"
+primarySource = "OPENSTAX_CHEMISTRY_2E"
+# jurisdiction: у естественнонаучного изложения правопорядка нет — та же
+# форма, что у `chem.rules`.
+jurisdiction = "none"
+instrument = "treatise"
+# sourceFidelity: закреплено воспроизводимое извлечение текста разделов из
+# HTML страниц книги, а не байты официального PDF-издания.
+sourceFidelity = "pinned_unofficial_copy"
+
+# Невыводимые поля: их не сверяет никто, поэтому причина выбора записана.
+#
+# issuer: у учебника есть издатель, и он же держатель лицензии.
+issuer = "OpenStax, Rice University"
+legalStatus = "doctrine"
+# verifiedAgainstSource: текст каждого фрагмента вырезан ИЗ закреплённых байтов
+# генератором `sync_openstax_acid_base_fragments.py` и сверен §194 (LDC-E5202)
+# на каждой сборке; границы срезов сверяются дословно по обеим сторонам.
+verifiedAgainstSource = true
+# ЛИЦЕНЗИЯ ОГРАНИЧИТЕЛЬНАЯ. Chemistry 2e — CC BY-NC-SA 4.0: некоммерческое
+# использование и share-alike, не CC BY. Решение закрепить такие байты с явной
+# пометкой принял владелец 06.09.2026; та же строка стоит в шапке sources.law
+# и в шапке фетчера.
+# (Поля лицензии в `package-manifest.schema` нет — замер 06.09.2026; строка
+# живёт комментарием здесь и текстом в шапке sources.law. Зазор записан в
+# docs/sciences/natural/CHEMISTRY.ru.md.)
+
+# Сценарии пакета: единственный источник фактов, вопросов и ожиданий.
+[[tests]]
+family = "openstax_chemistry_acids"
+suites = ["tests/openstax-chemistry-acids.lawtest"]
+world = ["openstax.chemistry_acids"]
